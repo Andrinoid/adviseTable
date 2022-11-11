@@ -1,16 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-// import Col from './Col';
+import Col from './Col';
 
-const Col = styled.div`
-    background: #fff;
-    box-shadow: inset 0px 0px 0 0.5px #ebebeb;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    position: absolute;
-    user-select: none;
-`;
+// const Col = styled.div`
+//     background: #fff;
+//     box-shadow: inset 0px 0px 0 0.5px #ebebeb;
+//     display: flex;
+//     align-items: center;
+//     justify-content: left;
+//     position: absolute;
+//     user-select: none;
+// `;
 const Resizer = styled.div`
     position: absolute;
     top: 0;
@@ -71,7 +71,6 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
     
     const mouseMoveHandler = (e) => {
         // How far the mouse has been moved
-
         setIsResizing(true);
         let newWidth;
         let dx;

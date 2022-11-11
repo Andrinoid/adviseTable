@@ -3,21 +3,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { default as mo } from "../data/months";
 import { numberToLetter } from './utils';
-// import Col from './Col';
+import Col from './Col';
 
 const RowElm = styled.div`
-    // position: absolute;
     position: relative;
     white-space: nowrap;
     width: 100%;
-`;
-const Col = styled.div`
-    background: #fff;
-    box-shadow: inset 0px 0px 0 0.5px #ebebeb;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    position: absolute;
 `;
 
 const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, hideTotal = false }) => {
@@ -58,7 +49,12 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
             {/*Technically toolbox is not a col*/}
             <Col style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}></Col>
             
-            <Col id={'a' + rowNumber} style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}>{row.name}</Col>
+            <Col 
+                id={'a' + rowNumber} 
+                horizontalAlign="left"
+                style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}>
+                    {row.name}
+            </Col>
             {/* map through the months and return cols */}
             {monthRange.map((month, i) => {
                 const left = leftOffset + i * colWidth;
@@ -68,7 +64,10 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
                     <Col id={colId} key={i} style={{ width: colWidth, height: colHeight, top: 0, left: left }}>{row[month]}</Col>
                 )
             })}
-            <Col id={numberToLetter(counter) + rowNumber} style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}>
+            <Col 
+                id={numberToLetter(counter) + rowNumber} 
+                style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
+            >
                 {getTotal()}
             </Col>
         </RowElm>

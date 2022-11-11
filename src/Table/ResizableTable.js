@@ -32,7 +32,7 @@ const ResizableTable = ({width, onResize, direction='right'}) => {
             isFirstRun.current = false;
             return;
         }
-        // Attach the listeners to `document`
+        // Attach the listeners to `document` when x changes
         document.addEventListener('mousemove', mouseMoveHandler);
         document.addEventListener('mouseup', mouseUpHandler);
 

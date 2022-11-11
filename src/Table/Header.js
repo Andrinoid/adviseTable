@@ -4,22 +4,14 @@ import styled from 'styled-components';
 import { default as mo } from "../data/months";
 import ResizablelCol from './ResizablelCol';
 import ResizableTable from './ResizableTable';
+import Col from './Col';
 
 const RowElm = styled.div`
     position: relative;
     white-space: nowrap;
     width: 100%;
 `;
-const Col = styled.div`
-    background: #fff;
-    box-shadow: inset 0px 0px 0 0.5px #ebebeb;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    position: absolute;
-    user-select: none;
 
-`;
 const Label = styled.div`
     padding: 5px;
     font-weight: bold;
