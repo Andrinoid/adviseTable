@@ -1,14 +1,13 @@
 //jsx component
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import styled from 'styled-components';
-import { cloneDeep, sortBy } from 'lodash';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Header from './Header';
 import Row from './Row';
 //DUMMY DATA
-import months from './data/months';
-import { view, ui_prefs } from './data';
+import months from '../data/months';
+import { view, ui_prefs } from '../data';
 
 const Wrapper = styled.div`
 width: 100%;
@@ -171,7 +170,15 @@ const Table = ({mode}) => {
                 </div>
 
             </div>
-
+            <p>Todo</p>
+            <ul>
+                <li>selectable cols</li>
+                <li>Control styles</li>
+                <li>expandable cols</li>
+                <li>Hightlight types of rows</li>
+                <li>Hide total option</li>
+                <li>Drag handle</li>
+            </ul>
         </Wrapper>
     )
 }

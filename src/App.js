@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './App.css';
 import Table from './Table';
 
@@ -22,23 +21,3 @@ function App() {
 }
 
 export default App;
-
-
-// import logo from './logo.svg';
-// import './App.css';
-// import Table from './Table';
-// import Table2 from './Table2';
-// import DragTest from './draganddrop';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <DragTest />
-//      <Table></Table>
-
-//     <Table2></Table2>
-//     </div>
-//   );
-// }
-
-// export default App;

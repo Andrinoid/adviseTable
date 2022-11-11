@@ -1,9 +1,7 @@
 //jsx component
-import React, { Children } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { find } from 'lodash';
-import { default as mo } from "./data/months";
-import ResizablelCol from './ResizablelCol';
+import { default as mo } from "../data/months";
 
 const RowElm = styled.div`
     // position: absolute;
@@ -20,8 +18,6 @@ const Col = styled.div`
     position: absolute;
 `;
 
-//map though months and pick values from system
-
 const Row = ({row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, hideTotal=false }) => {
 
     let months = mo.map((m) => m.system);
@@ -36,6 +32,7 @@ const Row = ({row, index, selectedMonths, topOffset, colWidth, colHeight, labelC
             return mapping.begin == selectedMonths[0] && mapping.end == selectedMonths[1];
         });
 
+        // needs more work
         if (mapping) {
             if (!hideTotal) {
                 return mapping.total;
@@ -62,13 +59,6 @@ const Row = ({row, index, selectedMonths, topOffset, colWidth, colHeight, labelC
                     <Col key={index} style={{ width: colWidth, height: colHeight, top: 0, left: left }}>{row[month]}</Col>        
                 )
             })}
-            {/* <ResizablelCol 
-                viewportHeight={viewportHeight}
-                onResize={onTotalColResize}
-                style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
-            >
-                {getTotal()}
-            </ResizablelCol> */}
             <Col style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}>{getTotal()}</Col>
         </RowElm>
     )

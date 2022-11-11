@@ -1,7 +1,7 @@
 //react component  
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
-import { default as mo } from "./data/months";
+import { default as mo } from "../data/months";
 import ResizablelCol from './ResizablelCol';
 import ResizableTable from './ResizableTable';
 
