@@ -50,7 +50,7 @@ const ToolBox = styled.div`
 // hide total option
 // dragability on table
 
-const Table = ({mode}) => {
+const Table = ({ mode }) => {
 
     const viewportRef = useRef(null);
 
@@ -64,9 +64,9 @@ const Table = ({mode}) => {
     const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
     const [totalWidth, setTotalWidth] = useState(1350);
     const [toolBoxWidth, setToolBoxWidth] = useState(50);
-    const [totalColWidth, setTotalColWidth] = useState(100); 
+    const [totalColWidth, setTotalColWidth] = useState(100);
     const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / totalMonths);
-    
+
     useEffect(() => {
         setColWidth(calcColWidth);
     }, [labelColWidth, totalColWidth, totalWidth]);
@@ -92,7 +92,7 @@ const Table = ({mode}) => {
         return (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / totalMonths;
     }
 
-    const handleOnDragEnd = (result)=> {
+    const handleOnDragEnd = (result) => {
         if (!result.destination) return;
         // const items = Array.from(viewd);
         // const [reorderedItem] = items.splice(result.source.index, 1);
@@ -103,12 +103,8 @@ const Table = ({mode}) => {
     return (
         <Wrapper>
             <div className='viewPort' ref={viewportRef}>
-                {/* <div className='container' style={{ width: totalWidth + colWidth, height: totalHeight }}> */}
-                <div className='container' style={{ width: totalWidth}}>
+                <div className='container' style={{ width: totalWidth }}>
 
-                    {/* <ToolBox width={toolBoxWidth}>
-
-                    </ToolBox> */}
                     <Header
                         colHeight={headerHeight}
                         colWidth={colWidth}
@@ -132,28 +128,27 @@ const Table = ({mode}) => {
                                     {
                                         view.map((row, i) => {
                                             return (
-                                                <Draggable 
-                                                    key={'id-'+row.id} 
-                                                    draggableId={'id-'+row.id} 
+                                                <Draggable
+                                                    key={'id-' + row.id}
+                                                    draggableId={'id-' + row.id}
                                                     index={i}
                                                     isDragDisabled={mode === 'static'}
                                                 >
                                                     {(provided) => (
-                                                        <div 
-                                                        ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                        <Row
-                                                            key={i}
-                                                            index={i}
-                                                            row={row}
-                                                            colWidth={colWidth}
-                                                            colHeight={colHeight}
-                                                            labelColWidth={labelColWidth}
-                                                            toolBoxWidth={toolBoxWidth}
-                                                            totalColWidth={totalColWidth}
-                                                            topOffset={headerHeight}
-                                                            selectedMonths={selectedMonths}
-                                                            totalMonths={totalMonths}
-                                                        />
+                                                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                            <Row
+                                                                key={i}
+                                                                index={i}
+                                                                row={row}
+                                                                colWidth={colWidth}
+                                                                colHeight={colHeight}
+                                                                labelColWidth={labelColWidth}
+                                                                toolBoxWidth={toolBoxWidth}
+                                                                totalColWidth={totalColWidth}
+                                                                topOffset={headerHeight}
+                                                                selectedMonths={selectedMonths}
+                                                                totalMonths={totalMonths}
+                                                            />
                                                         </div>
                                                     )}
                                                 </Draggable>

@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
+// import Col from './Col';
 
 const Col = styled.div`
     background: #fff;
