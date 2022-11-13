@@ -40,17 +40,19 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
 
     const leftOffset = toolBoxWidth + labelColWidth;
     // initial row number is one 
-    let rowNumber = index + 1;
+    let rowNumber = index;
     // count the number of cols to determine the id the total col
-    let counter = 1
+    let counter = 1;
     return (
         //Do we need the height here?
         <RowElm style={{ height: colHeight }} >
-            {/*Technically toolbox is not a col*/}
-            <Col style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}></Col>
+            {/*Technically toolbox is not a col use another component*/}
+            <Col selectable={false} style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}></Col>
             
             <Col 
-                id={'a' + rowNumber} 
+
+                x={rowNumber}
+                y={0}
                 horizontalAlign="left"
                 style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}>
                     {row.name}
@@ -58,14 +60,21 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
             {/* map through the months and return cols */}
             {monthRange.map((month, i) => {
                 const left = leftOffset + i * colWidth;
-                const colId = numberToLetter(i + 1) + rowNumber;
                 counter++;
                 return (
-                    <Col id={colId} key={i} style={{ width: colWidth, height: colHeight, top: 0, left: left }}>{row[month]}</Col>
+                    <Col 
+                        key={i} 
+                        x={rowNumber}
+                        y={i+1}
+                        style={{ width: colWidth, height: colHeight, top: 0, left: left }}
+                    >
+                        {row[month]}
+                    </Col>
                 )
             })}
             <Col 
-                id={numberToLetter(counter) + rowNumber} 
+                x={rowNumber}
+                y={counter}
                 style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
             >
                 {getTotal()}

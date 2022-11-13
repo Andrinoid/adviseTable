@@ -29,7 +29,7 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
     
     return (
         <RowElm style={{ height: colHeight }}>
-            <Col style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}></Col>
+            <Col style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }} selectable={false}></Col>
             <ResizablelCol 
                 style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth}}
                 onResize={onLabelColResize}

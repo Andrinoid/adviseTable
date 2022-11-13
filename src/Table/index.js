@@ -5,9 +5,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Header from './Header';
 import Row from './Row';
+import { TableContext } from './context';
 //DUMMY DATA
-import months from '../data/months';
-import { view, ui_prefs } from '../data';
+import { view, ui_prefs } from '../data/example2';
 
 const Wrapper = styled.div`
 width: 100%;
@@ -67,6 +67,15 @@ const Table = ({ mode }) => {
     const [totalColWidth, setTotalColWidth] = useState(100);
     const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / totalMonths);
 
+    const [mouseDownColCord, setMouseDownColCord] = useState(null);
+    const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
+    const [mouseUpColCord, setMouseUpColCord] = useState(null);
+    const [selectColDraging, setSelectColDraging] = useState(false);
+
+    useEffect(()=> {
+        console.log('selectColDraging', selectColDraging);
+    }, [selectColDraging])
+
     useEffect(() => {
         setColWidth(calcColWidth);
     }, [labelColWidth, totalColWidth, totalWidth]);
@@ -101,6 +110,16 @@ const Table = ({ mode }) => {
     }
 
     return (
+        <TableContext.Provider value={{
+            setSelectColDraging,
+            setMouseDownColCord, 
+            setMouseMoveColCord, 
+            setMouseUpColCord,
+            selectColDraging,
+            mouseDownColCord,
+            mouseMoveColCord,
+            mouseUpColCord,
+        }}>
         <Wrapper>
             <div className='viewPort' ref={viewportRef}>
                 <div className='container' style={{ width: totalWidth }}>
@@ -165,16 +184,24 @@ const Table = ({ mode }) => {
                 </div>
 
             </div>
+            <div>
+                <p>mouseDownCol:{mouseDownColCord}</p>
+                <p>mouseMoveCol:{mouseMoveColCord}</p>
+                <p>mouseUpCol:{mouseUpColCord}</p>
+            </div>
             <p>Todo</p>
             <ul>
                 <li>selectable cols</li>
+                <li>Detect overflow on Cols and auto adjust table width</li>
                 <li>Control styles</li>
                 <li>expandable cols</li>
                 <li>Hightlight types of rows</li>
                 <li>Hide total option</li>
                 <li>Drag handle</li>
+                <li>Min and max size on cols</li>
             </ul>
         </Wrapper>
+        </TableContext.Provider>
     )
 }
 

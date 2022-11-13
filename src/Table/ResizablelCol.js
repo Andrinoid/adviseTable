@@ -96,6 +96,7 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
         <Col
             ref={colRef}
             style={{...style }}
+            selectable={false}
         >
             {children}
             <Resizer
