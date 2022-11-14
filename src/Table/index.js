@@ -115,11 +115,16 @@ const Table = ({ mode }) => {
             setMouseDownColCord, 
             setMouseMoveColCord, 
             setMouseUpColCord,
+            setTotalWidth,
+            setlabelColWidth,
+            setTotalColWidth,
             selectColDraging,
             mouseDownColCord,
             mouseMoveColCord,
             mouseUpColCord,
-            colWidth
+            totalWidth,
+            labelColWidth,
+            totalColWidth,
         }}>
         <Wrapper>
             <div className='viewPort' ref={viewportRef}>

@@ -26,6 +26,7 @@ const Col = React.forwardRef((props, ref) => {
         children, 
         style={}, 
         selectable=true,
+        type,
         x,
         y,
     } = props;
@@ -115,7 +116,7 @@ const Col = React.forwardRef((props, ref) => {
             selected={selected}
             className={`tableCol ${isHightlighted() ? 'hightlighted' : ''}`}
         >
-            <Cell parentWidth={style.width}>
+            <Cell parentWidth={style.width} parentType={type}>
                 {children}
             </Cell>
         </Column>

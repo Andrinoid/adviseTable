@@ -50,7 +50,7 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
             <Col selectable={false} style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}></Col>
             
             <Col 
-
+                type="label"
                 x={rowNumber}
                 y={0}
                 horizontalAlign="left"
@@ -64,6 +64,7 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
                 return (
                     <Col 
                         key={i} 
+                        type="data"
                         x={rowNumber}
                         y={i+1}
                         style={{ width: colWidth, height: colHeight, top: 0, left: left }}
@@ -73,6 +74,7 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
                 )
             })}
             <Col 
+                type="total"
                 x={rowNumber}
                 y={counter}
                 style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
