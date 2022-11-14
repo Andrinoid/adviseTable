@@ -7,7 +7,7 @@ import Header from './Header';
 import Row from './Row';
 import { TableContext } from './context';
 //DUMMY DATA
-import { view, ui_prefs } from '../data/example2';
+import { view, ui_prefs } from '../data';
 
 const Wrapper = styled.div`
 width: 100%;
@@ -119,6 +119,7 @@ const Table = ({ mode }) => {
             mouseDownColCord,
             mouseMoveColCord,
             mouseUpColCord,
+            colWidth
         }}>
         <Wrapper>
             <div className='viewPort' ref={viewportRef}>
@@ -195,10 +196,11 @@ const Table = ({ mode }) => {
                 <li>Detect overflow on Cols and auto adjust table width</li>
                 <li>Control styles</li>
                 <li>expandable cols</li>
-                <li>Hightlight types of rows</li>
+                <li>Hightlight rows</li>
                 <li>Hide total option</li>
                 <li>Drag handle</li>
                 <li>Min and max size on cols</li>
+                <li>overflow ellips on cols</li>
             </ul>
         </Wrapper>
         </TableContext.Provider>

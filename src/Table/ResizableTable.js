@@ -18,13 +18,9 @@ const Resizer = styled.div`
 //width gæti verið vitlaus en þá þarf að mæla containerinn með ref
 const ResizableTable = ({width, onResize, direction='right'}) => {
 
-    const [w, setW] = useState(width);
     const [x, setX] = useState(0);
     const [isResizing, setIsResizing] = useState(false);
     const resizeRef = useRef(null);
-    // const colRef = useRef(null);
-
-    // useLayoutEffect(() => {
 
     const isFirstRun = useRef(true);
     useEffect(() => {

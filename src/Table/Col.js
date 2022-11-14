@@ -1,8 +1,9 @@
 //react component  
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
 import { debounce} from 'lodash';
 import { TableContext } from './context';
+import Cell from './Cell';
 
 
 const Column = styled.div`
@@ -17,10 +18,6 @@ const Column = styled.div`
     &.hightlighted {
         background: #e9f0fd;
     }
-`;
-
-const SpaceAround = styled.div`
-    padding: 0 5px;
 `;
 
 const Col = React.forwardRef((props, ref) => {
@@ -118,10 +115,9 @@ const Col = React.forwardRef((props, ref) => {
             selected={selected}
             className={`tableCol ${isHightlighted() ? 'hightlighted' : ''}`}
         >
-            <SpaceAround>
+            <Cell parentWidth={style.width}>
                 {children}
-                {/* {x}:{y} */}
-            </SpaceAround>
+            </Cell>
         </Column>
     )
 });
