@@ -11,7 +11,7 @@ const RowElm = styled.div`
     width: 100%;
 `;
 
-const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, hideTotal = false }) => {
+const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, handleProps, hideTotal = false }) => {
 
     let months = mo.map((m) => m.system);
     // select range of months based on selectedMonths
@@ -47,7 +47,9 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
         //Do we need the height here?
         <RowElm style={{ height: colHeight }} >
             {/*Technically toolbox is not a col use another component*/}
-            <Col selectable={false} style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}></Col>
+            <Col selectable={false} style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}>
+                <div {...handleProps}>drag</div>
+            </Col>
             
             <Col 
                 type="label"

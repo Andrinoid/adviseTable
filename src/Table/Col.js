@@ -13,24 +13,24 @@ const Column = styled.div`
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
     // background: ${props => props.selected ? '#e9f0fd' : 'white'};
+    background: white;
     position: absolute;
     user-select: none;
+    transition: all 0.2s ease;
     &.hightlighted {
         background: #e9f0fd;
     }
 `;
 
-const Col = React.forwardRef((props, ref) => {
-    const { 
-        horizontalAlign='right',
-        children, 
-        style={}, 
-        selectable=true,
-        type,
-        x,
-        y,
-    } = props;
-    // console.log(x,' ',y);
+const Col = React.forwardRef(({
+    horizontalAlign = 'right',
+    children,
+    style = {},
+    selectable = true,
+    type,
+    x,
+    y,
+}, ref) => {
 
     const {
         setSelectColDraging,

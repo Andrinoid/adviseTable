@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import Col from './Col';
+import { TableContext } from './context';
 
 // const Col = styled.div`
 //     background: #fff;
@@ -40,13 +41,17 @@ const Line = styled.div`
     display: ${props => props.isResizing ? 'block' : 'none'};
 `;
 
-const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', style }) => {
+const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', style, type }) => {
 
     const [w, setW] = useState(0);
     const [x, setX] = useState(0);
     const [isResizing, setIsResizing] = useState(false);
     const resizeRef = useRef(null);
     const colRef = useRef(null);
+    const { 
+        autoAdjustLabelColWidth,
+        autoAdjustTotalColWidth, 
+    } = useContext(TableContext);
 
     // useLayoutEffect(() => {
     //     setW(colRef.current.offsetWidth);
@@ -92,16 +97,26 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
         setIsResizing(false);
     };
 
+    const doubleClickHandler = () => {
+        if(type === 'label') {
+            autoAdjustLabelColWidth();
+        }
+        if(type === 'total') {
+            autoAdjustTotalColWidth();
+        }
+    };
+
     return (
         <Col
             ref={colRef}
             style={{...style }}
             selectable={false}
-            type="resizable"
+            type={type}
         >
             {children}
             <Resizer
                 onMouseDown={mouseDownHandler}
+                onDoubleClick={doubleClickHandler}
                 direction={direction}
                 isResizing={isResizing}
                 ref={resizeRef}

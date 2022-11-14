@@ -1,5 +1,5 @@
 //jsx component
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -31,8 +31,8 @@ box-sizing: border-box;
 }
 .container {
     position: relative;
-    background: lightblue;
-    border: 2px solid lightblue;
+    // background: lightblue;
+    // border: 2px solid lightblue;
 }
 `;
 
@@ -50,7 +50,7 @@ const ToolBox = styled.div`
 // hide total option
 // dragability on table
 
-const Table = ({ mode }) => {
+const Table = ({ mode }, ref) => {
 
     const viewportRef = useRef(null);
 
@@ -62,7 +62,7 @@ const Table = ({ mode }) => {
     const [headerHeight, setHeaderHeight] = useState(35);
     const [colHeight, setColHeight] = useState(50);
     const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
-    const [totalWidth, setTotalWidth] = useState(1350);
+    const [totalWidth, setTotalWidth] = useState(950);
     const [toolBoxWidth, setToolBoxWidth] = useState(50);
     const [totalColWidth, setTotalColWidth] = useState(100);
     const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / totalMonths);
@@ -71,6 +71,22 @@ const Table = ({ mode }) => {
     const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
     const [mouseUpColCord, setMouseUpColCord] = useState(null);
     const [selectColDraging, setSelectColDraging] = useState(false);
+
+    const [biggestLabelCellWidth , setBiggestLabelCellWidth] = useState(0);
+    const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
+    const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
+
+    useEffect(() => {
+        console.log('biggestDataCellWidth', biggestDataCellWidth);
+    }, [biggestDataCellWidth]);
+
+    useImperativeHandle(ref, () => ({
+
+        autoAdjust() {
+            autoAdjustDataColWidth();
+        }
+
+      }));
 
     useEffect(()=> {
         console.log('selectColDraging', selectColDraging);
@@ -84,6 +100,18 @@ const Table = ({ mode }) => {
         setViewportWidth(viewportRef.current.offsetWidth);
         setViewportHeight(viewportRef.current.offsetHeight);
     }, []);
+
+    const autoAdjustLabelColWidth = () => {
+        setlabelColWidth(biggestLabelCellWidth);
+    }
+
+    const autoAdjustTotalColWidth = () => {
+        setTotalColWidth(biggestTotalCellWidth);
+    }
+
+    const autoAdjustDataColWidth = () => {
+        setTotalWidth(labelColWidth + toolBoxWidth + totalColWidth + (biggestDataCellWidth * totalMonths));
+    }
 
     const onLabelColResize = (width) => {
         setlabelColWidth(width);
@@ -118,6 +146,11 @@ const Table = ({ mode }) => {
             setTotalWidth,
             setlabelColWidth,
             setTotalColWidth,
+            setBiggestDataCellWidth,
+            setBiggestLabelCellWidth,
+            setBiggestTotalCellWidth,
+            autoAdjustLabelColWidth,
+            autoAdjustTotalColWidth,
             selectColDraging,
             mouseDownColCord,
             mouseMoveColCord,
@@ -125,8 +158,11 @@ const Table = ({ mode }) => {
             totalWidth,
             labelColWidth,
             totalColWidth,
+            biggestDataCellWidth,
+            biggestLabelCellWidth,
+            biggestTotalCellWidth,
         }}>
-        <Wrapper>
+        <Wrapper ref={ref}>
             <div className='viewPort' ref={viewportRef}>
                 <div className='container' style={{ width: totalWidth }}>
 
@@ -160,7 +196,7 @@ const Table = ({ mode }) => {
                                                     isDragDisabled={mode === 'static'}
                                                 >
                                                     {(provided) => (
-                                                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                        <div ref={provided.innerRef} {...provided.draggableProps}>
                                                             <Row
                                                                 key={i}
                                                                 index={i}
@@ -173,6 +209,7 @@ const Table = ({ mode }) => {
                                                                 topOffset={headerHeight}
                                                                 selectedMonths={selectedMonths}
                                                                 totalMonths={totalMonths}
+                                                                handleProps={{...provided.dragHandleProps}}
                                                             />
                                                         </div>
                                                     )}
@@ -197,19 +234,17 @@ const Table = ({ mode }) => {
             </div>
             <p>Todo</p>
             <ul>
-                <li>selectable cols</li>
-                <li>Detect overflow on Cols and auto adjust table width</li>
                 <li>Control styles</li>
                 <li>expandable cols</li>
                 <li>Hightlight rows</li>
                 <li>Hide total option</li>
-                <li>Drag handle</li>
                 <li>Min and max size on cols</li>
                 <li>overflow ellips on cols</li>
+                <li>only show drag in edit mode</li>
             </ul>
         </Wrapper>
         </TableContext.Provider>
     )
 }
 
-export default Table;
+export default React.forwardRef(Table);

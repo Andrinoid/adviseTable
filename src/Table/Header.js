@@ -34,6 +34,7 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
                 style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth}}
                 onResize={onLabelColResize}
                 viewportHeight={viewportHeight}
+                type="label"
             >
             </ResizablelCol>
 
@@ -51,6 +52,7 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
                 onResize={onTotalColResize}
                 direction="left"
                 viewportHeight={viewportHeight}
+                type="total"
             >
                 <Label>Total</Label>
             </ResizablelCol>
