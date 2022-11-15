@@ -6,8 +6,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Header from './Header';
 import Row from './Row';
 import { TableContext } from './context';
+import SelectedCol from './SelectedCol';
 //DUMMY DATA
-import { view, ui_prefs } from '../data';
+import { view, ui_prefs } from '../data/example2';
 
 const Wrapper = styled.div`
 width: 100%;
@@ -75,6 +76,8 @@ const Table = ({ mode }, ref) => {
     const [biggestLabelCellWidth , setBiggestLabelCellWidth] = useState(0);
     const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
     const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
+
+    const [selectedCol, setSelectedCol] = useState(null);
 
     useEffect(() => {
         console.log('biggestDataCellWidth', biggestDataCellWidth);
@@ -151,6 +154,7 @@ const Table = ({ mode }, ref) => {
             setBiggestTotalCellWidth,
             autoAdjustLabelColWidth,
             autoAdjustTotalColWidth,
+            setSelectedCol,
             selectColDraging,
             mouseDownColCord,
             mouseMoveColCord,
@@ -161,6 +165,7 @@ const Table = ({ mode }, ref) => {
             biggestDataCellWidth,
             biggestLabelCellWidth,
             biggestTotalCellWidth,
+            selectedCol,
         }}>
         <Wrapper ref={ref}>
             <div className='viewPort' ref={viewportRef}>
@@ -180,7 +185,6 @@ const Table = ({ mode }, ref) => {
                         onTotalColResize={onTotalColResize}
                         onTableResize={onTableResize}
                     />
-
 
                     <DragDropContext onDragEnd={handleOnDragEnd}>
                         <Droppable droppableId="characters" >
@@ -210,6 +214,7 @@ const Table = ({ mode }, ref) => {
                                                                 selectedMonths={selectedMonths}
                                                                 totalMonths={totalMonths}
                                                                 handleProps={{...provided.dragHandleProps}}
+                                                                mode={mode}
                                                             />
                                                         </div>
                                                     )}
@@ -222,10 +227,11 @@ const Table = ({ mode }, ref) => {
                             )}
                         </Droppable>
                     </DragDropContext>
-
+                    
 
                 </div>
 
+                    {selectedCol && <SelectedCol width={colWidth} height={colHeight} offsetLeft={toolBoxWidth} offsetTop={headerHeight} />}
             </div>
             <div>
                 <p>mouseDownCol:{mouseDownColCord}</p>
@@ -239,8 +245,8 @@ const Table = ({ mode }, ref) => {
                 <li>Hightlight rows</li>
                 <li>Hide total option</li>
                 <li>Min and max size on cols</li>
-                <li>overflow ellips on cols</li>
-                <li>only show drag in edit mode</li>
+                <li>overflow ellips on label cols</li>
+                <li>Decouple Row and Col</li>
             </ul>
         </Wrapper>
         </TableContext.Provider>

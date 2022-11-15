@@ -12,8 +12,8 @@ const Column = styled.div`
     display: flex;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
-    // background: ${props => props.selected ? '#e9f0fd' : 'white'};
     background: white;
+    // background: ${props => props.selected ? '#e9f0fd' : 'white'};
     position: absolute;
     user-select: none;
     transition: all 0.2s ease;
@@ -28,6 +28,7 @@ const Col = React.forwardRef(({
     style = {},
     selectable = true,
     type,
+    id,
     x,
     y,
 }, ref) => {
@@ -41,9 +42,9 @@ const Col = React.forwardRef(({
         mouseDownColCord,
         mouseMoveColCord,
         mouseUpColCord,
+        setSelectedCol,
     } = useContext(TableContext); 
     const [selected, setSelected] = useState(false);
-
     
     // const isFirstRun = useRef(true);
     // useEffect(() => {
@@ -58,7 +59,6 @@ const Col = React.forwardRef(({
     
     const mouseDownHandler = (e, cord) => {
         if (!selectable) return;
-        setSelected(true);
         setSelectColDraging(true);
         setMouseDownColCord(cord);
     }
@@ -72,6 +72,16 @@ const Col = React.forwardRef(({
         if (!selectable) return;
         setSelectColDraging(false);
         setMouseUpColCord(cord);
+    }
+
+    const clickHandler = (cord) => {
+        if (!selectable) {
+            setSelected(false);
+            setSelectedCol(null);
+            return;
+        };
+        setSelected(true);
+        setSelectedCol({x: x, y: y, id: id, style: style});
     }
 
     const debounceMouseUpHandler = debounce(mouseMoveHandler, 100);
@@ -110,9 +120,11 @@ const Col = React.forwardRef(({
             ref={ref}
             x={x}
             y={y}
+            id={id}
             onMouseDown={(e)=>mouseDownHandler(e, [x, y])}
             onMouseUp={(e)=>mouseUpHandler(e, [x, y])}
             onMouseMove={(e)=>debounceMouseUpHandler(e, [x, y])}
+            onClick={()=>clickHandler([x,y])}
             selected={selected}
             className={`tableCol ${isHightlighted() ? 'hightlighted' : ''}`}
         >

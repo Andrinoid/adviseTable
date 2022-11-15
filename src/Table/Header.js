@@ -29,12 +29,16 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
     
     return (
         <RowElm style={{ height: colHeight }}>
-            <Col style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }} selectable={false}></Col>
+            <Col 
+                style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }} 
+                selectable={false}
+            ></Col>
             <ResizablelCol 
                 style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth}}
                 onResize={onLabelColResize}
                 viewportHeight={viewportHeight}
                 type="label"
+                selectable={false}
             >
             </ResizablelCol>
 
@@ -42,7 +46,11 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
             {monthRange.map((month, index) => {
                 const left = leftOffset + index * colWidth;
                 return (
-                    <Col key={index} style={{ width: colWidth, height: colHeight, top: 0, left: left }}><Label>{month}</Label></Col>
+                    <Col 
+                        key={index} 
+                        selectable={false}
+                        style={{ width: colWidth, height: colHeight, top: 0, left: left }}
+                    ><Label>{month}</Label></Col>
                 )
             })}
 
@@ -53,6 +61,7 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
                 direction="left"
                 viewportHeight={viewportHeight}
                 type="total"
+                selectable={false}
             >
                 <Label>Total</Label>
             </ResizablelCol>
