@@ -16,7 +16,8 @@ const Sub = styled.div`
 
 `
 
-const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, handleProps, mode, hideTotal = false }) => {
+const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, handleProps, mode, Handle, hideTotal = false }) => {
+
 
     const [expanded, setExpanded] = useState(false);
 
@@ -54,8 +55,10 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
     let rowNumber = index;
     // count the number of cols to determine the id the total col
     let counter = 1;
+
     return (
-        <>
+        <>  
+
             {/* //Do we need the height here? */}
             <RowElm style={{ height: colHeight }} >
                 {/*Technically toolbox is not a col use another component*/}
@@ -63,7 +66,7 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
                     selectable={false}
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
                 >
-                    {mode === "edit" && <div {...handleProps}>...</div>}
+                    {mode === "edit" && <Handle />}
                     <div onClick={expand}>+</div>
                 </Col>
 
