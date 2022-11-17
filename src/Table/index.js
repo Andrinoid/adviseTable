@@ -2,6 +2,7 @@
 import React, { useState, useRef, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useSyncScroller } from "./useSyncScroller";
 
 import Header from './Header';
 import Row from './Row';
@@ -14,12 +15,23 @@ const Wrapper = styled.div`
 width: 100%;
 padding: 20px;
 box-sizing: border-box;
+
 .viewPort {
     width: 100%;
     overflow: hidden;
     overflow-x: auto;
     position: relative;
     min-width: 0;
+    flex-direction: row;
+display: flex;
+flex: 1 1 auto;
+.pinnedRightContainer {
+    background: #f5f5f5;
+    width: 150px;
+    max-width: 150px;
+    min-width: 150px;
+    direction: ltr;
+}
 }
 .sub {
     position: absolute;
@@ -32,24 +44,8 @@ box-sizing: border-box;
 }
 .container {
     position: relative;
-    // background: lightblue;
-    // border: 2px solid lightblue;
 }
 `;
-
-const ToolBox = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: ${props => props.width}px;
-    background: green;
-`;
-
-
-//TODO
-// hide total option
-// dragability on table
 
 const Table = ({ mode }, ref) => {
 
@@ -79,6 +75,9 @@ const Table = ({ mode }, ref) => {
 
     const [selectedCol, setSelectedCol] = useState(null);
 
+    const headerScrollRef = useSyncScroller('hScrollingContainer');
+    const viewportScrollRef = useSyncScroller('hScrollingContainer');
+
     useEffect(() => {
         console.log('biggestDataCellWidth', biggestDataCellWidth);
     }, [biggestDataCellWidth]);
@@ -91,9 +90,9 @@ const Table = ({ mode }, ref) => {
 
       }));
 
-    useEffect(()=> {
-        console.log('selectColDraging', selectColDraging);
-    }, [selectColDraging])
+    // useEffect(()=> {
+    //     console.log('selectColDraging', selectColDraging);
+    // }, [selectColDraging])
 
     useEffect(() => {
         setColWidth(calcColWidth);
@@ -168,10 +167,13 @@ const Table = ({ mode }, ref) => {
             selectedCol,
         }}>
         <Wrapper ref={ref}>
-            <div className='viewPort' ref={viewportRef}>
-                <div className='container' style={{ width: totalWidth }}>
+                   
+
 
                     <Header
+                    width={viewportWidth}
+                    ref={headerScrollRef}
+                    className="scrollable"
                         colHeight={headerHeight}
                         colWidth={colWidth}
                         labelColWidth={labelColWidth}
@@ -185,6 +187,11 @@ const Table = ({ mode }, ref) => {
                         onTotalColResize={onTotalColResize}
                         onTableResize={onTableResize}
                     />
+            <div className='viewPort scrollable' ref={(el)=> {viewportRef.current=el; viewportScrollRef.current=el;}}>
+                     
+                    <div 
+                        className='container' 
+                        style={{ width: totalWidth }}>
 
                     <DragDropContext onDragEnd={handleOnDragEnd}>
                         <Droppable droppableId="characters" >
@@ -230,24 +237,12 @@ const Table = ({ mode }, ref) => {
                     
 
                 </div>
+                    
+                    {selectedCol && <SelectedCol width={colWidth} height={colHeight} offsetLeft={toolBoxWidth} offsetTop={0} />}
 
-                    {selectedCol && <SelectedCol width={colWidth} height={colHeight} offsetLeft={toolBoxWidth} offsetTop={headerHeight} />}
             </div>
-            <div>
-                <p>mouseDownCol:{mouseDownColCord}</p>
-                <p>mouseMoveCol:{mouseMoveColCord}</p>
-                <p>mouseUpCol:{mouseUpColCord}</p>
-            </div>
-            <p>Todo</p>
-            <ul>
-                <li>Control styles</li>
-                <li>expandable cols</li>
-                <li>Hightlight rows</li>
-                <li>Hide total option</li>
-                <li>Min and max size on cols</li>
-                <li>overflow ellips on label cols</li>
-                <li>Decouple Row and Col</li>
-            </ul>
+           
+         
         </Wrapper>
         </TableContext.Provider>
     )

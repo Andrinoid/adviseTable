@@ -7,9 +7,12 @@ import ResizableTable from './ResizableTable';
 import Col from './Col';
 
 const RowElm = styled.div`
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1;
     white-space: nowrap;
     width: 100%;
+    overflow: hidden;
 `;
 
 const Label = styled.div`
@@ -17,7 +20,11 @@ const Label = styled.div`
     font-weight: bold;
 `;
 
-const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight, selectedMonths, totalMonths, totalWidth, viewportHeight, onLabelColResize, onTotalColResize, onTableResize}) => {
+const Header = React.forwardRef(({
+    colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight, selectedMonths, totalMonths, totalWidth, viewportHeight, onLabelColResize, onTotalColResize, onTableResize
+}, ref) => {
+
+
     
     //map trhough months and pick values from system
     let months = mo.map((m) => m.system);
@@ -28,7 +35,7 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
 
     
     return (
-        <RowElm style={{ height: colHeight }}>
+        <RowElm style={{ height: colHeight }} ref={ref}>
             <Col 
                 style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }} 
                 selectable={false}
@@ -70,7 +77,7 @@ const Header = ({colWidth, toolBoxWidth, labelColWidth, totalColWidth, colHeight
 
         </RowElm>
     )
-}
+});
 
 
 export default Header;

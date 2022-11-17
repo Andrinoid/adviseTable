@@ -24,6 +24,18 @@ function App() {
       </div>
       <p>{mode}</p>
       <Table mode={mode} ref={tableRef} />
+
+      <p>Todo</p>
+            <ul>
+                <li>Control styles</li>
+                <li>expandable cols</li>
+                <li>Hightlight rows</li>
+                <li>Hide total option</li>
+                <li>Min and max size on cols</li>
+                <li>overflow ellips on label cols</li>
+                <li>Decouple Row and Col</li>
+                <li>pinned columns</li>
+            </ul>
     </div>
   );
 }

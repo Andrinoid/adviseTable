@@ -1,5 +1,5 @@
 //jsx component
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { default as mo } from "../data/months";
 import { numberToLetter } from './utils';
@@ -8,11 +8,17 @@ import Col from './Col';
 
 const RowElm = styled.div`
     position: relative;
-    white-space: nowrap;
-    width: 100%;
 `;
 
+const Sub = styled.div`
+    background: #f5f5f5;
+    height: 310px;
+
+`
+
 const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, handleProps, mode, hideTotal = false }) => {
+
+    const [expanded, setExpanded] = useState(false);
 
     let months = mo.map((m) => m.system);
     // select range of months based on selectedMonths
@@ -39,59 +45,73 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
         }
     }
 
+    const expand = () => {
+        setExpanded(!expanded);
+    }
+
     const leftOffset = toolBoxWidth + labelColWidth;
     // initial row number is one 
     let rowNumber = index;
     // count the number of cols to determine the id the total col
     let counter = 1;
     return (
-        //Do we need the height here?
-        <RowElm style={{ height: colHeight }} >
-            {/*Technically toolbox is not a col use another component*/}
-            <Col 
-                selectable={false} 
-                style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
-            >
-                {mode==="edit" && <div {...handleProps}>...</div>}
-                
-            </Col>
-            
-            <Col 
-                type="label"
-                id={`x${rowNumber}y0`}
-                x={rowNumber}
-                y={0}
-                horizontalAlign="left"
-                style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}>
+        <>
+            {/* //Do we need the height here? */}
+            <RowElm style={{ height: colHeight }} >
+                {/*Technically toolbox is not a col use another component*/}
+                <Col
+                    selectable={false}
+                    style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
+                >
+                    {mode === "edit" && <div {...handleProps}>...</div>}
+                    <div onClick={expand}>+</div>
+                </Col>
+
+                <Col
+                    type="label"
+                    id={`x${rowNumber}y0`}
+                    x={rowNumber}
+                    y={0}
+                    horizontalAlign="left"
+                    style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}>
                     {row.name}
-            </Col>
-            {/* map through the months and return cols */}
-            {monthRange.map((month, i) => {
-                const left = leftOffset + i * colWidth;
-                counter++;
-                return (
-                    <Col 
-                        key={i} 
-                        type="data"
-                        id={`x${rowNumber}y${i+1}`}
-                        x={rowNumber}
-                        y={i+1}
-                        style={{ width: colWidth, height: colHeight, top: 0, left: left }}
-                    >
-                        {row[month]}
-                    </Col>
-                )
-            })}
-            <Col 
-                type="total"
-                id={`x${rowNumber}y${counter}`}
-                x={rowNumber}
-                y={counter}
-                style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
-            >
-                {getTotal()}
-            </Col>
-        </RowElm>
+                </Col>
+                {/* map through the months and return cols */}
+                {monthRange.map((month, i) => {
+                    const left = leftOffset + i * colWidth;
+                    counter++;
+                    return (
+                        <Col
+                            key={i}
+                            type="data"
+                            id={`x${rowNumber}y${i + 1}`}
+                            x={rowNumber}
+                            y={i + 1}
+                            style={{ width: colWidth, height: colHeight, top: 0, left: left }}
+                        >
+                            {row[month]}
+                        </Col>
+                    )
+                })}
+                <Col
+                    type="total"
+                    id={`x${rowNumber}y${counter}`}
+                    x={rowNumber}
+                    y={counter}
+                    style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
+                >
+                    {getTotal()}
+                </Col>
+
+
+            </RowElm>
+
+            {expanded &&
+                <Sub>
+                    expanded Row
+                </Sub>
+            }
+        </>
     )
 }
 
