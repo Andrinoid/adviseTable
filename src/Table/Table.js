@@ -77,16 +77,10 @@ const Table = ({ mode, months, children }, ref) => {
     const headerScrollRef = useSyncScroller('hScrollingContainer');
     const viewportScrollRef = useSyncScroller('hScrollingContainer');
 
-    // useEffect(() => {
-    //     console.log('biggestDataCellWidth', biggestDataCellWidth);
-    // }, [biggestDataCellWidth]);
-
     useImperativeHandle(ref, () => ({
-
         autoAdjust() {
             autoAdjustDataColWidth();
         }
-
     }));
 
     useEffect(() => {
@@ -155,8 +149,6 @@ const Table = ({ mode, months, children }, ref) => {
         }}>
             <Wrapper ref={ref}>
 
-
-
                 <Header
                     width={viewportWidth}
                     ref={headerScrollRef}
@@ -191,7 +183,6 @@ const Table = ({ mode, months, children }, ref) => {
                                 topOffset: headerHeight,
                                 selectedMonths: selectedMonths,
                                 totalMonths: totalMonths,
-                                // handleProps: {...provided.dragHandleProps},
                                 mode: mode
                             }
                         })}

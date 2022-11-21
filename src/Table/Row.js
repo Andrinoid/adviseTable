@@ -15,46 +15,56 @@ const Sub = styled.div`
     height: 310px;
 
 `
-
-const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, handleProps, mode, Handle, hideTotal = false }) => {
-
+const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, handleProps, mode, Handle, children, hideTotal = false }) => {
 
     const [expanded, setExpanded] = useState(false);
-
-    let months = mo.map((m) => m.system);
-    // select range of months based on selectedMonths
-    let monthRange = months.slice(selectedMonths[0] - 1, selectedMonths[1]);
     // calculate the top position of the row
     const topPosition = (index * 50) + topOffset;
 
-    const getTotal = () => {
-        let mappings = row.totals_mappings || [];
-        let mapping = mappings.find((mapping) => {
-            return mapping.begin == selectedMonths[0] && mapping.end == selectedMonths[1];
-        });
-
-        // needs more work
-        if (mapping) {
-            if (!hideTotal) {
-                return mapping.total;
-            }
-            // else {
-            //     return row[selectedMonths[selectedMonths.length - 1].system];
-            // }
-        } else {
-            return null;
-        }
-    }
-
-    const expand = () => {
-        setExpanded(!expanded);
-    }
-
-    const leftOffset = toolBoxWidth + labelColWidth;
+    const leftOffset = toolBoxWidth;
     // initial row number is one 
     let rowNumber = index;
     // count the number of cols to determine the id the total col
-    let counter = 1;
+    let counter = 0;
+    
+    const expand = () => {
+        setExpanded(!expanded);
+    }
+    
+    const childrenWithProps = React.Children.map(children, (child, i) => {
+
+        let length = children[1].length;
+        let type;
+        let left;
+        let width;
+        if (i == 0) {
+            type = 'first';
+            left = leftOffset;
+            width = labelColWidth;
+        
+        } else if (i == length +1) {
+            type = 'last';
+            left = leftOffset + (totalMonths * colWidth) + labelColWidth;   
+            width = totalColWidth;
+        } 
+        else {
+            type = 'middle';
+            left =  leftOffset + labelColWidth + ((i - 1) * colWidth);
+            width = colWidth;
+        }
+
+        if (React.isValidElement(child)) {
+            return React.cloneElement(child, { 
+                id:`x${rowNumber}y${i + 1}`,
+                x: rowNumber,
+                y: 0,
+                type,
+                style: { width: width, height: colHeight, top: 0, left: left }
+            });
+        }
+        counter++;
+        return child;
+    });
 
     return (
         <>  
@@ -65,48 +75,13 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
                 <Col
                     selectable={false}
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
-                >
+                    >
                     {mode === "edit" && <Handle />}
                     <div onClick={expand}>+</div>
                 </Col>
 
-                <Col
-                    type="label"
-                    id={`x${rowNumber}y0`}
-                    x={rowNumber}
-                    y={0}
-                    horizontalAlign="left"
-                    style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}>
-                    {row.name}
-                </Col>
-                {/* map through the months and return cols */}
-                {monthRange.map((month, i) => {
-                    const left = leftOffset + i * colWidth;
-                    counter++;
-                    return (
-                        <Col
-                            key={i}
-                            type="data"
-                            id={`x${rowNumber}y${i + 1}`}
-                            x={rowNumber}
-                            y={i + 1}
-                            style={{ width: colWidth, height: colHeight, top: 0, left: left }}
-                        >
-                            {row[month]}
-                        </Col>
-                    )
-                })}
-                <Col
-                    type="total"
-                    id={`x${rowNumber}y${counter}`}
-                    x={rowNumber}
-                    y={counter}
-                    style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
-                >
-                    {getTotal()}
-                </Col>
-
-
+                {childrenWithProps}
+                
             </RowElm>
 
             {expanded &&

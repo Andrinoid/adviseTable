@@ -39,17 +39,17 @@ const Cell = ({ children, parentWidth, parentType }) => {
     }
     useEffect(() => {
         // Find the widest cell so table can be adjusted to fit
-        if (parentType === 'data') {
+        if (parentType === 'middle') {
             if (getElementWidth(ref.current) > biggestDataCellWidth) {
                 setBiggestDataCellWidth(getElementWidth(ref.current));
             }
         }
-        if(parentType === 'label') {
+        if(parentType === 'first') {
             if (getElementWidth(ref.current) > biggestLabelCellWidth) {
                 setBiggestLabelCellWidth(getElementWidth(ref.current));
             }
         }
-        if(parentType === 'total') {
+        if(parentType === 'last') {
             if (getElementWidth(ref.current) > biggestTotalCellWidth) {
                 setBiggestTotalCellWidth(getElementWidth(ref.current));
             }       
@@ -70,13 +70,13 @@ const Cell = ({ children, parentWidth, parentType }) => {
 
     useEffect(() => {
         if (isOverflowing) {
-            if (parentType === 'label') {
+            if (parentType === 'first') {
                 // setlabelColWidth(labelColWidth+ 20)
             }
-            if (parentType === 'data') {
+            if (parentType === 'middle') {
                 // setTotalWidth(totalWidth + 20);
             }
-            if (parentType === 'total') {
+            if (parentType === 'last') {
                 // setTotalColWidth(totalColWidth + 20);
             }
         }

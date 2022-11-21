@@ -2,19 +2,19 @@ import React, { useState, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import './App.css';
-import { Table, Row } from './Table';
+import { Table, Row, Col } from './Table';
 import { view, ui_prefs } from './data/example2';
-
+import { default as mo } from './data/months';
 
 function App() {
 
   const [mode, setMode] = useState('static');
-  const [autoAdjustment, setAutoAdjustment] = useState(false);
   const tableRef = useRef(null);
 
-  // useEffect(() => {
-  //   console.log('tableRef', tableRef.current);
-  // }, [tableRef]);
+
+  let months = mo.map((m) => m.system);
+  // select range of months based on selectedMonths
+  let monthRange = months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1]);
 
 
   const handleOnDragEnd = (result) => {
@@ -24,6 +24,25 @@ function App() {
     // items.splice(result.destination.index, 0, reorderedItem);
     // updateview(items);
   }
+
+  const getTotal = () => {
+    // let mappings = row.totals_mappings || [];
+    // let mapping = mappings.find((mapping) => {
+    //     return mapping.begin == selectedMonths[0] && mapping.end == selectedMonths[1];
+    // });
+
+    // // needs more work
+    // if (mapping) {
+    //     if (!hideTotal) {
+    //         return mapping.total;
+    //     }
+    //     // else {
+    //     //     return row[selectedMonths[selectedMonths.length - 1].system];
+    //     // }
+    // } else {
+    //     return null;
+    // }
+}
 
 
 
@@ -42,11 +61,7 @@ function App() {
       <p>{mode}</p>
 
       <Table mode={mode} ref={tableRef} months={ui_prefs.months}>
-        {(tableProvided) => 
-
-          (
-
-
+        {(tableProvided) => (
 
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="characters" >
@@ -64,14 +79,26 @@ function App() {
                           {(provided) => (
                             <div ref={provided.innerRef} {...provided.draggableProps}>
                               <Row
-                              row={row}
-                              key={i}
-                              index={i}
-                              Handle={()=> (<div {...provided.dragHandleProps}>...</div>)}
-                              {...tableProvided.rowProps}
-                       
-                              />
-                             </div>
+                                row={row}
+                                key={i}
+                                index={i}
+                                Handle={() => (<div {...provided.dragHandleProps}>...</div>)}
+                                {...tableProvided.rowProps}
+                              >
+
+                                <Col horizontalAlign="left">
+                                  {row.name}
+                                </Col>
+
+                                {monthRange.map((month, i) => <Col key={i}>{row[month]}</Col> )}
+
+                                <Col>
+                                  {/* {getTotal(row)}  */}
+                                  34567
+                                </Col>
+
+                              </Row>
+                            </div>
                           )}
                         </Draggable>
                       )
