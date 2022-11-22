@@ -1,10 +1,7 @@
 //jsx component
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { default as mo } from "../data/months";
-import { numberToLetter } from './utils';
 import Col from './Col';
-
 
 const RowElm = styled.div`
     position: relative;
@@ -15,7 +12,7 @@ const Sub = styled.div`
     height: 310px;
 
 `
-const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, handleProps, mode, Handle, children, hideTotal = false }) => {
+const Row = ({ index, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, mode, Handle, children  }) => {
 
     const [expanded, setExpanded] = useState(false);
     // calculate the top position of the row
@@ -57,7 +54,7 @@ const Row = ({ row, index, selectedMonths, topOffset, colWidth, colHeight, label
             return React.cloneElement(child, { 
                 id:`x${rowNumber}y${i + 1}`,
                 x: rowNumber,
-                y: 0,
+                y: i,
                 type,
                 style: { width: width, height: colHeight, top: 0, left: left }
             });

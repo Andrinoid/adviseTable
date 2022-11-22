@@ -45,16 +45,6 @@ const Col = React.forwardRef(({
         setSelectedCol,
     } = useContext(TableContext); 
     const [selected, setSelected] = useState(false);
-    
-    // const isFirstRun = useRef(true);
-    // useEffect(() => {
-    //     if (isFirstRun.current) {
-    //         isFirstRun.current = false;
-    //         return;
-    //     }
-    //     // document.addEventListener('mousemove', mouseMoveHandler);
-    //     // document.addEventListener('mouseup', mouseUpHandler);
-    // },[selected]);
 
     
     const mouseDownHandler = (e, cord) => {

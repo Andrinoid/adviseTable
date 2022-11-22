@@ -68,19 +68,19 @@ const Cell = ({ children, parentWidth, parentType }) => {
 
     }, [parentWidth, cellWidth, totalWidth]);
 
-    useEffect(() => {
-        if (isOverflowing) {
-            if (parentType === 'first') {
-                // setlabelColWidth(labelColWidth+ 20)
-            }
-            if (parentType === 'middle') {
-                // setTotalWidth(totalWidth + 20);
-            }
-            if (parentType === 'last') {
-                // setTotalColWidth(totalColWidth + 20);
-            }
-        }
-    }, [isOverflowing, totalWidth]);
+    // useEffect(() => {
+    //     if (isOverflowing) {
+    //         if (parentType === 'first') {
+    //             // setlabelColWidth(labelColWidth+ 20)
+    //         }
+    //         if (parentType === 'middle') {
+    //             // setTotalWidth(totalWidth + 20);
+    //         }
+    //         if (parentType === 'last') {
+    //             // setTotalColWidth(totalColWidth + 20);
+    //         }
+    //     }
+    // }, [isOverflowing, totalWidth]);
 
 
 
