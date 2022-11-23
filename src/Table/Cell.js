@@ -46,7 +46,6 @@ const Cell = ({ children, parentWidth, parentType }) => {
         }
         if(parentType === 'first') {
             if (getElementWidth(ref.current) > biggestLabelCellWidth) {
-                console.log('first will be messured', getElementWidth(ref.current));
                 setBiggestLabelCellWidth(getElementWidth(ref.current));
             }
         }
