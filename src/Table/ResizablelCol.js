@@ -98,10 +98,10 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
     };
 
     const doubleClickHandler = () => {
-        if(type === 'label') {
+        if(type === 'first') {
             autoAdjustLabelColWidth();
         }
-        if(type === 'total') {
+        if(type === 'last') {
             autoAdjustTotalColWidth();
         }
     };

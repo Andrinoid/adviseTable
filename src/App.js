@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import './App.css';
 import { Table, Row, Col } from './Table';
-import { view, ui_prefs } from './data/example2';
+import { view, ui_prefs } from './data';
 import { default as mo } from './data/months';
 
 function App() {
@@ -29,20 +29,20 @@ function App() {
 
 
 const header = [
-  { title: 'Label' },
-  { title: 'Jan' },
-  { title: 'Feb' },
-  { title: 'Mar' },
-  { title: 'Apr' },
-  { title: 'May' },
-  { title: 'Jun' },
-  { title: 'Jul' },
-  { title: 'Aug' },
-  { title: 'Sep' },
-  { title: 'Oct' },
-  { title: 'Nov' },
-  { title: 'Dec' },
-  { title: 'Total' },
+  { title: 'Label', key: 'label' },
+  { title: 'Jan', key: 'jan' },
+  { title: 'Feb', key: 'feb' },
+  { title: 'Mar', key: 'mar' },
+  { title: 'Apr', key: 'apr' },
+  { title: 'May', key: 'may' },
+  { title: 'Jun', key: 'jun' },
+  { title: 'Jul', key: 'jul' },
+  { title: 'Aug', key: 'aug' },
+  { title: 'Sep', key: 'sep' },
+  { title: 'Oct', key: 'oct' },
+  { title: 'Nov', key: 'nov' },
+  { title: 'Dec', key: 'dec' },
+  { title: 'Total', key: 'total' },
 ];
 
   return (
@@ -109,8 +109,10 @@ const header = [
       
       <p>problems</p>
       <ul>
-        <li>Total column not detected on smaller table</li>
+        <li>table resizer is overflowing</li>
+        <li>rename label and total through all components</li>
       </ul>
+     
       <div>
         <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
       </div>
@@ -151,10 +153,8 @@ const header = [
         <li>Control styles</li>
         <li>expandable cols</li>
         <li>Hightlight rows</li>
-        <li>Hide total option</li>
         <li>Min and max size on cols</li>
         <li>overflow ellips on label cols</li>
-        <li>Decouple Row and Col</li>
         <li>pinned columns</li>
       </ul>
     </div>

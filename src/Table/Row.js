@@ -42,7 +42,6 @@ const Row = ({
     }
 
     const childrenWithProps = React.Children.map(children, (child, i) => {
-        console.log(children);
 
         let type;
         let left;
@@ -52,19 +51,16 @@ const Row = ({
             type = 'first';
             left = leftOffset;
             width = labelColWidth;
-            console.log('first');
 
         } else if (i == numberOfDataCols + 1) { // plus one becuse the last col is not a dataCol e.g. total
             type = 'last';
             left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
             width = totalColWidth;
-            console.log('last');
         }
         else {
             type = 'middle';
             left = leftOffset + labelColWidth + ((i - 1) * colWidth);
             width = colWidth;
-            console.log('middle');
         }
 
         if (React.isValidElement(child)) {

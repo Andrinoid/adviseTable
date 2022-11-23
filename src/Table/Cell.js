@@ -16,11 +16,11 @@ const Cell = ({ children, parentWidth, parentType }) => {
     const [cellWidth, setCellWidth] = useState(null)
     const {
         totalWidth,
-        setTotalWidth,
-        labelColWidth,
-        setlabelColWidth,
-        totalColWidth,
-        setTotalColWidth,
+        // setTotalWidth,
+        // labelColWidth,
+        // setlabelColWidth,
+        // totalColWidth,
+        // setTotalColWidth,
         setBiggestDataCellWidth,
         biggestDataCellWidth,
         setBiggestLabelCellWidth,
@@ -46,6 +46,7 @@ const Cell = ({ children, parentWidth, parentType }) => {
         }
         if(parentType === 'first') {
             if (getElementWidth(ref.current) > biggestLabelCellWidth) {
+                console.log('first will be messured', getElementWidth(ref.current));
                 setBiggestLabelCellWidth(getElementWidth(ref.current));
             }
         }
@@ -85,7 +86,7 @@ const Cell = ({ children, parentWidth, parentType }) => {
 
 
     return (
-        <SpaceAround ref={ref} isOverflowing={isOverflowing} onClick={()=> console.log(getElementWidth(ref.current))}>
+        <SpaceAround ref={ref} isOverflowing={isOverflowing}>
             {children}
         </SpaceAround>
     );
