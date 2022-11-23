@@ -44,14 +44,14 @@ flex: 1 1 auto;
 }
 `;
 
-const Table = ({ mode, header, children }, ref) => {
+const Table = ({ mode, headerData, children }, ref) => {
 
     const viewportRef = useRef(null);
 
     const [viewportWidth, setViewportWidth] = useState(0);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [labelColWidth, setlabelColWidth] = useState(150);
-    const [numberOfDataCols, setNumberOfDataCols] = useState(header.length-2);
+    const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length-2);
     const [headerHeight, setHeaderHeight] = useState(35);
     const [colHeight, setColHeight] = useState(50);
     // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
@@ -71,8 +71,10 @@ const Table = ({ mode, header, children }, ref) => {
 
     const [selectedCol, setSelectedCol] = useState(null);
 
-    const headerScrollRef = useSyncScroller('hScrollingContainer');
-    const viewportScrollRef = useSyncScroller('hScrollingContainer');
+    // create unique id for each table
+    const tableId = Math.random().toString(36).substr(2, 9);
+    const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
+    const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
 
     useImperativeHandle(ref, () => ({
         autoAdjust() {
@@ -159,7 +161,8 @@ const Table = ({ mode, header, children }, ref) => {
                     onLabelColResize={onLabelColResize}
                     onTotalColResize={onTotalColResize}
                     onTableResize={onTableResize}
-                    data={header}
+                    numberOfDataCols={numberOfDataCols}
+                    data={headerData}
                 />
                 <div className='viewPort scrollable' ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
                     <div
@@ -174,6 +177,7 @@ const Table = ({ mode, header, children }, ref) => {
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
+                                headerData: headerData,
                                 mode: mode
                             }
                         })}

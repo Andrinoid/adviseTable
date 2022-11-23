@@ -46,20 +46,24 @@ const Row = ({
         let type;
         let left;
         let width;
+
         if (i == 0) {
             type = 'first';
             left = leftOffset;
             width = labelColWidth;
+            console.log('first');
 
         } else if (i == length + 1) {
             type = 'last';
             left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
             width = totalColWidth;
+            console.log('last');
         }
         else {
             type = 'middle';
             left = leftOffset + labelColWidth + ((i - 1) * colWidth);
             width = colWidth;
+            console.log('middle');
         }
 
         if (React.isValidElement(child)) {
@@ -78,13 +82,13 @@ const Row = ({
     return (
         <>
             {/* We need the height here because all cols are position absolute
-                Having cols as position absolute has no purpose yet, they could be inline block of flex ¯\_(ツ)_/¯ */}
+                Having cols as position absolute has no purpose yet, they could be inline block of ¯\_(ツ)_/¯ */}
             <RowElm style={{ height: colHeight }} >
                 <Col
                     selectable={false}
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
                 >
-                    {mode === "edit" && <Handle />}
+                    {mode === "edit" && Handle && <Handle />}
                     <div onClick={expand}>+</div>
                 </Col>
 

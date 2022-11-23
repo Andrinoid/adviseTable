@@ -10,6 +10,8 @@ function App() {
 
   const [mode, setMode] = useState('static');
   const tableRef = useRef(null);
+  const tableRef2 = useRef(null);
+  const tableRef3 = useRef(null);
 
 
   let months = mo.map((m) => m.system);
@@ -43,10 +45,6 @@ const header = [
   { title: 'Total' },
 ];
 
-
-
-
-
   return (
     <div className="App">
       <div>
@@ -58,7 +56,7 @@ const header = [
       </div>
       <p>{mode}</p>
 
-      <Table mode={mode} ref={tableRef} header={header}>
+      {/* <Table mode={mode} ref={tableRef} headerData={header}>
         {(tableProvided) => (
 
           <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -77,7 +75,6 @@ const header = [
                           {(provided) => (
                             <div ref={provided.innerRef} {...provided.draggableProps}>
                               <Row
-                                row={row}
                                 key={i}
                                 index={i}
                                 Handle={() => (<div {...provided.dragHandleProps}>...</div>)}
@@ -107,7 +104,45 @@ const header = [
             </Droppable>
           </DragDropContext>
         )}
+      </Table> */}
+      <hr/>
+      
+      <p>problems</p>
+      <ul>
+        <li>Total column not detected on smaller table</li>
+      </ul>
+      <div>
+        <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
+      </div>
+      <Table mode={mode} ref={tableRef3} headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}>
+        {(tableProvided) => (
+          <div>
+          <Row  {...tableProvided.rowProps} index={0}>
+            <Col horizontalAlign="left">
+              foo
+            </Col>
+            <Col>
+              bar
+            </Col>
+            <Col>
+              baz
+            </Col>
+          </Row>
+          <Row  {...tableProvided.rowProps} index={1}>
+          <Col horizontalAlign="left">
+            foo
+          </Col>
+          <Col>
+            bar
+          </Col>
+          <Col>
+            baz
+          </Col>
+        </Row>
+        </div>
+        )}
       </Table>
+        
 
 
 

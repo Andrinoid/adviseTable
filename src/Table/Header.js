@@ -30,11 +30,12 @@ const Header = React.forwardRef(({
     onLabelColResize,
     onTotalColResize,
     onTableResize,
+    numberOfDataCols,
     data,
 }, ref) => {
 
     const leftOffset = toolBoxWidth + labelColWidth;
-    const numberOfDataCols = data.length - 2;
+    // const numberOfDataCols = data.length - 2;
     return (
         <RowElm style={{ height: colHeight }} ref={ref}>
             <Col
@@ -53,14 +54,16 @@ const Header = React.forwardRef(({
                                 style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
                                 onResize={onLabelColResize}
                                 viewportHeight={viewportHeight}
-                                type="label"
+                                type="first"
                                 selectable={false}
                             >
+                                <Label>{item.title}</Label>
                             </ResizablelCol>
                         }
                         {index > 0 && index < data.length - 1 &&
                             <Col
                                 selectable={false}
+                                type="middle"
                                 style={{ width: colWidth, height: colHeight, top: 0, left: left }}
                             ><Label>{item.title}</Label></Col>
                         }
@@ -70,10 +73,10 @@ const Header = React.forwardRef(({
                                 onResize={onTotalColResize}
                                 direction="left"
                                 viewportHeight={viewportHeight}
-                                type="total"
+                                type="last"
                                 selectable={false}
                             >
-                                <Label>Total</Label>
+                                <Label>{item.title}</Label>
                             </ResizablelCol>
                         }
                     </React.Fragment>
