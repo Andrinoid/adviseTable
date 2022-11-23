@@ -12,7 +12,19 @@ const Sub = styled.div`
     height: 310px;
 
 `
-const Row = ({ index, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidth, totalColWidth, totalMonths, mode, Handle, children  }) => {
+const Row = ({
+    index,
+    topOffset,
+    colWidth,
+    colHeight,
+    labelColWidth,
+    toolBoxWidth,
+    totalColWidth,
+    numberOfDataCols,
+    mode,
+    Handle,
+    children
+}) => {
 
     const [expanded, setExpanded] = useState(false);
     // calculate the top position of the row
@@ -23,11 +35,11 @@ const Row = ({ index, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidt
     let rowNumber = index;
     // count the number of cols to determine the id the total col
     let counter = 0;
-    
+
     const expand = () => {
         setExpanded(!expanded);
     }
-    
+
     const childrenWithProps = React.Children.map(children, (child, i) => {
 
         let length = children[1].length;
@@ -38,21 +50,21 @@ const Row = ({ index, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidt
             type = 'first';
             left = leftOffset;
             width = labelColWidth;
-        
-        } else if (i == length +1) {
+
+        } else if (i == length + 1) {
             type = 'last';
-            left = leftOffset + (totalMonths * colWidth) + labelColWidth;   
+            left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
             width = totalColWidth;
-        } 
+        }
         else {
             type = 'middle';
-            left =  leftOffset + labelColWidth + ((i - 1) * colWidth);
+            left = leftOffset + labelColWidth + ((i - 1) * colWidth);
             width = colWidth;
         }
 
         if (React.isValidElement(child)) {
-            return React.cloneElement(child, { 
-                id:`x${rowNumber}y${i + 1}`,
+            return React.cloneElement(child, {
+                id: `x${rowNumber}y${i + 1}`,
                 x: rowNumber,
                 y: i,
                 type,
@@ -64,21 +76,20 @@ const Row = ({ index, topOffset, colWidth, colHeight, labelColWidth, toolBoxWidt
     });
 
     return (
-        <>  
-
-            {/* //Do we need the height here? */}
+        <>
+            {/* We need the height here because all cols are position absolute
+                Having cols as position absolute has no purpose yet, they could be inline block of flex ¯\_(ツ)_/¯ */}
             <RowElm style={{ height: colHeight }} >
-                {/*Technically toolbox is not a col use another component*/}
                 <Col
                     selectable={false}
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
-                    >
+                >
                     {mode === "edit" && <Handle />}
                     <div onClick={expand}>+</div>
                 </Col>
 
                 {childrenWithProps}
-                
+
             </RowElm>
 
             {expanded &&

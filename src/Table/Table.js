@@ -1,5 +1,5 @@
 //jsx component
-import React, { useState, useRef, useLayoutEffect, useEffect, useImperativeHandle, Children } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 
 import { useSyncScroller } from "./useSyncScroller";
@@ -7,8 +7,6 @@ import { useSyncScroller } from "./useSyncScroller";
 import Header from './Header';
 import { TableContext } from './context';
 import SelectedCol from './SelectedCol';
-//DUMMY DATA
-
 
 const Wrapper = styled.div`
 width: 100%;
@@ -53,8 +51,6 @@ const Table = ({ mode, header, children }, ref) => {
     const [viewportWidth, setViewportWidth] = useState(0);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [labelColWidth, setlabelColWidth] = useState(150);
-    // const [selectedMonths, setSelectedMonths] = useState(months);
-    // const [totalMonths, setTotalMonths] = useState(selectedMonths[1] - selectedMonths[0] + 1);
     const [numberOfDataCols, setNumberOfDataCols] = useState(header.length-2);
     const [headerHeight, setHeaderHeight] = useState(35);
     const [colHeight, setColHeight] = useState(50);
@@ -149,7 +145,6 @@ const Table = ({ mode, header, children }, ref) => {
             selectedCol,
         }}>
             <Wrapper ref={ref}>
-
                 <Header
                     width={viewportWidth}
                     ref={headerScrollRef}
@@ -159,8 +154,6 @@ const Table = ({ mode, header, children }, ref) => {
                     labelColWidth={labelColWidth}
                     toolBoxWidth={toolBoxWidth}
                     totalColWidth={totalColWidth}
-                    // selectedMonths={selectedMonths}
-                    totalMonths={numberOfDataCols}
                     totalWidth={totalWidth}
                     viewportHeight={viewportHeight}
                     onLabelColResize={onLabelColResize}
@@ -169,12 +162,9 @@ const Table = ({ mode, header, children }, ref) => {
                     data={header}
                 />
                 <div className='viewPort scrollable' ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
-
                     <div
                         className='container'
                         style={{ width: totalWidth }}>
-
-
                         {children({
                             rowProps: {
                                 colWidth: colWidth,
@@ -183,19 +173,13 @@ const Table = ({ mode, header, children }, ref) => {
                                 toolBoxWidth: toolBoxWidth,
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
-                                // selectedMonths: selectedMonths,
-                                totalMonths: numberOfDataCols,
+                                numberOfDataCols: numberOfDataCols,
                                 mode: mode
                             }
                         })}
-
                     </div>
-
                     {selectedCol && <SelectedCol width={colWidth} height={colHeight} offsetLeft={toolBoxWidth} offsetTop={0} />}
-
                 </div>
-
-
             </Wrapper>
         </TableContext.Provider>
     )

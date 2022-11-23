@@ -25,24 +25,6 @@ function App() {
     // updateview(items);
   }
 
-  const getTotal = () => {
-    // let mappings = row.totals_mappings || [];
-    // let mapping = mappings.find((mapping) => {
-    //     return mapping.begin == selectedMonths[0] && mapping.end == selectedMonths[1];
-    // });
-
-    // // needs more work
-    // if (mapping) {
-    //     if (!hideTotal) {
-    //         return mapping.total;
-    //     }
-    //     // else {
-    //     //     return row[selectedMonths[selectedMonths.length - 1].system];
-    //     // }
-    // } else {
-    //     return null;
-    // }
-}
 
 const header = [
   { title: 'Label' },
@@ -109,7 +91,6 @@ const header = [
                                 {monthRange.map((month, i) => <Col key={i}>{row[month]}</Col> )}
 
                                 <Col>
-                                  {/* {getTotal(row)}  */}
                                   34567
                                 </Col>
 

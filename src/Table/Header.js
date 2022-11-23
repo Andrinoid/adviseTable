@@ -1,7 +1,6 @@
 //react component  
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { default as mo } from "../data/months";
 import ResizablelCol from './ResizablelCol';
 import ResizableTable from './ResizableTable';
 import Col from './Col';
@@ -26,8 +25,6 @@ const Header = React.forwardRef(({
     labelColWidth,
     totalColWidth,
     colHeight,
-    selectedMonths,
-    totalMonths,
     totalWidth,
     viewportHeight,
     onLabelColResize,
@@ -37,13 +34,14 @@ const Header = React.forwardRef(({
 }, ref) => {
 
     const leftOffset = toolBoxWidth + labelColWidth;
+    const numberOfDataCols = data.length - 2;
     return (
         <RowElm style={{ height: colHeight }} ref={ref}>
             <Col
                 style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
                 selectable={false}
             ></Col>
-          
+
             {data.map((item, index) => {
                 // we need index to be zero after label col
                 let i = index - 1;
@@ -68,7 +66,7 @@ const Header = React.forwardRef(({
                         }
                         {index === data.length - 1 &&
                             <ResizablelCol
-                                style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (totalMonths * colWidth) }}
+                                style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                                 onResize={onTotalColResize}
                                 direction="left"
                                 viewportHeight={viewportHeight}
