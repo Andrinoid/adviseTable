@@ -44,6 +44,22 @@ function App() {
     // }
 }
 
+const header = [
+  { title: 'Label' },
+  { title: 'Jan' },
+  { title: 'Feb' },
+  { title: 'Mar' },
+  { title: 'Apr' },
+  { title: 'May' },
+  { title: 'Jun' },
+  { title: 'Jul' },
+  { title: 'Aug' },
+  { title: 'Sep' },
+  { title: 'Oct' },
+  { title: 'Nov' },
+  { title: 'Dec' },
+  { title: 'Total' },
+];
 
 
 
@@ -60,7 +76,7 @@ function App() {
       </div>
       <p>{mode}</p>
 
-      <Table mode={mode} ref={tableRef} months={ui_prefs.months}>
+      <Table mode={mode} ref={tableRef} header={header}>
         {(tableProvided) => (
 
           <DragDropContext onDragEnd={handleOnDragEnd}>

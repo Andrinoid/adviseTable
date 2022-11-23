@@ -46,22 +46,23 @@ flex: 1 1 auto;
 }
 `;
 
-const Table = ({ mode, months, children }, ref) => {
+const Table = ({ mode, header, children }, ref) => {
 
     const viewportRef = useRef(null);
 
     const [viewportWidth, setViewportWidth] = useState(0);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [labelColWidth, setlabelColWidth] = useState(150);
-    const [selectedMonths, setSelectedMonths] = useState(months);
-    const [totalMonths, setTotalMonths] = useState(selectedMonths[1] - selectedMonths[0] + 1);
+    // const [selectedMonths, setSelectedMonths] = useState(months);
+    // const [totalMonths, setTotalMonths] = useState(selectedMonths[1] - selectedMonths[0] + 1);
+    const [numberOfDataCols, setNumberOfDataCols] = useState(header.length-2);
     const [headerHeight, setHeaderHeight] = useState(35);
     const [colHeight, setColHeight] = useState(50);
     // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
     const [totalWidth, setTotalWidth] = useState(950);
     const [toolBoxWidth, setToolBoxWidth] = useState(50);
     const [totalColWidth, setTotalColWidth] = useState(100);
-    const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / totalMonths);
+    const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / numberOfDataCols);
 
     const [mouseDownColCord, setMouseDownColCord] = useState(null);
     const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
@@ -101,7 +102,7 @@ const Table = ({ mode, months, children }, ref) => {
     }
 
     const autoAdjustDataColWidth = () => {
-        setTotalWidth(labelColWidth + toolBoxWidth + totalColWidth + (biggestDataCellWidth * totalMonths));
+        setTotalWidth(labelColWidth + toolBoxWidth + totalColWidth + (biggestDataCellWidth * numberOfDataCols));
     }
 
     const onLabelColResize = (width) => {
@@ -117,7 +118,7 @@ const Table = ({ mode, months, children }, ref) => {
     }
 
     const calcColWidth = () => {
-        return (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / totalMonths;
+        return (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / numberOfDataCols;
     }
 
     return (
@@ -158,13 +159,14 @@ const Table = ({ mode, months, children }, ref) => {
                     labelColWidth={labelColWidth}
                     toolBoxWidth={toolBoxWidth}
                     totalColWidth={totalColWidth}
-                    selectedMonths={selectedMonths}
-                    totalMonths={totalMonths}
+                    // selectedMonths={selectedMonths}
+                    totalMonths={numberOfDataCols}
                     totalWidth={totalWidth}
                     viewportHeight={viewportHeight}
                     onLabelColResize={onLabelColResize}
                     onTotalColResize={onTotalColResize}
                     onTableResize={onTableResize}
+                    data={header}
                 />
                 <div className='viewPort scrollable' ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
 
@@ -181,8 +183,8 @@ const Table = ({ mode, months, children }, ref) => {
                                 toolBoxWidth: toolBoxWidth,
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
-                                selectedMonths: selectedMonths,
-                                totalMonths: totalMonths,
+                                // selectedMonths: selectedMonths,
+                                totalMonths: numberOfDataCols,
                                 mode: mode
                             }
                         })}
