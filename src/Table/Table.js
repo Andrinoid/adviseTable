@@ -177,7 +177,6 @@ const Table = ({ mode, headerData, children }, ref) => {
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
-                                headerData: headerData,
                                 mode: mode
                             }
                         })}

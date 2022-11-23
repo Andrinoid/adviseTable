@@ -56,7 +56,7 @@ const header = [
       </div>
       <p>{mode}</p>
 
-      {/* <Table mode={mode} ref={tableRef} headerData={header}>
+      <Table mode={mode} ref={tableRef} headerData={header}>
         {(tableProvided) => (
 
           <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -104,7 +104,7 @@ const header = [
             </Droppable>
           </DragDropContext>
         )}
-      </Table> */}
+      </Table>
       <hr/>
       
       <p>problems</p>

@@ -1,4 +1,5 @@
 //jsx component
+import { head } from 'lodash';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Col from './Col';
@@ -41,8 +42,8 @@ const Row = ({
     }
 
     const childrenWithProps = React.Children.map(children, (child, i) => {
+        console.log(children);
 
-        let length = children[1].length;
         let type;
         let left;
         let width;
@@ -53,7 +54,7 @@ const Row = ({
             width = labelColWidth;
             console.log('first');
 
-        } else if (i == length + 1) {
+        } else if (i == numberOfDataCols + 1) { // plus one becuse the last col is not a dataCol e.g. total
             type = 'last';
             left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
             width = totalColWidth;
