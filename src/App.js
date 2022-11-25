@@ -1,11 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
 import './App.css';
 import { Table, Row, Col } from './Table';
-import { view, ui_prefs } from './data';
+import { view, ui_prefs } from './data/example2';
 import { default as mo } from './data/months';
 
+const Sub = styled.div`
+    background: #f5f5f5;
+    border: 2px solid blue;
+    height: 310px;
+ ` 
 function App() {
 
   const [mode, setMode] = useState('static');
@@ -29,20 +35,20 @@ function App() {
 
 
 const header = [
-  { title: 'Label', key: 'label' },
-  { title: 'Jan', key: 'jan' },
-  { title: 'Feb', key: 'feb' },
-  { title: 'Mar', key: 'mar' },
-  { title: 'Apr', key: 'apr' },
-  { title: 'May', key: 'may' },
-  { title: 'Jun', key: 'jun' },
-  { title: 'Jul', key: 'jul' },
-  { title: 'Aug', key: 'aug' },
-  { title: 'Sep', key: 'sep' },
-  { title: 'Oct', key: 'oct' },
-  { title: 'Nov', key: 'nov' },
-  { title: 'Dec', key: 'dec' },
-  { title: 'Total', key: 'total' },
+  { title: 'Label'},
+  { title: 'Jan'},
+  { title: 'Feb'},
+  { title: 'Mar'},
+  { title: 'Apr'},
+  { title: 'May'},
+  { title: 'Jun'},
+  { title: 'Jul'},
+  { title: 'Aug'},
+  { title: 'Sep'},
+  { title: 'Oct'},
+  { title: 'Nov'},
+  { title: 'Dec'},
+  { title: 'Total'},
 ];
 
   return (
@@ -56,7 +62,7 @@ const header = [
       </div>
       <p>{mode}</p>
 
-      <Table mode={mode} ref={tableRef} headerData={header}>
+      <Table mode={mode} ref={tableRef} headerData={header} theme="default">
         {(tableProvided) => (
 
           <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -106,6 +112,8 @@ const header = [
         )}
       </Table>
       <hr/>
+
+
       
       <p>problems</p>
       <ul>
@@ -116,7 +124,12 @@ const header = [
       <div>
         <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
       </div>
-      <Table mode={mode} ref={tableRef3} headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}>
+      <Table 
+        mode={mode} 
+        ref={tableRef3} 
+        headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}
+        theme={'dark'}
+      >
         {(tableProvided) => (
           <div>
           <Row  {...tableProvided.rowProps} index={0}>
@@ -130,6 +143,19 @@ const header = [
               baz
             </Col>
           </Row>
+
+          <Row  {...tableProvided.rowProps} index={0}>
+            <Col horizontalAlign="left">
+              foo
+            </Col>
+            <Col>
+              bar
+            </Col>
+            <Col>
+              baz
+            </Col>
+          </Row>
+
           <Row  {...tableProvided.rowProps} index={1}>
           <Col horizontalAlign="left">
             foo
@@ -137,6 +163,7 @@ const header = [
           <Col>
             bar
           </Col>
+         
           <Col>
             baz
           </Col>

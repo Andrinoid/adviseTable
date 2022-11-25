@@ -6,6 +6,10 @@ import Col from './Col';
 
 const RowElm = styled.div`
     position: relative;
+    &:hover {
+        background: #e5f2fe;
+        box-shaddow: inset 0 0 2px #e5f2fe;
+    }
 `;
 
 const Sub = styled.div`
@@ -22,6 +26,7 @@ const Row = ({
     toolBoxWidth,
     totalColWidth,
     numberOfDataCols,
+    totalWidth,
     mode,
     Handle,
     children
@@ -51,7 +56,6 @@ const Row = ({
             type = 'first';
             left = leftOffset;
             width = labelColWidth;
-
         } else if (i == numberOfDataCols + 1) { // plus one becuse the last col is not a dataCol e.g. total
             type = 'last';
             left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
@@ -80,7 +84,7 @@ const Row = ({
         <>
             {/* We need the height here because all cols are position absolute
                 Having cols as position absolute has no purpose yet, they could be inline block of ¯\_(ツ)_/¯ */}
-            <RowElm style={{ height: colHeight }} >
+            <RowElm style={{ height: colHeight, width: totalWidth }} >
                 <Col
                     selectable={false}
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}

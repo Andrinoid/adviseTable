@@ -20,15 +20,8 @@ box-sizing: border-box;
     position: relative;
     min-width: 0;
     flex-direction: row;
-display: flex;
-flex: 1 1 auto;
-.pinnedRightContainer {
-    background: #f5f5f5;
-    width: 150px;
-    max-width: 150px;
-    min-width: 150px;
-    direction: ltr;
-}
+    display: flex;
+    flex: 1 1 auto;
 }
 .sub {
     position: absolute;
@@ -44,16 +37,64 @@ flex: 1 1 auto;
 }
 `;
 
-const Table = ({ mode, headerData, children }, ref) => {
+const themes = {
+    default: {
+        name: 'default',
+        table: {
+            background: '#fff',
+            border: '1px solid #ebebeb',
+        },
+        header: {
+            background: '#fafafa',
+            borderBottom: 'solid 1px #ededed',
+        },
+        row: {
+            
+        },
+        col: {
+            // background: 'white',s
 
+        },
+        cell: {
+            border: '1px solid #ebebeb',
+        },
+    },
+    dark: {
+        name: 'dark',
+        table: {
+            background: '#000',
+            border: '1px solid #ebebeb',
+        },
+        header: {
+            background: '#000',
+            border: '1px solid #ebebeb',
+        },
+        row: {
+            
+        },
+        col: {
+            background: '#202124',
+            color: '#bdc6cf',
+            boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',  
+            
+
+        },
+        cell: {
+            border: '1px solid #ebebeb',
+        },
+    }
+}
+
+const Table = ({ mode, headerData, theme="default", children }, ref) => {
+    
     const viewportRef = useRef(null);
-
+    const [theTheme, setTheTheme] = useState(themes[theme]);
     const [viewportWidth, setViewportWidth] = useState(0);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [labelColWidth, setlabelColWidth] = useState(150);
     const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length-2);
     const [headerHeight, setHeaderHeight] = useState(35);
-    const [colHeight, setColHeight] = useState(50);
+    const [colHeight, setColHeight] = useState(40);
     // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
     const [totalWidth, setTotalWidth] = useState(950);
     const [toolBoxWidth, setToolBoxWidth] = useState(50);
@@ -63,13 +104,15 @@ const Table = ({ mode, headerData, children }, ref) => {
     const [mouseDownColCord, setMouseDownColCord] = useState(null);
     const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
     const [mouseUpColCord, setMouseUpColCord] = useState(null);
+
     const [selectColDraging, setSelectColDraging] = useState(false);
+    const [selectedCol, setSelectedCol] = useState(null);
+    const [selectedArea, setSelectedArea] = useState(null);
 
     const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
     const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
     const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
 
-    const [selectedCol, setSelectedCol] = useState(null);
 
     // create unique id for each table
     const tableId = Math.random().toString(36).substr(2, 9);
@@ -134,6 +177,7 @@ const Table = ({ mode, headerData, children }, ref) => {
             autoAdjustLabelColWidth,
             autoAdjustTotalColWidth,
             setSelectedCol,
+            setSelectedArea,
             selectColDraging,
             mouseDownColCord,
             mouseMoveColCord,
@@ -145,12 +189,15 @@ const Table = ({ mode, headerData, children }, ref) => {
             biggestLabelCellWidth,
             biggestTotalCellWidth,
             selectedCol,
-        }}>
+            selectedArea,
+            theTheme,
+        }}> 
             <Wrapper ref={ref}>
+
                 <Header
-                    width={viewportWidth}
                     ref={headerScrollRef}
                     className="scrollable"
+                    width={viewportWidth}
                     colHeight={headerHeight}
                     colWidth={colWidth}
                     labelColWidth={labelColWidth}
@@ -162,8 +209,10 @@ const Table = ({ mode, headerData, children }, ref) => {
                     onTotalColResize={onTotalColResize}
                     onTableResize={onTableResize}
                     numberOfDataCols={numberOfDataCols}
+                    theTheme={theTheme}
                     data={headerData}
                 />
+
                 <div className='viewPort scrollable' ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
                     <div
                         className='container'
@@ -171,6 +220,7 @@ const Table = ({ mode, headerData, children }, ref) => {
                         {children({
                             rowProps: {
                                 colWidth: colWidth,
+                                totalWidth: totalWidth,
                                 colHeight: colHeight,
                                 labelColWidth: labelColWidth,
                                 toolBoxWidth: toolBoxWidth,

@@ -1,19 +1,18 @@
 //react component  
 import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
-import { debounce} from 'lodash';
+import { debounce, throttle} from 'lodash';
 import { TableContext } from './context';
 import Cell from './Cell';
 
 
 const Column = styled.div`
-    background: #fff;
-    box-shadow: inset 0px 0px 0 0.5px #ebebeb;
+    //background: ${props => props.selected ? '#e9f0fd' : 'white'};
+    // background: white;
+    // box-shadow: inset 0px 0px 0 0.5px #ebebeb;
     display: flex;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
-    background: white;
-    // background: ${props => props.selected ? '#e9f0fd' : 'white'};
     position: absolute;
     user-select: none;
     transition: all 0.2s ease;
@@ -43,18 +42,29 @@ const Col = React.forwardRef(({
         mouseMoveColCord,
         mouseUpColCord,
         setSelectedCol,
+        setSelectedArea,
+        selectedArea,
+        theTheme,
     } = useContext(TableContext); 
+
     const [selected, setSelected] = useState(false);
 
     
     const mouseDownHandler = (e, cord) => {
-        if (!selectable) return;
+        if (!selectable) {
+            setSelected(false);
+            setSelectedCol(null);
+            return;
+        };
+        setSelected(true);
+        setSelectedCol({x: x, y: y, id: id, style: style});
         setSelectColDraging(true);
         setMouseDownColCord(cord);
     }
     
     const mouseMoveHandler = (e, cord) => {
         if (!selectable) return;
+        // if (!selectColDraging) return;
         setMouseMoveColCord(cord);
     }
 
@@ -65,16 +75,10 @@ const Col = React.forwardRef(({
     }
 
     const clickHandler = (cord) => {
-        if (!selectable) {
-            setSelected(false);
-            setSelectedCol(null);
-            return;
-        };
-        setSelected(true);
-        setSelectedCol({x: x, y: y, id: id, style: style});
+        
     }
 
-    const debounceMouseUpHandler = debounce(mouseMoveHandler, 100);
+    const debounceMouseUpHandler = debounce(mouseMoveHandler, 70);
 
     const isHightlighted = () => {
 
@@ -106,7 +110,7 @@ const Col = React.forwardRef(({
     return (
         <Column 
             horizontalAlign={horizontalAlign}
-            style={{...style}} 
+            style={{...theTheme.col, ...style}} 
             ref={ref}
             x={x}
             y={y}

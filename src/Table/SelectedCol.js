@@ -5,13 +5,13 @@ import { TableContext } from "./context";
 const Selected = styled.div`
     position: absolute;
     // background: #65b2fe;
-    // background: ;
     display: flex;
     align-items: center;
     justify-content: right;
     // border: 2px solid #65b2fe;
     box-shadow: inset 0 0 0 2px #65b2fe;
-    transition: all 0.2s ease;
+    // transition: all 0.2s ease;
+    pointer-events: none;
 `;
 
 const SelectedCol = ({width, height, offsetTop, offsetLeft}) => {

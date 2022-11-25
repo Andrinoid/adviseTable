@@ -31,13 +31,15 @@ const Header = React.forwardRef(({
     onTotalColResize,
     onTableResize,
     numberOfDataCols,
+    theTheme,
     data,
 }, ref) => {
 
     const leftOffset = toolBoxWidth + labelColWidth;
     // const numberOfDataCols = data.length - 2;
     return (
-        <RowElm style={{ height: colHeight }} ref={ref}>
+        <RowElm  ref={ref}>
+            <div style={{...theTheme.header, height: colHeight, width: totalWidth, boxSizing: 'border-box'}}>
             <Col
                 style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
                 selectable={false}
@@ -51,11 +53,11 @@ const Header = React.forwardRef(({
                     <React.Fragment key={index}>
                         {index === 0 &&
                             <ResizablelCol
-                                style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
                                 onResize={onLabelColResize}
                                 viewportHeight={viewportHeight}
                                 type="first"
                                 selectable={false}
+                                style={{width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
                             >
                                 <Label>{item.title}</Label>
                             </ResizablelCol>
@@ -64,17 +66,17 @@ const Header = React.forwardRef(({
                             <Col
                                 selectable={false}
                                 type="middle"
-                                style={{ width: colWidth, height: colHeight, top: 0, left: left }}
+                                style={{width: colWidth, height: colHeight, top: 0, left: left }}
                             ><Label>{item.title}</Label></Col>
                         }
                         {index === data.length - 1 &&
                             <ResizablelCol
-                                style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                                 onResize={onTotalColResize}
                                 direction="left"
                                 viewportHeight={viewportHeight}
                                 type="last"
                                 selectable={false}
+                                style={{width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                             >
                                 <Label>{item.title}</Label>
                             </ResizablelCol>
@@ -84,7 +86,7 @@ const Header = React.forwardRef(({
             })}
 
             <ResizableTable width={totalWidth} onResize={onTableResize} />
-
+            </div>
         </RowElm>
     )
 });
