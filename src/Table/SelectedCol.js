@@ -14,22 +14,47 @@ const Selected = styled.div`
     pointer-events: none;
 `;
 
-const SelectedCol = ({width, height, offsetTop, offsetLeft}) => {
+const SelectedCol = ({
+    width, 
+    height, 
+    offsetTop, 
+    offsetLeft,
+}) => {
 
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
-    const {selectedCol, colWidth, colHeight} = useContext(TableContext);
+    const [bottom, setBottom] = useState(0);
+    const [right, setRight] = useState(0);
+    const [style, setStyle] = useState({});
+    const {
+        selectedCol, 
+        colWidth, 
+        colHeight,
+        mouseDownColCord,
+        mouseMoveColCord,
+        mouseUpColCord,
+    } = useContext(TableContext);
 
     useEffect(() => {
         console.log('selectedCol', selectedCol);
         console.log('colWidth', colWidth);
         console.log('colHeight', colHeight);
-        setTop(selectedCol.x * height + offsetTop);
-        setLeft(selectedCol.y * width + offsetLeft);
-        
-    }, [selectedCol]);
+        console.log('mouseDownColCord', mouseDownColCord);
+        // setTop(selectedCol.x * height + offsetTop);
+        // setLeft(selectedCol.y * width + offsetLeft);
 
-    return <Selected style={{...selectedCol.style, top: top }}></Selected>;
+        //  setBottom();
+        //  setRight();
+        
+
+
+    }, [mouseDownColCord, mouseMoveColCord, mouseUpColCord]);
+
+    useEffect(() => {
+
+    },[]);
+
+    return <Selected style={{...style, top: top }}></Selected>;
 };
 
 export default SelectedCol;

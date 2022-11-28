@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import DragHandle from './icons/DragHandle';
 
 import './App.css';
 import { Table, Row, Col } from './Table';
@@ -51,6 +52,15 @@ const header = [
   { title: 'Total'},
 ];
 
+const toolBoxContent = (dragHandleProps) => {
+  return (
+    <div>
+    {mode==='edit' && <div {...dragHandleProps}><DragHandle /></div>}
+    <div>+</div>
+    </div>
+  )
+}
+
   return (
     <div className="App">
       <div>
@@ -83,9 +93,10 @@ const header = [
                               <Row
                                 key={i}
                                 index={i}
-                                Handle={() => (<div {...provided.dragHandleProps}>...</div>)}
+                                toolBoxContent={toolBoxContent(provided.dragHandleProps)}
                                 {...tableProvided.rowProps}
                               >
+                               
 
                                 <Col horizontalAlign="left">
                                   {row.name}
@@ -132,7 +143,10 @@ const header = [
       >
         {(tableProvided) => (
           <div>
-          <Row  {...tableProvided.rowProps} index={0}>
+          <Row  {...tableProvided.rowProps} index={0} toolBoxContent={<div>
+            <button>+</button>
+            <button>bar</button>
+          </div>}>
             <Col horizontalAlign="left">
               foo
             </Col>

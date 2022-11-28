@@ -15,7 +15,6 @@ const RowElm = styled.div`
 const Sub = styled.div`
     background: #f5f5f5;
     height: 310px;
-
 `
 const Row = ({
     index,
@@ -27,8 +26,7 @@ const Row = ({
     totalColWidth,
     numberOfDataCols,
     totalWidth,
-    mode,
-    Handle,
+    toolBoxContent,
     children
 }) => {
 
@@ -84,13 +82,13 @@ const Row = ({
         <>
             {/* We need the height here because all cols are position absolute
                 Having cols as position absolute has no purpose yet, they could be inline block of ¯\_(ツ)_/¯ */}
-            <RowElm style={{ height: colHeight, width: totalWidth }} >
+            <RowElm style={{ height: colHeight, width: totalWidth }}>
                 <Col
+                    horizontalAlign='left'
                     selectable={false}
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
                 >
-                    {mode === "edit" && Handle && <Handle />}
-                    <div onClick={expand}>+</div>
+                    {toolBoxContent && toolBoxContent}
                 </Col>
 
                 {childrenWithProps}
