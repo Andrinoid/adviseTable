@@ -48,12 +48,22 @@ const Col = React.forwardRef(({
     x,
     y,
 }, ref) => {
+    // I need two refs on the col
 
     const {
         mouseDownColCord,
         mouseMoveColCord,
+        setTableMatrix,
+        tableMatrix,
         theTheme,
     } = useContext(TableContext); 
+
+    // if (tableMatrix[rowNumber]) {
+    //     setTableMatrix(prev => {
+    //         prev[rowNumber].push(currentColRef);
+    //         return prev;
+    //     });
+    // }
 
 
     const createOutlineClasses = (minX, maxX, minY, maxY) => {

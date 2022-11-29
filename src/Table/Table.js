@@ -112,7 +112,7 @@ const Table = ({ headerData, theme="default", children }, ref) => {
     const [selectedArea, setSelectedArea] = useState(null);
 
 
-    const [tableMatrix, setTableMatrix] = useState(null);
+    const [tableMatrix, setTableMatrix] = useState([]);
 
 
     const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
@@ -235,6 +235,8 @@ const Table = ({ headerData, theme="default", children }, ref) => {
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
+                                setTableMatrix: setTableMatrix,
+                                tableMatrix: tableMatrix,
                             }
                         })}
                     </div>

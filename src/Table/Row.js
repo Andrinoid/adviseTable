@@ -23,15 +23,37 @@ const Row = ({
     numberOfDataCols,
     totalWidth,
     toolBoxContent,
+    setTableMatrix,
+    tableMatrix,
     children
 }) => {
 
     const currentRowRef = useRef(null);
+    const currentColRef = useRef(null);
     const leftOffset = toolBoxWidth;
     // initial row number is one 
     let rowNumber = index;
     // count the number of cols to determine the id the total col
     let counter = 0;
+
+    // push an array to the setTableMatrix for each row
+    // this array will hold the refs for each col in the row
+    if (tableMatrix.length < rowNumber + 1) {
+        tableMatrix.push([]);
+    }
+
+
+
+
+
+    // if (!tableMatrix[rowNumber]) {
+    //     setTableMatrix(prev => {
+    //         prev[rowNumber] = currentRowRef;
+    //         return prev;
+    //     });
+
+    // }
+     
 
 
     const childrenWithProps = React.Children.map(children, (child, i) => {
@@ -61,10 +83,12 @@ const Row = ({
                 id: `x${rowNumber}y${i + 1}`,
                 x: rowNumber,
                 y: i,
+                ref: currentColRef,
                 type,
                 style: { width: width, height: colHeight, top: 0, left: left }
             });
-        }
+        }        
+
         counter++;
         return child;
     });

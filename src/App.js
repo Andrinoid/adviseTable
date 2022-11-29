@@ -75,8 +75,9 @@ const toolBoxContent = (dragHandleProps) => {
       <p>{mode}</p>
 
       <Table mode={mode} ref={tableRef} headerData={header} theme="default">
-        {(tableProvided) => (
-
+        {(tableProvided) => {
+          console.log('tableProvided',tableProvided);
+          return (
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="characters" >
               {(provided) => (
@@ -122,7 +123,7 @@ const toolBoxContent = (dragHandleProps) => {
               )}
             </Droppable>
           </DragDropContext>
-        )}
+        )}}
       </Table>
       <hr/>
 
@@ -137,7 +138,7 @@ const toolBoxContent = (dragHandleProps) => {
       <div>
         <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
       </div>
-      <Table 
+      {/* <Table 
         mode={mode} 
         ref={tableRef3} 
         headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}
@@ -186,7 +187,7 @@ const toolBoxContent = (dragHandleProps) => {
         </Row>
         </div>
         )}
-      </Table>
+      </Table> */}
         
 
 
