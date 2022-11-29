@@ -2,16 +2,18 @@ import React, { useState, useRef } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import DragHandle from './icons/DragHandle';
+import Plus from './icons/Plus';
 
 import './App.css';
 import { Table, Row, Col } from './Table';
 import { view, ui_prefs } from './data/example2';
 import { default as mo } from './data/months';
 
-const Sub = styled.div`
-    background: #f5f5f5;
-    border: 2px solid blue;
-    height: 310px;
+const Flex = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  cursor: ${({ cursor }) => cursor || 'default'};
  ` 
 function App() {
 
@@ -25,6 +27,22 @@ function App() {
   // select range of months based on selectedMonths
   let monthRange = months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1]);
 
+  const header = [
+    { title: 'Label'},
+    { title: 'Jan'},
+    { title: 'Feb'},
+    { title: 'Mar'},
+    { title: 'Apr'},
+    { title: 'May'},
+    { title: 'Jun'},
+    { title: 'Jul'},
+    { title: 'Aug'},
+    { title: 'Sep'},
+    { title: 'Oct'},
+    { title: 'Nov'},
+    { title: 'Dec'},
+    { title: 'Total'},
+  ];
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
@@ -35,29 +53,13 @@ function App() {
   }
 
 
-const header = [
-  { title: 'Label'},
-  { title: 'Jan'},
-  { title: 'Feb'},
-  { title: 'Mar'},
-  { title: 'Apr'},
-  { title: 'May'},
-  { title: 'Jun'},
-  { title: 'Jul'},
-  { title: 'Aug'},
-  { title: 'Sep'},
-  { title: 'Oct'},
-  { title: 'Nov'},
-  { title: 'Dec'},
-  { title: 'Total'},
-];
 
 const toolBoxContent = (dragHandleProps) => {
   return (
-    <div>
-    {mode==='edit' && <div {...dragHandleProps}><DragHandle /></div>}
-    <div>+</div>
-    </div>
+    <Flex>
+    {mode==='edit' && <Flex {...dragHandleProps}><DragHandle /></Flex>}
+    <Flex cursor={'pointer'} style={{marginLeft: 4}}><Plus /></Flex>
+    </Flex>
   )
 }
 
@@ -135,7 +137,7 @@ const toolBoxContent = (dragHandleProps) => {
       <div>
         <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
       </div>
-      <Table 
+      {/* <Table 
         mode={mode} 
         ref={tableRef3} 
         headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}
@@ -184,7 +186,7 @@ const toolBoxContent = (dragHandleProps) => {
         </Row>
         </div>
         )}
-      </Table>
+      </Table> */}
         
 
 

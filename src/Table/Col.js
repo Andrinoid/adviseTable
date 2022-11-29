@@ -36,16 +36,13 @@ const Column = styled.div`
     &.outline-bottom {
         // box-shadow: inset 0px -1px 0 1px #65b2fe;
         border-bottom: 1px solid #65b2fe;
-    }
-   
-
+    }s
 `;
 
 const Col = React.forwardRef(({
     horizontalAlign = 'right',
     children,
     style = {},
-    selectable = true,
     type,
     id,
     x,
@@ -53,53 +50,13 @@ const Col = React.forwardRef(({
 }, ref) => {
 
     const {
-        setSelectColDraging,
-        setMouseDownColCord, 
-        setMouseMoveColCord, 
-        setMouseUpColCord,
-        selectColDraging,
         mouseDownColCord,
         mouseMoveColCord,
-        mouseUpColCord,
-        setSelectedCol,
-        selectedCol,
-        setSelectedArea,
-        selectedArea,
         theTheme,
     } = useContext(TableContext); 
 
     const [selected, setSelected] = useState(false);
 
-    
-    const mouseDownHandler = (e, cord) => {
-        if (!selectable) {
-            setSelected(false);
-            setSelectedCol(null);
-            return;
-        };
-        setSelected(true);
-        setSelectedCol({x: x, y: y, id: id, style: style});
-        setSelectColDraging(true);
-        setMouseDownColCord(cord);
-    }
-    
-    const mouseMoveHandler = (e, cord) => {
-        if (!selectable) return;
-        // if (!selectColDraging) return;
-        setMouseMoveColCord(cord);
-    }
-
-    const mouseUpHandler = (e, cord) => {
-        if (!selectable) return;
-        setSelectColDraging(false);
-        setMouseUpColCord(cord);
-    }
-
-    const clickHandler = (cord) => {
-        
-    }
-
-    const debounceMouseUpHandler = debounce(mouseMoveHandler, 70);
 
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];
@@ -118,8 +75,8 @@ const Col = React.forwardRef(({
 	 */
     const isHightlighted = () => {
 
-        if (!selectable) return false;
-        if (!selectColDraging) return false; 
+        // if (!selectable) return false;
+        // if (!selectColDraging) return false; 
      
         let isX = false;
         let isY = false;
@@ -128,13 +85,12 @@ const Col = React.forwardRef(({
         let minY;
         let maxY;
 
-        if(mouseDownColCord) {
+        if(mouseDownColCord && mouseMoveColCord) {
             // Find the min and max of the mouseDownColCord and mouseMoveColCord
             minX = Math.min(mouseDownColCord[0], mouseMoveColCord[0]);
             maxX = Math.max(mouseDownColCord[0], mouseMoveColCord[0]);
             minY = Math.min(mouseDownColCord[1], mouseMoveColCord[1]);
             maxY = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
-
 
             // Check if the current column is in the selected area
             if(x >= minX && x <= maxX) {
@@ -144,11 +100,20 @@ const Col = React.forwardRef(({
                 isY = true;
             }
         }
+        if(mouseDownColCord && !mouseMoveColCord) {
+
+            if(x == mouseDownColCord[0] && y == mouseDownColCord[1]) {
+                console.log('its the same');
+                isX = true;
+                isY = true;
+                minX = x;
+                maxX = x;
+                minY = y;
+                maxY = y;
+            }
+        }
         if(isX && isY) { 
             return createOutlineClasses(minX, maxX, minY, maxY, x, y);
-
-
-            return true
         }        
         return false;
     }
@@ -160,12 +125,9 @@ const Col = React.forwardRef(({
             ref={ref}
             x={x}
             y={y}
+            data-x={x}
+            data-y={y}
             id={id}
-            onMouseDown={(e)=>mouseDownHandler(e, [x, y])}
-            onMouseUp={(e)=>mouseUpHandler(e, [x, y])}
-            onMouseMove={(e)=>debounceMouseUpHandler(e, [x, y])}
-            onClick={()=>clickHandler([x,y])}
-            selected={selected}
             className={`tableCol ${isHightlighted()}`}
         >
             <Cell parentWidth={style.width} parentType={type}>

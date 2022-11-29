@@ -86,6 +86,8 @@ const themes = {
 }
 
 const Table = ({ mode, headerData, theme="default", children }, ref) => {
+    //TODO
+    // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
     
     const viewportRef = useRef(null);
     const [theTheme, setTheTheme] = useState(themes[theme]);
@@ -96,7 +98,7 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
     const [headerHeight, setHeaderHeight] = useState(35);
     const [colHeight, setColHeight] = useState(40);
     // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
-    const [totalWidth, setTotalWidth] = useState(950);
+    const [totalWidth, setTotalWidth] = useState(1350);
     const [toolBoxWidth, setToolBoxWidth] = useState(50);
     const [totalColWidth, setTotalColWidth] = useState(100);
     const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / numberOfDataCols);
@@ -118,6 +120,20 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
     const tableId = Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
+
+    // const isFirstRun = useRef(true);
+    // useEffect(() => {
+    //     if (isFirstRun.current) {
+    //         isFirstRun.current = false;
+    //         return;
+    //     }
+       
+    //     return () => {
+
+    //     };
+
+
+    // }, []);
 
     useImperativeHandle(ref, () => ({
         autoAdjust() {
@@ -231,7 +247,7 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
                             }
                         })}
                     </div>
-                    {selectedCol && <SelectedCol width={colWidth} height={colHeight} offsetLeft={toolBoxWidth} offsetTop={0} />}
+                    <SelectedCol />
                 </div>
             </Wrapper>
         </TableContext.Provider>

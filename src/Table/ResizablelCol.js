@@ -65,6 +65,11 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
         // Attach the listeners to `document`
         document.addEventListener('mousemove', mouseMoveHandler);
         document.addEventListener('mouseup', mouseUpHandler);
+        return () => {
+            // Remove the listeners from `document`
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+        };
 
     }, [x]);
 

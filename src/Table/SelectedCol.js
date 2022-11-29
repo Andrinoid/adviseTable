@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { TableContext } from "./context";
+import delegate from "delegate";
 
 const Selected = styled.div`
     position: absolute;
@@ -14,48 +15,57 @@ const Selected = styled.div`
     pointer-events: none;
 `;
 
-const SelectedCol = ({
-    width, 
-    height, 
-    offsetTop, 
-    offsetLeft,
-}) => {
+let trackMouseMove = false;
 
-    const [top, setTop] = useState(0);
-    const [left, setLeft] = useState(0);
-    const [bottom, setBottom] = useState(0);
-    const [right, setRight] = useState(0);
-    const [style, setStyle] = useState({});
+const SelectedCol = () => {
+
     const {
-        selectedCol, 
-        colWidth, 
-        colHeight,
+        setMouseDownColCord, 
+        setMouseMoveColCord, 
+        setMouseUpColCord,
         mouseDownColCord,
         mouseMoveColCord,
         mouseUpColCord,
-    } = useContext(TableContext);
-
+    } = useContext(TableContext); 
+    
     useEffect(() => {
-        console.log('selectedCol', selectedCol);
-        console.log('colWidth', colWidth);
-        console.log('colHeight', colHeight);
-        console.log('mouseDownColCord', mouseDownColCord);
-        // setTop(selectedCol.x * height + offsetTop);
-        // setLeft(selectedCol.y * width + offsetLeft);
-
-        //  setBottom();
-        //  setRight();
         
+        let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false);
+        let mouseMove = delegate(document.body, '.tableCol', 'mousemove', onMouseMove, false);
+        let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
 
+        return () => {
+            mouseDown.destroy();
+            mouseMove.destroy();
+            mouseUp.destroy();
+        };
 
-    }, [mouseDownColCord, mouseMoveColCord, mouseUpColCord]);
+    }, []);
 
-    useEffect(() => {
+    const onMouseDown = (e) => {
+        trackMouseMove = true;
+        let { x, y } = e.delegateTarget.dataset;
+        console.log('onMouseDown', x, y);
+        setMouseMoveColCord(null);
+        setMouseDownColCord([ x, y ]);
+    }
 
-    },[]);
+    const onMouseMove = (e) => {
+        if (trackMouseMove) {
+            let { x, y } = e.delegateTarget.dataset;
+            setMouseMoveColCord([ x, y ]);
+        }
+    }
 
-    return <Selected style={{...style, top: top }}></Selected>;
+    const onMouseUp = (e) => {
+        trackMouseMove = false;
+        let { x, y } = e.delegateTarget.dataset;
+        setMouseUpColCord([ x, y ]);
+    }
+
+    return <></>;
 };
 
 export default SelectedCol;
+
 
