@@ -81,8 +81,8 @@ const Row = ({
         if (React.isValidElement(child)) {
             return React.cloneElement(child, {
                 id: `x${rowNumber}y${i + 1}`,
-                x: rowNumber,
-                y: i,
+                y: rowNumber,
+                x: i,
                 ref: currentColRef,
                 type,
                 style: { width: width, height: colHeight, top: 0, left: left }
@@ -97,7 +97,7 @@ const Row = ({
         <>
             {/* We need the height here because all cols are position absolute
                 Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯ */}
-            <RowElm style={{ height: colHeight, width: totalWidth }} ref={currentRowRef}>
+            <RowElm style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}>
                 <Col
                     horizontalAlign='left'
                     selectable={false}

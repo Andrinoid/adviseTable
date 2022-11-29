@@ -68,10 +68,10 @@ const Col = React.forwardRef(({
 
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];
-        if (y === minY) classes.push('outline-left');
-        if (y === maxY) classes.push('outline-right');
-        if (x === minX) classes.push('outline-top');
-        if (x === maxX) classes.push('outline-bottom');
+        if (y === minY) classes.push('outline-top');
+        if (y === maxY) classes.push('outline-bottom');
+        if (x === minX) classes.push('outline-left');
+        if (x === maxX) classes.push('outline-right');
         classes.push('hightlighted');
         return classes.join(' ');
     }
