@@ -1,6 +1,6 @@
 //jsx component
 import { head } from 'lodash';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Col from './Col';
 
@@ -30,7 +30,7 @@ const Row = ({
     children
 }) => {
 
-    const [expanded, setExpanded] = useState(false);
+    const currentRowRef = useRef(null);
     // calculate the top position of the row
     const topPosition = (index * 50) + topOffset;
 
@@ -40,9 +40,6 @@ const Row = ({
     // count the number of cols to determine the id the total col
     let counter = 0;
 
-    const expand = () => {
-        setExpanded(!expanded);
-    }
 
     const childrenWithProps = React.Children.map(children, (child, i) => {
 
@@ -54,7 +51,8 @@ const Row = ({
             type = 'first';
             left = leftOffset;
             width = labelColWidth;
-        } else if (i == numberOfDataCols + 1) { // plus one becuse the last col is not a dataCol e.g. total
+        } 
+        else if (i == numberOfDataCols + 1) { // plus one becuse the last col is not a dataCol e.g. total
             type = 'last';
             left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
             width = totalColWidth;
@@ -81,8 +79,8 @@ const Row = ({
     return (
         <>
             {/* We need the height here because all cols are position absolute
-                Having cols as position absolute has no purpose yet, they could be inline block of ¯\_(ツ)_/¯ */}
-            <RowElm style={{ height: colHeight, width: totalWidth }}>
+                Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯ */}
+            <RowElm style={{ height: colHeight, width: totalWidth }} ref={currentRowRef}>
                 <Col
                     horizontalAlign='left'
                     selectable={false}
@@ -95,11 +93,6 @@ const Row = ({
 
             </RowElm>
 
-            {expanded &&
-                <Sub>
-                    expanded Row
-                </Sub>
-            }
         </>
     )
 }

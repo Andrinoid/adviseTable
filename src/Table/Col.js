@@ -55,8 +55,6 @@ const Col = React.forwardRef(({
         theTheme,
     } = useContext(TableContext); 
 
-    const [selected, setSelected] = useState(false);
-
 
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];

@@ -137,7 +137,7 @@ const toolBoxContent = (dragHandleProps) => {
       <div>
         <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
       </div>
-      {/* <Table 
+      <Table 
         mode={mode} 
         ref={tableRef3} 
         headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}
@@ -160,7 +160,7 @@ const toolBoxContent = (dragHandleProps) => {
             </Col>
           </Row>
 
-          <Row  {...tableProvided.rowProps} index={0}>
+          <Row  {...tableProvided.rowProps} index={1}>
             <Col horizontalAlign="left">
               foo
             </Col>
@@ -172,7 +172,7 @@ const toolBoxContent = (dragHandleProps) => {
             </Col>
           </Row>
 
-          <Row  {...tableProvided.rowProps} index={1}>
+          <Row  {...tableProvided.rowProps} index={2}>
           <Col horizontalAlign="left">
             foo
           </Col>
@@ -186,7 +186,7 @@ const toolBoxContent = (dragHandleProps) => {
         </Row>
         </div>
         )}
-      </Table> */}
+      </Table>
         
 
 

@@ -88,7 +88,7 @@ const themes = {
 const Table = ({ mode, headerData, theme="default", children }, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
-    
+
     const viewportRef = useRef(null);
     const [theTheme, setTheTheme] = useState(themes[theme]);
     const [viewportWidth, setViewportWidth] = useState(0);
@@ -110,6 +110,10 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
     const [selectColDraging, setSelectColDraging] = useState(false);
     const [selectedCol, setSelectedCol] = useState(null);
     const [selectedArea, setSelectedArea] = useState(null);
+
+
+    const [tableMatrix, setTableMatrix] = useState(null);
+
 
     const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
     const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
@@ -194,6 +198,8 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
             autoAdjustTotalColWidth,
             setSelectedCol,
             setSelectedArea,
+            setTableMatrix,
+            tableMatrix,
             selectColDraging,
             mouseDownColCord,
             mouseMoveColCord,
@@ -255,3 +261,13 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
 }
 
 export default React.forwardRef(Table);
+
+
+  
+  
+// [y 0
+//     [ref],[ref],[ref]
+// ], 
+// [ y 1
+//     [],[],[]
+// ]
