@@ -12,10 +12,6 @@ const RowElm = styled.div`
     }
 `;
 
-const Sub = styled.div`
-    background: #f5f5f5;
-    height: 310px;
-`
 const Row = ({
     index,
     topOffset,
@@ -31,9 +27,6 @@ const Row = ({
 }) => {
 
     const currentRowRef = useRef(null);
-    // calculate the top position of the row
-    const topPosition = (index * 50) + topOffset;
-
     const leftOffset = toolBoxWidth;
     // initial row number is one 
     let rowNumber = index;

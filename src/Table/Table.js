@@ -85,7 +85,7 @@ const themes = {
     }
 }
 
-const Table = ({ mode, headerData, theme="default", children }, ref) => {
+const Table = ({ headerData, theme="default", children }, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
 
@@ -124,20 +124,6 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
     const tableId = Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
-
-    // const isFirstRun = useRef(true);
-    // useEffect(() => {
-    //     if (isFirstRun.current) {
-    //         isFirstRun.current = false;
-    //         return;
-    //     }
-       
-    //     return () => {
-
-    //     };
-
-
-    // }, []);
 
     useImperativeHandle(ref, () => ({
         autoAdjust() {
@@ -249,7 +235,6 @@ const Table = ({ mode, headerData, theme="default", children }, ref) => {
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
-                                mode: mode
                             }
                         })}
                     </div>
