@@ -36,22 +36,11 @@ const Row = ({
     // push an array to the setTableMatrix for each row
     // this array will hold the refs for each col in the row
     if (tableMatrix.length < rowNumber + 1) {
-        tableMatrix.push([]);
-    }
-
-
-
-
-
-    // if (!tableMatrix[rowNumber]) {
-    //     setTableMatrix(prev => {
-    //         prev[rowNumber] = currentRowRef;
-    //         return prev;
-    //     });
-
-    // }
-     
-
+        setTableMatrix(prev => {
+            prev.push([]);
+            return prev;
+        }); 
+    }     
 
     const childrenWithProps = React.Children.map(children, (child, i) => {
 
