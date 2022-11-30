@@ -1,6 +1,4 @@
-//jsx component
-import { head } from 'lodash';
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Col from './Col';
 
@@ -29,7 +27,6 @@ const Row = ({
 }) => {
 
     const currentRowRef = useRef(null);
-    const currentColRef = useRef(null);
     const leftOffset = toolBoxWidth;
     // initial row number is one 
     let rowNumber = index;
@@ -83,7 +80,6 @@ const Row = ({
                 id: `x${rowNumber}y${i + 1}`,
                 y: rowNumber,
                 x: i,
-                ref: currentColRef,
                 type,
                 style: { width: width, height: colHeight, top: 0, left: left }
             });

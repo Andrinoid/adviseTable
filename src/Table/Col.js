@@ -1,7 +1,6 @@
 //react component  
-import React, {useState, useContext} from 'react';
+import React, {useRef, useContext} from 'react';
 import styled from 'styled-components';
-import { debounce, throttle} from 'lodash';
 import { TableContext } from './context';
 import Cell from './Cell';
 
@@ -49,7 +48,7 @@ const Col = React.forwardRef(({
     y,
 }, ref) => {
     // I need two refs on the col
-
+    const currentColRef = useRef(null);
     const {
         mouseDownColCord,
         mouseMoveColCord,
@@ -58,13 +57,15 @@ const Col = React.forwardRef(({
         theTheme,
     } = useContext(TableContext); 
 
-    // if (tableMatrix[rowNumber]) {
-    //     setTableMatrix(prev => {
-    //         prev[rowNumber].push(currentColRef);
-    //         return prev;
-    //     });
-    // }
-
+    if (tableMatrix[y]) {
+        setTimeout(() => {
+            setTableMatrix(prev => {
+                // add currentColref to the tableMatrix in the y row and x col
+                prev[y][x] = currentColRef.current;
+                return prev;
+            });
+        }, 0);
+    }
 
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];
@@ -130,7 +131,8 @@ const Col = React.forwardRef(({
         <Column 
             horizontalAlign={horizontalAlign}
             style={{...theTheme.col, ...style}} 
-            ref={ref}
+            // ref={ref}
+            ref={(el) => { ref = el; currentColRef.current = el; }}
             x={x}
             y={y}
             data-x={x}
