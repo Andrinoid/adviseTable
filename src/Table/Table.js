@@ -121,7 +121,7 @@ const Table = ({ headerData, theme="default", children }, ref) => {
 
 
     // create unique id for each table
-    const tableId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
+    const tableId = useRef(Math.random().toString(36).substr(2, 9));
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
 

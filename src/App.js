@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import DragHandle from './icons/DragHandle';
 import Plus from './icons/Plus';
 
+
 import './App.css';
 import { Table, Row, Col } from './Table';
 import { view, ui_prefs } from './data/example2';
@@ -52,6 +53,8 @@ function App() {
     // updateview(items);
   }
 
+  
+
 
 
 const toolBoxContent = (dragHandleProps) => {
@@ -76,11 +79,13 @@ const toolBoxContent = (dragHandleProps) => {
 
       <Table mode={mode} ref={tableRef} headerData={header} theme="default">
         {(tableProvided) => {
+          // console.log(tableProvided)
           return (
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="characters" >
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
+
                   {
                     view.map((row, i) => {
                       return (
@@ -186,8 +191,8 @@ const toolBoxContent = (dragHandleProps) => {
         </Row>
         </div>
         )}
-      </Table> */}
-        
+      </Table>
+         */}
 
 
 

@@ -56,6 +56,7 @@ const Header = React.forwardRef(({
                                 onResize={onLabelColResize}
                                 viewportHeight={viewportHeight}
                                 type="first"
+                                horizontalAlign="left"
                                 selectable={false}
                                 style={{width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
                             >

@@ -22,6 +22,8 @@ const Resizer = styled.div`
     height: 100%;
     cursor: col-resize;
     background: ${props => props.isResizing ? '#64b2fe' : 'transparent'};
+    
+    border-${({direction})=> direction}: solid 1px #ccc;
     &:hover {
         background: #64b2fe;
     }
@@ -41,7 +43,16 @@ const Line = styled.div`
     display: ${props => props.isResizing ? 'block' : 'none'};
 `;
 
-const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', style, type }) => {
+const Fill = styled.div`
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: ${props => props.horizontalAlign};
+`;
+
+const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', style, type, horizontalAlign='right' }) => {
 
     const [w, setW] = useState(0);
     const [x, setX] = useState(0);
@@ -113,11 +124,13 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
 
     return (
         <Col
-            ref={colRef}
-            style={{...style }}
-            selectable={false}
-            type={type}
+        style={{...style }}
+        selectable={false}
+        type={type}
+        empty={true}
         >
+          {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}  
+            <Fill className='fill' ref={colRef} horizontalAlign={horizontalAlign}>
             {children}
             <Resizer
                 onMouseDown={mouseDownHandler}
@@ -132,6 +145,7 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
                     direction={direction}
                 />
             </Resizer>
+            </Fill>
         </Col>
     )
 }

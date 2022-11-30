@@ -23,9 +23,6 @@ const SelectedCol = () => {
         setMouseDownColCord, 
         setMouseMoveColCord, 
         setMouseUpColCord,
-        mouseDownColCord,
-        mouseMoveColCord,
-        mouseUpColCord,
     } = useContext(TableContext); 
     
     useEffect(() => {
@@ -45,6 +42,9 @@ const SelectedCol = () => {
     const onMouseDown = (e) => {
         trackMouseMove = true;
         let { x, y } = e.delegateTarget.dataset;
+        // if x and y are undefined return
+        if (x === undefined || y === undefined) return;
+
         setMouseMoveColCord(null);
         setMouseDownColCord([ x, y ]);
     }
@@ -52,6 +52,7 @@ const SelectedCol = () => {
     const onMouseMove = (e) => {
         if (trackMouseMove) {
             let { x, y } = e.delegateTarget.dataset;
+            if (x === undefined || y === undefined) return;
             setMouseMoveColCord([ x, y ]);
         }
     }
@@ -59,6 +60,7 @@ const SelectedCol = () => {
     const onMouseUp = (e) => {
         trackMouseMove = false;
         let { x, y } = e.delegateTarget.dataset;
+        if (x === undefined || y === undefined) return;
         setMouseUpColCord([ x, y ]);
     }
 

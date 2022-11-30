@@ -38,7 +38,7 @@ const Column = styled.div`
     }s
 `;
 
-const Col = React.forwardRef(({
+const Col = ({
     horizontalAlign = 'right',
     children,
     style = {},
@@ -46,7 +46,8 @@ const Col = React.forwardRef(({
     id,
     x,
     y,
-}, ref) => {
+    empty = false
+}) => {
     // I need two refs on the col
     const currentColRef = useRef(null);
     const {
@@ -61,7 +62,7 @@ const Col = React.forwardRef(({
         if (tableMatrix[y]) {
             setTableMatrix(prev => {
                 // add currentColref to the tableMatrix in the y row and x col
-                prev[y][x] = currentColRef.current;
+                prev[y][x] = currentColRef;
                 return prev;
             });
         }
@@ -83,9 +84,6 @@ const Col = React.forwardRef(({
      * Selected rectange needs to be on a higher level component
      */
     const isHightlighted = () => {
-
-        // if (!selectable) return false;
-        // if (!selectColDraging) return false; 
 
         let isX = false;
         let isY = false;
@@ -130,8 +128,7 @@ const Col = React.forwardRef(({
         <Column
             horizontalAlign={horizontalAlign}
             style={{ ...theTheme.col, ...style }}
-            // ref={ref}
-            ref={(el) => { ref = el; currentColRef.current = el; }}
+            ref={currentColRef}
             x={x}
             y={y}
             data-x={x}
@@ -139,11 +136,18 @@ const Col = React.forwardRef(({
             id={id}
             className={`tableCol ${isHightlighted()}`}
         >
-            <Cell parentWidth={style.width} parentType={type}>
-                {children}
-            </Cell>
+            {!empty &&
+                <Cell parentWidth={style.width} parentType={type}>
+                    {children}
+                </Cell>
+            }
+            {/* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell, 
+            one for the matrix and another for the resize. The solution is to use empty col in resizeCol and fill the space 
+            with a child for mesurements 
+            */}
+            {empty && <>{children}</>}
         </Column>
     )
-});
+}
 
 export default Col;
