@@ -133,6 +133,7 @@ const Col = ({
             y={y}
             data-x={x}
             data-y={y}
+            type={type}
             id={id}
             className={`tableCol ${isHightlighted()}`}
         >

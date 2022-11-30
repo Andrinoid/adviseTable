@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useSyncScroller } from "./useSyncScroller";
 
 import Header from './Header';
+import Footer from './Footer';
 import { TableContext } from './context';
 import SelectedCol from './SelectedCol';
 
@@ -37,6 +38,8 @@ box-sizing: border-box;
 }
 `;
 
+
+
 const themes = {
     default: {
         name: 'default',
@@ -49,7 +52,7 @@ const themes = {
             borderBottom: 'solid 1px #ededed',
         },
         row: {
-            
+
         },
         col: {
             // background: 'white',s
@@ -70,13 +73,13 @@ const themes = {
             border: '1px solid #ebebeb',
         },
         row: {
-            
+
         },
         col: {
             background: '#202124',
             color: '#bdc6cf',
-            boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',  
-            
+            boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',
+
 
         },
         cell: {
@@ -85,16 +88,18 @@ const themes = {
     }
 }
 
-const Table = ({ headerData, theme="default", children }, ref) => {
+const Table = ({ headerData, theme = "default", children, onSelection = () => { } }, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
+    // fix scroller for multiple instances
+    // fix table resizer
 
     const viewportRef = useRef(null);
     const [theTheme, setTheTheme] = useState(themes[theme]);
     const [viewportWidth, setViewportWidth] = useState(0);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [labelColWidth, setlabelColWidth] = useState(150);
-    const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length-2);
+    const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
     const [headerHeight, setHeaderHeight] = useState(35);
     const [colHeight, setColHeight] = useState(40);
     // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
@@ -119,11 +124,17 @@ const Table = ({ headerData, theme="default", children }, ref) => {
     const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
     const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
 
+    const [selectedCount, setSelectedCount] = useState(0);
+    const [selectedSum, setSelectedSum] = useState(0);
+    const [selectedMin, setSelectedMin] = useState(0);
+    const [selectedMax, setSelectedMax] = useState(0);
+    const [selectedAvg, setSelectedAvg] = useState(0);
 
     // create unique id for each table
     const tableId = useRef(Math.random().toString(36).substr(2, 9));
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
+
 
     useImperativeHandle(ref, () => ({
         autoAdjust() {
@@ -139,6 +150,11 @@ const Table = ({ headerData, theme="default", children }, ref) => {
         setViewportWidth(viewportRef.current.offsetWidth);
         setViewportHeight(viewportRef.current.offsetHeight);
     }, []);
+
+    useEffect(() => {
+        getSelectedArea(mouseDownColCord, mouseMoveColCord);
+        console.log('getselection fire');
+    }, [mouseDownColCord, mouseMoveColCord]);
 
     const autoAdjustLabelColWidth = () => {
         setlabelColWidth(biggestLabelCellWidth);
@@ -166,6 +182,66 @@ const Table = ({ headerData, theme="default", children }, ref) => {
 
     const calcColWidth = () => {
         return (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / numberOfDataCols;
+    }
+
+    const getSelectedArea = (startCord, endCord) => {
+
+        if (!startCord || !endCord) return null;
+        const startY = startCord[1];
+        const endY = endCord[1];
+        const startX = startCord[0];
+        const endX = endCord[0];
+
+        const minY = Math.min(startY, endY);
+        const maxY = Math.max(startY, endY);
+        const minX = Math.min(startX, endX);
+        const maxX = Math.max(startX, endX);
+
+        const selectedArea = [];
+        let count = 0;
+        let sum = 0;
+        let min = 0;
+        let max = 0;
+        let avg = 0;
+        //pick the selected area from the table matrix
+        for (let i = minY; i <= maxY; i++) {
+            for (let j = minX; j <= maxX; j++) {
+
+                selectedArea.push(tableMatrix[i][j]);
+
+                let value = tableMatrix[i][j].current.innerText;
+                // try to convert value to number
+                value = Number(value);
+                if (!isNaN(value)) {
+                    sum += value;
+                }
+                // find the lowest value
+                if (min === 0) {
+                    min = value;
+                } else if (value < min) {
+                    min = value;
+                }
+                // find the highest value
+                if (max === 0) {
+                    max = value;
+                } else if (value > max) {
+                    max = value;
+                }
+                avg = sum / count;
+
+                count++
+            }
+        }
+        if(count > 0){
+            setSelectedCount(count);
+            setSelectedSum(sum);
+            setSelectedMin(min);
+            setSelectedMax(max);
+            setSelectedAvg(avg);
+        }
+
+        return selectedArea;
+
     }
 
     return (
@@ -199,7 +275,7 @@ const Table = ({ headerData, theme="default", children }, ref) => {
             selectedCol,
             selectedArea,
             theTheme,
-        }}> 
+        }}>
             <Wrapper ref={ref}>
 
                 <Header
@@ -240,8 +316,10 @@ const Table = ({ headerData, theme="default", children }, ref) => {
                             }
                         })}
                     </div>
-                    <SelectedCol />
+                    <SelectedCol onSelection={onSelection} />
                 </div>
+                <Footer count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
+
             </Wrapper>
         </TableContext.Provider>
     )
@@ -250,8 +328,8 @@ const Table = ({ headerData, theme="default", children }, ref) => {
 export default React.forwardRef(Table);
 
 
-  
-  
+
+
 // [y 0
 //     [ref],[ref],[ref]
 // ], 

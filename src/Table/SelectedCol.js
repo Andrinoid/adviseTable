@@ -17,17 +17,17 @@ const Selected = styled.div`
 
 let trackMouseMove = false;
 
-const SelectedCol = () => {
+const SelectedCol = ({ onSelection }) => {
 
     const {
-        setMouseDownColCord, 
-        setMouseMoveColCord, 
+        setMouseDownColCord,
+        setMouseMoveColCord,
         setMouseUpColCord,
-    } = useContext(TableContext); 
-    
+    } = useContext(TableContext);
+
     useEffect(() => {
-        
-        let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false);
+
+        let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, true );
         let mouseMove = delegate(document.body, '.tableCol', 'mousemove', onMouseMove, false);
         let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
 
@@ -42,18 +42,34 @@ const SelectedCol = () => {
     const onMouseDown = (e) => {
         trackMouseMove = true;
         let { x, y } = e.delegateTarget.dataset;
+        console.log(e)
         // if x and y are undefined return
-        if (x === undefined || y === undefined) return;
-
+        if (x === undefined || y === undefined) {
+            setMouseMoveColCord(null);
+            setMouseDownColCord(null);
+            setMouseUpColCord(null);
+            return;
+        };
+        // only run setters if x and y have changed from previous values
         setMouseMoveColCord(null);
-        setMouseDownColCord([ x, y ]);
+        setMouseDownColCord([x, y]);
     }
 
+    let oldX = null;
+    let oldY = null;
     const onMouseMove = (e) => {
         if (trackMouseMove) {
             let { x, y } = e.delegateTarget.dataset;
             if (x === undefined || y === undefined) return;
-            setMouseMoveColCord([ x, y ]);
+
+            // only run if x and y have changed from previous values. That is moved to next cell
+            if (x !== oldX || y !== oldY) {
+                setMouseMoveColCord([x, y]);
+                // fire the onSelection callback to the table component
+                onSelection();
+            }
+            oldX = x;
+            oldY = y;
         }
     }
 
@@ -61,7 +77,7 @@ const SelectedCol = () => {
         trackMouseMove = false;
         let { x, y } = e.delegateTarget.dataset;
         if (x === undefined || y === undefined) return;
-        setMouseUpColCord([ x, y ]);
+        setMouseUpColCord([x, y]);
     }
 
     return <></>;

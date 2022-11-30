@@ -66,7 +66,7 @@ const Row = ({
 
         if (React.isValidElement(child)) {
             return React.cloneElement(child, {
-                id: `x${rowNumber}y${i + 1}`,
+                id: `x${i}y${rowNumber}`,
                 y: rowNumber,
                 x: i,
                 type,
