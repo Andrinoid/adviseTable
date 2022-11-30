@@ -76,7 +76,6 @@ const toolBoxContent = (dragHandleProps) => {
 
       <Table mode={mode} ref={tableRef} headerData={header} theme="default">
         {(tableProvided) => {
-          console.log('tableProvided',tableProvided);
           return (
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="characters" >

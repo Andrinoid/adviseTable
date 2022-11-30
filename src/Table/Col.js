@@ -1,5 +1,5 @@
 //react component  
-import React, {useRef, useContext} from 'react';
+import React, { useRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { TableContext } from './context';
 import Cell from './Cell';
@@ -55,17 +55,17 @@ const Col = React.forwardRef(({
         setTableMatrix,
         tableMatrix,
         theTheme,
-    } = useContext(TableContext); 
+    } = useContext(TableContext);
 
-    if (tableMatrix[y]) {
-        setTimeout(() => {
+    useEffect(() => {
+        if (tableMatrix[y]) {
             setTableMatrix(prev => {
                 // add currentColref to the tableMatrix in the y row and x col
                 prev[y][x] = currentColRef.current;
                 return prev;
             });
-        }, 0);
-    }
+        }
+    }, []);
 
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];
@@ -78,15 +78,15 @@ const Col = React.forwardRef(({
     }
 
     /**
-	 * Calculate the selected area
-	 * Note that we can not draw the selected area here, because we are in a single column component
+     * Calculate the selected area
+     * Note that we can not draw the selected area here, because we are in a single column component
      * Selected rectange needs to be on a higher level component
-	 */
+     */
     const isHightlighted = () => {
 
         // if (!selectable) return false;
         // if (!selectColDraging) return false; 
-     
+
         let isX = false;
         let isY = false;
         let minX;
@@ -94,7 +94,7 @@ const Col = React.forwardRef(({
         let minY;
         let maxY;
 
-        if(mouseDownColCord && mouseMoveColCord) {
+        if (mouseDownColCord && mouseMoveColCord) {
             // Find the min and max of the mouseDownColCord and mouseMoveColCord
             minX = Math.min(mouseDownColCord[0], mouseMoveColCord[0]);
             maxX = Math.max(mouseDownColCord[0], mouseMoveColCord[0]);
@@ -102,17 +102,16 @@ const Col = React.forwardRef(({
             maxY = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
 
             // Check if the current column is in the selected area
-            if(x >= minX && x <= maxX) {
+            if (x >= minX && x <= maxX) {
                 isX = true;
             }
-            if(y >= minY && y <= maxY) {  
+            if (y >= minY && y <= maxY) {
                 isY = true;
             }
         }
-        if(mouseDownColCord && !mouseMoveColCord) {
+        if (mouseDownColCord && !mouseMoveColCord) {
 
-            if(x == mouseDownColCord[0] && y == mouseDownColCord[1]) {
-                console.log('its the same');
+            if (x == mouseDownColCord[0] && y == mouseDownColCord[1]) {
                 isX = true;
                 isY = true;
                 minX = x;
@@ -121,16 +120,16 @@ const Col = React.forwardRef(({
                 maxY = y;
             }
         }
-        if(isX && isY) { 
+        if (isX && isY) {
             return createOutlineClasses(minX, maxX, minY, maxY, x, y);
-        }        
+        }
         return false;
     }
-    
+
     return (
-        <Column 
+        <Column
             horizontalAlign={horizontalAlign}
-            style={{...theTheme.col, ...style}} 
+            style={{ ...theTheme.col, ...style }}
             // ref={ref}
             ref={(el) => { ref = el; currentColRef.current = el; }}
             x={x}

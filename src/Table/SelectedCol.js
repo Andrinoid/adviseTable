@@ -45,7 +45,6 @@ const SelectedCol = () => {
     const onMouseDown = (e) => {
         trackMouseMove = true;
         let { x, y } = e.delegateTarget.dataset;
-        console.log('onMouseDown', x, y);
         setMouseMoveColCord(null);
         setMouseDownColCord([ x, y ]);
     }
