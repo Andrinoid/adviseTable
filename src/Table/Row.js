@@ -1,13 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Col from './Col';
 
 const RowElm = styled.div`
     position: relative;
-    &:hover {
-        background: #e5f2fe;
-        box-shaddow: inset 0 0 2px #e5f2fe;
-    }
+    ${({hover}) => hover ? 'background: #e5f2fe;' : 'background: #fff;'}
 `;
 
 const Row = ({
@@ -27,6 +24,7 @@ const Row = ({
 }) => {
 
     const currentRowRef = useRef(null);
+    const [hover, setHover] = useState(false);
     const leftOffset = toolBoxWidth;
     // initial row number is one 
     let rowNumber = index;
@@ -40,8 +38,8 @@ const Row = ({
             prev.push([]);
             return prev;
         }); 
-    }     
-
+    }   
+    
     const childrenWithProps = React.Children.map(children, (child, i) => {
 
         let type;
@@ -70,6 +68,7 @@ const Row = ({
                 y: rowNumber,
                 x: i,
                 type,
+                rowHovered: hover,
                 style: { width: width, height: colHeight, top: 0, left: left }
             });
         }        
@@ -82,7 +81,12 @@ const Row = ({
         <>
             {/* We need the height here because all cols are position absolute
                 Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯ */}
-            <RowElm style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}>
+            <RowElm 
+                onMouseOver={() => setHover(true)}
+                onMouseOut={() => setHover(false)}
+                hover={hover}
+                style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}
+            >
                 <Col
                     horizontalAlign='left'
                     selectable={false}

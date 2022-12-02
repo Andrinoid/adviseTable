@@ -14,32 +14,30 @@ const Column = styled.div`
     justify-content: ${props => props.horizontalAlign};
     position: absolute;
     user-select: none;
-    transition: all 0.2s ease;
+    // transition: all 0.2s ease;
     border: 1px solid transparent;
     box-sizing: border-box;
     &.hightlighted {
-        background: #e9f0fd;
+        background: rgba(33,150,243,0.2);;
     }
     &.outline-left {
-        // box-shadow: inset 2px 0px 0 1px #65b2fe;
         border-left: 1px solid #65b2fe;
     }
     &.outline-right {
-        // box-shadow: inset -1px 0px 0 1px #65b2fe;
         border-right: 1px solid #65b2fe;
     }
     &.outline-top {
-        // box-shadow: inset 0px 1px 0 1px #65b2fe;
         border-top: 1px solid #65b2fe;
     }
     &.outline-bottom {
-        // box-shadow: inset 0px -1px 0 1px #65b2fe;
         border-bottom: 1px solid #65b2fe;
-    }s
+    }
+    // ${props => props.rowHovered && 'background: #baddfb !important;'}
 `;
 
 const Col = ({
     horizontalAlign = 'right',
+    rowHovered,
     children,
     style = {},
     type,
@@ -135,6 +133,7 @@ const Col = ({
             data-y={y}
             type={type}
             id={id}
+            rowHovered={rowHovered}
             className={`tableCol ${isHightlighted()}`}
         >
             {!empty &&
