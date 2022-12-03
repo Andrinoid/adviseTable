@@ -38,13 +38,14 @@ const Box = styled.div`
     }
 }`;
 
-const Footer = ({ count, sum, min, max, avg }) => {
+const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+    console.log("Footer", maxWidth);
     return (
-        <TableFooter>
+        <TableFooter style={{maxWidth: maxWidth}}>
             <Left>
 
             </Left>

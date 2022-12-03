@@ -320,7 +320,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                     <Scroller active={selectColDraging} />    
                 </div>
                 <div className='table-end'></div>
-                <Footer count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
+                <Footer maxWidth={totalWidth} count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
                 
             </Wrapper>
         </TableContext.Provider>
