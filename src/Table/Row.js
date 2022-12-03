@@ -5,6 +5,7 @@ import Col from './Col';
 const RowElm = styled.div`
     position: relative;
     ${({hover}) => hover ? 'background: #e5f2fe;' : 'background: #fff;'}
+    
 `;
 
 const Row = ({
@@ -68,7 +69,6 @@ const Row = ({
                 y: rowNumber,
                 x: i,
                 type,
-                rowHovered: hover,
                 style: { width: width, height: colHeight, top: 0, left: left }
             });
         }        

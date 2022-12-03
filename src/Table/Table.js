@@ -8,6 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { TableContext } from './context';
 import SelectedCol from './SelectedCol';
+import Scroller from './Scroller';
 
 const Wrapper = styled.div`
 width: 100%;
@@ -96,6 +97,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
 
     const viewportRef = useRef(null);
     const [theTheme, setTheTheme] = useState(themes[theme]);
+
     const [viewportWidth, setViewportWidth] = useState(0);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [labelColWidth, setlabelColWidth] = useState(150);
@@ -116,9 +118,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
     const [selectedCol, setSelectedCol] = useState(null);
     const [selectedArea, setSelectedArea] = useState(null);
 
-
     const [tableMatrix, setTableMatrix] = useState([]);
-
 
     const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
     const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
@@ -131,7 +131,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
     const [selectedAvg, setSelectedAvg] = useState(0);
 
     // create unique id for each table
-    const tableId = useRef(Math.random().toString(36).substr(2, 9));
+    const tableId = Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
 
@@ -153,7 +153,6 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
 
     useEffect(() => {
         getSelectedArea(mouseDownColCord, mouseMoveColCord);
-        console.log('getselection fire');
     }, [mouseDownColCord, mouseMoveColCord]);
 
     const autoAdjustLabelColWidth = () => {
@@ -272,11 +271,12 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
             biggestDataCellWidth,
             biggestLabelCellWidth,
             biggestTotalCellWidth,
+            viewportHeight,
             selectedCol,
             selectedArea,
             theTheme,
         }}>
-            <Wrapper ref={ref}>
+            <Wrapper ref={ref} className={'table-viewport'}>
 
                 <Header
                     ref={headerScrollRef}
@@ -316,10 +316,12 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                             }
                         })}
                     </div>
-                    <SelectedCol onSelection={onSelection} />
+                    <SelectedCol onSelection={onSelection}/>
+                    <Scroller active={selectColDraging} />    
                 </div>
+                <div className='table-end'></div>
                 <Footer count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
-
+                
             </Wrapper>
         </TableContext.Provider>
     )

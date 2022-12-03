@@ -23,12 +23,14 @@ const SelectedCol = ({ onSelection }) => {
         setMouseDownColCord,
         setMouseMoveColCord,
         setMouseUpColCord,
+        setSelectColDraging,
+        setHoveredRowY,
     } = useContext(TableContext);
 
     useEffect(() => {
 
-        let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, true );
-        let mouseMove = delegate(document.body, '.tableCol', 'mousemove', onMouseMove, false);
+        let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false );
+        let mouseMove = delegate(document.body, '.tableCol', 'mouseover', onMouseMove, false);
         let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
 
         return () => {
@@ -42,7 +44,6 @@ const SelectedCol = ({ onSelection }) => {
     const onMouseDown = (e) => {
         trackMouseMove = true;
         let { x, y } = e.delegateTarget.dataset;
-        console.log(e)
         // if x and y are undefined return
         if (x === undefined || y === undefined) {
             setMouseMoveColCord(null);
@@ -59,6 +60,7 @@ const SelectedCol = ({ onSelection }) => {
     let oldY = null;
     const onMouseMove = (e) => {
         if (trackMouseMove) {
+            setSelectColDraging(true);
             let { x, y } = e.delegateTarget.dataset;
             if (x === undefined || y === undefined) return;
 
@@ -75,6 +77,7 @@ const SelectedCol = ({ onSelection }) => {
 
     const onMouseUp = (e) => {
         trackMouseMove = false;
+        setSelectColDraging(false);
         let { x, y } = e.delegateTarget.dataset;
         if (x === undefined || y === undefined) return;
         setMouseUpColCord([x, y]);
