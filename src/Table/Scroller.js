@@ -6,11 +6,8 @@ var edgeSize = 50;
 var timer = null;
 const Scroller = ({active=false}) => {
 
-    const [target, setTarget] = useState(null);
-
     useEffect(() => {
         window.addEventListener("mousemove", handleMousemove, false);
-
 
         return () => {
             window.removeEventListener("mousemove", handleMousemove, false);
