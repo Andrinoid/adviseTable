@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { isElementInViewport } from "./utils";
+import { isElementInViewport } from "../utils";
 
 var edgeSize = 50;
 var timer = null;

@@ -1,9 +1,9 @@
 //react component  
 import React from 'react';
 import styled from 'styled-components';
-import ResizablelCol from './ResizablelCol';
+import ResizablelCol from '../Col/ResizablelCol';
 import ResizableTable from './ResizableTable';
-import Col from './Col';
+import Col from '../Col';
 
 const RowElm = styled.div`
     position: sticky;

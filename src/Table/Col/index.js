@@ -1,7 +1,7 @@
 //react component  
 import React, { useRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { TableContext } from './context';
+import { TableContext } from '../context';
 import Cell from './Cell';
 
 

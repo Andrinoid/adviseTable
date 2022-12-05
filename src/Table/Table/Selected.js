@@ -1,6 +1,6 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
-import { TableContext } from "./context";
+import { TableContext } from "../context";
 import delegate from "delegate";
 
 let trackMouseMove = false;

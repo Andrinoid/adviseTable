@@ -2,11 +2,11 @@
 import React, { useState, useRef, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 
-import { useSyncScroller } from "./useSyncScroller";
+import { useSyncScroller } from "../utils/useSyncScroller";
 
-import Header from './Header';
-import Footer from './Footer';
-import { TableContext } from './context';
+import Header from '../Header';
+import Footer from '../Footer';
+import { TableContext } from '../context';
 import Selected from './Selected';
 import Scroller from './Scroller';
 import themes from './themes';

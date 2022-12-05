@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import Col from './Col';
-import { TableContext } from './context';
+import Col from './';
+import { TableContext } from '../context';
 
 const Resizer = styled.div`
     position: absolute;

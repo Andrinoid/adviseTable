@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Col from './Col';
+import Col from '../Col';
 
 
 const RowElm = styled.div`

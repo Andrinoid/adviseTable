@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { TableContext } from "./context";
+import { TableContext } from "../context";
 
 const cellPaddingLeftRight = 5;
 
