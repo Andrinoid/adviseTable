@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { toInteger } from "lodash";
 
 const TableFooter = styled.div`
     display: flex;
@@ -60,7 +61,7 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
                         <Box>max: <span>{numberWithCommas(max)}</span></Box>
                     }
                     {!isNaN(avg) &&
-                    <Box>avg: <span>{numberWithCommas(avg)}</span></Box>
+                    <Box>avg: <span>{(numberWithCommas(toInteger(avg)))}</span></Box>
                     }
                     {!isNaN(sum) &&
                     <Box>sum: <span>{numberWithCommas(sum)}</span></Box>
