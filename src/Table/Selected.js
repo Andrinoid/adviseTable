@@ -29,7 +29,6 @@ const Selected = ({ onSelection }) => {
             mouseMove.destroy();
             mouseUp.destroy();
         };
-
     }, []);
 
     /**

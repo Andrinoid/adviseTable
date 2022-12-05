@@ -10,17 +10,15 @@ const SpaceAround = styled.div`
     // background: ${props => props.isOverflowing ? 'red' : 'transparent'};
 `;
 
-const Cell = ({ children, parentWidth, parentType }) => {
+// x and y are only for debugging if needed
+const Cell = ({ children, parentWidth, parentType, x, y }) => {
     const ref = useRef(null);
     const [isOverflowing, setIsOverflowing] = useState(false);
     const [cellWidth, setCellWidth] = useState(null)
+
+    // Get the context we need
     const {
         totalWidth,
-        // setTotalWidth,
-        // labelColWidth,
-        // setlabelColWidth,
-        // totalColWidth,
-        // setTotalColWidth,
         setBiggestDataCellWidth,
         biggestDataCellWidth,
         setBiggestLabelCellWidth,
@@ -29,6 +27,9 @@ const Cell = ({ children, parentWidth, parentType }) => {
         biggestTotalCellWidth,
     } = useContext(TableContext);
 
+    /**
+     * This functionn gets the total width of an element, we use it to check if the cell is overflowing
+     */
     function getElementWidth(element) {
         const style = element.currentStyle || window.getComputedStyle(element);
         const width = element.offsetWidth;
@@ -37,8 +38,11 @@ const Cell = ({ children, parentWidth, parentType }) => {
         const border = parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
         return width + margin + padding + border;
     }
+
+    /**
+     * Find the widest cell and set it as context so we can use it to auto adjust the width of the columns
+     */
     useEffect(() => {
-        // Find the widest cell so table can be adjusted to fit
         if (parentType === 'middle') {
             if (getElementWidth(ref.current) > biggestDataCellWidth) {
                 setBiggestDataCellWidth(getElementWidth(ref.current));
@@ -54,39 +58,26 @@ const Cell = ({ children, parentWidth, parentType }) => {
                 setBiggestTotalCellWidth(getElementWidth(ref.current));
             }       
         }
+        // im not sure if we should run on every render
+        // or cellWidth, biggestDataCellWidth. keeping this as reference
+    }, []);
 
-    }, [cellWidth, biggestDataCellWidth]);
-
+    /**
+     * Check if the cell is overflowing and set the state
+     */
     useEffect(() => {
-        setCellWidth(ref.current.offsetWidth);
-
-        if (cellWidth > parentWidth) {
+        if (ref.current.offsetWidth > parentWidth) {
             setIsOverflowing(true);
         } else {
-            setIsOverflowing(false);
+            setIsOverflowing(false);    
         }
 
-    }, [parentWidth, cellWidth, totalWidth]);
-
-    // useEffect(() => {
-    //     if (isOverflowing) {
-    //         if (parentType === 'first') {
-    //             // setlabelColWidth(labelColWidth+ 20)
-    //         }
-    //         if (parentType === 'middle') {
-    //             // setTotalWidth(totalWidth + 20);
-    //         }
-    //         if (parentType === 'last') {
-    //             // setTotalColWidth(totalColWidth + 20);
-    //         }
-    //     }
-    // }, [isOverflowing, totalWidth]);
-
-
+    }, [parentWidth, totalWidth]);
 
     return (
         <SpaceAround ref={ref} isOverflowing={isOverflowing}>
             {children}
+            {/* x{x} y{y} */}
         </SpaceAround>
     );
 };

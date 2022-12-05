@@ -145,7 +145,7 @@ const Col = ({
             className={`tableCol ${isHightlighted()}`}
         >
             {!empty &&
-                <Cell parentWidth={style.width} parentType={type}>
+                <Cell parentWidth={style.width} parentType={type} x={x} y={y}>
                     {children}
                 </Cell>
             }
