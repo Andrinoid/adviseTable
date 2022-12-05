@@ -11,8 +11,6 @@ const RowElm = styled.div`
 let instancesCount = 0
 
 const Row = ({
-    index,
-    topOffset,
     colWidth,
     colHeight,
     labelColWidth,
@@ -21,10 +19,6 @@ const Row = ({
     numberOfDataCols,
     totalWidth,
     toolBoxContent,
-    setTableMatrix,
-    tableMatrix,
-    setRowIndex,
-    rowIndex,
     children
 }) => {
 
@@ -40,22 +34,10 @@ const Row = ({
         instancesCount += 1
         setRowNumber(instancesCount)
         return () => {
-          instancesCount -= 1
-          setRowNumber(instancesCount)
+            instancesCount -= 1
+            setRowNumber(instancesCount)
         }
-      }, [])
-
-    // push an array to the setTableMatrix for each row
-    // this array will hold the refs for each col in the row
-    //   useLayoutEffect(() => {
-    //     if (tableMatrix.length < rowNumber + 1) {
-    //         setTableMatrix(prev => {
-    //             prev.push([]);
-    //             return prev;
-    //         });
-    //     }
-    // }, [rowNumber]);
-
+    }, [])
 
     const childrenWithProps = React.Children.map(children, (child, i) => {
 

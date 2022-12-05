@@ -53,10 +53,6 @@ function App() {
     // updateview(items);
   }
 
-
-
-
-
   const toolBoxContent = (dragHandleProps, rowId) => {
     return (
       <Flex>
@@ -65,11 +61,11 @@ function App() {
           cursor={'pointer'}
           style={{ marginLeft: 4 }}
           onClick={() => {
-            // if (expandedIds.includes(rowId)) {
-            //   setExpandedIds(expandedIds.filter((id) => id !== rowId));
-            // } else {
-            //   setExpandedIds([...expandedIds, rowId]);
-            // }
+            if (expandedIds.includes(rowId)) {
+              setExpandedIds(expandedIds.filter((id) => id !== rowId));
+            } else {
+              setExpandedIds([...expandedIds, rowId]);
+            }
           }}
         >
           <Plus />
@@ -126,7 +122,7 @@ function App() {
 
                                 </Row>
 
-                                {/* {expandedIds.includes(row.id) &&
+                                {expandedIds.includes(row.id) &&
                                   <Row>
                                     <Col>
                                       34567
@@ -138,7 +134,7 @@ function App() {
                                       34567
                                     </Col>
                                   </Row>
-                                } */}
+                                }
 
                               </div>
                             )}

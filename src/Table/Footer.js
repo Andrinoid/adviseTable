@@ -46,7 +46,7 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
     }
 
     return (
-        <TableFooter style={{maxWidth: maxWidth}}>
+        <TableFooter style={{ maxWidth: maxWidth }}>
             <Left>
 
             </Left>
@@ -55,16 +55,16 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
                 {count > 1 && <>
                     <Box>count: <span>{count}</span></Box>
                     {!isNaN(min) &&
-                    <Box>min: <span>{numberWithCommas(min)}</span></Box>
+                        <Box>min: <span>{numberWithCommas(min)}</span></Box>
                     }
                     {!isNaN(max) &&
                         <Box>max: <span>{numberWithCommas(max)}</span></Box>
                     }
                     {!isNaN(avg) &&
-                    <Box>avg: <span>{(numberWithCommas(toInteger(avg)))}</span></Box>
+                        <Box>avg: <span>{(numberWithCommas(toInteger(avg)))}</span></Box>
                     }
                     {!isNaN(sum) &&
-                    <Box>sum: <span>{numberWithCommas(sum)}</span></Box>
+                        <Box>sum: <span>{numberWithCommas(sum)}</span></Box>
                     }
                 </>
                 }

@@ -39,8 +39,6 @@ box-sizing: border-box;
 }
 `;
 
-
-
 const themes = {
     default: {
         name: 'default',
@@ -92,7 +90,6 @@ const themes = {
 const Table = ({ headerData, theme = "default", children, onSelection = () => { } }, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
-    // fix scroller for multiple instances
     // fix table resizer
 
     const viewportRef = useRef(null);
@@ -134,8 +131,6 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
     const tableId = Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
-
-    const [rowIndex , setRowIndex] = useState(0);
 
 
     useImperativeHandle(ref, () => ({
@@ -210,25 +205,25 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
 
                 selectedArea.push(tableMatrix[i][j]);
                 try {
-                let value = tableMatrix[i][j].current.innerText;
-                // try to convert value to number
-                value = Number(value);
-                if (!isNaN(value)) {
-                    sum += value;
-                }
-                // find the lowest value
-                if (min === 0) {
-                    min = value;
-                } else if (value < min) {
-                    min = value;
-                }
-                // find the highest value
-                if (max === 0) {
-                    max = value;
-                } else if (value > max) {
-                    max = value;
-                }
-                avg = sum / count;
+                    let value = tableMatrix[i][j].current.innerText;
+                    // try to convert value to number
+                    value = Number(value);
+                    if (!isNaN(value)) {
+                        sum += value;
+                    }
+                    // find the lowest value
+                    if (min === 0) {
+                        min = value;
+                    } else if (value < min) {
+                        min = value;
+                    }
+                    // find the highest value
+                    if (max === 0) {
+                        max = value;
+                    } else if (value > max) {
+                        max = value;
+                    }
+                    avg = sum / count;
                 } catch (error) {
 
                     // onsole log as error
@@ -238,7 +233,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                 count++
             }
         }
-        if(count > 0){
+        if (count > 0) {
             setSelectedCount(count);
             setSelectedSum(sum);
             setSelectedMin(min);
@@ -318,19 +313,15 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
-                                setTableMatrix: setTableMatrix,
-                                setRowIndex: setRowIndex,
-                                rowIndex: rowIndex,
-                                tableMatrix: tableMatrix,
                             }
                         })}
                     </div>
-                    <SelectedCol onSelection={onSelection}/>
-                    <Scroller active={selectColDraging} />    
+                    <SelectedCol onSelection={onSelection} />
+                    <Scroller active={selectColDraging} />
                 </div>
                 <div className='table-end'></div>
                 <Footer maxWidth={totalWidth} count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
-                
+
             </Wrapper>
         </TableContext.Provider>
     )

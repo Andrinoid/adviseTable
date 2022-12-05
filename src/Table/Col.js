@@ -32,12 +32,10 @@ const Column = styled.div`
     &.outline-bottom {
         border-bottom: 1px solid #65b2fe;
     }
-    // ${props => props.rowHovered && 'background: #baddfb !important;'}
 `;
 
 const Col = ({
     horizontalAlign = 'right',
-    rowHovered,
     children,
     style = {},
     type,
@@ -73,9 +71,9 @@ const Col = ({
         }
     }, [y, x]);
 
-    
 
-    
+
+
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];
         if (y === minY) classes.push('outline-top');
@@ -143,7 +141,6 @@ const Col = ({
             data-y={y}
             type={type}
             id={id}
-            rowHovered={rowHovered}
             className={`tableCol ${isHightlighted()}`}
         >
             {!empty &&
