@@ -5,7 +5,7 @@ import delegate from "delegate";
 
 let trackMouseMove = false;
 
-const SelectedCol = ({ onSelection }) => {
+const Selected = ({ onSelection }) => {
 
     // Get the context we need
     const {
@@ -22,12 +22,12 @@ const SelectedCol = ({ onSelection }) => {
     useEffect(() => {
         let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false );
         let mouseMove = delegate(document.body, '.tableCol', 'mouseover', onMouseMove, false);
-        // let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
+        let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
 
         return () => {
             mouseDown.destroy();
             mouseMove.destroy();
-            // mouseUp.destroy();
+            mouseUp.destroy();
         };
 
     }, []);
@@ -90,6 +90,6 @@ const SelectedCol = ({ onSelection }) => {
     return <></>;
 };
 
-export default SelectedCol;
+export default Selected;
 
 

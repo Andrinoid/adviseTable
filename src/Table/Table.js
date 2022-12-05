@@ -7,7 +7,7 @@ import { useSyncScroller } from "./useSyncScroller";
 import Header from './Header';
 import Footer from './Footer';
 import { TableContext } from './context';
-import SelectedCol from './SelectedCol';
+import Selected from './Selected';
 import Scroller from './Scroller';
 import themes from './themes';
 
@@ -260,7 +260,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                         })}
                     </div>
 
-                    <SelectedCol onSelection={onSelection} />
+                    <Selected onSelection={onSelection} />
                     <Scroller active={selectColDraging} />
                 </div>
                 <div className='table-end'></div> 
