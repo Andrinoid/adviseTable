@@ -1,16 +1,26 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Col from './Col';
 
+
 const RowElm = styled.div`
     position: relative;
-    ${({ hover }) => hover ? 'background: #e5f2fe;' : 'background: #fff;'}
-    
+    ${({ hover }) => hover ? 'background: #e5f2fe;' : 'background: #transparent;'}
+    ${({type})=> {
+        if(type === 'primary') {
+            return 'background: transparent'
+        }
+        else if (type === 'secondary') {
+            return 'background: #fafafa'
+        }
+    }}
 `;
 
+// Copunter for instances of this component used for row number
 let instancesCount = 0
 
 const Row = ({
+    type='primary',
     colWidth,
     colHeight,
     labelColWidth,
@@ -24,12 +34,12 @@ const Row = ({
 
     const currentRowRef = useRef(null);
     const [hover, setHover] = useState(false);
+    const [rowNumber, setRowNumber] = useState(0);
     const leftOffset = toolBoxWidth;
 
-    const [rowNumber, setRowNumber] = useState(0);
-    // count the number of cols to determine the id the total col
-    let counter = 0;
-
+    /** This is a hack to get the row number from the component instance
+     * we could also use querySelectorAll to count the elements before this one 
+     */ 
     useEffect(() => {
         instancesCount += 1
         setRowNumber(instancesCount)
@@ -39,8 +49,13 @@ const Row = ({
         }
     }, [])
 
-    const childrenWithProps = React.Children.map(children, (child, i) => {
-
+    /**
+     * Map over the children that should be Col components and add the props we need
+     * We want to keep the Col component simple for the user so we inject the props here
+     * We have three types of cols: first, middle and last becuase first and last cols have different widths
+     * and are rezisable. Data cols however are not resizable and have the same width
+     */ 
+    const childrenWithProps = React.Children.map(children, (child, i) => { 
         let type;
         let left;
         let width;
@@ -70,18 +85,18 @@ const Row = ({
                 style: { width: width, height: colHeight, top: 0, left: left }
             });
         }
-
-        counter++;
         return child;
     });
 
     return (
         <>
-            {/* We need the height here because all cols are position absolute
-                Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯ */}
+            {/* We only need the height here because all cols are position absolute
+              * Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯ 
+              */}
             <RowElm
                 onMouseOver={() => setHover(true)}
                 onMouseOut={() => setHover(false)}
+                type={type}
                 hover={hover}
                 style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}
             >
@@ -96,7 +111,6 @@ const Row = ({
                 {childrenWithProps}
 
             </RowElm>
-
         </>
     )
 }

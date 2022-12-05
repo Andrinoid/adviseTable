@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import DragHandle from './icons/DragHandle';
@@ -16,10 +16,20 @@ const Flex = styled.div`
   align-content: center;
   cursor: ${({ cursor }) => cursor || 'default'};
  `
+
+const createNewObject = () => ({});
+function useForceUpdate() {
+  const [, setValue] = useState(createNewObject);
+  return useCallback(() => {
+    setValue(createNewObject());
+  }, []);
+}
+
 function App() {
 
   const [mode, setMode] = useState('static');
   const [expandedIds, setExpandedIds] = useState([]);
+  const forceUpdate = useForceUpdate();
   const tableRef = useRef(null);
   const tableRef3 = useRef(null);
 
@@ -123,17 +133,99 @@ function App() {
                                 </Row>
 
                                 {expandedIds.includes(row.id) &&
-                                  <Row>
-                                    <Col>
-                                      34567
-                                    </Col>
-                                    <Col>
-                                      34567
-                                    </Col>
-                                    <Col>
-                                      34567
-                                    </Col>
-                                  </Row>
+                                  // <div>
+                                  //   <h1>hello</h1>
+                                  // </div>
+                                  <>
+                                    <Row {...tableProvided.rowProps} type={'secondary'}>
+                                      <Col horizontalAlign="left">
+                                        lykill 1004
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                    </Row>
+                                    <Row {...tableProvided.rowProps} type={'secondary'}>
+                                      <Col horizontalAlign="left">
+                                        lykill 1006
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                      <Col>
+                                        34567
+                                      </Col>
+                                    </Row>
+                                  </>
                                 }
 
                               </div>

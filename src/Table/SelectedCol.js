@@ -24,7 +24,6 @@ const SelectedCol = ({ onSelection }) => {
         setMouseMoveColCord,
         setMouseUpColCord,
         setSelectColDraging,
-        setHoveredRowY,
     } = useContext(TableContext);
 
     useEffect(() => {

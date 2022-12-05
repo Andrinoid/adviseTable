@@ -9,6 +9,7 @@ import Footer from './Footer';
 import { TableContext } from './context';
 import SelectedCol from './SelectedCol';
 import Scroller from './Scroller';
+import themes from './themes';
 
 const Wrapper = styled.div`
 width: 100%;
@@ -25,67 +26,11 @@ box-sizing: border-box;
     display: flex;
     flex: 1 1 auto;
 }
-.sub {
-    position: absolute;
-    white-space: nowrap;
-    width: 100%;
-    overflow-y: auto;
-    .col {
-        background: #f5f5f5;
-    }
-}
 .container {
     position: relative;
 }
 `;
 
-const themes = {
-    default: {
-        name: 'default',
-        table: {
-            background: '#fff',
-            border: '1px solid #ebebeb',
-        },
-        header: {
-            background: '#fafafa',
-            borderBottom: 'solid 1px #ededed',
-        },
-        row: {
-
-        },
-        col: {
-            // background: 'white',s
-
-        },
-        cell: {
-            border: '1px solid #ebebeb',
-        },
-    },
-    dark: {
-        name: 'dark',
-        table: {
-            background: '#000',
-            border: '1px solid #ebebeb',
-        },
-        header: {
-            background: '#000',
-            border: '1px solid #ebebeb',
-        },
-        row: {
-
-        },
-        col: {
-            background: '#202124',
-            color: '#bdc6cf',
-            boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',
-
-
-        },
-        cell: {
-            border: '1px solid #ebebeb',
-        },
-    }
-}
 
 const Table = ({ headerData, theme = "default", children, onSelection = () => { } }, ref) => {
     //TODO
@@ -127,7 +72,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
     const [selectedMax, setSelectedMax] = useState(0);
     const [selectedAvg, setSelectedAvg] = useState(0);
 
-    // create unique id for each table
+    // create unique id for each table. Used for seperating events
     const tableId = Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
@@ -225,8 +170,6 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                     }
                     avg = sum / count;
                 } catch (error) {
-
-                    // onsole log as error
                     console.error(error);
                 }
 
@@ -316,10 +259,11 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                             }
                         })}
                     </div>
+
                     <SelectedCol onSelection={onSelection} />
                     <Scroller active={selectColDraging} />
                 </div>
-                <div className='table-end'></div>
+                <div className='table-end'></div> 
                 <Footer maxWidth={totalWidth} count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
 
             </Wrapper>
@@ -328,13 +272,3 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
 }
 
 export default React.forwardRef(Table);
-
-
-
-
-// [y 0
-//     [ref],[ref],[ref]
-// ], 
-// [ y 1
-//     [],[],[]
-// ]

@@ -6,15 +6,12 @@ import Cell from './Cell';
 
 
 const Column = styled.div`
-    //background: ${props => props.selected ? '#e9f0fd' : 'white'};
-    // background: white;
-    // box-shadow: inset 0px 0px 0 0.5px #ebebeb;
+    // transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
     position: absolute;
     user-select: none;
-    // transition: all 0.2s ease;
     border: 1px solid transparent;
     box-sizing: border-box;
     &.hightlighted {
@@ -44,8 +41,9 @@ const Col = ({
     y,
     empty = false
 }) => {
-    // I need two refs on the col
     const currentColRef = useRef(null);
+
+    // Get the context we need
     const {
         mouseDownColCord,
         mouseMoveColCord,
@@ -55,7 +53,8 @@ const Col = ({
     } = useContext(TableContext);
 
     /*
-    *  Construct the matrix
+    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
+    *  The table matrix is used for calculating the selected area and has other opportunities for future features
     */
     useEffect(() => {
         if (tableMatrix[y]) {
@@ -71,9 +70,9 @@ const Col = ({
         }
     }, [y, x]);
 
-
-
-
+    /**
+     * Create the outline classes to show the selected area
+     */
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];
         if (y === minY) classes.push('outline-top');
@@ -90,7 +89,6 @@ const Col = ({
      * Selected rectange needs to be on a higher level component
      */
     const isHightlighted = () => {
-
         let isX = false;
         let isY = false;
         let minX;
@@ -113,8 +111,9 @@ const Col = ({
                 isY = true;
             }
         }
+        // if we have only one column selected we set that column as the selected area
         if (mouseDownColCord && !mouseMoveColCord) {
-
+            // check if this instance is the selected column
             if (x == mouseDownColCord[0] && y == mouseDownColCord[1]) {
                 isX = true;
                 isY = true;
@@ -124,6 +123,7 @@ const Col = ({
                 maxY = y;
             }
         }
+        // if isX and isY are true, this instance is in the selected area so can determine the outline classes
         if (isX && isY) {
             return createOutlineClasses(minX, maxX, minY, maxY, x, y);
         }
@@ -137,6 +137,7 @@ const Col = ({
             ref={currentColRef}
             x={x}
             y={y}
+            // ↓ In Selection component we use the dom to gett the selected area data attr are simpler to get
             data-x={x}
             data-y={y}
             type={type}
@@ -148,10 +149,12 @@ const Col = ({
                     {children}
                 </Cell>
             }
-            {/* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell, 
-            one for the matrix and another for the resize. The solution is to use empty col in resizeCol and fill the space 
-            with a child for mesurements 
-            */}
+            {
+            /* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell, 
+             * one for the matrix and another for the resize. The solution is to use empty col in resizeCol and fill the space 
+             * with a child for mesurements 
+             */
+            }
             {empty && <>{children}</>}
         </Column>
     )
