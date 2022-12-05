@@ -135,6 +135,8 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
 
+    const [rowIndex , setRowIndex] = useState(0);
+
 
     useImperativeHandle(ref, () => ({
         autoAdjust() {
@@ -207,7 +209,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
             for (let j = minX; j <= maxX; j++) {
 
                 selectedArea.push(tableMatrix[i][j]);
-
+                try {
                 let value = tableMatrix[i][j].current.innerText;
                 // try to convert value to number
                 value = Number(value);
@@ -227,6 +229,11 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                     max = value;
                 }
                 avg = sum / count;
+                } catch (error) {
+
+                    // onsole log as error
+                    console.error(error);
+                }
 
                 count++
             }
@@ -312,6 +319,8 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
                                 setTableMatrix: setTableMatrix,
+                                setRowIndex: setRowIndex,
+                                rowIndex: rowIndex,
                                 tableMatrix: tableMatrix,
                             }
                         })}

@@ -1,12 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import Col from './Col';
 
 const RowElm = styled.div`
     position: relative;
-    ${({hover}) => hover ? 'background: #e5f2fe;' : 'background: #fff;'}
+    ${({ hover }) => hover ? 'background: #e5f2fe;' : 'background: #fff;'}
     
 `;
+
+let instancesCount = 0
 
 const Row = ({
     index,
@@ -21,26 +23,40 @@ const Row = ({
     toolBoxContent,
     setTableMatrix,
     tableMatrix,
+    setRowIndex,
+    rowIndex,
     children
 }) => {
 
     const currentRowRef = useRef(null);
     const [hover, setHover] = useState(false);
     const leftOffset = toolBoxWidth;
-    // initial row number is one 
-    let rowNumber = index;
+
+    const [rowNumber, setRowNumber] = useState(0);
     // count the number of cols to determine the id the total col
     let counter = 0;
 
+    useEffect(() => {
+        instancesCount += 1
+        setRowNumber(instancesCount)
+        return () => {
+          instancesCount -= 1
+          setRowNumber(instancesCount)
+        }
+      }, [])
+
     // push an array to the setTableMatrix for each row
     // this array will hold the refs for each col in the row
-    if (tableMatrix.length < rowNumber + 1) {
-        setTableMatrix(prev => {
-            prev.push([]);
-            return prev;
-        }); 
-    }   
-    
+    //   useLayoutEffect(() => {
+    //     if (tableMatrix.length < rowNumber + 1) {
+    //         setTableMatrix(prev => {
+    //             prev.push([]);
+    //             return prev;
+    //         });
+    //     }
+    // }, [rowNumber]);
+
+
     const childrenWithProps = React.Children.map(children, (child, i) => {
 
         let type;
@@ -51,7 +67,7 @@ const Row = ({
             type = 'first';
             left = leftOffset;
             width = labelColWidth;
-        } 
+        }
         else if (i == numberOfDataCols + 1) { // plus one becuse the last col is not a dataCol e.g. total
             type = 'last';
             left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
@@ -71,7 +87,7 @@ const Row = ({
                 type,
                 style: { width: width, height: colHeight, top: 0, left: left }
             });
-        }        
+        }
 
         counter++;
         return child;
@@ -81,7 +97,7 @@ const Row = ({
         <>
             {/* We need the height here because all cols are position absolute
                 Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯ */}
-            <RowElm 
+            <RowElm
                 onMouseOver={() => setHover(true)}
                 onMouseOut={() => setHover(false)}
                 hover={hover}

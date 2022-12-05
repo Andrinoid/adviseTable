@@ -56,16 +56,26 @@ const Col = ({
         theTheme,
     } = useContext(TableContext);
 
+    /*
+    *  Construct the matrix
+    */
     useEffect(() => {
         if (tableMatrix[y]) {
             setTableMatrix(prev => {
-                // add currentColref to the tableMatrix in the y row and x col
                 prev[y][x] = currentColRef;
                 return prev;
             });
+        } else {
+            setTableMatrix(prev => {
+                prev.push([[currentColRef]]);
+                return prev;
+            });
         }
-    }, []);
+    }, [y, x]);
 
+    
+
+    
     const createOutlineClasses = (minX, maxX, minY, maxY) => {
         let classes = [];
         if (y === minY) classes.push('outline-top');

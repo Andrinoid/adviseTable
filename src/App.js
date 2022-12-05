@@ -15,12 +15,12 @@ const Flex = styled.div`
   flex-wrap: wrap;
   align-content: center;
   cursor: ${({ cursor }) => cursor || 'default'};
- ` 
+ `
 function App() {
 
   const [mode, setMode] = useState('static');
+  const [expandedIds, setExpandedIds] = useState([]);
   const tableRef = useRef(null);
-  const tableRef2 = useRef(null);
   const tableRef3 = useRef(null);
 
 
@@ -29,20 +29,20 @@ function App() {
   let monthRange = months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1]);
 
   const header = [
-    { title: 'Label'},
-    { title: 'Jan'},
-    { title: 'Feb'},
-    { title: 'Mar'},
-    { title: 'Apr'},
-    { title: 'May'},
-    { title: 'Jun'},
-    { title: 'Jul'},
-    { title: 'Aug'},
-    { title: 'Sep'},
-    { title: 'Oct'},
-    { title: 'Nov'},
-    { title: 'Dec'},
-    { title: 'Total'},
+    { title: 'Label' },
+    { title: 'Jan' },
+    { title: 'Feb' },
+    { title: 'Mar' },
+    { title: 'Apr' },
+    { title: 'May' },
+    { title: 'Jun' },
+    { title: 'Jul' },
+    { title: 'Aug' },
+    { title: 'Sep' },
+    { title: 'Oct' },
+    { title: 'Nov' },
+    { title: 'Dec' },
+    { title: 'Total' },
   ];
 
   const handleOnDragEnd = (result) => {
@@ -53,18 +53,30 @@ function App() {
     // updateview(items);
   }
 
-  
 
 
 
-const toolBoxContent = (dragHandleProps) => {
-  return (
-    <Flex>
-    {mode==='edit' && <Flex {...dragHandleProps}><DragHandle /></Flex>}
-    <Flex cursor={'pointer'} style={{marginLeft: 4}}><Plus /></Flex>
-    </Flex>
-  )
-}
+
+  const toolBoxContent = (dragHandleProps, rowId) => {
+    return (
+      <Flex>
+        {mode === 'edit' && <Flex {...dragHandleProps}><DragHandle /></Flex>}
+        <Flex
+          cursor={'pointer'}
+          style={{ marginLeft: 4 }}
+          onClick={() => {
+            // if (expandedIds.includes(rowId)) {
+            //   setExpandedIds(expandedIds.filter((id) => id !== rowId));
+            // } else {
+            //   setExpandedIds([...expandedIds, rowId]);
+            // }
+          }}
+        >
+          <Plus />
+        </Flex>
+      </Flex>
+    )
+  }
 
   return (
     <div className="App">
@@ -79,66 +91,79 @@ const toolBoxContent = (dragHandleProps) => {
 
       <Table mode={mode} ref={tableRef} headerData={header} theme="default">
         {(tableProvided) => {
-          // console.log(tableProvided)
           return (
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="characters" >
-              {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Droppable droppableId="characters" >
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef}>
 
-                  {
-                    view.map((row, i) => {
-                      return (
-                        <Draggable
-                          isDragDisabled={mode === 'static'}
-                          draggableId={'id-' + row.id}
-                          key={'id-' + row.id}
-                          index={i}
-                        >
-                          {(provided) => (
-                            <div ref={provided.innerRef} {...provided.draggableProps}>
-                              <Row
-                                key={i}
-                                index={i}
-                                toolBoxContent={toolBoxContent(provided.dragHandleProps)}
-                                {...tableProvided.rowProps}
-                              >
-                               
+                    {
+                      view.map((row, i) => {
+                        return (
+                          <Draggable
+                            isDragDisabled={mode === 'static'}
+                            draggableId={'id-' + row.id}
+                            key={'id-' + row.id}
+                            index={i}
+                          >
+                            {(provided) => (
+                              <div ref={provided.innerRef} {...provided.draggableProps}>
+                                <Row
+                                  key={i}
+                                  toolBoxContent={toolBoxContent(provided.dragHandleProps, row.id)}
+                                  {...tableProvided.rowProps}
+                                >
 
-                                <Col horizontalAlign="left">
-                                  {row.name}
-                                </Col>
+                                  <Col horizontalAlign="left">
+                                    {row.name}
+                                  </Col>
 
-                                {monthRange.map((month, i) => <Col key={i}>{row[month]}</Col> )}
+                                  {monthRange.map((month, i) => <Col key={i}>{row[month]}</Col>)}
 
-                                <Col>
-                                  34567
-                                </Col>
+                                  <Col>
+                                    34567
+                                  </Col>
 
-                              </Row>
-                            </div>
-                          )}
-                        </Draggable>
-                      )
-                    })
-                  }
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        )}}
+                                </Row>
+
+                                {/* {expandedIds.includes(row.id) &&
+                                  <Row>
+                                    <Col>
+                                      34567
+                                    </Col>
+                                    <Col>
+                                      34567
+                                    </Col>
+                                    <Col>
+                                      34567
+                                    </Col>
+                                  </Row>
+                                } */}
+
+                              </div>
+                            )}
+                          </Draggable>
+                        )
+                      })
+                    }
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )
+        }}
       </Table>
-      <hr/>
+      <hr />
 
 
-      
+
       <p>problems</p>
       <ul>
         <li>table resizer is overflowing</li>
         <li>rename label and total through all components</li>
       </ul>
-     
+
       <div>
         <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
       </div>

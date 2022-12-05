@@ -44,7 +44,7 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
-    console.log("Footer", maxWidth);
+
     return (
         <TableFooter style={{maxWidth: maxWidth}}>
             <Left>
