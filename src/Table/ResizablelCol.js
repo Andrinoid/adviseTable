@@ -3,15 +3,6 @@ import styled from 'styled-components';
 import Col from './Col';
 import { TableContext } from './context';
 
-// const Col = styled.div`
-//     background: #fff;
-//     box-shadow: inset 0px 0px 0 0.5px #ebebeb;
-//     display: flex;
-//     align-items: center;
-//     justify-content: left;
-//     position: absolute;
-//     user-select: none;
-// `;
 const Resizer = styled.div`
     position: absolute;
     top: 0;
@@ -29,19 +20,22 @@ const Resizer = styled.div`
     }
 `;
 
-const Line = styled.div`
-    position: absolute;
-    top: 0;
-    ${({direction})=> {
-        return direction === 'right' ? 'right: 1px;' : 'left: 1px;'
-    }}
-    right: 1px;
-    width: 1px;
-    height: ${props => props.height}px;
-    background: #64b2fe;
-    z-index: 1;
-    display: ${props => props.isResizing ? 'block' : 'none'};
-`;
+// The line was good idea to show the resizing, but it was not working well with the scroll position
+// Im keeping it here as a reminder to try to fix it later
+
+// const Line = styled.div`
+//     position: absolute;
+//     top: 0;
+//     ${({direction})=> {
+//         return direction === 'right' ? 'right: 1px;' : 'left: 1px;'
+//     }}
+//     right: 1px;
+//     width: 1px;
+//     height: ${props => props.height}px;
+//     background: #64b2fe;
+//     z-index: 1;
+//     display: ${props => props.isResizing ? 'block' : 'none'};
+// `;
 
 const Fill = styled.div`
     width: 100%;
@@ -59,14 +53,13 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
     const [isResizing, setIsResizing] = useState(false);
     const resizeRef = useRef(null);
     const colRef = useRef(null);
+    // Get the context we need
     const { 
         autoAdjustLabelColWidth,
         autoAdjustTotalColWidth, 
     } = useContext(TableContext);
 
-    // useLayoutEffect(() => {
-    //     setW(colRef.current.offsetWidth);
-    // }, []);
+    // This is a hack to only run the effect once
     const isFirstRun = useRef(true);
     useEffect(() => {
         if (isFirstRun.current) {
@@ -139,11 +132,11 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
                 isResizing={isResizing}
                 ref={resizeRef}
             >
-                <Line
+                {/* <Line
                     height={viewportHeight}
                     isResizing={isResizing}
                     direction={direction}
-                />
+                /> */}
             </Resizer>
             </Fill>
         </Col>

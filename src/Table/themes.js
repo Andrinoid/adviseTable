@@ -13,7 +13,6 @@ const themes = {
 
         },
         col: {
-            // background: 'white',s
 
         },
         cell: {

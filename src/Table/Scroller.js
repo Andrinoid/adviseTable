@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import delegate from "delegate";
+import React, { useEffect } from "react";
 import { isElementInViewport } from "./utils";
 
 var edgeSize = 50;
@@ -153,9 +152,11 @@ const Scroller = ({active=false}) => {
 
             // Should we scroll down?
         } else if (isInBottomEdge && canScrollDown) {
-             //TODO more unique id
+
+    // .table-end is the last element in the table. it has no height it is just a marker
     let isTableInViewport = isElementInViewport(document.querySelector(".table-end"))
 
+    // cancel the scroll if the table is in the viewport.This is how we know that the bottom of the table is in the viewport
     if(isTableInViewport) {
         clearTimeout(timer);
         return;
@@ -190,7 +191,6 @@ const Scroller = ({active=false}) => {
     }
  
     }
-
 
 
     return (

@@ -9,7 +9,6 @@ const TableFooter = styled.div`
     width: 100%;
     height: 30px;
     background: #f5f5f5;
-
     padding: 0 10px;
     box-sizing: border-box;
     color: #333;
@@ -25,7 +24,6 @@ const Middle = styled.div`
 const Right = styled.div`
     display: inline-flex;
 `;
-
 
 const Box = styled.div`
     display: flex;

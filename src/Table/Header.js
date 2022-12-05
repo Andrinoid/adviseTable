@@ -36,7 +36,7 @@ const Header = React.forwardRef(({
 }, ref) => {
 
     const leftOffset = toolBoxWidth + labelColWidth;
-    // const numberOfDataCols = data.length - 2;
+
     return (
         <RowElm  ref={ref}>
             <div style={{...theTheme.header, height: colHeight, width: totalWidth, boxSizing: 'border-box'}}>
@@ -46,10 +46,11 @@ const Header = React.forwardRef(({
             ></Col>
 
             {data.map((item, index) => {
-                // we need index to be zero after label col
+                // we need index to be zero after the first col wich has it's own width
                 let i = index - 1;
                 const left = leftOffset + (i * colWidth);
                 return (
+                    // we need to use the verbose syntax here because we need to set the key
                     <React.Fragment key={index}>
                         {index === 0 &&
                             <ResizablelCol

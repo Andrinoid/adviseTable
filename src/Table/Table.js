@@ -78,53 +78,101 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
 
 
+    /**
+     * expose method to parent component
+     * For this to work, the parent component must pass a ref to this component
+     * autoAdjust() will adjust the width of the table data cols to fit the data
+     * usage in app: tableRef.current.autoAdjust()
+     */ 
     useImperativeHandle(ref, () => ({
         autoAdjust() {
             autoAdjustDataColWidth();
         }
     }));
 
+    /**
+     * when the width of the table changes, recalculate the width of the data cols
+     */
     useEffect(() => {
         setColWidth(calcColWidth);
     }, [labelColWidth, totalColWidth, totalWidth]);
 
+    /**
+     * Messure the viewport width and height. 
+     * the width may vary based on the css applied to parent elements or the browser window width
+     */
     useLayoutEffect(() => {
         setViewportWidth(viewportRef.current.offsetWidth);
         setViewportHeight(viewportRef.current.offsetHeight);
     }, []);
 
+    /**
+     *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
+     */
     useEffect(() => {
         getSelectedArea(mouseDownColCord, mouseMoveColCord);
     }, [mouseDownColCord, mouseMoveColCord]);
 
+    /**
+     * This function auto adjusts the width of the first col to fit the biggest label
+     * It is run by double clicking the first col resizer
+     */
     const autoAdjustLabelColWidth = () => {
         setlabelColWidth(biggestLabelCellWidth);
     }
 
+    /**
+     * as above so bellow
+     * This applies to last col
+     */
     const autoAdjustTotalColWidth = () => {
         setTotalColWidth(biggestTotalCellWidth);
     }
 
+    /**
+     * This function auto adjusts the width of the data cols to fit the biggest data cell
+     * it is exposed to the parent component to run if needed
+     */
     const autoAdjustDataColWidth = () => {
         setTotalWidth(labelColWidth + toolBoxWidth + totalColWidth + (biggestDataCellWidth * numberOfDataCols));
     }
 
+    /**
+     * callback function for the label col resizer
+     */
     const onLabelColResize = (width) => {
         setlabelColWidth(width);
     }
 
+    /**
+     * callback function for the total col resizer
+     */
     const onTotalColResize = (width) => {
         setTotalColWidth(width);
     }
 
+    /**
+     * callback function for the table resizer
+     */
     const onTableResize = (width) => {
         setTotalWidth(width);
     }
 
+    /**
+     *  Calculate the width of the data cols based on moving parts
+     *  changes to the all other parts of the table will affect the width of the data cols
+     */
     const calcColWidth = () => {
         return (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / numberOfDataCols;
     }
 
+    /**
+     * This function figures out the selected area based on the mouseDownColCord and mouseMoveColCord
+     * and does basic calculations on the selected area values
+     * These culations are used to display the selected area values in the footer
+     * Better approach would be to run a prop function for the parent component to use the values, 
+     * becuse the footer is not always visible
+     */
     const getSelectedArea = (startCord, endCord) => {
 
         if (!startCord || !endCord) return null;
@@ -183,7 +231,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
             setSelectedMax(max);
             setSelectedAvg(avg);
         }
-
+        // we are not using this value in the app, but it should be available for the parent component to use
         return selectedArea;
 
     }
@@ -222,7 +270,6 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
             theTheme,
         }}>
             <Wrapper ref={ref} className={'table-viewport'}>
-
                 <Header
                     ref={headerScrollRef}
                     className="scrollable"
