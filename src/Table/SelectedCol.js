@@ -3,22 +3,11 @@ import styled from "styled-components";
 import { TableContext } from "./context";
 import delegate from "delegate";
 
-const Selected = styled.div`
-    position: absolute;
-    // background: #65b2fe;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    // border: 2px solid #65b2fe;
-    box-shadow: inset 0 0 0 2px #65b2fe;
-    // transition: all 0.2s ease;
-    pointer-events: none;
-`;
-
 let trackMouseMove = false;
 
 const SelectedCol = ({ onSelection }) => {
 
+    // Get the context we need
     const {
         setMouseDownColCord,
         setMouseMoveColCord,
@@ -26,20 +15,26 @@ const SelectedCol = ({ onSelection }) => {
         setSelectColDraging,
     } = useContext(TableContext);
 
+    /** 
+     * Add event listeners to all the cells in the table
+     * As this can be a large number of cells, we use delegate the event listeners to the body for performance
+     */
     useEffect(() => {
-
         let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false );
         let mouseMove = delegate(document.body, '.tableCol', 'mouseover', onMouseMove, false);
-        let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
+        // let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
 
         return () => {
             mouseDown.destroy();
             mouseMove.destroy();
-            mouseUp.destroy();
+            // mouseUp.destroy();
         };
 
     }, []);
 
+    /**
+     * When the mouse is down, reset the selection and set the new coordinates
+     */
     const onMouseDown = (e) => {
         trackMouseMove = true;
         let { x, y } = e.delegateTarget.dataset;
@@ -55,6 +50,12 @@ const SelectedCol = ({ onSelection }) => {
         setMouseDownColCord([x, y]);
     }
 
+    /**
+     * When the mouse is moved, set the new coordinates
+     * Only run if x and y have changed from previous values. That is moved to next cell
+     * This was on mouseMove before that fires very often. Now we are using mouseOver so it might not be neccessary
+     * to check if x and y have changed, but I am leaving it in for now
+     */
     let oldX = null;
     let oldY = null;
     const onMouseMove = (e) => {
@@ -74,6 +75,10 @@ const SelectedCol = ({ onSelection }) => {
         }
     }
 
+    /**
+     * We are only using the mouseUp event to detect when the user has finished selecting
+     * the mouseUpColCords are not used but they might be useful in the future
+     */
     const onMouseUp = (e) => {
         trackMouseMove = false;
         setSelectColDraging(false);
@@ -81,7 +86,7 @@ const SelectedCol = ({ onSelection }) => {
         if (x === undefined || y === undefined) return;
         setMouseUpColCord([x, y]);
     }
-
+    // this compoenent does not render anything
     return <></>;
 };
 
