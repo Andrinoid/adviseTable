@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { motion, AnimatePresence } from "framer-motion";
 import styled from 'styled-components';
 import DragHandle from './icons/DragHandle';
 import Plus from './icons/Plus';
@@ -133,10 +134,36 @@ function App() {
                                 </Row>
 
                                 {expandedIds.includes(row.id) &&
-                                  // <div>
-                                  //   <h1>hello</h1>
-                                  // </div>
-                                  <>
+                                  // The motion divs are optional and just an example of how to animate the conditional rendered rows
+                                  // it shows how dynamic the table can be
+                                  // Optional animation starts
+                                  <motion.div
+                                    initial="collapsed"
+                                    animate="open"
+                                    exit="collapsed"
+                                    variants={{
+                                      open: {
+                                        height: 'auto',
+                                        transition: { when: "beforeChildren", duration: 0.3 }
+                                      },
+                                      collapsed: {
+                                        height: 0,
+                                        transition: { when: "afterChildren" }
+                                      }
+                                    }}
+                                  >
+                                    <motion.div
+                                     variants={{
+                                      open: {
+                                        opacity: 1,
+                                      },
+                                      collapsed: {
+                                        opacity: 0,
+                                      },
+                                    }}
+                                    >
+                                    {/* Optional animation ends */}
+
                                     <Row {...tableProvided.rowProps} type={'secondary'}>
                                       <Col horizontalAlign="left">
                                         lykill 1004
@@ -225,7 +252,10 @@ function App() {
                                         34567
                                       </Col>
                                     </Row>
-                                  </>
+                                    {/* Optional animation starts */}
+                                    </motion.div>
+                                  </motion.div>
+                                  // Optional animation ends
                                 }
 
                               </div>
