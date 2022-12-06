@@ -6,15 +6,14 @@ import { TableContext } from '../context';
 const Resizer = styled.div`
     position: absolute;
     top: 0;
-    ${({direction})=> {
-        return direction === 'right' ? 'right: 0;' : 'left: 0;'
-    }}
     width: 5px;
     height: 100%;
     cursor: col-resize;
     background: ${props => props.isResizing ? '#64b2fe' : 'transparent'};
-    
     border-${({direction})=> direction}: solid 1px #ccc;
+    ${({direction})=> {
+        return direction === 'right' ? 'right: 0;' : 'left: 0;'
+    }}
     &:hover {
         background: #64b2fe;
     }

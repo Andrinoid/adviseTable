@@ -39,6 +39,9 @@ const Box = styled.div`
 
 const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
 
+    /**
+     * Simple number formatter
+     */
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
@@ -50,6 +53,7 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
             </Left>
             <Middle></Middle>
             <Right>
+                {/* This needs more work to account for some scenarios like when one column is selected after bigger selection */}
                 {count > 1 && <>
                     <Box>count: <span>{count}</span></Box>
                     {!isNaN(min) &&
