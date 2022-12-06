@@ -5,15 +5,15 @@ import Col from '../Col';
 
 const RowElm = styled.div`
     position: relative;
-    ${({ hover }) => hover ? 'background: #e5f2fe;' : 'background: #transparent;'}
-    ${({type})=> {
+    ${({type, hover})=> {
         if(type === 'primary') {
-            return 'background: transparent'
+            return  hover ? 'background: #e5f2fe;' : 'background: transparent;'
         }
         else if (type === 'secondary') {
-            return 'background: #fafafa'
+            return hover ? 'background: #e5f2fe;' : 'background:#fafafa;'
         }
     }}
+    // ${({ hover }) => hover ? 'background: #e5f2fe;' : 'background: #transparent;'}
 `;
 
 // Copunter for instances of this component used for row number

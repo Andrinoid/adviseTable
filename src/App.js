@@ -278,7 +278,6 @@ function App() {
 
       <p>problems</p>
       <ul>
-        <li>table resizer is overflowing</li>
         <li>rename label and total through all components</li>
       </ul>
 

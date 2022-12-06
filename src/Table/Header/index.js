@@ -80,14 +80,16 @@ const Header = React.forwardRef(({
                                 selectable={false}
                                 style={{width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                             >
+                                <>
                                 <Label>{item.title}</Label>
+                                <ResizableTable width={totalWidth} onResize={onTableResize} />
+                                </>
                             </ResizablelCol>
                         }
                     </React.Fragment>
                 )
             })}
 
-            <ResizableTable width={totalWidth} onResize={onTableResize} />
             </div>
         </RowElm>
     )
