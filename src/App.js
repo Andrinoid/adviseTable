@@ -312,8 +312,7 @@ function App() {
       <p>Todo</p>
       <ul>
         <li>Control styles</li>
-        <li>expandable cols</li>
-        <li>Hightlight rows</li>
+        <li>Hightlight rows aka selection mode</li>
         <li>Min and max size on cols</li>
         <li>overflow ellips on label cols</li>
         <li>pinned columns</li>
