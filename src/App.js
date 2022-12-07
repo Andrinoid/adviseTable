@@ -18,21 +18,14 @@ const Flex = styled.div`
   cursor: ${({ cursor }) => cursor || 'default'};
  `
 
-const createNewObject = () => ({});
-function useForceUpdate() {
-  const [, setValue] = useState(createNewObject);
-  return useCallback(() => {
-    setValue(createNewObject());
-  }, []);
-}
-
 function App() {
 
   const [mode, setMode] = useState('static');
   const [expandedIds, setExpandedIds] = useState([]);
-  const forceUpdate = useForceUpdate();
   const tableRef = useRef(null);
   const tableRef3 = useRef(null);
+
+
 
 
   let months = mo.map((m) => m.system);
@@ -96,7 +89,7 @@ function App() {
       </div>
       <p>{mode}</p>
 
-      <Table mode={mode} ref={tableRef} headerData={header} theme="default">
+      <Table mode={mode} ref={tableRef} headerData={header} theme="default" selectionMode={'row'} expandedIds={expandedIds}>
         {(tableProvided) => {
           return (
             <DragDropContext onDragEnd={handleOnDragEnd}>

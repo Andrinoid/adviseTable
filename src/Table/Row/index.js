@@ -13,7 +13,6 @@ const RowElm = styled.div`
             return hover ? 'background: #e5f2fe;' : 'background:#fafafa;'
         }
     }}
-    // ${({ hover }) => hover ? 'background: #e5f2fe;' : 'background: #transparent;'}
 `;
 
 // Copunter for instances of this component used for row number
@@ -29,7 +28,8 @@ const Row = ({
     numberOfDataCols,
     totalWidth,
     toolBoxContent,
-    children
+    children,
+    expandedIds,
 }) => {
 
     const currentRowRef = useRef(null);
@@ -47,7 +47,7 @@ const Row = ({
             instancesCount -= 1
             setRowNumber(instancesCount)
         }
-    }, [])
+    }, [expandedIds])
 
     /**
      * Map over the children that should be Col components and add the props we need

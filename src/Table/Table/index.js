@@ -32,7 +32,7 @@ box-sizing: border-box;
 `;
 
 
-const Table = ({ headerData, theme = "default", children, onSelection = () => { } }, ref) => {
+const Table = ({ headerData, theme = "default", children, onSelection = () => { }, expandedIds }, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
     // fix table resizer
@@ -303,6 +303,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                                 totalColWidth: totalColWidth,
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
+                                expandedIds: expandedIds,
                             }
                         })}
                     </div>
