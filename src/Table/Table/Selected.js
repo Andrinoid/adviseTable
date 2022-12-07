@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import styled from "styled-components";
 import { TableContext } from "../context";
 import delegate from "delegate";
 
