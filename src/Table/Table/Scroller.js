@@ -59,27 +59,28 @@ const Scroller = ({ active = false }) => {
         })();
 
         function adjustViewportScroll() {
-            console.log('is active for scroll')
             if (!active) return;
             
             let currentScrollX = viewport.scrollLeft;
             // Determine if the viewport can be scrolled in any particular direction.
             let canScrollLeft = (currentScrollX > 0);
             let canScrollRight = (currentScrollX < maxScrollX);
+            console.log('canScrollRight', canScrollRight)
+            console.log('isInRightEdge', isInRightEdge)
 
             let nextScrollX = currentScrollX;
             let maxStep = 50;
 
             if(isInLeftEdge && canScrollLeft){
-                var intensity = (edgeLeft - viewportX) / edgeLeft;
+                var intensity = (edgeLeft - viewportX) / edgeSize;
                 nextScrollX = Math.max(0, currentScrollX - (maxStep * intensity));
             }
             if(isInRightEdge && canScrollRight){
-                var intensity = (viewportX - edgeRight) / edgeLeft;
+                var intensity = (viewportX - edgeRight) / edgeSize;
                 nextScrollX = Math.min(maxScrollX, currentScrollX + (maxStep * intensity));
             }
 
-            nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
+            // nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
 
             if(nextScrollX !== currentScrollX) {
                 viewport.scrollLeft = nextScrollX;
