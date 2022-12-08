@@ -47,11 +47,11 @@ const Scroller = ({ active = false }) => {
 
         (function checkForViewportScroll() {
 
-            clearTimeout(timer);
+            clearTimeout(tableTimer);
 
             if (adjustViewportScroll()) {
 
-                timer = setTimeout(checkForViewportScroll, 30);
+                tableTimer = setTimeout(checkForViewportScroll, 30);
 
 
             }
@@ -78,6 +78,7 @@ const Scroller = ({ active = false }) => {
             if(isInRightEdge && canScrollRight){
                 var intensity = (viewportX - edgeRight) / edgeSize;
                 nextScrollX = Math.min(maxScrollX, currentScrollX + (maxStep * intensity));
+                console.log('nextScrollX', nextScrollX)
             }
 
             // nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
