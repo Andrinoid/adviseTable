@@ -22,6 +22,7 @@ function App() {
 
   const [mode, setMode] = useState('static');
   const [expandedIds, setExpandedIds] = useState([]);
+  const [selectionMode, setSelectionMode] = useState('row');
   const tableRef = useRef(null);
   const tableRef3 = useRef(null);
 
@@ -57,6 +58,10 @@ function App() {
     // updateview(items);
   }
 
+  const onChangeSelectionMode = (e) => {
+    setSelectionMode(e.target.value);
+  }
+
   const toolBoxContent = (dragHandleProps, rowId) => {
     return (
       <Flex>
@@ -87,10 +92,19 @@ function App() {
       <div>
         <button onClick={() => tableRef.current.autoAdjust()}>Auto adjust</button>
       </div>
+      <div>
+      <div onChange={onChangeSelectionMode}>
+        <p>Selection mode</p>
+        <input type="radio" value="row" name="selectionMode" /> Row
+        <input type="radio" value="col" name="selectionMode" /> Column
+        <input type="radio" value="cell" name="selectionMode" /> Cell
+      </div>
+      </div>
       <p>{mode}</p>
 
-      <Table mode={mode} ref={tableRef} headerData={header} theme="default" selectionMode={'row'} expandedIds={expandedIds}>
+      <Table mode={mode} ref={tableRef} headerData={header} theme="default" selectionMode={selectionMode} expandedIds={expandedIds}>
         {(tableProvided) => {
+          console.log(tableProvided);
           return (
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="characters" >
