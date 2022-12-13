@@ -32,7 +32,14 @@ box-sizing: border-box;
 `;
 
 
-const Table = ({ headerData, theme = "default", children, onSelection = () => { }, expandedIds }, ref) => {
+const Table = ({
+    onSelection = () => { },
+    theme = 'default',
+    selectionMode = 'cell',
+    expandedIds,
+    headerData,
+    children,
+}, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
     // fix table resizer
@@ -76,6 +83,10 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
     const tableId = Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
+
+    useEffect(() => {
+        console.log(tableMatrix);
+    }, []);
 
 
     /**
@@ -270,6 +281,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
             selectedCol,
             selectedArea,
             theTheme,
+            selectionMode,
         }}>
             <Wrapper ref={ref} className={'table-viewport'}>
                 <Header
@@ -306,6 +318,9 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                                 topOffset: headerHeight,
                                 numberOfDataCols: numberOfDataCols,
                                 expandedIds: expandedIds,
+                                selectionMode,
+                                mouseDownColCord,
+                                mouseMoveColCord,
                             }
                         })}
                     </div>
