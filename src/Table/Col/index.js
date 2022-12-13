@@ -6,7 +6,7 @@ import Cell from './Cell';
 
 
 const Column = styled.div`
-    // transition: all 0.2s ease;
+// transition: width 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
@@ -50,6 +50,7 @@ const Col = ({
         setTableMatrix,
         tableMatrix,
         theTheme,
+        selectionMode,
     } = useContext(TableContext);
 
     /*
@@ -86,9 +87,13 @@ const Col = ({
     /**
      * Calculate the selected area
      * Note that we can not draw the selected area here, because we are in a single column component
-     * Selected rectange needs to be on a higher level component
+     * Selected is tracked in the Selected.js component on root level
      */
     const isHightlighted = () => {
+        // if selectionMode is not cell return
+        if(selectionMode !== 'cell') return;
+
+        // asume notihing is selected
         let isX = false;
         let isY = false;
         let minX;
