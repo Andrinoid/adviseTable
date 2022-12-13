@@ -22,8 +22,6 @@ const Selected = ({ onSelection }) => {
         let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false );
         let mouseMove = delegate(document.body, '.tableCol', 'mouseover', onMouseMove, false);
         let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
-        // let mouseOnEnd = delegate(document.body, '.tableFooter', 'mouseover', onMouseEndOver, false);
-
         return () => {
             mouseDown.destroy();
             mouseMove.destroy();
@@ -31,15 +29,13 @@ const Selected = ({ onSelection }) => {
         };
     }, []);
 
-    const onMouseEndOver = (e) => {
-        console.log('onMouseEndOver', e.delegateTarget);
-    }
-
     /**
      * When the mouse is down, reset the selection and set the new coordinates
      */
     const onMouseDown = (e) => {
         let { x, y } = e.delegateTarget.dataset;
+        
+        // Check if shift key is pressed and make selection acordingly
         if(e.shiftKey) {
             setMouseMoveColCord([x, y]);
             return
