@@ -37,6 +37,11 @@ const Box = styled.div`
     }
 }`;
 
+/**
+ * The footer is a nessasary component because it used to track when selection is outside the table
+ * If the footer is not desired, it can be rendered with white or transparent background and no content
+ * TODO make the footer optional with a prop from the table
+ */
 const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
 
     /**
@@ -47,7 +52,7 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
     }
 
     return (
-        <TableFooter style={{ maxWidth: maxWidth }}>
+        <TableFooter style={{ maxWidth: maxWidth }} className="tableCol tableFooter" data-end={true}>
             <Left>
 
             </Left>
@@ -70,6 +75,7 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
                     }
                 </>
                 }
+                {count === 1 && <></>}
             </Right>
         </TableFooter>
     );

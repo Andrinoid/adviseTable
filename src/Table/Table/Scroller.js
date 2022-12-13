@@ -65,8 +65,6 @@ const Scroller = ({ active = false }) => {
             // Determine if the viewport can be scrolled in any particular direction.
             let canScrollLeft = (currentScrollX > 0);
             let canScrollRight = (currentScrollX < maxScrollX);
-            console.log('canScrollRight', canScrollRight)
-            console.log('isInRightEdge', isInRightEdge)
 
             let nextScrollX = currentScrollX;
             let maxStep = 50;
@@ -240,7 +238,7 @@ const Scroller = ({ active = false }) => {
             } else if (isInBottomEdge && canScrollDown) {
 
                 // .table-end is the last element in the table. it has no height it is just a marker
-                let isTableInViewport = isElementInViewport(document.querySelector(".table-end"))
+                let isTableInViewport = isElementInViewport(document.querySelector(".table-end"), {bottom: 30})
 
                 // cancel the scroll if the table is in the viewport.This is how we know that the bottom of the table is in the viewport
                 if (isTableInViewport) {

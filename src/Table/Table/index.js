@@ -83,7 +83,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
      * For this to work, the parent component must pass a ref to this component
      * autoAdjust() will adjust the width of the table data cols to fit the data
      * usage in app: tableRef.current.autoAdjust()
-     */ 
+     */
     useImperativeHandle(ref, () => ({
         autoAdjust() {
             autoAdjustDataColWidth();
@@ -174,7 +174,10 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
      * becuse the footer is not always visible
      */
     const getSelectedArea = (startCord, endCord) => {
-
+        // If there is no endCord, it means that we only have one cell selected so we set the endCord to the startCord
+        if (startCord && !endCord) {
+            endCord = startCord;
+        }
         if (!startCord || !endCord) return null;
         const startY = startCord[1];
         const endY = endCord[1];
@@ -224,14 +227,13 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                 count++
             }
         }
-        if (count > 0) {
-            setSelectedCount(count);
-            setSelectedSum(sum);
-            setSelectedMin(min);
-            setSelectedMax(max);
-            setSelectedAvg(avg);
-        }
-        // we are not using this value in the app, but it should be available for the parent component to use
+
+        setSelectedCount(count);
+        setSelectedSum(sum);
+        setSelectedMin(min);
+        setSelectedMax(max);
+        setSelectedAvg(avg);
+
         return selectedArea;
 
     }
@@ -311,7 +313,7 @@ const Table = ({ headerData, theme = "default", children, onSelection = () => { 
                     <Selected onSelection={onSelection} />
                     <Scroller active={selectColDraging} />
                 </div>
-                <div className='table-end'></div> 
+                <div className='table-end'></div>
                 <Footer maxWidth={totalWidth} count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
 
             </Wrapper>

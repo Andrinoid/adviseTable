@@ -22,6 +22,7 @@ const Selected = ({ onSelection }) => {
         let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false );
         let mouseMove = delegate(document.body, '.tableCol', 'mouseover', onMouseMove, false);
         let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
+        // let mouseOnEnd = delegate(document.body, '.tableFooter', 'mouseover', onMouseEndOver, false);
 
         return () => {
             mouseDown.destroy();
@@ -30,12 +31,20 @@ const Selected = ({ onSelection }) => {
         };
     }, []);
 
+    const onMouseEndOver = (e) => {
+        console.log('onMouseEndOver', e.delegateTarget);
+    }
+
     /**
      * When the mouse is down, reset the selection and set the new coordinates
      */
     const onMouseDown = (e) => {
-        trackMouseMove = true;
         let { x, y } = e.delegateTarget.dataset;
+        if(e.shiftKey) {
+            setMouseMoveColCord([x, y]);
+            return
+        }
+        trackMouseMove = true;
         // if x and y are undefined return
         if (x === undefined || y === undefined) {
             setMouseMoveColCord(null);
@@ -57,9 +66,11 @@ const Selected = ({ onSelection }) => {
     let oldX = null;
     let oldY = null;
     const onMouseMove = (e) => {
+        // console.log('onMouseMove', e.delegateTarget);
         if (trackMouseMove) {
             setSelectColDraging(true);
-            let { x, y } = e.delegateTarget.dataset;
+            let { x, y, end } = e.delegateTarget.dataset;
+          
             if (x === undefined || y === undefined) return;
 
             // only run if x and y have changed from previous values. That is moved to next cell
