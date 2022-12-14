@@ -233,7 +233,7 @@ const Table = ({
                     }
                     avg = sum / count;
                 } catch (error) {
-                    console.error(error);
+                    console.warn(error);
                 }
 
                 count++
