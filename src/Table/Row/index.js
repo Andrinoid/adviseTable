@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Col from '../Col';
+import Brick from '../Col/Brick';
 
 
 const RowElm = styled.div`
@@ -41,11 +42,11 @@ const Row = ({
      * we could also use querySelectorAll to count the elements before this one 
      */ 
     useEffect(() => {
-        instancesCount += 1
-        setRowNumber(instancesCount)
+        // instancesCount += 1
+        setRowNumber(instancesCount++)
         return () => {
-            instancesCount -= 1
-            setRowNumber(instancesCount)
+            // instancesCount -= 1
+            setRowNumber(--instancesCount)
         }
     }, [expandedIds])
 
@@ -100,13 +101,12 @@ const Row = ({
                 hover={hover}
                 style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}
             >
-                <Col
+                <Brick
                     horizontalAlign='left'
-                    selectable={false}
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
                 >
                     {toolBoxContent && toolBoxContent}
-                </Col>
+                </Brick>
 
                 {childrenWithProps}
 

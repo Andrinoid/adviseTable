@@ -104,7 +104,7 @@ function App() {
 
       <Table mode={mode} ref={tableRef} headerData={header} theme="default" selectionMode={selectionMode} expandedIds={expandedIds}>
         {(tableProvided) => {
-          console.log(tableProvided);
+          // console.log(tableProvided);
           return (
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="characters" >

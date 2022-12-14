@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ResizablelCol from '../Col/ResizablelCol';
 import ResizableTable from './ResizableTable';
-import Col from '../Col';
+import Brick from '../Col/Brick';
 
 const RowElm = styled.div`
     position: sticky;
@@ -40,10 +40,9 @@ const Header = React.forwardRef(({
     return (
         <RowElm  ref={ref}>
             <div style={{...theTheme.header, height: colHeight, width: totalWidth, boxSizing: 'border-box'}}>
-            <Col
+            <Brick
                 style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
-                selectable={false}
-            ></Col>
+            ></Brick>
 
             {data.map((item, index) => {
                 // we need index to be zero after the first col wich has it's own width
@@ -65,11 +64,11 @@ const Header = React.forwardRef(({
                             </ResizablelCol>
                         }
                         {index > 0 && index < data.length - 1 &&
-                            <Col
+                            <Brick
                                 selectable={false}
                                 type="middle"
                                 style={{width: colWidth, height: colHeight, top: 0, left: left }}
-                            ><Label>{item.title}</Label></Col>
+                            ><Label>{item.title}</Label></Brick>
                         }
                         {index === data.length - 1 &&
                             <ResizablelCol

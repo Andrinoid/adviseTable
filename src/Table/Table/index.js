@@ -67,7 +67,8 @@ const Table = ({
     const [selectedCol, setSelectedCol] = useState(null);
     const [selectedArea, setSelectedArea] = useState(null);
 
-    const [tableMatrix, setTableMatrix] = useState([]);
+    // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
+    const [tableMatrix, setTableMatrix] = useState([[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],]);
 
     const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
     const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
@@ -84,9 +85,9 @@ const Table = ({
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
 
-    useEffect(() => {
-        console.log(tableMatrix);
-    }, []);
+    // useEffect(() => {
+    //     console.log(tableMatrix);
+    // }, []);
 
 
     /**

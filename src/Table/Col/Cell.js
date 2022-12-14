@@ -14,7 +14,6 @@ const SpaceAround = styled.div`
 const Cell = ({ children, parentWidth, parentType, x, y }) => {
     const ref = useRef(null);
     const [isOverflowing, setIsOverflowing] = useState(false);
-    const [cellWidth, setCellWidth] = useState(null)
 
     // Get the context we need
     const {
@@ -28,7 +27,7 @@ const Cell = ({ children, parentWidth, parentType, x, y }) => {
     } = useContext(TableContext);
 
     /**
-     * This functionn gets the total width of an element, we use it to check if the cell is overflowing
+     * This function gets the total width of an element, we use it to check if the cell is overflowing
      */
     function getElementWidth(element) {
         const style = element.currentStyle || window.getComputedStyle(element);

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import Col from './';
 import { TableContext } from '../context';
+import Brick from './Brick';
 
 const Resizer = styled.div`
     position: absolute;
@@ -115,12 +116,7 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
     };
 
     return (
-        <Col
-        style={{...style }}
-        selectable={false}
-        type={type}
-        empty={true}
-        >
+        <Brick style={{...style }}>
           {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}  
             <Fill className='fill' ref={colRef} horizontalAlign={horizontalAlign}>
             {children}
@@ -138,7 +134,7 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
                 /> */}
             </Resizer>
             </Fill>
-        </Col>
+        </Brick>
     )
 }
 
