@@ -15,8 +15,12 @@ const Wrapper = styled.div`
 width: 100%;
 padding: 20px;
 box-sizing: border-box;
+.container {
+    position: relative;
+}
+`;
 
-.viewPort {
+const ViewPort = styled.div`
     width: 100%;
     overflow: hidden;
     overflow-x: auto;
@@ -25,10 +29,6 @@ box-sizing: border-box;
     flex-direction: row;
     display: flex;
     flex: 1 1 auto;
-}
-.container {
-    position: relative;
-}
 `;
 
 
@@ -80,15 +80,10 @@ const Table = ({
     const [selectedMax, setSelectedMax] = useState(0);
     const [selectedAvg, setSelectedAvg] = useState(0);
 
-    // create unique id for each table. Used for seperating events
-    const tableId = Math.random().toString(36).substr(2, 9);
+    // create unique id for each table. Used for seperating events]
+    const tableId = 'id-' + Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
-
-    // useEffect(() => {
-    //     console.log(tableMatrix);
-    // }, []);
-
 
     /**
      * expose method to parent component
@@ -247,7 +242,6 @@ const Table = ({
         setSelectedAvg(avg);
 
         return selectedArea;
-
     }
 
     return (
@@ -283,8 +277,9 @@ const Table = ({
             selectedArea,
             theTheme,
             selectionMode,
+            tableId,
         }}>
-            <Wrapper ref={ref} className={'table-viewport'}>
+            <Wrapper ref={ref} className={`${tableId} table-viewport`}>
                 <Header
                     ref={headerScrollRef}
                     className="scrollable"
@@ -304,7 +299,7 @@ const Table = ({
                     data={headerData}
                 />
 
-                <div className='viewPort scrollable' ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
+                <ViewPort className='viewPort scrollable' ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
                     <div
                         className='container'
                         style={{ width: totalWidth }}>
@@ -322,13 +317,14 @@ const Table = ({
                                 selectionMode,
                                 mouseDownColCord,
                                 mouseMoveColCord,
+                                tableId,
                             }
                         })}
                     </div>
 
                     <Selected onSelection={onSelection} />
-                    <Scroller active={selectColDraging} />
-                </div>
+                    <Scroller active={selectColDraging} id={tableId} />
+                </ViewPort>
                 <div className='table-end'></div>
                 <Footer maxWidth={totalWidth} count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
 
