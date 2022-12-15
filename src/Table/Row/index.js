@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Brick from '../Col/Brick';
-import { TableContext } from '../context';
 
 
 const RowElm = styled.div`
@@ -14,24 +13,35 @@ const RowElm = styled.div`
             return hover ? 'background: #e5f2fe;' : 'background:#fafafa;'
         }
     }}
-    border: 1px solid transparent;
-    box-sizing: border-box;
+`;
+
+let Outliner = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0.5px dashed transparent;
+    pointer-events: none;
+    z-index: 100;
     &.hightlighted {
-        background: rgba(33,150,243,0.2);;
-    }
-    &.outline-left {
-        border-left: 1px solid #65b2fe;
-    }
-    &.outline-right {
-        border-right: 1px solid #65b2fe;
+        background: rgba(33,150,243,0.2);
     }
     &.outline-top {
-        border-top: 1px solid #65b2fe;
+        border-top: 1px dashed #65b2fe;
+        border-left: 1px dashed #65b2fe;
+        border-right: 1px dashed #65b2fe;
     }
     &.outline-bottom {
-        border-bottom: 1px solid #65b2fe;
+        border-bottom: 1px dashed #65b2fe;
+        border-left: 1px dashed #65b2fe;
+        border-right: 1px dashed #65b2fe;
     }
-`;
+    &.outline-middle {
+        border-left: 1px dashed #65b2fe;
+        border-right: 1px dashed #65b2fe;
+    }
+}`;
 
 // Copunter for instances of this component used for row number
 let instancesCount = 0
@@ -49,20 +59,14 @@ const Row = ({
     children,
     expandedIds,
     selectionMode,
-    // mouseDownColCord,
-    // mouseMoveColCord,
+    mouseDownColCord,
+    mouseMoveColCord,
 }) => {
 
     const currentRowRef = useRef(null);
     const [hover, setHover] = useState(false);
     const [rowNumber, setRowNumber] = useState(0);
     const leftOffset = toolBoxWidth;
-
-    const {
-        mouseDownColCord,
-        mouseMoveColCord,
-       
-    } = useContext(TableContext);
 
     /** This is a hack to get the row number from the component instance
      * we could also use querySelectorAll to count the elements before this one 
@@ -170,11 +174,12 @@ const Row = ({
             <RowElm
                 onMouseOver={() => setHover(true)}
                 onMouseOut={() => setHover(false)}
-                className={isHightlighted()}
+                // className={isHightlighted()}
                 type={type}
                 hover={hover}
                 style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}
             >
+                <Outliner className={isHightlighted()} />
                 <Brick
                     horizontalAlign='left'
                     style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
