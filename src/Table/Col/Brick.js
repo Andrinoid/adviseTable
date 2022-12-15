@@ -28,7 +28,7 @@ const Brick = ({
 
     return (
         <BrickElm 
-            className="brick"
+            className="brick tableCol"
             horizontalAlign={horizontalAlign}
             style={{ ...theTheme.col, ...style }}
         >
