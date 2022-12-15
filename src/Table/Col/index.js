@@ -58,9 +58,6 @@ const Col = ({
     *  The table matrix is used for calculating the selected area and has other opportunities for future features
     */
     useEffect(() => {
-        console.log('y',y)
-        console.log('x',x)
-        console.log(currentColRef)
         if (tableMatrix[y]) {
             setTableMatrix(prev => {
                 prev[y][x] = currentColRef;
@@ -72,8 +69,6 @@ const Col = ({
                 return prev;
             });
         }
-        console.log('matrix', tableMatrix)
-        console.log('---')
     }, [y, x]);
 
     /**
