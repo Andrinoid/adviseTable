@@ -12,7 +12,7 @@ const RowElm = styled.div`
         else if (type === 'secondary') {
             return hover ? 'background: #e5f2fe;' : 'background:#fafafa;'
         }
-    }}
+    }}  
 `;
 
 let Outliner = styled.div`
