@@ -6,11 +6,12 @@ var edgeSize = 80;
 var timer = null;
 var tableTimer = null;
 
-const Scroller = ({ active = false }) => {
+const Scroller = ({ active = false, tableId }) => {
 
     useEffect(() => {
         window.addEventListener("mousemove", handleMousemove, false);
-        let tableMouseMove = delegate(document.body, '.viewPort', 'mousemove', onTableMouseMove, false);
+        console.log( `.viewPort${tableId}`)
+        let tableMouseMove = delegate(document.body, `.viewPort${tableId}`, 'mousemove', onTableMouseMove, false);
 
 
         return () => {
@@ -20,6 +21,7 @@ const Scroller = ({ active = false }) => {
     }, [active]);
 
     const onTableMouseMove = (event) => {
+        console.log('event', event)
         let viewport = event.delegateTarget;
         let container = viewport.querySelector(".container");
 

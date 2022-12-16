@@ -34,11 +34,12 @@ const ViewPort = styled.div`
 
 const Table = ({
     onSelection = () => { },
-    theme = 'default',
     selectionMode = 'cell',
+    theme = 'default',
     expandedIds,
     headerData,
     children,
+    tableId, // make required
 }, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
@@ -81,7 +82,7 @@ const Table = ({
     const [selectedAvg, setSelectedAvg] = useState(0);
 
     // create unique id for each table. Used for seperating events]
-    const tableId = 'id-' + Math.random().toString(36).substr(2, 9);
+    // const tableId = 'id-' + Math.random().toString(36).substr(2, 9);
     const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
     const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
 
@@ -279,7 +280,7 @@ const Table = ({
             selectionMode,
             tableId,
         }}>
-            <Wrapper ref={ref} className={`${tableId} table-viewport`}>
+            <Wrapper ref={ref}>
                 <Header
                     ref={headerScrollRef}
                     className="scrollable"
@@ -299,7 +300,7 @@ const Table = ({
                     data={headerData}
                 />
 
-                <ViewPort className='viewPort scrollable' ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
+                <ViewPort className={`viewPort${tableId} scrollable`} ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>
                     <div
                         className='container'
                         style={{ width: totalWidth }}>
@@ -323,7 +324,7 @@ const Table = ({
                     </div>
 
                     <Selected onSelection={onSelection} />
-                    <Scroller active={selectColDraging} id={tableId} />
+                    <Scroller active={selectColDraging} tableId={tableId} />
                 </ViewPort>
                 <div className='table-end'></div>
                 <Footer maxWidth={totalWidth} count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />

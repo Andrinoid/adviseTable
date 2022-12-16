@@ -34,7 +34,7 @@ function App() {
   let monthRange = months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1]);
 
   const header = [
-    { title: 'Label' },
+    { title: '' },
     { title: 'Jan' },
     { title: 'Feb' },
     { title: 'Mar' },
@@ -102,7 +102,15 @@ function App() {
       </div>
       <p>{mode}</p>
 
-      <Table mode={mode} ref={tableRef} headerData={header} theme="default" selectionMode={selectionMode} expandedIds={expandedIds}>
+      <Table 
+        mode={mode} 
+        ref={tableRef} 
+        headerData={header} 
+        theme="default" 
+        selectionMode={selectionMode} 
+        expandedIds={expandedIds}
+        tableId={'bigTable'}
+      >
         {(tableProvided) => {
           // console.log(tableProvided);
           return (
@@ -296,6 +304,7 @@ function App() {
         ref={tableRef3} 
         headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}
         theme={'dark'}
+        tableId={'smallTable'}
       >
         {(tableProvided) => (
           <div>
