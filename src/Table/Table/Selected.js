@@ -62,7 +62,6 @@ const Selected = ({ onSelection, tableId }) => {
     let oldX = null;
     let oldY = null;
     const onMouseMove = (e) => {
-        // console.log('onMouseMove', e.delegateTarget);
         if (trackMouseMove) {
             setSelectColDraging(true);
             let { x, y, end } = e.delegateTarget.dataset;

@@ -72,10 +72,8 @@ const Row = ({
      * we could also use querySelectorAll to count the elements before this one 
      */
     useEffect(() => {
-        // instancesCount += 1
         setRowNumber(instancesCount++)
         return () => {
-            // instancesCount -= 1
             setRowNumber(--instancesCount)
         }
     }, [expandedIds])
@@ -180,12 +178,14 @@ const Row = ({
                 style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}
             >
                 <Outliner className={isHightlighted()} />
-                <Brick
-                    horizontalAlign='left'
-                    style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
-                >
-                    {toolBoxContent && toolBoxContent}
-                </Brick>
+                {toolBoxContent &&
+                    <Brick
+                        horizontalAlign='left'
+                        style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
+                    >
+                        {toolBoxContent}
+                    </Brick>
+                }
 
                 {childrenWithProps}
 

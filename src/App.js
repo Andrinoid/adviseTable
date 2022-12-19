@@ -17,6 +17,9 @@ const Flex = styled.div`
   align-content: center;
   cursor: ${({ cursor }) => cursor || 'default'};
  `
+const Label = styled.div`
+
+`;
 
 function App() {
 
@@ -305,6 +308,7 @@ function App() {
         headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}
         // theme={'dark'}
         tableId={'smallTable'}
+        leftBrickWidth={0}
       >
         {(tableProvided) => (
           <div>
@@ -319,6 +323,8 @@ function App() {
               baz
             </Col>
           </Row>
+
+         
 
           <Row  {...tableProvided.rowProps}>
             <Col horizontalAlign="left">

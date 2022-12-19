@@ -40,6 +40,7 @@ const Table = ({
     headerData,
     children,
     tableId, // make required
+    leftBrickWidth = 50,
 }, ref) => {
     //TODO
     // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
@@ -56,7 +57,7 @@ const Table = ({
     const [colHeight, setColHeight] = useState(40);
     // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
     const [totalWidth, setTotalWidth] = useState(1350);
-    const [toolBoxWidth, setToolBoxWidth] = useState(50);
+    const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
     const [totalColWidth, setTotalColWidth] = useState(100);
     const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / numberOfDataCols);
 
@@ -318,6 +319,7 @@ const Table = ({
                                 selectionMode,
                                 mouseDownColCord,
                                 mouseMoveColCord,
+                                setToolBoxWidth,
                                 tableId,
                             }
                         })}
