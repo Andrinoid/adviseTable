@@ -299,19 +299,16 @@ function App() {
       <div>
         <button onClick={() => tableRef3.current.autoAdjust()}>Auto adjust</button>
       </div>
-      {/* <Table 
+      <Table 
         mode={mode} 
         ref={tableRef3} 
         headerData={[{title: 'foo'}, {title: 'bar'}, {title: 'baz'}]}
-        theme={'dark'}
+        // theme={'dark'}
         tableId={'smallTable'}
       >
         {(tableProvided) => (
           <div>
-          <Row  {...tableProvided.rowProps} index={0} toolBoxContent={<div>
-            <button>+</button>
-            <button>bar</button>
-          </div>}>
+          <Row  {...tableProvided.rowProps}>
             <Col horizontalAlign="left">
               foo
             </Col>
@@ -323,7 +320,7 @@ function App() {
             </Col>
           </Row>
 
-          <Row  {...tableProvided.rowProps} index={1}>
+          <Row  {...tableProvided.rowProps}>
             <Col horizontalAlign="left">
               foo
             </Col>
@@ -335,7 +332,7 @@ function App() {
             </Col>
           </Row>
 
-          <Row  {...tableProvided.rowProps} index={2}>
+          <Row  {...tableProvided.rowProps}>
           <Col horizontalAlign="left">
             foo
           </Col>
@@ -350,7 +347,7 @@ function App() {
         </div>
         )}
       </Table>
-         */}
+        
 
 
 
