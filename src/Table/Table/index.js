@@ -280,7 +280,7 @@ const Table = ({
             selectionMode,
             tableId,
         }}>
-            <Wrapper ref={ref}>
+            <Wrapper ref={ref} id={tableId}>
                 <Header
                     ref={headerScrollRef}
                     className="scrollable"
@@ -323,7 +323,7 @@ const Table = ({
                         })}
                     </div>
 
-                    <Selected onSelection={onSelection} />
+                    <Selected onSelection={onSelection} tableId={tableId}/>
                     <Scroller active={selectColDraging} tableId={tableId} />
                 </ViewPort>
                 <div className='table-end'></div>

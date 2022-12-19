@@ -4,7 +4,7 @@ import delegate from "delegate";
 
 let trackMouseMove = false;
 
-const Selected = ({ onSelection }) => {
+const Selected = ({ onSelection, tableId }) => {
 
     // Get the context we need
     const {
@@ -19,9 +19,9 @@ const Selected = ({ onSelection }) => {
      * As this can be a large number of cells, we use delegate the event listeners to the body for performance
      */
     useEffect(() => {
-        let mouseDown = delegate(document.body, '.tableCol', 'mousedown', onMouseDown, false );
-        let mouseMove = delegate(document.body, '.tableCol', 'mouseover', onMouseMove, false);
-        let mouseUp = delegate(document.body, '.tableCol', 'mouseup', onMouseUp, false);
+        let mouseDown = delegate(document.body, `#${tableId} .tableCol`, 'mousedown', onMouseDown, false );
+        let mouseMove = delegate(document.body, `#${tableId} .tableCol`, 'mouseover', onMouseMove, false);
+        let mouseUp = delegate(document.body, `#${tableId} .tableCol`, 'mouseup', onMouseUp, false);
         return () => {
             mouseDown.destroy();
             mouseMove.destroy();
