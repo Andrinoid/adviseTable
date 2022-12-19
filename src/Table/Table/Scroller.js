@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { isElementInViewport } from "../utils";
 import delegate from "delegate";
 
-var edgeSize = 80;
-var timer = null;
-var tableTimer = null;
+let edgeSize = 80;
+let timer = null;
+let tableTimer = null;
 
 const Scroller = ({ active = false, tableId }) => {
 
