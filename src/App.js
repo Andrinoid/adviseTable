@@ -10,6 +10,11 @@ const Panel = styled.div`
   padding: 10px;
 `;
 
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Hr = styled.hr`
 border: 0;
 height: 1px;
@@ -23,6 +28,7 @@ const App = () => {
   const [draggable, setDraggable] = useState(false);
   const [autoAdjustTrigger, setAutoAdjustTrigger] = useState(0);
   const [selectionMode, setSelectionMode] = useState('cell');
+  const [footerVissible, setFooterVissible] = useState(true);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -80,6 +86,16 @@ const App = () => {
             <Text type="secondary">Selection Mode</Text>
           </div>
           <Radio.Group block options={['row', 'cell']} onChange={onSelectionModeChange} value={selectionMode} optionType="button" />
+        </Panel>
+        <Hr />
+        <Panel>
+          <div style={{ marginBottom: 5 }}>
+            <Text type="secondary">Footer</Text>
+          </div>
+          <Flex>
+            <Text type="secondary">Has footer</Text>
+            <Switch checked={footerVissible} onChange={(checked) => setFooterVissible(checked)} />
+          </Flex>
         </Panel>
 
       </Sider>
