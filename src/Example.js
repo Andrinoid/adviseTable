@@ -355,6 +355,7 @@ function Example({
             <p>Todo</p>
             <ul>
                 <li>Control styles</li>
+                <li>throttle on table resize or streach out method</li>
                 <li>Min and max size on cols</li>
                 <li>pinned columns</li>
             </ul>
