@@ -24,6 +24,7 @@ function Example({
     draggable,
     autoAdjustTrigger,
     selectionMode,
+    footerVissible,
 }) {
 
     const [expandedIds, setExpandedIds] = useState([]);
@@ -103,6 +104,7 @@ function Example({
                 selectionMode={selectionMode}
                 expandedIds={expandedIds}
                 tableId={'bigTable'}
+                footer={footerVissible}
             >
                 {(tableProvided) => {
                     // console.log(tableProvided);

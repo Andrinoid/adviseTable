@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Example from './Example';
-import { Layout, theme, Radio, Typography, Switch, Button, Space } from 'antd';
+import { Layout, theme, Radio, Typography, Switch, Button } from 'antd';
 const { Header, Sider, Content } = Layout;
 const { Text, Title } = Typography;
 
@@ -125,6 +125,7 @@ const App = () => {
             draggable={draggable}
             autoAdjustTrigger={autoAdjustTrigger}
             selectionMode={selectionMode}
+            footerVissible={footerVissible}
           />
         </Content>
       </Layout>

@@ -8,7 +8,7 @@ const TableFooter = styled.div`
     overflow: hidden;
     width: 100%;
     height: 30px;
-    background: #f5f5f5;
+    background: ${props => props.vissible ? '#f5f5f5' : 'transparent'};
     padding: 0 10px;
     box-sizing: border-box;
     color: #333;
@@ -42,7 +42,7 @@ const Box = styled.div`
  * If the footer is not desired, it can be rendered with white or transparent background and no content
  * TODO make the footer optional with a prop from the table
  */
-const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
+const Footer = ({ count, sum, min, max, avg, maxWidth, vissible }) => {
 
     /**
      * Simple number formatter
@@ -52,31 +52,33 @@ const Footer = ({ count, sum, min, max, avg, maxWidth }) => {
     }
 
     return (
-        <TableFooter style={{ maxWidth: maxWidth }} className="tableCol tableFooter" data-end={true}>
-            <Left>
+        <TableFooter style={{ maxWidth: maxWidth }} className="tableCol tableFooter" data-end={true} vissible={vissible}>
+            {vissible && <>
+                <Left>
 
-            </Left>
-            <Middle></Middle>
-            <Right>
-                {/* This needs more work to account for some scenarios like when one column is selected after bigger selection */}
-                {count > 1 && <>
-                    <Box>count: <span>{count}</span></Box>
-                    {!isNaN(min) &&
-                        <Box>min: <span>{numberWithCommas(min)}</span></Box>
+                </Left>
+                <Middle></Middle>
+                <Right>
+                    {/* This needs more work to account for some scenarios like when one column is selected after bigger selection */}
+                    {count > 1 && <>
+                        <Box>count: <span>{count}</span></Box>
+                        {!isNaN(min) &&
+                            <Box>min: <span>{numberWithCommas(min)}</span></Box>
+                        }
+                        {!isNaN(max) &&
+                            <Box>max: <span>{numberWithCommas(max)}</span></Box>
+                        }
+                        {!isNaN(avg) &&
+                            <Box>avg: <span>{(numberWithCommas(toInteger(avg)))}</span></Box>
+                        }
+                        {!isNaN(sum) &&
+                            <Box>sum: <span>{numberWithCommas(sum)}</span></Box>
+                        }
+                    </>
                     }
-                    {!isNaN(max) &&
-                        <Box>max: <span>{numberWithCommas(max)}</span></Box>
-                    }
-                    {!isNaN(avg) &&
-                        <Box>avg: <span>{(numberWithCommas(toInteger(avg)))}</span></Box>
-                    }
-                    {!isNaN(sum) &&
-                        <Box>sum: <span>{numberWithCommas(sum)}</span></Box>
-                    }
-                </>
-                }
-                {count === 1 && <></>}
-            </Right>
+                    {count === 1 && <></>}
+                </Right>
+            </>}
         </TableFooter>
     );
 }

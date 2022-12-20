@@ -41,6 +41,7 @@ const Table = ({
     children,
     tableId, // make required
     leftBrickWidth = 50,
+    footer, //Boolean
 }, ref) => {
 
     useEffect(() => {
@@ -332,7 +333,15 @@ const Table = ({
                     <Scroller active={selectColDraging} tableId={tableId} />
                 </ViewPort>
                 <div className='table-end'></div>
-                <Footer maxWidth={totalWidth} count={selectedCount} sum={selectedSum} min={selectedMin} max={selectedMax} avg={selectedAvg} />
+                <Footer 
+                    maxWidth={totalWidth} 
+                    count={selectedCount} 
+                    sum={selectedSum} 
+                    min={selectedMin} 
+                    max={selectedMax} 
+                    avg={selectedAvg} 
+                    vissible={footer}
+                />
 
             </Wrapper>
         </TableContext.Provider>
