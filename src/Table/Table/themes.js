@@ -1,5 +1,5 @@
 const themes = {
-    default: {
+    light: {
         name: 'default',
         table: {
             background: '#fff',

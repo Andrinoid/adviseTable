@@ -43,11 +43,27 @@ let Outliner = styled.div`
     }
 }`;
 
+const Label = styled.div`
+    position: absolute;
+    inset: 0;
+    display: flex;
+    vertical-align: middle;
+    justify-content: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+    font-weight: 500;
+    pointer-events: none;
+    background: gray;
+    color: white;
+    padding: 0 5px;
+`;
+
 // Copunter for instances of this component used for row number
 let instancesCount = 0
 
 const Row = ({
     type = 'primary',
+    label,
     colWidth,
     colHeight,
     labelColWidth,
@@ -177,6 +193,8 @@ const Row = ({
                 hover={hover}
                 style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}
             >
+                {label && <Label>{label}</Label>}
+
                 <Outliner className={isHightlighted()} />
                 {toolBoxContent &&
                     <Brick

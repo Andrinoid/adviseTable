@@ -35,16 +35,19 @@ const ViewPort = styled.div`
 const Table = ({
     onSelection = () => { },
     selectionMode = 'cell',
-    theme = 'default',
+    theme = 'light',
     expandedIds,
     headerData,
     children,
     tableId, // make required
     leftBrickWidth = 50,
 }, ref) => {
-    //TODO
-    // if multiple instances of this table are rendered on the same page, event listeners will be added multiple times
-    // fix table resizer
+
+    useEffect(() => {
+        console.log(theme)
+        setTheTheme(themes[theme])
+    }, [theme]);
+
 
     const viewportRef = useRef(null);
     const [theTheme, setTheTheme] = useState(themes[theme]);
