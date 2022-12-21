@@ -12,7 +12,7 @@ const Column = styled.div`
     justify-content: ${props => props.horizontalAlign};
     position: absolute;
     user-select: none;
-    border: 1px solid transparent;
+    // border: 1px solid transparent;
     box-sizing: border-box;
     &.hightlighted {
         background: rgba(33,150,243,0.2);;
@@ -30,6 +30,32 @@ const Column = styled.div`
         border-bottom: 1px solid #65b2fe;
     }
 `;
+
+let Outliner = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // border: 1px solid transparent;
+    pointer-events: none;
+    z-index: 100;
+    &.hightlighted {
+        background: rgba(33,150,243,0.2);;
+    }
+    &.outline-left {
+        border-left: 1px solid #65b2fe;
+    }
+    &.outline-right {
+        border-right: 1px solid #65b2fe;
+    }
+    &.outline-top {
+        border-top: 1px solid #65b2fe;
+    }
+    &.outline-bottom {
+        border-bottom: 1px solid #65b2fe;
+    }
+}`;
 
 const Col = ({
     horizontalAlign = 'right',
@@ -147,8 +173,10 @@ const Col = ({
             data-y={y}
             type={type}
             id={id}
-            className={`tableCol ${isHightlighted()}`}
+            className={`tableCol`}
         >
+            
+            <Outliner className={isHightlighted()} />
             {!empty &&
                 <Cell parentWidth={style.width} parentType={type} x={x} y={y}>
                     {children}
