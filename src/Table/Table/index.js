@@ -42,6 +42,7 @@ const Table = ({
     tableId, // make required
     leftBrickWidth = 50,
     footer, //Boolean
+    headerStickyTopOffset = 0,
 }, ref) => {
 
     useEffect(() => {
@@ -303,6 +304,7 @@ const Table = ({
                     numberOfDataCols={numberOfDataCols}
                     theTheme={theTheme}
                     data={headerData}
+                    stickyTopOffset={headerStickyTopOffset}
                 />
 
                 <ViewPort className={`viewPort${tableId} scrollable`} ref={(el) => { viewportRef.current = el; viewportScrollRef.current = el; }}>

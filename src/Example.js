@@ -25,6 +25,7 @@ function Example({
     autoAdjustTrigger,
     selectionMode,
     footerVissible,
+    headerOffset,
 }) {
 
     const [expandedIds, setExpandedIds] = useState([]);
@@ -105,6 +106,7 @@ function Example({
                 expandedIds={expandedIds}
                 tableId={'bigTable'}
                 footer={footerVissible}
+                headerStickyTopOffset={headerOffset}
             >
                 {(tableProvided) => {
                     // console.log(tableProvided);

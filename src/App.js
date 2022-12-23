@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Example from './Example';
-import { Layout, theme, Radio, Typography, Switch, Button } from 'antd';
+import { Layout, theme, Radio, Typography, Switch, Button, Slider } from 'antd';
 const { Header, Sider, Content } = Layout;
 const { Text, Title } = Typography;
 
@@ -29,6 +29,7 @@ const App = () => {
   const [autoAdjustTrigger, setAutoAdjustTrigger] = useState(0);
   const [selectionMode, setSelectionMode] = useState('cell');
   const [footerVissible, setFooterVissible] = useState(true);
+  const [headerOffset, setHeaderOffset] = useState(0);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -97,11 +98,24 @@ const App = () => {
             <Switch checked={footerVissible} onChange={(checked) => setFooterVissible(checked)} />
           </Flex>
         </Panel>
+        <Hr />
+        <Panel>
+          <div style={{ marginBottom: 5 }}>
+            <Text type="secondary">Header top offset</Text>
+          </div>
+
+            <Slider
+              defaultValue={0}
+              onChange={(value) => {setHeaderOffset(value)}}
+            />
+            <Text type="secondary">Use e.g if the page has fixed header</Text>
+
+        </Panel>
 
       </Sider>
-      <Layout className="site-layout"style={{
-          marginLeft: 200,
-        }}>
+      <Layout className="site-layout" style={{
+        marginLeft: 200,
+      }}>
         <Header
           style={{
             padding: 0,
@@ -126,6 +140,7 @@ const App = () => {
             autoAdjustTrigger={autoAdjustTrigger}
             selectionMode={selectionMode}
             footerVissible={footerVissible}
+            headerOffset={headerOffset}
           />
         </Content>
       </Layout>

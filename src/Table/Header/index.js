@@ -7,8 +7,8 @@ import Brick from '../Col/Brick';
 
 const RowElm = styled.div`
     position: sticky;
-    top: 0px;
-    z-index: 1;
+    top: ${({ stickyTopOffset }) => stickyTopOffset}px;
+    z-index: 101;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
@@ -31,6 +31,7 @@ const Header = React.forwardRef(({
     onTotalColResize,
     onTableResize,
     numberOfDataCols,
+    stickyTopOffset = 0,
     theTheme,
     data,
 }, ref) => {
@@ -38,7 +39,7 @@ const Header = React.forwardRef(({
     const leftOffset = toolBoxWidth + labelColWidth;
 
     return (
-        <RowElm  ref={ref}>
+        <RowElm  ref={ref} stickyTopOffset={stickyTopOffset}>
             <div style={{...theTheme.header, height: colHeight, width: totalWidth, boxSizing: 'border-box'}}>
             <Brick
                 style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
