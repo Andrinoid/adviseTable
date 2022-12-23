@@ -7,7 +7,7 @@ import Brick from '../Col/Brick';
 
 const RowElm = styled.div`
     position: sticky;
-    top: 0;
+    top: 0px;
     z-index: 1;
     white-space: nowrap;
     width: 100%;
