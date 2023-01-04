@@ -1,5 +1,6 @@
 //react component  
 import React, { useRef, useContext, useEffect } from 'react';
+import { get } from 'lodash';
 import styled from 'styled-components';
 import { TableContext } from '../context';
 import Cell from './Cell';
@@ -12,7 +13,6 @@ const Column = styled.div`
     justify-content: ${props => props.horizontalAlign};
     position: absolute;
     user-select: none;
-    // border: 1px solid transparent;
     box-sizing: border-box;
     &.hightlighted {
         background: rgba(33,150,243,0.2);;
@@ -29,6 +29,17 @@ const Column = styled.div`
     &.outline-bottom {
         border-bottom: 1px solid #65b2fe;
     }
+    ${({ rowType, rowHover, theme }) => {
+        if(rowHover) {
+            return theme.rowHoverCol;
+        }
+        if (rowType === 'primary') {
+            return theme.col;
+        }
+        else if (rowType === 'secondary') {
+            return theme.colSecondary;
+        }
+    }}  
 `;
 
 let Outliner = styled.div`
@@ -58,8 +69,10 @@ let Outliner = styled.div`
 
 const Col = ({
     horizontalAlign = 'right',
+    rowType, // row is the parent row for this column
+    rowHover,// row is the parent row for this column
     children,
-    style = {},
+    style = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
     type,
     id,
     x,
@@ -163,11 +176,14 @@ const Col = ({
     return (
         <Column
             horizontalAlign={horizontalAlign}
-            style={{ ...theTheme.col, ...style }}
+            rowHover={rowHover}
+            rowType={rowType}
+            style={{ ...style }}
+            theme={theTheme}
             ref={currentColRef}
             x={x}
             y={y}
-            // ↓ In Selection component we use the dom to gett the selected area data attr are simpler to get
+            // ↓ In Selection component we use the dom to get the selected area. Data attr are simpler to get
             data-x={x}
             data-y={y}
             type={type}

@@ -115,7 +115,7 @@ function Example({
                             <Droppable droppableId="characters" >
                                 {(provided) => (
                                     <div {...provided.droppableProps} ref={provided.innerRef}>
-
+                                        
                                         {
                                             view.map((row, i) => {
                                                 return (

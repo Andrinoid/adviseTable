@@ -5,14 +5,6 @@ import Brick from '../Col/Brick';
 
 const RowElm = styled.div`
     position: relative;
-    ${({ type, hover }) => {
-        if (type === 'primary') {
-            return hover ? 'background: #e5f2fe;' : 'background: transparent;'
-        }
-        else if (type === 'secondary') {
-            return hover ? 'background: #e5f2fe;' : 'background:#fafafa;'
-        }
-    }}  
 `;
 
 let Outliner = styled.div`
@@ -77,6 +69,7 @@ const Row = ({
     selectionMode,
     mouseDownColCord,
     mouseMoveColCord,
+    theTheme,
 }) => {
 
     const currentRowRef = useRef(null);
@@ -148,22 +141,22 @@ const Row = ({
      * and are rezisable. Data cols however are not resizable and have the same width
      */
     const childrenWithProps = React.Children.map(children, (child, i) => {
-        let type;
+        let colType;
         let left;
         let width;
 
         if (i == 0) {
-            type = 'first';
+            colType = 'first';
             left = leftOffset;
             width = labelColWidth;
         }
         else if (i == numberOfDataCols + 1) { // plus one becuse the last col is not a dataCol e.g. total
-            type = 'last';
+            colType = 'last';
             left = leftOffset + (numberOfDataCols * colWidth) + labelColWidth;
             width = totalColWidth;
         }
         else {
-            type = 'middle';
+            colType = 'middle';
             left = leftOffset + labelColWidth + ((i - 1) * colWidth);
             width = colWidth;
         }
@@ -173,7 +166,9 @@ const Row = ({
                 id: `x${i}y${rowNumber}`,
                 y: rowNumber,
                 x: i,
-                type,
+                type: colType,
+                rowType: type,
+                rowHover: hover,
                 style: { width: width, height: colHeight, top: 0, left: left }
             });
         }
@@ -188,10 +183,11 @@ const Row = ({
             <RowElm
                 onMouseOver={() => setHover(true)}
                 onMouseOut={() => setHover(false)}
-                // className={isHightlighted()}
                 type={type}
                 hover={hover}
-                style={{ height: colHeight, width: totalWidth }} ref={currentRowRef} y={rowNumber}
+                style={{ height: colHeight, width: totalWidth }} 
+                ref={currentRowRef} 
+                y={rowNumber}
             >
                 {label && <Label>{label}</Label>}
 
@@ -199,10 +195,25 @@ const Row = ({
                 {toolBoxContent &&
                     <Brick
                         horizontalAlign='left'
-                        style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
+                        style={{ 
+                            width: toolBoxWidth, 
+                            height: colHeight,
+                            zIndex: 101,
+                            left: 0,
+                            position: 'sticky',
+                        }}
                     >
                         {toolBoxContent}
                     </Brick>
+                }
+                {!toolBoxContent && 
+                    <Brick style={{ 
+                        width: toolBoxWidth, 
+                        height: colHeight, 
+                        position: 'sticky', 
+                        left: 0, 
+                        zIndex: 101,
+                    }} />
                 }
 
                 {childrenWithProps}

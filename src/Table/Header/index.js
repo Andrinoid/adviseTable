@@ -42,7 +42,14 @@ const Header = React.forwardRef(({
         <RowElm  ref={ref} stickyTopOffset={stickyTopOffset}>
             <div style={{...theTheme.header, height: colHeight, width: totalWidth, boxSizing: 'border-box'}}>
             <Brick
-                style={{ width: toolBoxWidth, height: colHeight, top: 0, left: 0 }}
+                style={{ 
+                    width: toolBoxWidth, 
+                    height: colHeight, 
+                    zIndex: 101,
+                    position: 'sticky',
+                    top: 0, 
+                    left: 0 
+                }}
             ></Brick>
 
             {data.map((item, index) => {

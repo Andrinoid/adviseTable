@@ -7,13 +7,14 @@ const BrickElm = styled.div`
     align-items: center;
     position: absolute;
     user-select: none;
-    border: 1px solid transparent;
+    // border: 1px solid transparent;
     box-sizing: border-box;
     font-size: 14px;
     justify-content: ${props => props.horizontalAlign};
 `;
 /**
  * The Brick component is the Columns of the table that does not hold data
+ * TODO ADD PARENT TYPE AS PROP TO ALLOW FOR HEADER STYLES
  */
 const Brick = ({
     horizontalAlign = 'right',
