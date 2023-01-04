@@ -1,9 +1,28 @@
-export { default as Example } from "./Example";
+import { default as Example } from "./Example";
 
-export { Layout, theme, Radio, Typography, Switch, Button, Slider } from "antd";
+import { Layout, theme, Radio, Typography, Switch, Button, Slider } from "antd";
 
-export { Table, Row, Col } from "./Table";
-export { view, ui_prefs } from "./data/example2";
-export { default as mo } from "./data/months";
-export { default as DragHandle } from "./icons/DragHandle";
-export { default as Plus } from "./icons/Plus";
+import { Table, Row, Col } from "./Table";
+import { view, ui_prefs } from "./data/example2";
+import { default as mo } from "./data/months";
+import { default as DragHandle } from "./icons/DragHandle";
+import { default as Plus } from "./icons/Plus";
+
+export {
+  Example,
+  Layout,
+  theme,
+  Radio,
+  Typography,
+  Switch,
+  Button,
+  Slider,
+  Table,
+  Row,
+  Col,
+  view,
+  ui_prefs,
+  mo,
+  DragHandle,
+  Plus,
+};
