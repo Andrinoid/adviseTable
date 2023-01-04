@@ -8,7 +8,7 @@ import { default as mo } from "./data/months";
 import { default as DragHandle } from "./icons/DragHandle";
 import { default as Plus } from "./icons/Plus";
 
-export {
+export default {
   Example,
   Layout,
   theme,
