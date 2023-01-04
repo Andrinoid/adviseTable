@@ -1,15 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+export { default as Example } from "./Example";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <App />
-);
+export { Layout, theme, Radio, Typography, Switch, Button, Slider } from "antd";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+export { Table, Row, Col } from "./Table";
+export { view, ui_prefs } from "./data/example2";
+export { default as mo } from "./data/months";
+export { default as DragHandle } from "./icons/DragHandle";
+export { default as Plus } from "./icons/Plus";
