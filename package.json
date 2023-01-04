@@ -2,6 +2,7 @@
   "name": "advise-ui",
   "version": "0.1.0",
   "private": true,
+  "main": "build/index.js",
   "dependencies": {
     "antd": "^5.0.7",
     "delegate": "^3.2.0",
