@@ -5,7 +5,6 @@ import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
 import Plus from "./icons/Plus";
 
-import "./App.css";
 import { Table, Row, Col } from "./Table";
 import { view, ui_prefs } from "./data/example2";
 import { default as mo } from "./data/months";
