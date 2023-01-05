@@ -11,15 +11,25 @@ const BrickElm = styled.div`
     box-sizing: border-box;
     font-size: 14px;
     justify-content: ${props => props.horizontalAlign};
+    ${({ location, theme }) => {
+        if (location === 'top') {
+            return {...theme.col, ...theme.header};
+        }
+        else if (location === 'left') {
+            return theme.col;
+        }
+    }}
 `;
 /**
  * The Brick component is the Columns of the table that does not hold data
+ * they are used in the header and as the first column in every row
  * TODO ADD PARENT TYPE AS PROP TO ALLOW FOR HEADER STYLES
  */
 const Brick = ({
     horizontalAlign = 'right',
     children,
-    style, 
+    style,
+    location, //top or left
 }) => {
 
     // Get the context we need
@@ -28,10 +38,13 @@ const Brick = ({
     } = useContext(TableContext);
 
     return (
-        <BrickElm 
+        <BrickElm
+        data-location={location}
+            location={location}
             className="brick tableCol"
             horizontalAlign={horizontalAlign}
-            style={{ ...theTheme.col, ...style }}
+            theme={theTheme}
+            style={{ ...style }}
         >
             {children}
         </BrickElm>

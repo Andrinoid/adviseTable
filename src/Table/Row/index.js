@@ -185,8 +185,8 @@ const Row = ({
                 onMouseOut={() => setHover(false)}
                 type={type}
                 hover={hover}
-                style={{ height: colHeight, width: totalWidth }} 
-                ref={currentRowRef} 
+                style={{ height: colHeight, width: totalWidth }}
+                ref={currentRowRef}
                 y={rowNumber}
             >
                 {label && <Label>{label}</Label>}
@@ -195,8 +195,9 @@ const Row = ({
                 {toolBoxContent &&
                     <Brick
                         horizontalAlign='left'
-                        style={{ 
-                            width: toolBoxWidth, 
+                        location={'left'}
+                        style={{
+                            width: toolBoxWidth,
                             height: colHeight,
                             zIndex: 101,
                             left: 0,
@@ -206,14 +207,16 @@ const Row = ({
                         {toolBoxContent}
                     </Brick>
                 }
-                {!toolBoxContent && 
-                    <Brick style={{ 
-                        width: toolBoxWidth, 
-                        height: colHeight, 
-                        position: 'sticky', 
-                        left: 0, 
-                        zIndex: 101,
-                    }} />
+                {!toolBoxContent &&
+                    <Brick
+                        location={'left'}
+                        style={{
+                            width: toolBoxWidth,
+                            height: colHeight,
+                            position: 'sticky',
+                            left: 0,
+                            zIndex: 101,
+                        }} />
                 }
 
                 {childrenWithProps}

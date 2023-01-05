@@ -33,7 +33,6 @@ const themes = {
         },
         header: {
             background: '#000',
-            // border: '1px solid #ebebeb',
             boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',
         },
         row: {
