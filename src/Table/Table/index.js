@@ -41,6 +41,7 @@ const Table = ({
     tableId, // make required
     leftBrickWidth = 50,
     footer, //Boolean
+    showGrid, // Boolean
     headerStickyTopOffset = 0,
 }, ref) => {
 
@@ -284,6 +285,7 @@ const Table = ({
             theTheme,
             selectionMode,
             tableId,
+            showGrid,
         }}>
             <Wrapper ref={ref} id={tableId}>
                 <Header

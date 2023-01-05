@@ -11,6 +11,11 @@ const BrickElm = styled.div`
     box-sizing: border-box;
     font-size: 14px;
     justify-content: ${props => props.horizontalAlign};
+    ${({ showGrid, theme }) => {
+        if (showGrid) {
+            return theme.grid;
+        }
+    }}
     ${({ location, theme }) => {
         if (location === 'top') {
             return {...theme.col, ...theme.header};
@@ -35,6 +40,7 @@ const Brick = ({
     // Get the context we need
     const {
         theTheme,
+        showGrid,
     } = useContext(TableContext);
 
     return (
@@ -44,6 +50,7 @@ const Brick = ({
             className="brick tableCol"
             horizontalAlign={horizontalAlign}
             theme={theTheme}
+            showGrid={showGrid}
             style={{ ...style }}
         >
             {children}

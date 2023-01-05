@@ -22,6 +22,7 @@ const Flex = styled.div`
 function Example({
     theme,
     draggable,
+    showGrid,
     autoAdjustTrigger,
     selectionMode,
     footerVissible,
@@ -106,6 +107,7 @@ function Example({
                 expandedIds={expandedIds}
                 tableId={'bigTable'}
                 footer={footerVissible}
+                showGrid={showGrid}
                 headerStickyTopOffset={headerOffset}
             >
                 {(tableProvided) => {

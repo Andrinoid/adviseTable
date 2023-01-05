@@ -26,6 +26,7 @@ opacity: 0.4;
 const App = () => {
   const [tableTheme, setTableTheme] = useState('light');
   const [draggable, setDraggable] = useState(false);
+  const [showGrid, setShowGrid] = useState(false);
   const [autoAdjustTrigger, setAutoAdjustTrigger] = useState(0);
   const [selectionMode, setSelectionMode] = useState('cell');
   const [footerVissible, setFooterVissible] = useState(true);
@@ -72,6 +73,13 @@ const App = () => {
             <Text type="secondary">Draggable</Text>
           </div>
           <Switch checked={draggable} onChange={(checked) => setDraggable(checked)} />
+        </Panel>
+        <Hr />
+        <Panel>
+          <div style={{ marginBottom: 5 }}>
+            <Text type="secondary">Show grid</Text>
+          </div>
+          <Switch checked={showGrid} onChange={(checked) => setShowGrid(checked)} />
         </Panel>
         <Hr />
         <Panel>
@@ -137,6 +145,7 @@ const App = () => {
           <Example
             theme={tableTheme}
             draggable={draggable}
+            showGrid={showGrid}
             autoAdjustTrigger={autoAdjustTrigger}
             selectionMode={selectionMode}
             footerVissible={footerVissible}

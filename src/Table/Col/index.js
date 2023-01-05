@@ -29,6 +29,11 @@ const Column = styled.div`
     &.outline-bottom {
         border-bottom: 1px solid #65b2fe;
     }
+    ${({ showGrid, theme }) => {
+        if (showGrid) {
+            return theme.grid;
+        }
+    }}
     ${({ rowType, rowHover, theme }) => {
         if(rowHover) {
             return theme.rowHoverCol;
@@ -89,6 +94,7 @@ const Col = ({
         tableMatrix,
         theTheme,
         selectionMode,
+        showGrid,
     } = useContext(TableContext);
 
     /*
@@ -180,6 +186,7 @@ const Col = ({
             rowType={rowType}
             style={{ ...style }}
             theme={theTheme}
+            showGrid={showGrid}
             ref={currentColRef}
             x={x}
             y={y}

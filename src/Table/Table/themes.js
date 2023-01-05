@@ -7,7 +7,7 @@ const themes = {
         },
         header: {
             background: '#fafafa',
-            borderBottom: 'solid 1px #ededed',
+            // borderBottom: 'solid 1px #ededed',
         },
         row: {
 
@@ -21,9 +21,13 @@ const themes = {
         rowHoverCol: {
             background: '#e5f2fe',
         },
+        grid: {
+            boxShadow: 'inset 0px 0px 0 0.5px #ebebeb',
+        },
         cell: {
             border: '1px solid #ebebeb',
         },
+        
     },
     dark: {
         name: 'dark',
