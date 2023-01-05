@@ -37,7 +37,6 @@ const themes = {
         },
         header: {
             background: '#000',
-            boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',
         },
         row: {
 
@@ -45,16 +44,16 @@ const themes = {
         col: {
             background: '#202124',
             color: '#bdc6cf',
-            boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',
         },
         rowHoverCol: {
             background: '#27314e',
             color: '#bdc6cf',
-            boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',
         },
         colSecondary: {
             background: '#202124',
             color: '#bdc6cf',
+        },
+        grid: {
             boxShadow: 'inset 0px 0px 0 0.5px #4a4c50',
         },
         cell: {
