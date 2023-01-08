@@ -46,7 +46,16 @@ const Fill = styled.div`
     justify-content: ${props => props.horizontalAlign};
 `;
 
-const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', style, type, horizontalAlign='right' }) => {
+const ResizablelCol = ({ 
+    children, 
+    viewportHeight,
+     onResize, 
+     direction='right', 
+     style, 
+     type,
+    horizontalAlign='right',
+    location,
+}) => {
 
     const [w, setW] = useState(0);
     const [x, setX] = useState(0);
@@ -116,7 +125,7 @@ const ResizablelCol = ({ children, viewportHeight, onResize, direction='right', 
     };
 
     return (
-        <Brick style={{...style }}>
+        <Brick location={location} style={{...style }}>
           {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}  
             <Fill className='fill' ref={colRef} horizontalAlign={horizontalAlign}>
             {children}
