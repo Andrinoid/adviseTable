@@ -3,7 +3,7 @@
         [
             "@babel/preset-env",
             {
-                "modules": true
+                "modules": "auto"
             }
         ],
         "@babel/react"
