@@ -12,15 +12,15 @@ If you have finished your changes, it's important to create a new release of it'
 1. First go to the tags management page clicking here: <br />
 <img alt="instruction-1" title="instruction-1" src=".github/assets/instruction-1.png" width="400px" />
 
-<br /> <br /> 
+<br /> 
 2. After that you will need to create a new release for it: <br />
 <img alt="instruction-2" title="instruction-2" src=".github/assets/instruction-2.png" width="200px" />
 
-<br /> <br /> 
+<br />
 3. After that define your tag name: <br />
 <img alt="instruction-3" title="instruction-3" src=".github/assets/instruction-3.png" width="400px" />
 
-<br /> <br /> 
+<br />
 4. Then fill your release name and press "Publish Release" <br />
 <img alt="instruction-4" title="instruction-4" src=".github/assets/instruction-4.png" width="800px" />
 
