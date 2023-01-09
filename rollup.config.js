@@ -5,7 +5,7 @@ const commonjs = require('@rollup/plugin-commonjs');
 const externalPeer = require('rollup-plugin-peer-deps-external');
 
 module.exports = {
-  input: 'src/index.js',
+  input: 'src/Table/index.js',
   output: [
     {
       file: pkg.main,
