@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { motion } from "framer-motion/dist/framer-motion";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
 import Plus from "./icons/Plus";
