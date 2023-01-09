@@ -9,7 +9,6 @@
     "framer-motion": "^7.6.19",
     "lodash": "^4.17.21",
     "react-beautiful-dnd": "^13.0.0",
-    "react-scripts": "^5.0.1",
     "styled-components": "^5.3.6"
   },
   "peerDependencies": {
@@ -37,7 +36,8 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "babel": "^6.23.0",
     "rollup": "^3.9.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4"
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "react-scripts": "^5.0.1"
   },
   "browserslist": {
     "production": [
