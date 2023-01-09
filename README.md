@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+### ✌ Welcome!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+These is a package created for centralizing the advise system UI components 😄
 
-## Available Scripts
+### 🛠 Installation
 
-In the project directory, you can run:
+You can install these package using when testing the changes made on the new system ```bash npm install git+ssh://git@github.com:Andrinoid/adviseTable.git --legacy-peer-deps --force```
 
-### `npm start`
+If you have finished your changes, it's important to create a new release of it's associated tag, you can do it here:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<img alt="instruction-1" title="instruction-1" src=".github/assets/instruction-1.png" width="400px" />
+<img alt="instruction-2" title="instruction-2" src=".github/assets/instruction-2.png" width="400px" />
+<img alt="instruction-3" title="instruction-3" src=".github/assets/instruction-3.png" width="400px" />
+<img alt="instruction-4" title="instruction-4" src=".github/assets/instruction-4.png" width="400px" />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Then you should be able to install the package using ```bash npm install git+ssh://git@github.com:Andrinoid/adviseTable.git#v1.0.0 --legacy-peer-deps --force```
 
-### `npm test`
+### 💻 Configuration
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You can run the code using ```bash npm run start```, don't forget of installing the dependencies before using ```bash npm install```, there you will have a place to visually test the package code that you are developing.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+It's important to notice that only the code exported on the build entrypoint defined on 
+```bash rollup.config.js``` ```bash input: 'src/Table/index.js'``` will be builded and exported by the package.
