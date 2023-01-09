@@ -8,9 +8,16 @@ You can install these package using when testing the changes made on the new sys
 
 If you have finished your changes, it's important to create a new release of it's associated tag, you can do it here:
 
-<img alt="instruction-1" title="instruction-1" src=".github/assets/instruction-1.png" width="400px" />
-<img alt="instruction-2" title="instruction-2" src=".github/assets/instruction-2.png" width="400px" />
+First go to the tags management page clicking here:
+<img alt="instruction-1" title="instruction-1" src=".github/assets/instruction-1.png" width="200px" />
+
+After that you will need to create a new release for it:
+<img alt="instruction-2" title="instruction-2" src=".github/assets/instruction-2.png" width="200px" />
+
+After that define your tag name:
 <img alt="instruction-3" title="instruction-3" src=".github/assets/instruction-3.png" width="400px" />
+
+Then fill your release name and press "Publish Release"
 <img alt="instruction-4" title="instruction-4" src=".github/assets/instruction-4.png" width="400px" />
 
 Then you should be able to install the package using ```bash npm install git+ssh://git@github.com:Andrinoid/adviseTable.git#v1.0.0 --legacy-peer-deps --force```
