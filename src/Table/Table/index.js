@@ -33,20 +33,19 @@ const ViewPort = styled.div`
 
 const Table = ({
     onSelection = () => { },
+    headerStickyTopOffset = 0,
     selectionMode = 'cell',
+    leftBrickWidth = 50,
     theme = 'light',
     expandedIds,
     headerData,
+    showGrid, // Boolean
     children,
     tableId, // make required
-    leftBrickWidth = 50,
     footer, //Boolean
-    showGrid, // Boolean
-    headerStickyTopOffset = 0,
 }, ref) => {
 
     useEffect(() => {
-        console.log(theme)
         setTheTheme(themes[theme])
     }, [theme]);
 
@@ -125,7 +124,9 @@ const Table = ({
      */
     useEffect(() => {
         getSelectedArea(mouseDownColCord, mouseMoveColCord);
+        onSelection({selectedSum, selectedAvg, selectedMin, selectedMax, selectedCount});
     }, [mouseDownColCord, mouseMoveColCord]);
+
 
     /**
      * This function auto adjusts the width of the first col to fit the biggest label

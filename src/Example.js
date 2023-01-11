@@ -103,6 +103,9 @@ function Example({
         tableId={"bigTable"}
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
+        onSelection = {(selectedReport) => {
+          console.log('selectedReport', selectedReport);
+        }}
       >
         {(tableProvided) => {
           // console.log(tableProvided);
