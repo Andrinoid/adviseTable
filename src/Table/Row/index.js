@@ -190,7 +190,7 @@ const Row = ({
                 ref={currentRowRef}
                 y={rowNumber}
             >
-                {label && <Label class="someLabel">{label}</Label>}
+                {label && <Label>{label}</Label>}
 
                 <Outliner className={isHightlighted()} />
                 {toolBoxContent &&
