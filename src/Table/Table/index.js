@@ -104,7 +104,6 @@ const Table = ({
     }));
 
     useEffect(() => {
-        console.log('width changed', width)
         setTotalWidth(width)
     }, [width]);
 
