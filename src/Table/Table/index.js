@@ -258,6 +258,7 @@ const Table = ({
             setMouseDownColCord,
             setMouseMoveColCord,
             setMouseUpColCord,
+            setSelectedCount,
             setTotalWidth,
             setlabelColWidth,
             setTotalColWidth,

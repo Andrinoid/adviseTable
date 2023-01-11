@@ -12,6 +12,7 @@ const Selected = ({ onSelection, tableId }) => {
         setMouseMoveColCord,
         setMouseUpColCord,
         setSelectColDraging,
+        setSelectedCount,
     } = useContext(TableContext);
 
     /** 
@@ -46,6 +47,7 @@ const Selected = ({ onSelection, tableId }) => {
             setMouseMoveColCord(null);
             setMouseDownColCord(null);
             setMouseUpColCord(null);
+            setSelectedCount(0);
             return;
         };
         // only run setters if x and y have changed from previous values
