@@ -34,6 +34,7 @@ const ViewPort = styled.div`
 const Table = ({
     onSelection = () => { },
     headerStickyTopOffset = 0,
+    width = 1350,
     selectionMode = 'cell',
     leftBrickWidth = 50,
     theme = 'light',
@@ -49,7 +50,6 @@ const Table = ({
         setTheTheme(themes[theme])
     }, [theme]);
 
-
     const viewportRef = useRef(null);
     const [theTheme, setTheTheme] = useState(themes[theme]);
 
@@ -60,7 +60,7 @@ const Table = ({
     const [headerHeight, setHeaderHeight] = useState(35);
     const [colHeight, setColHeight] = useState(40);
     // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
-    const [totalWidth, setTotalWidth] = useState(1350);
+    const [totalWidth, setTotalWidth] = useState(width);
     const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
     const [totalColWidth, setTotalColWidth] = useState(100);
     const [colWidth, setColWidth] = useState((totalWidth - labelColWidth - toolBoxWidth - totalColWidth) / numberOfDataCols);
@@ -102,6 +102,11 @@ const Table = ({
             autoAdjustDataColWidth();
         }
     }));
+
+    useEffect(() => {
+        console.log('width changed', width)
+        setTotalWidth(width)
+    }, [width]);
 
     /**
      * when the width of the table changes, recalculate the width of the data cols

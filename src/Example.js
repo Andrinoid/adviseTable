@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -25,9 +25,18 @@ function Example({
   headerOffset,
 }) {
   const [expandedIds, setExpandedIds] = useState([]);
+  const [containerWidth, setContainerWidth] = useState(0);
   // const [selectionMode, setSelectionMode] = useState('row');
   const tableRef = useRef(null);
   const tableRef3 = useRef(null);
+  const tableContainerRef = useRef(null);
+
+  // mesure tablContainerRef
+  useLayoutEffect(() => {
+    setContainerWidth(tableContainerRef.current.offsetWidth);
+    console.log(tableContainerRef.current.offsetWidth)
+  }, []);
+
 
   const isFirstRun = useRef(true);
   useEffect(() => {
@@ -94,8 +103,10 @@ function Example({
 
   return (
     <div className="App">
+      <div ref={tableContainerRef}>
       <Table
         ref={tableRef}
+        width={containerWidth}
         headerData={header}
         theme={theme}
         selectionMode={selectionMode}
@@ -240,6 +251,7 @@ function Example({
           );
         }}
       </Table>
+      </div>
       <hr />
 
       <p>problems</p>
@@ -299,6 +311,7 @@ function Example({
         <li>Min and max size on cols</li>
         <li>pinned columns</li>
       </ul>
+    
     </div>
   );
 }
