@@ -84,38 +84,7 @@ const Table = (
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
+    [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],
   ]);
 
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
@@ -377,7 +346,7 @@ const Table = (
             viewportScrollRef.current = el;
           }}
         >
-          <div style={{ width: totalWidth, position: "relative" }}>
+          <div style={{ width: totalWidth, position: "relative" }} className={`${tableId}container`}>
             {children({
               rowProps: {
                 colWidth: colWidth,

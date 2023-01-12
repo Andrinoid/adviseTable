@@ -20,7 +20,7 @@ const Scroller = ({ active = false, tableId }) => {
 
     const onTableMouseMove = (event) => {
         let viewport = event.delegateTarget;
-        let container = viewport.querySelector(".container");
+        let container = viewport.querySelector(`.${tableId}container`);
 
         let viewportLeft = viewport.getBoundingClientRect().left;
         let viewportWidth = viewport.clientWidth;
