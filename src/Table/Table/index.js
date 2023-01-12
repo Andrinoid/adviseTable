@@ -97,6 +97,12 @@ const Table = (
   const [selectedMax, setSelectedMax] = useState(0);
   const [selectedAvg, setSelectedAvg] = useState(0);
 
+  const [instanceCount, setInstanceCount] = useState(0);
+
+  useEffect(() => {
+    console.log('table instancecount',instanceCount);
+  }, [instanceCount]);
+
   // create unique id for each table. Used for seperating events]
   // const tableId = 'id-' + Math.random().toString(36).substr(2, 9);
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
@@ -319,6 +325,7 @@ const Table = (
       }}
     >
       <Wrapper ref={ref} id={tableId}>
+        {JSON.stringify(instanceCount)}
         <Header
           ref={headerScrollRef}
           className="scrollable"
@@ -362,6 +369,8 @@ const Table = (
                 mouseDownColCord,
                 mouseMoveColCord,
                 setToolBoxWidth,
+                setInstanceCount,
+                instanceCount,
                 tableId,
                 theTheme,
               },

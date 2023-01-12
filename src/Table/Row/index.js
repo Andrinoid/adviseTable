@@ -52,7 +52,6 @@ const Label = styled.div`
 `;
 
 // Copunter for instances of this component used for row number
-let instancesCount = 0
 
 const Row = ({
     type = 'primary',
@@ -70,23 +69,35 @@ const Row = ({
     selectionMode,
     mouseDownColCord,
     mouseMoveColCord,
+    setInstanceCount,
+    instanceCount,
     theTheme,
 }) => {
 
     const currentRowRef = useRef(null);
     const [hover, setHover] = useState(false);
     const [rowNumber, setRowNumber] = useState(0);
+
+
     const leftOffset = toolBoxWidth;
 
     /** This is a hack to get the row number from the component instance
      * we could also use querySelectorAll to count the elements before this one 
      */
     useEffect(() => {
-        setRowNumber(instancesCount++)
-        return () => {
-            setRowNumber(--instancesCount)
+        console.log(rowNumber, instanceCount)
+        if(instanceCount === rowNumber) {
+        console.log('set row number', instanceCount)
+        setRowNumber(instanceCount)
+        setInstanceCount(++instanceCount)
         }
-    }, [expandedIds])
+        return () => {
+            console.log('unmount row')
+            setRowNumber(instanceCount)
+            setInstanceCount(--instanceCount)
+        }
+
+    }, [instanceCount, setInstanceCount])
 
     const createOutlineClasses = (min, max, rowNumber) => {
         let classes = [];
