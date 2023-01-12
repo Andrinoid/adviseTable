@@ -5,6 +5,8 @@ import React, {
   useLayoutEffect,
   useEffect,
   useImperativeHandle,
+  useCallback,
+  useMemo,
 } from "react";
 import styled from "styled-components";
 
@@ -84,7 +86,38 @@ const Table = (
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([
-    [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
   ]);
 
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
@@ -100,7 +133,7 @@ const Table = (
   const [instanceCount, setInstanceCount] = useState(0);
 
   useEffect(() => {
-    console.log('table instancecount',instanceCount);
+    console.log("table instancecount", instanceCount);
   }, [instanceCount]);
 
   // create unique id for each table. Used for seperating events]
@@ -353,7 +386,10 @@ const Table = (
             viewportScrollRef.current = el;
           }}
         >
-          <div style={{ width: totalWidth, position: "relative" }} className={`${tableId}container`}>
+          <div
+            style={{ width: totalWidth, position: "relative" }}
+            className={`${tableId}container`}
+          >
             {children({
               rowProps: {
                 colWidth: colWidth,
