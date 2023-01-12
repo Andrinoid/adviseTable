@@ -132,10 +132,6 @@ const Table = (
 
   const [instanceCount, setInstanceCount] = useState(0);
 
-  useEffect(() => {
-    console.log("table instancecount", instanceCount);
-  }, [instanceCount]);
-
   // create unique id for each table. Used for seperating events]
   // const tableId = 'id-' + Math.random().toString(36).substr(2, 9);
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
