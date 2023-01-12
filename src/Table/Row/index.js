@@ -48,6 +48,7 @@ const Label = styled.div`
     background: gray;
     color: white;
     padding: 0 5px;
+    z-index: 1;
 `;
 
 // Copunter for instances of this component used for row number

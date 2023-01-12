@@ -36,21 +36,21 @@ const ViewPort = styled.div`
 const Table = (
   {
     onSelection = () => {},
+    headerStickyTopOffset = 0,
+    width = 1350,
     selectionMode = "cell",
+    leftBrickWidth = 50,
     theme = "light",
     expandedIds,
     headerData,
+    showGrid, // Boolean
     children,
     tableId, // make required
-    leftBrickWidth = 50,
     footer, //Boolean
-    showGrid, // Boolean
-    headerStickyTopOffset = 0,
   },
   ref
 ) => {
   useEffect(() => {
-    console.log(theme);
     setTheTheme(themes[theme]);
   }, [theme]);
 
@@ -66,7 +66,7 @@ const Table = (
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
-  const [totalWidth, setTotalWidth] = useState(1350);
+  const [totalWidth, setTotalWidth] = useState(width);
   const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
   const [totalColWidth, setTotalColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
@@ -145,6 +145,10 @@ const Table = (
     },
   }));
 
+  useEffect(() => {
+    setTotalWidth(width);
+  }, [width]);
+
   /**
    * when the width of the table changes, recalculate the width of the data cols
    */
@@ -166,6 +170,13 @@ const Table = (
    */
   useEffect(() => {
     getSelectedArea(mouseDownColCord, mouseMoveColCord);
+    onSelection({
+      selectedSum,
+      selectedAvg,
+      selectedMin,
+      selectedMax,
+      selectedCount,
+    });
   }, [mouseDownColCord, mouseMoveColCord]);
 
   /**
@@ -306,6 +317,7 @@ const Table = (
         setMouseDownColCord,
         setMouseMoveColCord,
         setMouseUpColCord,
+        setSelectedCount,
         setTotalWidth,
         setlabelColWidth,
         setTotalColWidth,
