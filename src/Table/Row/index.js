@@ -78,6 +78,9 @@ const Row = ({
 
   const leftOffset = toolBoxWidth;
 
+  /** This is a hack to get the row number from the component instance
+   * we could also use querySelectorAll to count the elements before this one
+   */
   useEffect(() => {
     if (rowNumber == null) {
       setInstanceCount((value) => {
@@ -86,23 +89,6 @@ const Row = ({
       });
     }
   }, [instanceCount]);
-
-  /** This is a hack to get the row number from the component instance
-   * we could also use querySelectorAll to count the elements before this one
-   */
-  //   useEffect(() => {
-  //     console.log(rowNumber, instanceCount);
-  //     if (instanceCount === rowNumber) {
-  //       console.log("set row number", instanceCount);
-  //       setRowNumber(instanceCount);
-  //       setInstanceCount(++instanceCount);
-  //     }
-  //     return () => {
-  //       console.log("unmount row");
-  //       setRowNumber(instanceCount);
-  //       setInstanceCount(--instanceCount);
-  //     };
-  //   }, [instanceCount, setInstanceCount]);
 
   const createOutlineClasses = (min, max, rowNumber) => {
     let classes = [];
