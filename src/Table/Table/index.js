@@ -138,6 +138,29 @@ const Table = (
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
 
   /**
+   *
+   * Computes the minimun size allowed to the table without overflowing the numbers
+   */
+  const getAdjustedSize = useCallback(() => {
+    console.log(`${labelColWidth} +
+      ${toolBoxWidth}+
+      ${totalColWidth} +
+    ${biggestDataCellWidth * numberOfDataCols}`);
+    return (
+      labelColWidth +
+      toolBoxWidth +
+      totalColWidth +
+      biggestDataCellWidth * numberOfDataCols
+    );
+  }, [
+    labelColWidth,
+    toolBoxWidth,
+    totalColWidth,
+    biggestDataCellWidth,
+    numberOfDataCols,
+  ]);
+
+  /**
    * expose method to parent component
    * For this to work, the parent component must pass a ref to this component
    * autoAdjust() will adjust the width of the table data cols to fit the data
@@ -149,9 +172,35 @@ const Table = (
     },
   }));
 
+  /**
+   * Update the total With but applying validation to the minimun width
+   */
+  const updateTableWith = useCallback(
+    (width) => {
+      const minSize = getAdjustedSize();
+      console.log(width, minSize);
+      if (!width || width < minSize) {
+        console.log("setTotalWidth(minSize)", minSize);
+        setTotalWidth(minSize);
+      } else {
+        console.log("setTotalWidth(width)", width);
+        setTotalWidth(width);
+      }
+    },
+    [getAdjustedSize]
+  );
+
   useEffect(() => {
-    setTotalWidth(width);
-  }, [width]);
+    updateTableWith(width);
+  }, [
+    updateTableWith,
+    width,
+    labelColWidth,
+    toolBoxWidth,
+    totalColWidth,
+    biggestDataCellWidth,
+    numberOfDataCols,
+  ]);
 
   /**
    * when the width of the table changes, recalculate the width of the data cols
@@ -167,6 +216,11 @@ const Table = (
   useLayoutEffect(() => {
     setViewportWidth(viewportRef.current.offsetWidth);
     setViewportHeight(viewportRef.current.offsetHeight);
+    window.addEventListener("resize", () => {});
+
+    return () => {
+      window.removeEventListener("resize", () => {});
+    };
   }, []);
 
   /**
@@ -204,12 +258,7 @@ const Table = (
    * it is exposed to the parent component to run if needed
    */
   const autoAdjustDataColWidth = () => {
-    setTotalWidth(
-      labelColWidth +
-        toolBoxWidth +
-        totalColWidth +
-        biggestDataCellWidth * numberOfDataCols
-    );
+    updateTableWith(getAdjustedSize());
   };
 
   /**
@@ -230,7 +279,7 @@ const Table = (
    * callback function for the table resizer
    */
   const onTableResize = (width) => {
-    setTotalWidth(width);
+    updateTableWith(width);
   };
 
   /**

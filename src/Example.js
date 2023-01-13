@@ -103,7 +103,7 @@ function Example({
 
   return (
     <div className="App">
-      <div ref={tableContainerRef}>
+      <div ref={tableContainerRef} width='900px'>
       <Table
         ref={tableRef}
         width={containerWidth}
@@ -254,7 +254,7 @@ function Example({
       </div>
       <hr />
 
-      <p>problems</p>
+      {/* <p>problems</p>
       <ul>
         <li>rename label and total through all components</li>
       </ul>
@@ -302,7 +302,7 @@ function Example({
             </Row>
           </div>
         )}
-      </Table>
+      </Table> */}
 
       <p>Todo</p>
       <ul>
