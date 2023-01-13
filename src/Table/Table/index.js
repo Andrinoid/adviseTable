@@ -37,9 +37,9 @@ const ViewPort = styled.div`
 
 const Table = (
   {
-    onSelection = () => {},
+    onSelection = () => { },
     headerStickyTopOffset = 0,
-    width = 1350,
+    width,
     selectionMode = "cell",
     leftBrickWidth = 50,
     theme = "light",
@@ -68,12 +68,12 @@ const Table = (
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
-  const [totalWidth, setTotalWidth] = useState(width);
+  const [totalWidth, setTotalWidth] = useState(1350);
   const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
   const [totalColWidth, setTotalColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
     (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
-      numberOfDataCols
+    numberOfDataCols
   );
 
   const [mouseDownColCord, setMouseDownColCord] = useState(null);
@@ -136,16 +136,13 @@ const Table = (
   // const tableId = 'id-' + Math.random().toString(36).substr(2, 9);
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const tableContainerRef = useRef(null);
 
   /**
    *
    * Computes the minimun size allowed to the table without overflowing the numbers
    */
   const getAdjustedSize = useCallback(() => {
-    console.log(`${labelColWidth} +
-      ${toolBoxWidth}+
-      ${totalColWidth} +
-    ${biggestDataCellWidth * numberOfDataCols}`);
     return (
       labelColWidth +
       toolBoxWidth +
@@ -178,12 +175,9 @@ const Table = (
   const updateTableWith = useCallback(
     (width) => {
       const minSize = getAdjustedSize();
-      console.log(width, minSize);
       if (!width || width < minSize) {
-        console.log("setTotalWidth(minSize)", minSize);
         setTotalWidth(minSize);
       } else {
-        console.log("setTotalWidth(width)", width);
         setTotalWidth(width);
       }
     },
@@ -191,7 +185,7 @@ const Table = (
   );
 
   useEffect(() => {
-    updateTableWith(width);
+    updateTableWith(width ? width : tableContainerRef.current.offsetWidth);
   }, [
     updateTableWith,
     width,
@@ -216,12 +210,17 @@ const Table = (
   useLayoutEffect(() => {
     setViewportWidth(viewportRef.current.offsetWidth);
     setViewportHeight(viewportRef.current.offsetHeight);
-    window.addEventListener("resize", () => {});
-
-    return () => {
-      window.removeEventListener("resize", () => {});
-    };
   }, []);
+
+  useEffect(() => {
+     window.addEventListener("resize", () => {
+       updateTableWith(tableContainerRef.current.offsetWidth);
+     });
+
+     return () => {
+       window.removeEventListener("resize", () => {});
+     };
+  }, [updateTableWith, biggestDataCellWidth]);
 
   /**
    *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
@@ -364,115 +363,116 @@ const Table = (
   };
 
   return (
-    <TableContext.Provider
-      value={{
-        setSelectColDraging,
-        setMouseDownColCord,
-        setMouseMoveColCord,
-        setMouseUpColCord,
-        setSelectedCount,
-        setTotalWidth,
-        setlabelColWidth,
-        setTotalColWidth,
-        setBiggestDataCellWidth,
-        setBiggestLabelCellWidth,
-        setBiggestTotalCellWidth,
-        autoAdjustLabelColWidth,
-        autoAdjustTotalColWidth,
-        setSelectedCol,
-        setSelectedArea,
-        setTableMatrix,
-        tableMatrix,
-        selectColDraging,
-        mouseDownColCord,
-        mouseMoveColCord,
-        mouseUpColCord,
-        totalWidth,
-        labelColWidth,
-        totalColWidth,
-        biggestDataCellWidth,
-        biggestLabelCellWidth,
-        biggestTotalCellWidth,
-        viewportHeight,
-        selectedCol,
-        selectedArea,
-        theTheme,
-        selectionMode,
-        tableId,
-        showGrid,
-      }}
-    >
-      <Wrapper ref={ref} id={tableId}>
-        {JSON.stringify(instanceCount)}
-        <Header
-          ref={headerScrollRef}
-          className="scrollable"
-          width={viewportWidth}
-          colHeight={headerHeight}
-          colWidth={colWidth}
-          labelColWidth={labelColWidth}
-          toolBoxWidth={toolBoxWidth}
-          totalColWidth={totalColWidth}
-          totalWidth={totalWidth}
-          viewportHeight={viewportHeight}
-          onLabelColResize={onLabelColResize}
-          onTotalColResize={onTotalColResize}
-          onTableResize={onTableResize}
-          numberOfDataCols={numberOfDataCols}
-          theTheme={theTheme}
-          data={headerData}
-          stickyTopOffset={headerStickyTopOffset}
-        />
+    <div ref={tableContainerRef}>
+      <TableContext.Provider
+        value={{
+          setSelectColDraging,
+          setMouseDownColCord,
+          setMouseMoveColCord,
+          setMouseUpColCord,
+          setSelectedCount,
+          setTotalWidth,
+          setlabelColWidth,
+          setTotalColWidth,
+          setBiggestDataCellWidth,
+          setBiggestLabelCellWidth,
+          setBiggestTotalCellWidth,
+          autoAdjustLabelColWidth,
+          autoAdjustTotalColWidth,
+          setSelectedCol,
+          setSelectedArea,
+          setTableMatrix,
+          tableMatrix,
+          selectColDraging,
+          mouseDownColCord,
+          mouseMoveColCord,
+          mouseUpColCord,
+          totalWidth,
+          labelColWidth,
+          totalColWidth,
+          biggestDataCellWidth,
+          biggestLabelCellWidth,
+          biggestTotalCellWidth,
+          viewportHeight,
+          selectedCol,
+          selectedArea,
+          theTheme,
+          selectionMode,
+          tableId,
+          showGrid,
+        }}
+      >
+        <Wrapper ref={ref} id={tableId}>
+          <Header
+            ref={headerScrollRef}
+            className="scrollable"
+            width={viewportWidth}
+            colHeight={headerHeight}
+            colWidth={colWidth}
+            labelColWidth={labelColWidth}
+            toolBoxWidth={toolBoxWidth}
+            totalColWidth={totalColWidth}
+            totalWidth={totalWidth}
+            viewportHeight={viewportHeight}
+            onLabelColResize={onLabelColResize}
+            onTotalColResize={onTotalColResize}
+            onTableResize={onTableResize}
+            numberOfDataCols={numberOfDataCols}
+            theTheme={theTheme}
+            data={headerData}
+            stickyTopOffset={headerStickyTopOffset}
+          />
 
-        <ViewPort
-          className={`viewPort${tableId} scrollable`}
-          ref={(el) => {
-            viewportRef.current = el;
-            viewportScrollRef.current = el;
-          }}
-        >
-          <div
-            style={{ width: totalWidth, position: "relative" }}
-            className={`${tableId}container`}
+          <ViewPort
+            className={`viewPort${tableId} scrollable`}
+            ref={(el) => {
+              viewportRef.current = el;
+              viewportScrollRef.current = el;
+            }}
           >
-            {children({
-              rowProps: {
-                colWidth: colWidth,
-                totalWidth: totalWidth,
-                colHeight: colHeight,
-                labelColWidth: labelColWidth,
-                toolBoxWidth: toolBoxWidth,
-                totalColWidth: totalColWidth,
-                topOffset: headerHeight,
-                numberOfDataCols: numberOfDataCols,
-                expandedIds: expandedIds,
-                selectionMode,
-                mouseDownColCord,
-                mouseMoveColCord,
-                setToolBoxWidth,
-                setInstanceCount,
-                instanceCount,
-                tableId,
-                theTheme,
-              },
-            })}
-          </div>
+            <div
+              style={{ width: totalWidth, position: "relative" }}
+              className={`${tableId}container`}
+            >
+              {children({
+                rowProps: {
+                  colWidth: colWidth,
+                  totalWidth: totalWidth,
+                  colHeight: colHeight,
+                  labelColWidth: labelColWidth,
+                  toolBoxWidth: toolBoxWidth,
+                  totalColWidth: totalColWidth,
+                  topOffset: headerHeight,
+                  numberOfDataCols: numberOfDataCols,
+                  expandedIds: expandedIds,
+                  selectionMode,
+                  mouseDownColCord,
+                  mouseMoveColCord,
+                  setToolBoxWidth,
+                  setInstanceCount,
+                  instanceCount,
+                  tableId,
+                  theTheme,
+                },
+              })}
+            </div>
 
-          <Selected onSelection={onSelection} tableId={tableId} />
-          <Scroller active={selectColDraging} tableId={tableId} />
-        </ViewPort>
-        <div className="table-end"></div>
-        <Footer
-          maxWidth={totalWidth}
-          count={selectedCount}
-          sum={selectedSum}
-          min={selectedMin}
-          max={selectedMax}
-          avg={selectedAvg}
-          vissible={footer}
-        />
-      </Wrapper>
-    </TableContext.Provider>
+            <Selected onSelection={onSelection} tableId={tableId} />
+            <Scroller active={selectColDraging} tableId={tableId} />
+          </ViewPort>
+          <div className="table-end"></div>
+          <Footer
+            maxWidth={totalWidth}
+            count={selectedCount}
+            sum={selectedSum}
+            min={selectedMin}
+            max={selectedMax}
+            avg={selectedAvg}
+            vissible={footer}
+          />
+        </Wrapper>
+      </TableContext.Provider>
+    </div>
   );
 };
 

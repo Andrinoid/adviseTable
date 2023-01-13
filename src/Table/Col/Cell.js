@@ -42,23 +42,25 @@ const Cell = ({ children, parentWidth, parentType, x, y }) => {
      * Find the widest cell and set it as context so we can use it to auto adjust the width of the columns
      */
     useEffect(() => {
-        if (parentType === 'middle') {
-            if (getElementWidth(ref.current) > biggestDataCellWidth) {
-                setBiggestDataCellWidth(getElementWidth(ref.current));
-            }
+      if (parentType === "middle") {
+        setBiggestDataCellWidth((value) => {
+            return getElementWidth(ref.current) > value
+                ? getElementWidth(ref.current)
+                : value;
+        });
+      }
+      if (parentType === "first") {
+        if (getElementWidth(ref.current) > biggestLabelCellWidth) {
+          setBiggestLabelCellWidth(getElementWidth(ref.current));
         }
-        if(parentType === 'first') {
-            if (getElementWidth(ref.current) > biggestLabelCellWidth) {
-                setBiggestLabelCellWidth(getElementWidth(ref.current));
-            }
+      }
+      if (parentType === "last") {
+        if (getElementWidth(ref.current) > biggestTotalCellWidth) {
+          setBiggestTotalCellWidth(getElementWidth(ref.current));
         }
-        if(parentType === 'last') {
-            if (getElementWidth(ref.current) > biggestTotalCellWidth) {
-                setBiggestTotalCellWidth(getElementWidth(ref.current));
-            }       
-        }
-        // im not sure if we should run on every render
-        // or cellWidth, biggestDataCellWidth. keeping this as reference
+      }
+      // im not sure if we should run on every render
+      // or cellWidth, biggestDataCellWidth. keeping this as reference
     }, []);
 
     /**

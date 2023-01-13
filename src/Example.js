@@ -29,13 +29,6 @@ function Example({
   // const [selectionMode, setSelectionMode] = useState('row');
   const tableRef = useRef(null);
   const tableRef3 = useRef(null);
-  const tableContainerRef = useRef(null);
-
-  // mesure tablContainerRef
-  useLayoutEffect(() => {
-    setContainerWidth(tableContainerRef.current.offsetWidth);
-    console.log(tableContainerRef.current.offsetWidth)
-  }, []);
 
 
   const isFirstRun = useRef(true);
@@ -103,10 +96,8 @@ function Example({
 
   return (
     <div className="App">
-      <div ref={tableContainerRef} width='900px'>
       <Table
         ref={tableRef}
-        width={containerWidth}
         headerData={header}
         theme={theme}
         selectionMode={selectionMode}
@@ -251,10 +242,9 @@ function Example({
           );
         }}
       </Table>
-      </div>
-      <hr />
+      {/* <hr />
 
-      {/* <p>problems</p>
+      <p>problems</p>
       <ul>
         <li>rename label and total through all components</li>
       </ul>
@@ -302,7 +292,7 @@ function Example({
             </Row>
           </div>
         )}
-      </Table> */}
+      </Table>
 
       <p>Todo</p>
       <ul>
@@ -310,8 +300,7 @@ function Example({
         <li>throttle on table resize or streach out method</li>
         <li>Min and max size on cols</li>
         <li>pinned columns</li>
-      </ul>
-    
+      </ul> */}
     </div>
   );
 }
