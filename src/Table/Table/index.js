@@ -5,8 +5,6 @@ import React, {
   useLayoutEffect,
   useEffect,
   useImperativeHandle,
-  useCallback,
-  useMemo,
 } from "react";
 import styled from "styled-components";
 
@@ -354,7 +352,6 @@ const Table = (
       }}
     >
       <Wrapper ref={ref} id={tableId}>
-        {JSON.stringify(instanceCount)}
         <Header
           ref={headerScrollRef}
           className="scrollable"
