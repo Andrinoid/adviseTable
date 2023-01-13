@@ -5,8 +5,6 @@ import React, {
   useLayoutEffect,
   useEffect,
   useImperativeHandle,
-  useCallback,
-  useMemo,
 } from "react";
 import styled from "styled-components";
 

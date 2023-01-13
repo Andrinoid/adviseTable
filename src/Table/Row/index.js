@@ -78,8 +78,8 @@ const Row = ({
 
   const leftOffset = toolBoxWidth;
 
-  /** This is a hack to get the row number from the component instance
-   * we could also use querySelectorAll to count the elements before this one
+  /** 
+   * Count the instances of this component and set the row number
    */
   useEffect(() => {
     if (rowNumber == null) {
