@@ -219,12 +219,13 @@ const Table = (
   }, []);
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
+    const callback = () => {
       updateTableWith(tableContainerRef.current.offsetWidth);
-    });
+    };
+    window.addEventListener("resize", callback );
 
     return () => {
-      window.removeEventListener("resize", () => {});
+      window.removeEventListener("resize", callback );
     };
   }, [updateTableWith, biggestDataCellWidth]);
 
