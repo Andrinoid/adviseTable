@@ -116,6 +116,29 @@ function Example({
               <Droppable droppableId="characters">
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
+                    <Draggable
+                      isDragDisabled={!draggable}
+                      draggableId={"id-" + view.length}
+                      key={"id-" + view.length}
+                      index={view.length}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <Row
+                            {...tableProvided.rowProps}
+                            // type={"secondary"}
+                          >
+                            <Col colSpan={6}>myLabel1</Col>
+                            <Col colSpan={7}>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                          </Row>
+                        </div>
+                      )}
+                    </Draggable>
+
                     {view.map((row, i) => {
                       return (
                         <Draggable

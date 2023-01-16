@@ -146,27 +146,36 @@ const Row = ({
    * We have three types of cols: first, middle and last becuase first and last cols have different widths
    * and are rezisable. Data cols however are not resizable and have the same width
    */
-  const childrenWithProps = React.Children.map(getValidChildren(children), (child, i) => {
+  let numCols = 0;
+  const childrenWithProps = React.Children.map(getValidChildren(children), (child) => {
     let colType;
     let left;
     let width;
-
-    if (i == 0) {
-      colType = "first";
-      left = leftOffset;
-      width = labelColWidth;
-    } else if (i == numberOfDataCols + 1) {
-      // plus one becuse the last col is not a dataCol e.g. total
-      colType = "last";
-      left = leftOffset + numberOfDataCols * colWidth + labelColWidth;
-      width = totalColWidth;
-    } else {
-      colType = "middle";
-      left = leftOffset + labelColWidth + (i - 1) * colWidth;
-      width = colWidth;
-    }
+    const { colSpan } = child.props;
 
     if (React.isValidElement(child)) {
+      const i = numCols;
+      if (i === 0) {
+        colType = "first";
+        left = leftOffset;
+        width = labelColWidth + (colSpan > 1 ? colSpan - 1 : 1) * colWidth;
+      } else if (i === numberOfDataCols + 1) {
+        // plus one becuse the last col is not a dataCol e.g. total
+        colType = "last";
+        left = leftOffset + numberOfDataCols * colWidth + labelColWidth;
+        width = totalColWidth;
+      } else {
+        colType = "middle";
+        left = leftOffset + labelColWidth + (numCols - 1) * colWidth;
+        width = colSpan ? colSpan * colWidth : colWidth;
+      }
+
+      if (colSpan) {
+        numCols += colSpan;
+      } else { 
+        numCols++;
+      }
+
       return React.cloneElement(child, {
         id: `x${i}y${rowNumber}`,
         y: rowNumber,
