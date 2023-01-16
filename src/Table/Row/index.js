@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import Col from "../Col";
 import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
@@ -133,13 +134,19 @@ const Row = ({
     }
   };
 
+  const getValidChildren = (childrenFromProps) => {
+    return React.Children.toArray(childrenFromProps).filter((child) => {
+      return child.type === Col;
+    });
+  };
+
   /**
    * Map over the children that should be Col components and add the props we need
    * We want to keep the Col component simple for the user so we inject the props here
    * We have three types of cols: first, middle and last becuase first and last cols have different widths
    * and are rezisable. Data cols however are not resizable and have the same width
    */
-  const childrenWithProps = React.Children.map(children, (child, i) => {
+  const childrenWithProps = React.Children.map(getValidChildren(children), (child, i) => {
     let colType;
     let left;
     let width;
