@@ -36,7 +36,7 @@ const ViewPort = styled.div`
 
 const Table = (
   {
-    onSelection = () => { },
+    onSelection = () => {},
     headerStickyTopOffset = 0,
     width,
     selectionMode = "cell",
@@ -72,7 +72,7 @@ const Table = (
   const [totalColWidth, setTotalColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
     (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
-    numberOfDataCols
+      numberOfDataCols
   );
 
   const [mouseDownColCord, setMouseDownColCord] = useState(null);
@@ -196,11 +196,18 @@ const Table = (
   ]);
 
   /**
+   * Updates the number of columns when headerData.length changes
+   * */
+  useEffect(() => {
+    setNumberOfDataCols(headerData.length - 2);
+  }, [headerData]);
+
+  /**
    * when the width of the table changes, recalculate the width of the data cols
    */
   useEffect(() => {
     setColWidth(calcColWidth);
-  }, [labelColWidth, totalColWidth, totalWidth]);
+  }, [labelColWidth, totalColWidth, totalWidth, numberOfDataCols]);
 
   /**
    * Messure the viewport width and height.
@@ -212,13 +219,13 @@ const Table = (
   }, []);
 
   useEffect(() => {
-     window.addEventListener("resize", () => {
-       updateTableWith(tableContainerRef.current.offsetWidth);
-     });
+    window.addEventListener("resize", () => {
+      updateTableWith(tableContainerRef.current.offsetWidth);
+    });
 
-     return () => {
-       window.removeEventListener("resize", () => {});
-     };
+    return () => {
+      window.removeEventListener("resize", () => {});
+    };
   }, [updateTableWith, biggestDataCellWidth]);
 
   /**
