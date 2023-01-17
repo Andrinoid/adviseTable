@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { TableContext } from '../context';
 
@@ -7,7 +7,6 @@ const BrickElm = styled.div`
     align-items: center;
     position: absolute;
     user-select: none;
-    // border: 1px solid transparent;
     box-sizing: border-box;
     font-size: 14px;
     justify-content: ${props => props.horizontalAlign};
@@ -18,7 +17,7 @@ const BrickElm = styled.div`
     }}
     ${({ location, theme }) => {
         if (location === 'top') {
-            return {...theme.col, ...theme.header};
+            return { ...theme.col, ...theme.header };
         }
         else if (location === 'left') {
             return theme.col;
@@ -45,7 +44,7 @@ const Brick = ({
 
     return (
         <BrickElm
-        data-location={location}
+            data-location={location}
             location={location}
             className="brick tableCol"
             horizontalAlign={horizontalAlign}
