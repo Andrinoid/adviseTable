@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
@@ -80,13 +80,22 @@ const Row = ({
 
   const leftOffset = toolBoxWidth;
 
-  /** 
+  const updateRowNumber = useCallback(
+    (value) => {
+      setTimeout(() => {
+        setRowNumber(value);
+      }, 1);
+    },
+    [rowNumber, setRowNumber]
+  );
+
+  /**
    * Count the instances of this component and set the row number
    */
   useEffect(() => {
     if (rowNumber == null) {
       setInstanceCount((value) => {
-        setRowNumber(value);
+        updateRowNumber(value);
         return value + 1;
       });
     }
@@ -148,47 +157,50 @@ const Row = ({
    * and are rezisable. Data cols however are not resizable and have the same width
    */
   let numCols = 0;
-  const childrenWithProps = React.Children.map(getValidChildren(children), (child) => {
-    let colType;
-    let left;
-    let width;
-    const { colSpan } = child.props;
+  const childrenWithProps = React.Children.map(
+    getValidChildren(children),
+    (child) => {
+      let colType;
+      let left;
+      let width;
+      const { colSpan } = child.props;
 
-    if (React.isValidElement(child)) {
-      const i = numCols;
-      if (i === 0) {
-        colType = "first";
-        left = leftOffset;
-        width = labelColWidth + (colSpan > 1 ? colSpan - 1 : 1) * colWidth;
-      } else if (i === numberOfDataCols + 1) {
-        // plus one becuse the last col is not a dataCol e.g. total
-        colType = "last";
-        left = leftOffset + numberOfDataCols * colWidth + labelColWidth;
-        width = totalColWidth;
-      } else {
-        colType = "middle";
-        left = leftOffset + labelColWidth + (numCols - 1) * colWidth;
-        width = colSpan ? colSpan * colWidth : colWidth;
+      if (React.isValidElement(child)) {
+        const i = numCols;
+        if (i === 0) {
+          colType = "first";
+          left = leftOffset;
+          width = labelColWidth + (colSpan > 1 ? colSpan - 1 : 1) * colWidth;
+        } else if (i === numberOfDataCols + 1) {
+          // plus one becuse the last col is not a dataCol e.g. total
+          colType = "last";
+          left = leftOffset + numberOfDataCols * colWidth + labelColWidth;
+          width = totalColWidth;
+        } else {
+          colType = "middle";
+          left = leftOffset + labelColWidth + (numCols - 1) * colWidth;
+          width = colSpan ? colSpan * colWidth : colWidth;
+        }
+
+        if (colSpan) {
+          numCols += colSpan;
+        } else {
+          numCols++;
+        }
+
+        return React.cloneElement(child, {
+          id: `x${i}y${rowNumber}`,
+          y: rowNumber,
+          x: i,
+          type: colType,
+          rowType: type,
+          rowHover: hover,
+          style: { width: width, height: colHeight, top: 0, left: left },
+        });
       }
-
-      if (colSpan) {
-        numCols += colSpan;
-      } else { 
-        numCols++;
-      }
-
-      return React.cloneElement(child, {
-        id: `x${i}y${rowNumber}`,
-        y: rowNumber,
-        x: i,
-        type: colType,
-        rowType: type,
-        rowHover: hover,
-        style: { width: width, height: colHeight, top: 0, left: left },
-      });
+      return child;
     }
-    return child;
-  });
+  );
 
   return (
     <>
