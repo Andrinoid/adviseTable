@@ -220,12 +220,14 @@ const Table = (
 
   useEffect(() => {
     const callback = () => {
-      updateTableWith(tableContainerRef.current.offsetWidth);
+      if (tableContainerRef?.current?.offsetWidth) {
+        updateTableWith(tableContainerRef.current.offsetWidth);
+      }
     };
-    window.addEventListener("resize", callback );
+    window.addEventListener("resize", callback);
 
     return () => {
-      window.removeEventListener("resize", callback );
+      window.removeEventListener("resize", callback);
     };
   }, [updateTableWith, biggestDataCellWidth]);
 
