@@ -73,147 +73,145 @@ let Outliner = styled.div`
 }`;
 
 const Col = ({
-    horizontalAlign = 'right',
-    rowType, // row is the parent row for this column
-    rowHover,// row is the parent row for this column
-    children,
-    style = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
-    type,
-    id,
-    x,
-    y,
-    empty = false
+  horizontalAlign = "right",
+  rowType, // row is the parent row for this column
+  rowHover, // row is the parent row for this column
+  children,
+  style = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
+  type,
+  id,
+  x,
+  y,
+  empty = false,
+  colSpan = 0,
 }) => {
-    const currentColRef = useRef(null);
+  const currentColRef = useRef(null);
 
-    // Get the context we need
-    const {
-        mouseDownColCord,
-        mouseMoveColCord,
-        setTableMatrix,
-        tableMatrix,
-        theTheme,
-        selectionMode,
-        showGrid,
-    } = useContext(TableContext);
+  // Get the context we need
+  const {
+    mouseDownColCord,
+    mouseMoveColCord,
+    setTableMatrix,
+    tableMatrix,
+    theTheme,
+    selectionMode,
+    showGrid,
+  } = useContext(TableContext);
 
-    /*
-    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
-    *  The table matrix is used for calculating the selected area and has other opportunities for future features
-    */
-    useEffect(() => {
-        if (tableMatrix[y]) {
-            setTableMatrix(prev => {
-                prev[y][x] = currentColRef;
-                return prev;
-            });
-        } else {
-            setTableMatrix(prev => {
-                prev.push([[currentColRef]]);
-                return prev;
-            });
-        }
-    }, [y, x]);
-
-    /**
-     * Create the outline classes to show the selected area
-     */
-    const createOutlineClasses = (minX, maxX, minY, maxY) => {
-        let classes = [];
-        if (y === minY) classes.push('outline-top');
-        if (y === maxY) classes.push('outline-bottom');
-        if (x === minX) classes.push('outline-left');
-        if (x === maxX) classes.push('outline-right');
-        classes.push('hightlighted');
-        return classes.join(' ');
+  /*
+   *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
+   *  The table matrix is used for calculating the selected area and has other opportunities for future features
+   */
+  useEffect(() => {
+    if (tableMatrix[y]) {
+      setTableMatrix((prev) => {
+        prev[y][x] = currentColRef;
+        return prev;
+      });
+    } else {
+      setTableMatrix((prev) => {
+        prev.push([[currentColRef]]);
+        return prev;
+      });
     }
+  }, [y, x]);
 
-    /**
-     * Calculate the selected area
-     * Note that we can not draw the selected area here, because we are in a single column component
-     * Selected is tracked in the Selected.js component on root level
-     */
-    const isHightlighted = () => {
-        // if selectionMode is not cell return
-        if(selectionMode !== 'cell') return;
+  /**
+   * Create the outline classes to show the selected area
+   */
+  const createOutlineClasses = (minX, maxX, minY, maxY) => {
+    let classes = [];
+    if (y === minY) classes.push("outline-top");
+    if (y === maxY) classes.push("outline-bottom");
+    if (x === minX) classes.push("outline-left");
+    if (x === maxX) classes.push("outline-right");
+    classes.push("hightlighted");
+    return classes.join(" ");
+  };
 
-        // asume notihing is selected
-        let isX = false;
-        let isY = false;
-        let minX;
-        let maxX;
-        let minY;
-        let maxY;
+  /**
+   * Calculate the selected area
+   * Note that we can not draw the selected area here, because we are in a single column component
+   * Selected is tracked in the Selected.js component on root level
+   */
+  const isHightlighted = () => {
+    // if selectionMode is not cell return
+    if (selectionMode !== "cell") return;
 
-        if (mouseDownColCord && mouseMoveColCord) {
-            // Find the min and max of the mouseDownColCord and mouseMoveColCord
-            minX = Math.min(mouseDownColCord[0], mouseMoveColCord[0]);
-            maxX = Math.max(mouseDownColCord[0], mouseMoveColCord[0]);
-            minY = Math.min(mouseDownColCord[1], mouseMoveColCord[1]);
-            maxY = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
+    // asume notihing is selected
+    let isX = false;
+    let isY = false;
+    let minX;
+    let maxX;
+    let minY;
+    let maxY;
 
-            // Check if the current column is in the selected area
-            if (x >= minX && x <= maxX) {
-                isX = true;
-            }
-            if (y >= minY && y <= maxY) {
-                isY = true;
-            }
-        }
-        // if we have only one column selected we set that column as the selected area
-        if (mouseDownColCord && !mouseMoveColCord) {
-            // check if this instance is the selected column
-            if (x == mouseDownColCord[0] && y == mouseDownColCord[1]) {
-                isX = true;
-                isY = true;
-                minX = x;
-                maxX = x;
-                minY = y;
-                maxY = y;
-            }
-        }
-        // if isX and isY are true, this instance is in the selected area so can determine the outline classes
-        if (isX && isY) {
-            return createOutlineClasses(minX, maxX, minY, maxY, x, y);
-        }
-        return false;
+    if (mouseDownColCord && mouseMoveColCord) {
+      // Find the min and max of the mouseDownColCord and mouseMoveColCord
+      minX = Math.min(mouseDownColCord[0], mouseMoveColCord[0]);
+      maxX = Math.max(mouseDownColCord[0], mouseMoveColCord[0]);
+      minY = Math.min(mouseDownColCord[1], mouseMoveColCord[1]);
+      maxY = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
+
+      // Check if the current column is in the selected area
+      if (x >= minX && x <= maxX) {
+        isX = true;
+      }
+      if (y >= minY && y <= maxY) {
+        isY = true;
+      }
     }
+    // if we have only one column selected we set that column as the selected area
+    if (mouseDownColCord && !mouseMoveColCord) {
+      // check if this instance is the selected column
+      if (x == mouseDownColCord[0] && y == mouseDownColCord[1]) {
+        isX = true;
+        isY = true;
+        minX = x;
+        maxX = x;
+        minY = y;
+        maxY = y;
+      }
+    }
+    // if isX and isY are true, this instance is in the selected area so can determine the outline classes
+    if (isX && isY) {
+      return createOutlineClasses(minX, maxX, minY, maxY, x, y);
+    }
+    return false;
+  };
 
-    return (
-        <Column
-            horizontalAlign={horizontalAlign}
-            rowHover={rowHover}
-            rowType={rowType}
-            style={{ ...style }}
-            theme={theTheme}
-            showGrid={showGrid}
-            ref={currentColRef}
-            x={x}
-            y={y}
-            // ↓ In Selection component we use the dom to get the selected area. Data attr are simpler to get
-            data-x={x}
-            data-y={y}
-            type={type}
-            id={id}
-            className={`tableCol`}
-        >
-            
-            <Outliner className={isHightlighted()} />
-            {!empty &&
-                <Cell parentWidth={style.width} parentType={type} x={x} y={y}>
-                    {children}
-                </Cell>
-            }
-            {
-            /* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell, 
-             * one for the matrix and another for the resize. The solution is to use empty col in resizeCol and fill the space 
-             * with a child for mesurements 
-             */
-            }
-            {empty && <>{children}</>}
-            {/* y:{y} x:{x} */}
-        </Column>
-    )
-}
+  return (
+    <Column
+      horizontalAlign={horizontalAlign}
+      rowHover={rowHover}
+      rowType={rowType}
+      style={{ ...style }}
+      theme={theTheme}
+      showGrid={showGrid}
+      ref={currentColRef}
+      x={x}
+      y={y}
+      // ↓ In Selection component we use the dom to get the selected area. Data attr are simpler to get
+      data-x={x}
+      data-y={y}
+      type={type}
+      id={id}
+      className={`tableCol`}
+    >
+      <Outliner className={isHightlighted()} />
+      {!empty && (
+        <Cell parentWidth={style.width} parentType={type} x={x} y={y}>
+          {children}
+        </Cell>
+      )}
+      {/* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell,
+       * one for the matrix and another for the resize. The solution is to use empty col in resizeCol and fill the space
+       * with a child for mesurements
+       */}
+      {empty && <>{children}</>}
+      {/* y:{y} x:{x} */}
+    </Column>
+  );
+};
 
 export default Col;

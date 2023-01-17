@@ -214,17 +214,22 @@ const Table = (
    * the width may vary based on the css applied to parent elements or the browser window width
    */
   useLayoutEffect(() => {
-    setViewportWidth(viewportRef.current.offsetWidth);
-    setViewportHeight(viewportRef.current.offsetHeight);
+    if (viewportRef?.current?.offsetWidth)
+      setViewportWidth(viewportRef.current.offsetWidth);
+    if (viewportRef?.current?.offsetHeight)
+      setViewportHeight(viewportRef.current.offsetHeight);
   }, []);
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      updateTableWith(tableContainerRef.current.offsetWidth);
-    });
+    const callback = () => {
+      if (tableContainerRef?.current?.offsetWidth) {
+        updateTableWith(tableContainerRef.current.offsetWidth);
+      }
+    };
+    window.addEventListener("resize", callback);
 
     return () => {
-      window.removeEventListener("resize", () => {});
+      window.removeEventListener("resize", callback);
     };
   }, [updateTableWith, biggestDataCellWidth]);
 

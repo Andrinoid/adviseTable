@@ -131,8 +131,8 @@ function Example({
                             {...tableProvided.rowProps}
                             // type={"secondary"}
                           >
-                            <Col colSpan={6}>myLabel1</Col>
-                            <Col colSpan={7}>myLabel2</Col>
+                            <Col colSpan={7}>myLabel1</Col>
+                            <Col colSpan={6}>myLabel2</Col>
                             <Col>myLabel2</Col>
                           </Row>
                         </div>
