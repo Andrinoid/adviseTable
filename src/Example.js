@@ -23,6 +23,7 @@ function Example({
   selectionMode,
   footerVissible,
   headerOffset,
+  showGrid,
 }) {
   const [expandedIds, setExpandedIds] = useState([]);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -100,6 +101,7 @@ function Example({
         ref={tableRef}
         headerData={header}
         theme={theme}
+        showGrid={showGrid}
         selectionMode={selectionMode}
         expandedIds={expandedIds}
         tableId={"bigTable"}
