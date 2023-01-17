@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import styled from 'styled-components';
 import { TableContext } from '../context';
 import Cell from './Cell';
+import { getContainedArea } from '../Table/SelectedAreas';
 
 
 const Column = styled.div`
@@ -14,21 +15,6 @@ const Column = styled.div`
     position: absolute;
     user-select: none;
     box-sizing: border-box;
-    &.hightlighted {
-        background: rgba(33,150,243,0.2);;
-    }
-    &.outline-left {
-        border-left: 1px solid #65b2fe;
-    }
-    &.outline-right {
-        border-right: 1px solid #65b2fe;
-    }
-    &.outline-top {
-        border-top: 1px solid #65b2fe;
-    }
-    &.outline-bottom {
-        border-bottom: 1px solid #65b2fe;
-    }
     ${({ showGrid, theme }) => {
         if (showGrid) {
             return theme.grid;
@@ -91,6 +77,7 @@ const Col = ({
   const {
     mouseDownColCord,
     mouseMoveColCord,
+    selectedAreas,
     setTableMatrix,
     tableMatrix,
     theTheme,
@@ -121,62 +108,35 @@ const Col = ({
    */
   const createOutlineClasses = (minX, maxX, minY, maxY) => {
     let classes = [];
-    if (y === minY) classes.push("outline-top");
-    if (y === maxY) classes.push("outline-bottom");
-    if (x === minX) classes.push("outline-left");
-    if (x === maxX) classes.push("outline-right");
+    // if (y === minY) classes.push("outline-top");
+    // if (y === maxY) classes.push("outline-bottom");
+    // if (x === minX) classes.push("outline-left");
+    // if (x === maxX) classes.push("outline-right");
     classes.push("hightlighted");
+
     return classes.join(" ");
   };
 
   /**
    * Calculate the selected area
    * Note that we can not draw the selected area here, because we are in a single column component
-   * Selected is tracked in the Selected.js component on root level
+   * Selected is tracked in the SelectedAreas.js component on root level
    */
   const isHightlighted = () => {
-    // if selectionMode is not cell return
     if (selectionMode !== "cell") return;
-
-    // asume notihing is selected
-    let isX = false;
-    let isY = false;
-    let minX;
-    let maxX;
-    let minY;
-    let maxY;
-
-    if (mouseDownColCord && mouseMoveColCord) {
-      // Find the min and max of the mouseDownColCord and mouseMoveColCord
-      minX = Math.min(mouseDownColCord[0], mouseMoveColCord[0]);
-      maxX = Math.max(mouseDownColCord[0], mouseMoveColCord[0]);
-      minY = Math.min(mouseDownColCord[1], mouseMoveColCord[1]);
-      maxY = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
-
-      // Check if the current column is in the selected area
-      if (x >= minX && x <= maxX) {
-        isX = true;
-      }
-      if (y >= minY && y <= maxY) {
-        isY = true;
-      }
+   
+    const containedArea = getContainedArea(selectedAreas, { x, y });
+    if (containedArea) {
+      return createOutlineClasses(
+        containedArea.fromX,
+        containedArea.toX,
+        containedArea.fromY,
+        containedArea.toY,
+        x,
+        y
+      );
     }
-    // if we have only one column selected we set that column as the selected area
-    if (mouseDownColCord && !mouseMoveColCord) {
-      // check if this instance is the selected column
-      if (x == mouseDownColCord[0] && y == mouseDownColCord[1]) {
-        isX = true;
-        isY = true;
-        minX = x;
-        maxX = x;
-        minY = y;
-        maxY = y;
-      }
-    }
-    // if isX and isY are true, this instance is in the selected area so can determine the outline classes
-    if (isX && isY) {
-      return createOutlineClasses(minX, maxX, minY, maxY, x, y);
-    }
+    
     return false;
   };
 

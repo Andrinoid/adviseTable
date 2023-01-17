@@ -69,6 +69,7 @@ const Row = ({
   selectionMode,
   mouseDownColCord,
   mouseMoveColCord,
+  selectedAreas,
   setInstanceCount,
   instanceCount,
   theTheme,

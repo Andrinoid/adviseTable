@@ -14,7 +14,7 @@ import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
 import Footer from "../Footer";
 import { TableContext } from "../context";
-import Selected from "./Selected";
+import SelectedArea, { getContainedArea } from "./SelectedAreas";
 import Scroller from "./Scroller";
 import themes from "./themes";
 
@@ -78,10 +78,10 @@ const Table = (
   const [mouseDownColCord, setMouseDownColCord] = useState(null);
   const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
   const [mouseUpColCord, setMouseUpColCord] = useState(null);
+  const [selectedAreas, setSelectedAreas] = useState([]);
 
   const [selectColDraging, setSelectColDraging] = useState(false);
   const [selectedCol, setSelectedCol] = useState(null);
-  const [selectedArea, setSelectedArea] = useState(null);
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([
@@ -233,7 +233,7 @@ const Table = (
    *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
    */
   useEffect(() => {
-    getSelectedArea(mouseDownColCord, mouseMoveColCord);
+    computeAreaData(selectedAreas);
     onSelection({
       selectedSum,
       selectedAvg,
@@ -241,7 +241,7 @@ const Table = (
       selectedMax,
       selectedCount,
     });
-  }, [mouseDownColCord, mouseMoveColCord]);
+  }, [JSON.stringify(selectedAreas)]);
 
   /**
    * This function auto adjusts the width of the first col to fit the biggest label
@@ -306,59 +306,46 @@ const Table = (
    * Better approach would be to run a prop function for the parent component to use the values,
    * becuse the footer is not always visible
    */
-  const getSelectedArea = (startCord, endCord) => {
-    // If there is no endCord, it means that we only have one cell selected so we set the endCord to the startCord
-    if (startCord && !endCord) {
-      endCord = startCord;
-    }
-    if (!startCord || !endCord) return null;
-    const startY = startCord[1];
-    const endY = endCord[1];
-    const startX = startCord[0];
-    const endX = endCord[0];
-
-    const minY = Math.min(startY, endY);
-    const maxY = Math.max(startY, endY);
-    const minX = Math.min(startX, endX);
-    const maxX = Math.max(startX, endX);
-
-    const selectedArea = [];
+  const computeAreaData = (selectedAreas) => {
     let count = 0;
     let sum = 0;
     let min = 0;
     let max = 0;
     let avg = 0;
-    //pick the selected area from the table matrix
-    for (let i = minY; i <= maxY; i++) {
-      for (let j = minX; j <= maxX; j++) {
-        selectedArea.push(tableMatrix[i][j]);
-        try {
-          let value = tableMatrix[i][j].current.innerText;
-          // try to convert value to number
-          value = Number(value);
-          if (!isNaN(value)) {
-            sum += value;
+    tableMatrix.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        let containedArea = getContainedArea(selectedAreas, {
+          x: colIndex,
+          y: rowIndex,
+        });
+        if (containedArea && !containedArea.isExclusion) {
+          count++;
+          try {
+            let value = tableMatrix[rowIndex][colIndex].current.innerText;
+            // try to convert value to number
+            value = Number(value);
+            if (!isNaN(value)) {
+              sum += value;
+            }
+            // find the lowest value
+            if (min === 0) {
+              min = value;
+            } else if (value < min) {
+              min = value;
+            }
+            // find the highest value
+            if (max === 0) {
+              max = value;
+            } else if (value > max) {
+              max = value;
+            }
+            avg = sum / count;
+          } catch (error) {
+            console.warn(error);
           }
-          // find the lowest value
-          if (min === 0) {
-            min = value;
-          } else if (value < min) {
-            min = value;
-          }
-          // find the highest value
-          if (max === 0) {
-            max = value;
-          } else if (value > max) {
-            max = value;
-          }
-          avg = sum / count;
-        } catch (error) {
-          console.warn(error);
         }
-
-        count++;
-      }
-    }
+      });
+    });
 
     setSelectedCount(count);
     setSelectedSum(sum);
@@ -366,13 +353,74 @@ const Table = (
     setSelectedMax(max);
     setSelectedAvg(avg);
 
-    return selectedArea;
+    // // If there is no endCord, it means that we only have one cell selected so we set the endCord to the startCord
+    // if (startCord && !endCord) {
+    //   endCord = startCord;
+    // }
+    // if (!startCord || !endCord) return null;
+    // const startY = startCord[1];
+    // const endY = endCord[1];
+    // const startX = startCord[0];
+    // const endX = endCord[0];
+
+    // const minY = Math.min(startY, endY);
+    // const maxY = Math.max(startY, endY);
+    // const minX = Math.min(startX, endX);
+    // const maxX = Math.max(startX, endX);
+
+    // const selectedArea = [];
+    // let count = 0;
+    // let sum = 0;
+    // let min = 0;
+    // let max = 0;
+    // let avg = 0;
+    // //pick the selected area from the table matrix
+    // for (let i = minY; i <= maxY; i++) {
+    //   for (let j = minX; j <= maxX; j++) {
+    //     selectedArea.push(tableMatrix[i][j]);
+    //     try {
+    //       let value = tableMatrix[i][j].current.innerText;
+    //       // try to convert value to number
+    //       value = Number(value);
+    //       if (!isNaN(value)) {
+    //         sum += value;
+    //       }
+    //       // find the lowest value
+    //       if (min === 0) {
+    //         min = value;
+    //       } else if (value < min) {
+    //         min = value;
+    //       }
+    //       // find the highest value
+    //       if (max === 0) {
+    //         max = value;
+    //       } else if (value > max) {
+    //         max = value;
+    //       }
+    //       avg = sum / count;
+    //     } catch (error) {
+    //       console.warn(error);
+    //     }
+
+    //     count++;
+    //   }
+    // }
+
+    // setSelectedCount(count);
+    // setSelectedSum(sum);
+    // setSelectedMin(min);
+    // setSelectedMax(max);
+    // setSelectedAvg(avg);
   };
 
   return (
     <div ref={tableContainerRef}>
+      { JSON.stringify(selectedAreas.length)}
+      { JSON.stringify(selectedAreas)}
       <TableContext.Provider
         value={{
+          setSelectedAreas,
+          selectedAreas,
           setSelectColDraging,
           setMouseDownColCord,
           setMouseMoveColCord,
@@ -387,7 +435,6 @@ const Table = (
           autoAdjustLabelColWidth,
           autoAdjustTotalColWidth,
           setSelectedCol,
-          setSelectedArea,
           setTableMatrix,
           tableMatrix,
           selectColDraging,
@@ -402,7 +449,6 @@ const Table = (
           biggestTotalCellWidth,
           viewportHeight,
           selectedCol,
-          selectedArea,
           theTheme,
           selectionMode,
           tableId,
@@ -455,6 +501,7 @@ const Table = (
                   selectionMode,
                   mouseDownColCord,
                   mouseMoveColCord,
+                  selectedAreas,
                   setToolBoxWidth,
                   setInstanceCount,
                   instanceCount,
@@ -464,7 +511,7 @@ const Table = (
               })}
             </div>
 
-            <Selected onSelection={onSelection} tableId={tableId} />
+            <SelectedArea onSelection={onSelection} tableId={tableId} />
             <Scroller active={selectColDraging} tableId={tableId} />
           </ViewPort>
           <div className="table-end"></div>
