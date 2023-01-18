@@ -39,7 +39,7 @@ export const useSyncScroller = (id) => {
         if (otherEl !== el) {
           if (
             updateX &&
-            otherEl.scrollLeft &&
+            otherEl?.scrollLeft &&
             Math.round(
               otherEl.scrollLeft -
                 (scrollX = otherEl.eX =
