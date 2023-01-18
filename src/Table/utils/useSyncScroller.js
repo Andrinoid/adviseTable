@@ -10,8 +10,7 @@ export const useSyncScroller = (id) => {
       names[id].push(ref);
     } else {
       names[id] = [ref];
-    } 
-    
+    }
   }, [id, ref]);
 
   useEffect(() => {
@@ -40,11 +39,13 @@ export const useSyncScroller = (id) => {
         if (otherEl !== el) {
           if (
             updateX &&
+            otherEl.scrollLeft &&
             Math.round(
               otherEl.scrollLeft -
-                (scrollX = otherEl.eX = Math.round(
-                  xRate * (otherEl.scrollWidth - otherEl.clientWidth)
-                ))
+                (scrollX = otherEl.eX =
+                  Math.round(
+                    xRate * (otherEl.scrollWidth - otherEl.clientWidth)
+                  ))
             )
           ) {
             otherEl.scrollLeft = scrollX;
