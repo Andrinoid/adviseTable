@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
+import React, { useRef, useState, useEffect, useContext, memo } from 'react';
 import styled from 'styled-components';
 import Col from './';
 import { TableContext } from '../context';
@@ -46,7 +46,7 @@ const Fill = styled.div`
     justify-content: ${props => props.horizontalAlign};
 `;
 
-const ResizablelCol = ({ 
+const ResizablelCol = memo(({ 
     children, 
     viewportHeight,
      onResize, 
@@ -145,6 +145,6 @@ const ResizablelCol = ({
             </Fill>
         </Brick>
     )
-}
+});
 
 export default ResizablelCol;

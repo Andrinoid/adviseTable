@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { isElementInViewport } from "../utils";
 import delegate from "delegate";
 
@@ -199,4 +199,4 @@ const Scroller = ({ active = false, tableId }) => {
     )
 }
 
-export default Scroller
+export default memo(Scroller)

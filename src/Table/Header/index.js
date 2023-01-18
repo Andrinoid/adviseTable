@@ -1,5 +1,5 @@
 //react component  
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import ResizablelCol from '../Col/ResizablelCol';
 import ResizableTable from './ResizableTable';
@@ -107,4 +107,4 @@ const Header = React.forwardRef(({
 });
 
 
-export default Header;
+export default memo(Header);
