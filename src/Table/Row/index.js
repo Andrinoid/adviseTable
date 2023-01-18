@@ -84,7 +84,7 @@ const Row = ({
     (value) => {
       setTimeout(() => {
         setRowNumber(value);
-      }, 1);
+      }, 10);
     },
     [rowNumber, setRowNumber]
   );
