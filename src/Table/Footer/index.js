@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { toInteger } from "lodash";
 
@@ -42,7 +42,7 @@ const Box = styled.div`
  * If the footer is not desired, it can be rendered with white or transparent background and no content
  * TODO make the footer optional with a prop from the table
  */
-const Footer = ({ count, sum, min, max, avg, maxWidth, vissible }) => {
+const Footer = memo(({ count, sum, min, max, avg, maxWidth, vissible }) => {
 
     /**
      * Simple number formatter
@@ -81,6 +81,6 @@ const Footer = ({ count, sum, min, max, avg, maxWidth, vissible }) => {
             </>}
         </TableFooter>
     );
-}
+});
 
 export default Footer;

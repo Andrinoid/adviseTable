@@ -1,6 +1,5 @@
 //react component  
-import React, { useRef, useContext, useEffect } from 'react';
-import { get } from 'lodash';
+import React, { useRef, useContext, useEffect, memo } from 'react';
 import styled from 'styled-components';
 import { TableContext } from '../context';
 import Cell from './Cell';
@@ -58,7 +57,7 @@ let Outliner = styled.div`
     }
 }`;
 
-const Col = ({
+const Col = memo(({
   horizontalAlign = "right",
   rowType, // row is the parent row for this column
   rowHover, // row is the parent row for this column
@@ -172,6 +171,6 @@ const Col = ({
       {/* y:{y} x:{x} */}
     </Column>
   );
-};
+});
 
 export default Col;

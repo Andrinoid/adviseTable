@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, memo } from 'react';
 import styled from 'styled-components';
 
 const Resizer = styled.div`
@@ -16,7 +16,7 @@ const Resizer = styled.div`
     }
 `;
 //width gæti verið vitlaus en þá þarf að mæla containerinn með ref
-const ResizableTable = ({width, onResize, direction='right'}) => {
+const ResizableTable = memo(({width, onResize, direction='right'}) => {
 
     const [x, setX] = useState(0);
     const [isResizing, setIsResizing] = useState(false);
@@ -72,6 +72,6 @@ const ResizableTable = ({width, onResize, direction='right'}) => {
             ref={resizeRef}
         />
     )
-}
+});
 
 export default ResizableTable;

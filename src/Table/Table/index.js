@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   useCallback,
+  memo
 } from "react";
 import styled from "styled-components";
 
@@ -534,4 +535,4 @@ const Table = (
   );
 };
 
-export default React.forwardRef(Table);
+export default memo(React.forwardRef(Table));

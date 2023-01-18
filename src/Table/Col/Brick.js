@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import styled from "styled-components";
 import { TableContext } from '../context';
 
@@ -29,7 +29,7 @@ const BrickElm = styled.div`
  * they are used in the header and as the first column in every row
  * TODO ADD PARENT TYPE AS PROP TO ALLOW FOR HEADER STYLES
  */
-const Brick = ({
+const Brick =memo(({
     horizontalAlign = 'right',
     children,
     style,
@@ -55,6 +55,6 @@ const Brick = ({
             {children}
         </BrickElm>
     );
-}
+});
 
 export default Brick;

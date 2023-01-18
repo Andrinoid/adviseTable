@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, memo } from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
@@ -53,7 +53,7 @@ const Label = styled.div`
 
 // Copunter for instances of this component used for row number
 
-const Row = ({
+const Row = memo(({
   type = "primary",
   label,
   colWidth,
@@ -255,6 +255,6 @@ const Row = ({
       </RowElm>
     </>
   );
-};
+});
 
 export default Row;

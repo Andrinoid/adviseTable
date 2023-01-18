@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, memo } from "react";
 import { TableContext } from "../context";
 import delegate from "delegate";
 
@@ -196,6 +196,6 @@ export const getContainedArea = (selectedAreas, { x, y }) => {
   return null;
 };
 
-export default SelectedAreas;
+export default memo(SelectedAreas);
 
 

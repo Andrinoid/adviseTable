@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect, useContext, memo } from "react";
 import styled from "styled-components";
 import { TableContext } from "../context";
 
@@ -11,7 +11,7 @@ const SpaceAround = styled.div`
 `;
 
 // x and y are only for debugging if needed
-const Cell = ({ children, parentWidth, parentType, x, y }) => {
+const Cell = memo(({ children, parentWidth, parentType, x, y }) => {
     const ref = useRef(null);
     const [isOverflowing, setIsOverflowing] = useState(false);
 
@@ -81,6 +81,6 @@ const Cell = ({ children, parentWidth, parentType, x, y }) => {
             {/* x{x} y{y} */}
         </SpaceAround>
     );
-};
+});
 
 export default Cell;
