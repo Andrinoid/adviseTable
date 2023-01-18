@@ -15,7 +15,7 @@ const Resizer = styled.div`
         background: #64b2fe;
     }
 `;
-//width gæti verið vitlaus en þá þarf að mæla containerinn með ref
+
 const ResizableTable = memo(({width, onResize, direction='right'}) => {
 
     const [x, setX] = useState(0);
