@@ -170,7 +170,11 @@ const Row = ({
         if (i === 0) {
           colType = "first";
           left = leftOffset;
-          width = labelColWidth + (colSpan > 1 ? colSpan - 1 : 1) * colWidth;
+          width = labelColWidth;
+
+          if (colSpan > 1) {
+            width = labelColWidth + (colSpan - 1) * colWidth;
+          }
         } else if (i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
