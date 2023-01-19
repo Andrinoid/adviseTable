@@ -68,7 +68,7 @@ const Col = memo(({
   x,
   y,
   empty = false,
-  colSpan = 0,
+  colspan,
 }) => {
   const currentColRef = useRef(null);
 
@@ -91,12 +91,22 @@ const Col = memo(({
   useEffect(() => {
     if (tableMatrix[y]) {
       setTableMatrix((prev) => {
-        prev[y][x] = currentColRef;
+        // console.log("A", currentColRef.current.dataset.colspan);
+        const { colspan } = currentColRef.current.dataset;
+        for (let index = x; index <= (colspan ? x+(colspan - 1) : x); index++) {
+          prev[y][index] = currentColRef;
+        }
         return prev;
       });
     } else {
       setTableMatrix((prev) => {
-        prev.push([[currentColRef]]);
+        // console.log("A", currentColRef.current.dataset.colspan);
+        const { colspan } = currentColRef.current.dataset;
+        const colRefs = [];
+        for (let index = x; index <= (colspan ? x+(colspan-1) : x); index++) {
+          colRefs[index] = currentColRef;
+        }
+        prev.push([colRefs]);
         return prev;
       });
     }
@@ -153,6 +163,7 @@ const Col = memo(({
       // ↓ In Selection component we use the dom to get the selected area. Data attr are simpler to get
       data-x={x}
       data-y={y}
+      data-colspan={colspan}
       type={type}
       id={id}
       className={`tableCol`}

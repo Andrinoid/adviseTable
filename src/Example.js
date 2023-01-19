@@ -106,7 +106,7 @@ function Example({
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
         onSelection={(selectedReport) => {
-          console.log("selectedReport", selectedReport);
+          // console.log("selectedReport", selectedReport);
         }}
       >
         {(tableProvided) => {
@@ -131,8 +131,41 @@ function Example({
                             {...tableProvided.rowProps}
                             // type={"secondary"}
                           >
-                            <Col colSpan={7}>myLabel1</Col>
-                            <Col colSpan={6}>myLabel2</Col>
+                            <Col>myLabel1</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                            <Col>myLabel2</Col>
+                          </Row>
+                        </div>
+                      )}
+                    </Draggable>
+                    <Draggable
+                      isDragDisabled={!draggable}
+                      draggableId={"id-" + view.length+1}
+                      key={"id-" + view.length+1}
+                      index={view.length}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <Row
+                            {...tableProvided.rowProps}
+                            // type={"secondary"}
+                          >
+                            <Col colspan={7}>myLabel1</Col>
+                            <Col colspan={6}>myLabel2</Col>
                             <Col>myLabel2</Col>
                           </Row>
                         </div>

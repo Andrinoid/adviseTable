@@ -163,7 +163,7 @@ const Row = memo(({
       let colType;
       let left;
       let width;
-      const { colSpan } = child.props;
+      const { colspan } = child.props;
 
       if (React.isValidElement(child)) {
         const i = numCols;
@@ -172,8 +172,8 @@ const Row = memo(({
           left = leftOffset;
           width = labelColWidth;
 
-          if (colSpan > 1) {
-            width = labelColWidth + (colSpan - 1) * colWidth;
+          if (colspan > 1) {
+            width = labelColWidth + (colspan - 1) * colWidth;
           }
         } else if (i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
@@ -183,11 +183,11 @@ const Row = memo(({
         } else {
           colType = "middle";
           left = leftOffset + labelColWidth + (numCols - 1) * colWidth;
-          width = colSpan ? colSpan * colWidth : colWidth;
+          width = colspan ? colspan * colWidth : colWidth;
         }
 
-        if (colSpan) {
-          numCols += colSpan;
+        if (colspan) {
+          numCols += colspan;
         } else {
           numCols++;
         }

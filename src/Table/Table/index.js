@@ -420,8 +420,8 @@ const Table = (
 
   return (
     <div ref={tableContainerRef}>
-      { JSON.stringify(selectedAreas.length)}
-      { JSON.stringify(selectedAreas)}
+      {JSON.stringify(selectedAreas.length)}
+      {JSON.stringify(selectedAreas)}
       <TableContext.Provider
         value={{
           setSelectedAreas,
@@ -516,7 +516,11 @@ const Table = (
               })}
             </div>
 
-            <SelectedArea onSelection={onSelection} tableId={tableId} />
+            <SelectedArea
+              onSelection={onSelection}
+              tableId={tableId}
+              tableMatrix
+            />
             <Scroller active={selectColDraging} tableId={tableId} />
           </ViewPort>
           <div className="table-end"></div>
