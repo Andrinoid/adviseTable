@@ -144,8 +144,8 @@ const SelectedAreas = ({ onSelection, tableId }) => {
             currentSelectedArea.oldMouseMoveTo.toX &&
             currentSelectedArea.oldMouseMoveTo.toX - toX > 0
           ) {
-            console.log("moving to left");
-            console.log(toX, currentSelectedArea.toX);
+            // console.log("moving to left");
+            // console.log(toX, currentSelectedArea.toX);
             if (toX < currentSelectedArea.fromX) {
               currentSelectedArea.fromX = toX;
             } else if (toX === currentSelectedArea.toX - 1) {
@@ -156,8 +156,8 @@ const SelectedAreas = ({ onSelection, tableId }) => {
             currentSelectedArea.oldMouseMoveTo.toX &&
             currentSelectedArea.oldMouseMoveTo.toX - toX < 0
           ) {
-            console.log("moving to right");
-            console.log(toX, currentSelectedArea.toX);
+            // console.log("moving to right");
+            // console.log(toX, currentSelectedArea.toX);
             if (toX > currentSelectedArea.toX) {
               currentSelectedArea.toX = toX;
             } else if (toX === currentSelectedArea.fromX + 1){
