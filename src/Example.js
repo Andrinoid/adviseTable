@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
 
-import { Table, Row, Col, Plus } from "./Table";
+import { Table, Row, Col } from "./Table";
 import { view, ui_prefs } from "./data/example2";
 import { default as mo } from "./data/months";
+import Plus from './icons/Plus';
 
 const Flex = styled.div`
   display: flex;
