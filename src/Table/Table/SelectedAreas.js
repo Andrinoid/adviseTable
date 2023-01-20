@@ -112,8 +112,10 @@ const SelectedAreas = ({ onSelection, tableId }) => {
       }
     }
 
-    if(forceMinX != null) currentSelectedArea.fromX = forceMinX;
-    if (forceMaxX != null) currentSelectedArea.toX = forceMaxX;
+    if (forceMinX != null && forceMinX < currentSelectedArea.fromX)
+      currentSelectedArea.fromX = forceMinX;
+    if (forceMaxX != null && forceMaxX > currentSelectedArea.toX)
+      currentSelectedArea.toX = forceMaxX;
   }
     
     /** Edit the last selected area */
@@ -136,11 +138,6 @@ const SelectedAreas = ({ onSelection, tableId }) => {
 
         if (fromX != null) currentSelectedArea.fromX = fromX;
         if (fromY != null) currentSelectedArea.fromY = fromY;
-        // if (currentSelectedArea.oldMouseMoveTo) {
-        //   console.log(currentSelectedArea.oldMouseMoveTo.toX, toX);
-        // } else {
-        //   console.log(null, toX);
-        // }
         if (toX != null) {
           if (
             currentSelectedArea.oldMouseMoveTo &&
@@ -148,9 +145,10 @@ const SelectedAreas = ({ onSelection, tableId }) => {
             currentSelectedArea.oldMouseMoveTo.toX - toX > 0
           ) {
             console.log("moving to left");
+            console.log(toX, currentSelectedArea.toX);
             if (toX < currentSelectedArea.fromX) {
               currentSelectedArea.fromX = toX;
-            } else {
+            } else if (toX === currentSelectedArea.toX - 1) {
               currentSelectedArea.toX = toX;
             }
           } else if (
@@ -159,9 +157,10 @@ const SelectedAreas = ({ onSelection, tableId }) => {
             currentSelectedArea.oldMouseMoveTo.toX - toX < 0
           ) {
             console.log("moving to right");
+            console.log(toX, currentSelectedArea.toX);
             if (toX > currentSelectedArea.toX) {
               currentSelectedArea.toX = toX;
-            } else {
+            } else if (toX === currentSelectedArea.fromX + 1){
               currentSelectedArea.fromX = toX;
             }
           } else if (
