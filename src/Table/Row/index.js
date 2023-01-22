@@ -230,7 +230,7 @@ const Row = memo(({
             style={{
               width: toolBoxWidth,
               height: colHeight,
-              zIndex: 101,
+              zIndex: 1,
               left: 0,
               position: "sticky",
             }}
