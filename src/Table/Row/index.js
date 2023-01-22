@@ -15,7 +15,7 @@ let Outliner = styled.div`
     height: 100%;
     border: 0.5px dashed transparent;
     pointer-events: none;
-    z-index: 100;
+    z-index: 1;
     &.hightlighted {
         background: rgba(33,150,243,0.2);
     }
