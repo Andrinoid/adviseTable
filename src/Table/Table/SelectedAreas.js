@@ -38,6 +38,7 @@ const SelectedAreas = ({ onSelection, tableId }) => {
    * When the mouse is down, reset the selection and set the new coordinates
    */
   const onMouseDown = (e) => {
+    console.log('mouseDown')
     let { x, y, colspan } = e.delegateTarget.dataset;
 
     if (e.metaKey || e.ctrlKey) {

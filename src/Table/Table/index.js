@@ -420,8 +420,6 @@ const Table = (
 
   return (
     <div ref={tableContainerRef}>
-      {JSON.stringify(selectedAreas.length)}
-      {JSON.stringify(selectedAreas)}
       <TableContext.Provider
         value={{
           setSelectedAreas,
