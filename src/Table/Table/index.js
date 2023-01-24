@@ -447,7 +447,6 @@ const Table = (
             <SelectedArea
               onSelection={onSelection}
               tableId={tableId}
-
               setMouseDownColCord={setMouseDownColCord}
               setMouseMoveColCord={setMouseMoveColCord}
               setMouseUpColCord={setMouseUpColCord}

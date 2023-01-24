@@ -217,7 +217,6 @@ const Row = memo(({
           tableMatrix,
           theTheme,
           selectionMode,
-
           showGrid,
           totalWidth,
           setBiggestDataCellWidth,
