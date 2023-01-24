@@ -7,7 +7,9 @@ const RowElm = styled.div`
   position: relative;
   &:hover {
     .tableCol {
-      background: red;
+      ${({ theTheme }) => {
+          return theTheme.rowHoverCol;
+      }}  
     }
   }
 `;
@@ -243,6 +245,7 @@ const Row = memo(({
         style={{ height: colHeight, width: totalWidth }}
         ref={currentRowRef}
         y={rowNumber}
+        theTheme={theTheme}
       >
         {label && <Label>{label}</Label>}
 

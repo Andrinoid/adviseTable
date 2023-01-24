@@ -18,17 +18,6 @@ const Column = styled.div`
       return theme.grid;
     }
   }}
-    ${({ rowType, rowHover, theme }) => {
-    if (rowHover) {
-      return theme.rowHoverCol;
-    }
-    if (rowType === 'primary') {
-      return theme.col;
-    }
-    else if (rowType === 'secondary') {
-      return theme.colSecondary;
-    }
-  }}  
 `;
 
 let Outliner = styled.div`
@@ -74,7 +63,6 @@ const Col = memo(({
   tableMatrix,
   theTheme,
   selectionMode,
-
   totalWidth,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
