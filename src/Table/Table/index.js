@@ -251,17 +251,17 @@ const Table = (
    * This function auto adjusts the width of the first col to fit the biggest label
    * It is run by double clicking the first col resizer
    */
-  const autoAdjustLabelColWidth = () => {
+  const autoAdjustLabelColWidth = useCallback(() => {
     setlabelColWidth(biggestLabelCellWidth);
-  };
+  }, [biggestLabelCellWidth]);
 
   /**
    * as above so bellow
    * This applies to last col
    */
-  const autoAdjustTotalColWidth = () => {
+  const autoAdjustTotalColWidth = useCallback(() => {
     setTotalColWidth(biggestTotalCellWidth);
-  };
+  }, [biggestTotalCellWidth]);
 
   /**
    * This function auto adjusts the width of the data cols to fit the biggest data cell
@@ -274,23 +274,23 @@ const Table = (
   /**
    * callback function for the label col resizer
    */
-  const onLabelColResize = (width) => {
+  const onLabelColResize = useCallback((width) => {
     setlabelColWidth(width);
-  };
+  }, []);
 
   /**
    * callback function for the total col resizer
    */
-  const onTotalColResize = (width) => {
+  const onTotalColResize = useCallback((width) => {
     setTotalColWidth(width);
-  };
+  }, []);
 
   /**
    * callback function for the table resizer
    */
-  const onTableResize = (width) => {
+  const onTableResize = useCallback((width) => {
     updateTableWith(width);
-  };
+  }, []);
 
   /**
    *  Calculate the width of the data cols based on moving parts
@@ -358,116 +358,123 @@ const Table = (
     setSelectedAvg(avg);
   };
 
+  const [childrenRows, setChildrenRows] = useState([]);
+  useEffect(() => {
+    setChildrenRows(
+      children({
+        rowProps: {
+          setToolBoxWidth,
+          setInstanceCount,
+          setSelectedAreas,
+          setSelectColDraging,
+          setMouseDownColCord,
+          setMouseMoveColCord,
+          setMouseUpColCord,
+          setSelectedCount,
+          setTotalWidth,
+          setlabelColWidth,
+          setTotalColWidth,
+          setBiggestDataCellWidth,
+          setBiggestLabelCellWidth,
+          setBiggestTotalCellWidth,
+          autoAdjustLabelColWidth,
+          autoAdjustTotalColWidth,
+          setSelectedCol,
+          setTableMatrix,
+          colWidth,
+          colHeight,
+          toolBoxWidth,
+          topOffset: headerHeight,
+          numberOfDataCols,
+          expandedIds,
+          selectedAreas,
+          instanceCount,
+          tableMatrix,
+          selectColDraging,
+          mouseDownColCord,
+          mouseMoveColCord,
+          mouseUpColCord,
+          totalWidth,
+          labelColWidth,
+          totalColWidth,
+          biggestDataCellWidth,
+          biggestLabelCellWidth,
+          biggestTotalCellWidth,
+          viewportHeight,
+          selectedCol,
+          theTheme,
+          selectionMode,
+          tableId,
+          showGrid,
+        },
+      })
+    );
+  }, [totalWidth, labelColWidth, totalColWidth, biggestDataCellWidth, selectedAreas, children, autoAdjustLabelColWidth, autoAdjustTotalColWidth, colWidth, colHeight, toolBoxWidth, headerHeight, numberOfDataCols, expandedIds, instanceCount, tableMatrix, selectColDraging, mouseDownColCord, mouseMoveColCord, mouseUpColCord, biggestLabelCellWidth, biggestTotalCellWidth, viewportHeight, selectedCol, theTheme, selectionMode, tableId, showGrid]);
+
   return (
     <div ref={tableContainerRef}>
-        <Wrapper ref={ref} id={tableId}>
-          <Header
-            ref={headerScrollRef}
-            className="scrollable"
-            width={viewportWidth}
-            colHeight={headerHeight}
-            colWidth={colWidth}
-            labelColWidth={labelColWidth}
-            toolBoxWidth={toolBoxWidth}
-            totalColWidth={totalColWidth}
-            totalWidth={totalWidth}
-            viewportHeight={viewportHeight}
-            onLabelColResize={onLabelColResize}
-            onTotalColResize={onTotalColResize}
-            onTableResize={onTableResize}
-            numberOfDataCols={numberOfDataCols}
-            theTheme={theTheme}
-            data={headerData}
-            stickyTopOffset={headerStickyTopOffset}
-            showGrid={showGrid}
-            autoAdjustLabelColWidth={autoAdjustLabelColWidth}
-            autoAdjustTotalColWidth={autoAdjustTotalColWidth}
-          />
+      <Wrapper ref={ref} id={tableId}>
+        <Header
+          ref={headerScrollRef}
+          className="scrollable"
+          width={viewportWidth}
+          colHeight={headerHeight}
+          colWidth={colWidth}
+          labelColWidth={labelColWidth}
+          toolBoxWidth={toolBoxWidth}
+          totalColWidth={totalColWidth}
+          totalWidth={totalWidth}
+          viewportHeight={viewportHeight}
+          onLabelColResize={onLabelColResize}
+          onTotalColResize={onTotalColResize}
+          onTableResize={onTableResize}
+          numberOfDataCols={numberOfDataCols}
+          theTheme={theTheme}
+          data={headerData}
+          stickyTopOffset={headerStickyTopOffset}
+          showGrid={showGrid}
+          autoAdjustLabelColWidth={autoAdjustLabelColWidth}
+          autoAdjustTotalColWidth={autoAdjustTotalColWidth}
+        />
 
-          <ViewPort
-            className={`viewPort${tableId} scrollable`}
-            ref={(el) => {
-              viewportRef.current = el;
-              viewportScrollRef.current = el;
-            }}
+        <ViewPort
+          className={`viewPort${tableId} scrollable`}
+          ref={(el) => {
+            viewportRef.current = el;
+            viewportScrollRef.current = el;
+          }}
+        >
+          <div
+            style={{ width: totalWidth, position: "relative" }}
+            className={`${tableId}container`}
           >
-            <div
-              style={{ width: totalWidth, position: "relative" }}
-              className={`${tableId}container`}
-            >
-              {children({
-                rowProps: {
-                  setToolBoxWidth,
-                  setInstanceCount,
-                  setSelectedAreas,
-                  setSelectColDraging,
-                  setMouseDownColCord,
-                  setMouseMoveColCord,
-                  setMouseUpColCord,
-                  setSelectedCount,
-                  setTotalWidth,
-                  setlabelColWidth,
-                  setTotalColWidth,
-                  setBiggestDataCellWidth,
-                  setBiggestLabelCellWidth,
-                  setBiggestTotalCellWidth,
-                  autoAdjustLabelColWidth,
-                  autoAdjustTotalColWidth,
-                  setSelectedCol,
-                  setTableMatrix,
-                  colWidth,
-                  colHeight,
-                  toolBoxWidth,
-                  topOffset: headerHeight,
-                  numberOfDataCols,
-                  expandedIds,
-                  selectedAreas,
-                  instanceCount,
-                  tableMatrix,
-                  selectColDraging,
-                  mouseDownColCord,
-                  mouseMoveColCord,
-                  mouseUpColCord,
-                  totalWidth,
-                  labelColWidth,
-                  totalColWidth,
-                  biggestDataCellWidth,
-                  biggestLabelCellWidth,
-                  biggestTotalCellWidth,
-                  viewportHeight,
-                  selectedCol,
-                  theTheme,
-                  selectionMode,
-                  tableId,
-                  showGrid,
-                },
-              })}
-            </div>
+            {childrenRows}
+          </div>
 
-            <SelectedArea
-              onSelection={onSelection}
-              tableId={tableId}
-              setMouseDownColCord={setMouseDownColCord}
-              setMouseMoveColCord={setMouseMoveColCord}
-              setMouseUpColCord={setMouseUpColCord}
-              setSelectColDraging={setSelectColDraging}
-              setSelectedCount={setSelectedCount}
-              setSelectedAreas={setSelectedAreas}
-              tableMatrix={tableMatrix}
-            />
-            <Scroller active={selectColDraging} tableId={tableId} />
-          </ViewPort>
-          <div className="table-end"></div>
-          <Footer
-            maxWidth={totalWidth}
-            count={selectedCount}
-            sum={selectedSum}
-            min={selectedMin}
-            max={selectedMax}
-            avg={selectedAvg}
-            vissible={footer}
+          <SelectedArea
+            onSelection={onSelection}
+            tableId={tableId}
+            setMouseDownColCord={setMouseDownColCord}
+            setMouseMoveColCord={setMouseMoveColCord}
+            setMouseUpColCord={setMouseUpColCord}
+            setSelectColDraging={setSelectColDraging}
+            setSelectedCount={setSelectedCount}
+            setSelectedAreas={setSelectedAreas}
+            tableMatrix={tableMatrix}
           />
-        </Wrapper>
+          <Scroller active={selectColDraging} tableId={tableId} />
+        </ViewPort>
+        <div className="table-end"></div>
+        <Footer
+          maxWidth={totalWidth}
+          count={selectedCount}
+          sum={selectedSum}
+          min={selectedMin}
+          max={selectedMax}
+          avg={selectedAvg}
+          vissible={footer}
+        />
+      </Wrapper>
     </div>
   );
 };
