@@ -5,6 +5,11 @@ import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
   position: relative;
+  &:hover {
+    .tableCol {
+      background: red;
+    }
+  }
 `;
 
 let Outliner = styled.div`
@@ -54,25 +59,32 @@ const Label = styled.div`
 // Copunter for instances of this component used for row number
 
 const Row = memo(({
+  children,
   type = "primary",
   label,
+  toolBoxContent,
+  setInstanceCount,
+  setBiggestDataCellWidth,
+  setBiggestLabelCellWidth,
+  setBiggestTotalCellWidth,
+  setTableMatrix,
   colWidth,
   colHeight,
-  labelColWidth,
   toolBoxWidth,
-  totalColWidth,
   numberOfDataCols,
-  totalWidth,
-  toolBoxContent,
-  children,
-  expandedIds,
-  selectionMode,
+  selectedAreas,
+  instanceCount,
+  tableMatrix,
   mouseDownColCord,
   mouseMoveColCord,
-  selectedAreas,
-  setInstanceCount,
-  instanceCount,
+  totalWidth,
+  labelColWidth,
+  totalColWidth,
+  biggestLabelCellWidth,
+  biggestTotalCellWidth,
   theTheme,
+  selectionMode,
+  showGrid,
 }) => {
   const currentRowRef = useRef(null);
   const [hover, setHover] = useState(false);
@@ -200,6 +212,19 @@ const Row = memo(({
           rowType: type,
           rowHover: hover,
           style: { width: width, height: colHeight, top: 0, left: left },
+          selectedAreas,
+          setTableMatrix,
+          tableMatrix,
+          theTheme,
+          selectionMode,
+
+          showGrid,
+          totalWidth,
+          setBiggestDataCellWidth,
+          setBiggestLabelCellWidth,
+          biggestLabelCellWidth,
+          setBiggestTotalCellWidth,
+          biggestTotalCellWidth,
         });
       }
       return child;
@@ -212,8 +237,8 @@ const Row = memo(({
        * Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯
        */}
       <RowElm
-        onMouseOver={() => setHover(true)}
-        onMouseOut={() => setHover(false)}
+        // onMouseOver={() => setHover(true)}
+        // onMouseOut={() => setHover(false)}
         type={type}
         hover={hover}
         style={{ height: colHeight, width: totalWidth }}
@@ -225,6 +250,8 @@ const Row = memo(({
         <Outliner className={isHightlighted()} />
         {toolBoxContent && (
           <Brick
+            theTheme={theTheme}
+            showGrid={showGrid}
             horizontalAlign="left"
             location={"left"}
             style={{
@@ -240,6 +267,8 @@ const Row = memo(({
         )}
         {!toolBoxContent && (
           <Brick
+            theTheme={theTheme}
+            showGrid={showGrid}
             location={"left"}
             style={{
               width: toolBoxWidth,

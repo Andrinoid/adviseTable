@@ -1,7 +1,6 @@
 //react component  
-import React, { useRef, useContext, useEffect, memo } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
 import styled from 'styled-components';
-import { TableContext } from '../context';
 import Cell from './Cell';
 import { getContainedArea } from '../Table/SelectedAreas';
 
@@ -15,21 +14,21 @@ const Column = styled.div`
     user-select: none;
     box-sizing: border-box;
     ${({ showGrid, theme }) => {
-        if (showGrid) {
-            return theme.grid;
-        }
-    }}
+    if (showGrid) {
+      return theme.grid;
+    }
+  }}
     ${({ rowType, rowHover, theme }) => {
-        if(rowHover) {
-            return theme.rowHoverCol;
-        }
-        if (rowType === 'primary') {
-            return theme.col;
-        }
-        else if (rowType === 'secondary') {
-            return theme.colSecondary;
-        }
-    }}  
+    if (rowHover) {
+      return theme.rowHoverCol;
+    }
+    if (rowType === 'primary') {
+      return theme.col;
+    }
+    else if (rowType === 'secondary') {
+      return theme.colSecondary;
+    }
+  }}  
 `;
 
 let Outliner = styled.div`
@@ -69,21 +68,22 @@ const Col = memo(({
   y,
   empty = false,
   colspan,
+  showGrid,
+  selectedAreas,
+  setTableMatrix,
+  tableMatrix,
+  theTheme,
+  selectionMode,
+
+  totalWidth,
+  setBiggestDataCellWidth,
+  setBiggestLabelCellWidth,
+  biggestLabelCellWidth,
+  setBiggestTotalCellWidth,
+  biggestTotalCellWidth,
+
 }) => {
   const currentColRef = useRef(null);
-
-  // Get the context we need
-  const {
-    mouseDownColCord,
-    mouseMoveColCord,
-    selectedAreas,
-    setTableMatrix,
-    tableMatrix,
-    theTheme,
-    selectionMode,
-    showGrid,
-  } = useContext(TableContext);
-
   /*
    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
@@ -93,7 +93,7 @@ const Col = memo(({
       setTableMatrix((prev) => {
         // console.log("A", currentColRef.current.dataset.colspan);
         const { colspan } = currentColRef.current.dataset;
-        for (let index = x; index <= (colspan ? x+(colspan - 1) : x); index++) {
+        for (let index = x; index <= (colspan ? x + (colspan - 1) : x); index++) {
           prev[y][index] = currentColRef;
         }
         return prev;
@@ -103,7 +103,7 @@ const Col = memo(({
         // console.log("A", currentColRef.current.dataset.colspan);
         const { colspan } = currentColRef.current.dataset;
         const colRefs = [];
-        for (let index = x; index <= (colspan ? x+(colspan-1) : x); index++) {
+        for (let index = x; index <= (colspan ? x + (colspan - 1) : x); index++) {
           colRefs[index] = currentColRef;
         }
         prev.push([colRefs]);
@@ -133,7 +133,7 @@ const Col = memo(({
    */
   const isHightlighted = () => {
     if (selectionMode !== "cell") return;
-   
+
     const containedArea = getContainedArea(selectedAreas, { x, y });
     if (containedArea) {
       return createOutlineClasses(
@@ -145,7 +145,7 @@ const Col = memo(({
         y
       );
     }
-    
+
     return false;
   };
 
@@ -170,7 +170,18 @@ const Col = memo(({
     >
       <Outliner className={isHightlighted()} />
       {!empty && (
-        <Cell parentWidth={style.width} parentType={type} x={x} y={y}>
+        <Cell
+          parentWidth={style.width}
+          parentType={type}
+
+          totalWidth={totalWidth}
+          setBiggestDataCellWidth={setBiggestDataCellWidth}
+          setBiggestLabelCellWidth={setBiggestLabelCellWidth}
+          biggestLabelCellWidth={biggestLabelCellWidth}
+          setBiggestTotalCellWidth={setBiggestTotalCellWidth}
+          biggestTotalCellWidth={biggestTotalCellWidth}
+
+        >
           {children}
         </Cell>
       )}

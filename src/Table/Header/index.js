@@ -33,7 +33,10 @@ const Header = React.forwardRef(({
     numberOfDataCols,
     stickyTopOffset = 0,
     theTheme,
+    showGrid,
     data,
+    autoAdjustLabelColWidth,
+    autoAdjustTotalColWidth,
 }, ref) => {
 
     const leftOffset = toolBoxWidth + labelColWidth;
@@ -42,10 +45,13 @@ const Header = React.forwardRef(({
         <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
             <div style={{ ...theTheme.header, height: colHeight, width: totalWidth, boxSizing: 'border-box' }}>
                 <Brick
+                    showGrid={showGrid}
+                    theTheme={theTheme}
                     location={'top'}
                     style={{
                         width: toolBoxWidth,
                         height: colHeight,
+                        theTheme,
                         zIndex: 101,
                         position: 'sticky',
                         top: 0,
@@ -68,6 +74,8 @@ const Header = React.forwardRef(({
                                     type="first"
                                     horizontalAlign="left"
                                     selectable={false}
+                                    autoAdjustLabelColWidth={autoAdjustLabelColWidth}
+                                    autoAdjustTotalColWidth={autoAdjustTotalColWidth}
                                     style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
                                 >
                                     <Label>{item.title}</Label>
@@ -78,6 +86,8 @@ const Header = React.forwardRef(({
                                     location={'top'}
                                     selectable={false}
                                     type="middle"
+                                    showGrid={showGrid}
+                                    theTheme={theTheme}
                                     style={{ width: colWidth, height: colHeight, top: 0, left: left }}
                                 ><Label>{item.title}</Label></Brick>
                             }
@@ -89,6 +99,8 @@ const Header = React.forwardRef(({
                                     viewportHeight={viewportHeight}
                                     type="last"
                                     selectable={false}
+                                    autoAdjustLabelColWidth={autoAdjustLabelColWidth}
+                                    autoAdjustTotalColWidth={autoAdjustTotalColWidth}
                                     style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                                 >
                                     <>

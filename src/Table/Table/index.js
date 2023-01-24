@@ -14,7 +14,6 @@ import { useSyncScroller } from "../utils/useSyncScroller";
 
 import Header from "../Header";
 import Footer from "../Footer";
-import { TableContext } from "../context";
 import SelectedArea, { getContainedArea } from "./SelectedAreas";
 import Scroller from "./Scroller";
 import themes from "./themes";
@@ -39,7 +38,6 @@ const Table = (
   {
     onSelection = () => {},
     headerStickyTopOffset = 0,
-    width,
     selectionMode = "cell",
     leftBrickWidth = 50,
     theme = "light",
@@ -49,6 +47,7 @@ const Table = (
     children,
     tableId, // make required
     footer, //Boolean
+    width,
   },
   ref
 ) => {
@@ -357,107 +356,10 @@ const Table = (
     setSelectedMin(min);
     setSelectedMax(max);
     setSelectedAvg(avg);
-
-    // // If there is no endCord, it means that we only have one cell selected so we set the endCord to the startCord
-    // if (startCord && !endCord) {
-    //   endCord = startCord;
-    // }
-    // if (!startCord || !endCord) return null;
-    // const startY = startCord[1];
-    // const endY = endCord[1];
-    // const startX = startCord[0];
-    // const endX = endCord[0];
-
-    // const minY = Math.min(startY, endY);
-    // const maxY = Math.max(startY, endY);
-    // const minX = Math.min(startX, endX);
-    // const maxX = Math.max(startX, endX);
-
-    // const selectedArea = [];
-    // let count = 0;
-    // let sum = 0;
-    // let min = 0;
-    // let max = 0;
-    // let avg = 0;
-    // //pick the selected area from the table matrix
-    // for (let i = minY; i <= maxY; i++) {
-    //   for (let j = minX; j <= maxX; j++) {
-    //     selectedArea.push(tableMatrix[i][j]);
-    //     try {
-    //       let value = tableMatrix[i][j].current.innerText;
-    //       // try to convert value to number
-    //       value = Number(value);
-    //       if (!isNaN(value)) {
-    //         sum += value;
-    //       }
-    //       // find the lowest value
-    //       if (min === 0) {
-    //         min = value;
-    //       } else if (value < min) {
-    //         min = value;
-    //       }
-    //       // find the highest value
-    //       if (max === 0) {
-    //         max = value;
-    //       } else if (value > max) {
-    //         max = value;
-    //       }
-    //       avg = sum / count;
-    //     } catch (error) {
-    //       console.warn(error);
-    //     }
-
-    //     count++;
-    //   }
-    // }
-
-    // setSelectedCount(count);
-    // setSelectedSum(sum);
-    // setSelectedMin(min);
-    // setSelectedMax(max);
-    // setSelectedAvg(avg);
   };
 
   return (
     <div ref={tableContainerRef}>
-      <TableContext.Provider
-        value={{
-          setSelectedAreas,
-          selectedAreas,
-          setSelectColDraging,
-          setMouseDownColCord,
-          setMouseMoveColCord,
-          setMouseUpColCord,
-          setSelectedCount,
-          setTotalWidth,
-          setlabelColWidth,
-          setTotalColWidth,
-          setBiggestDataCellWidth,
-          setBiggestLabelCellWidth,
-          setBiggestTotalCellWidth,
-          autoAdjustLabelColWidth,
-          autoAdjustTotalColWidth,
-          setSelectedCol,
-          setTableMatrix,
-          tableMatrix,
-          selectColDraging,
-          mouseDownColCord,
-          mouseMoveColCord,
-          mouseUpColCord,
-          totalWidth,
-          labelColWidth,
-          totalColWidth,
-          biggestDataCellWidth,
-          biggestLabelCellWidth,
-          biggestTotalCellWidth,
-          viewportHeight,
-          selectedCol,
-          theTheme,
-          selectionMode,
-          tableId,
-          showGrid,
-        }}
-      >
         <Wrapper ref={ref} id={tableId}>
           <Header
             ref={headerScrollRef}
@@ -477,6 +379,9 @@ const Table = (
             theTheme={theTheme}
             data={headerData}
             stickyTopOffset={headerStickyTopOffset}
+            showGrid={showGrid}
+            autoAdjustLabelColWidth={autoAdjustLabelColWidth}
+            autoAdjustTotalColWidth={autoAdjustTotalColWidth}
           />
 
           <ViewPort
@@ -492,24 +397,49 @@ const Table = (
             >
               {children({
                 rowProps: {
-                  colWidth: colWidth,
-                  totalWidth: totalWidth,
-                  colHeight: colHeight,
-                  labelColWidth: labelColWidth,
-                  toolBoxWidth: toolBoxWidth,
-                  totalColWidth: totalColWidth,
-                  topOffset: headerHeight,
-                  numberOfDataCols: numberOfDataCols,
-                  expandedIds: expandedIds,
-                  selectionMode,
-                  mouseDownColCord,
-                  mouseMoveColCord,
-                  selectedAreas,
                   setToolBoxWidth,
                   setInstanceCount,
+                  setSelectedAreas,
+                  setSelectColDraging,
+                  setMouseDownColCord,
+                  setMouseMoveColCord,
+                  setMouseUpColCord,
+                  setSelectedCount,
+                  setTotalWidth,
+                  setlabelColWidth,
+                  setTotalColWidth,
+                  setBiggestDataCellWidth,
+                  setBiggestLabelCellWidth,
+                  setBiggestTotalCellWidth,
+                  autoAdjustLabelColWidth,
+                  autoAdjustTotalColWidth,
+                  setSelectedCol,
+                  setTableMatrix,
+                  colWidth,
+                  colHeight,
+                  toolBoxWidth,
+                  topOffset: headerHeight,
+                  numberOfDataCols,
+                  expandedIds,
+                  selectedAreas,
                   instanceCount,
-                  tableId,
+                  tableMatrix,
+                  selectColDraging,
+                  mouseDownColCord,
+                  mouseMoveColCord,
+                  mouseUpColCord,
+                  totalWidth,
+                  labelColWidth,
+                  totalColWidth,
+                  biggestDataCellWidth,
+                  biggestLabelCellWidth,
+                  biggestTotalCellWidth,
+                  viewportHeight,
+                  selectedCol,
                   theTheme,
+                  selectionMode,
+                  tableId,
+                  showGrid,
                 },
               })}
             </div>
@@ -517,7 +447,14 @@ const Table = (
             <SelectedArea
               onSelection={onSelection}
               tableId={tableId}
-              tableMatrix
+
+              setMouseDownColCord={setMouseDownColCord}
+              setMouseMoveColCord={setMouseMoveColCord}
+              setMouseUpColCord={setMouseUpColCord}
+              setSelectColDraging={setSelectColDraging}
+              setSelectedCount={setSelectedCount}
+              setSelectedAreas={setSelectedAreas}
+              tableMatrix={tableMatrix}
             />
             <Scroller active={selectColDraging} tableId={tableId} />
           </ViewPort>
@@ -532,7 +469,6 @@ const Table = (
             vissible={footer}
           />
         </Wrapper>
-      </TableContext.Provider>
     </div>
   );
 };

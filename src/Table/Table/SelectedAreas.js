@@ -1,23 +1,19 @@
-import React, { useEffect, useContext, memo } from "react";
-import { TableContext } from "../context";
+import React, { useEffect, memo } from "react";
 import delegate from "delegate";
-import { min } from "lodash";
 
 let trackMouseMove = false;
 
-const SelectedAreas = ({ onSelection, tableId }) => {
+const SelectedAreas = ({
+  tableId,
+  setMouseDownColCord,
+  setMouseMoveColCord,
+  setMouseUpColCord,
+  setSelectColDraging,
+  setSelectedCount,
+  setSelectedAreas,
+  tableMatrix,
+}) => {
 
-  // Get the context we need
-  const {
-    setMouseDownColCord,
-    setMouseMoveColCord,
-    setMouseUpColCord,
-    setSelectColDraging,
-    setSelectedCount,
-    setSelectedAreas,
-    selectedAreas,
-    tableMatrix,
-  } = useContext(TableContext);
 
   /** 
    * Add event listeners to all the cells in the table
@@ -85,7 +81,7 @@ const SelectedAreas = ({ onSelection, tableId }) => {
   const colspanForceAxis = (currentSelectedArea) => {
     let forceMinX = null;
     let forceMaxX = null;
-     
+
     for (
       let i = currentSelectedArea.fromY;
       i <= currentSelectedArea.toY;
@@ -118,174 +114,174 @@ const SelectedAreas = ({ onSelection, tableId }) => {
     if (forceMaxX != null && forceMaxX > currentSelectedArea.toX)
       currentSelectedArea.toX = forceMaxX;
   }
-    
-    /** Edit the last selected area */
-    const updateCurrentSelectedArea = ({
-      fromX,
-      fromY,
-      toX,
-      toY,
-    } = {}) => {
-      if (toX) toX = parseInt(toX);
-      if (toY) toY = parseInt(toY);
-      if (fromX) fromX = parseInt(fromX);
-      if (fromY) fromY = parseInt(fromY);
-      
-      setSelectedAreas((selectedAreas) => {
-        let currentSelectedArea = selectedAreas[selectedAreas.length - 1];
-        if (!currentSelectedArea) {
-          currentSelectedArea = {};
-        }
 
-        if (fromX != null) currentSelectedArea.fromX = fromX;
-        if (fromY != null) currentSelectedArea.fromY = fromY;
-        if (toX != null) {
-          if (
-            currentSelectedArea.oldMouseMoveTo &&
-            currentSelectedArea.oldMouseMoveTo.toX &&
-            currentSelectedArea.oldMouseMoveTo.toX - toX > 0
-          ) {
-            // console.log("moving to left");
-            // console.log(toX, currentSelectedArea.toX);
-            if (toX < currentSelectedArea.fromX) {
-              currentSelectedArea.fromX = toX;
-            } else if (toX === currentSelectedArea.toX - 1) {
-              currentSelectedArea.toX = toX;
-            }
-          } else if (
-            currentSelectedArea.oldMouseMoveTo &&
-            currentSelectedArea.oldMouseMoveTo.toX &&
-            currentSelectedArea.oldMouseMoveTo.toX - toX < 0
-          ) {
-            // console.log("moving to right");
-            // console.log(toX, currentSelectedArea.toX);
-            if (toX > currentSelectedArea.toX) {
-              currentSelectedArea.toX = toX;
-            } else if (toX === currentSelectedArea.fromX + 1){
-              currentSelectedArea.fromX = toX;
-            }
-          } else if (
-            !currentSelectedArea.oldMouseMoveTo ||
-            !currentSelectedArea.oldMouseMoveTo.toX
-          ) {
+  /** Edit the last selected area */
+  const updateCurrentSelectedArea = ({
+    fromX,
+    fromY,
+    toX,
+    toY,
+  } = {}) => {
+    if (toX) toX = parseInt(toX);
+    if (toY) toY = parseInt(toY);
+    if (fromX) fromX = parseInt(fromX);
+    if (fromY) fromY = parseInt(fromY);
+
+    setSelectedAreas((selectedAreas) => {
+      let currentSelectedArea = selectedAreas[selectedAreas.length - 1];
+      if (!currentSelectedArea) {
+        currentSelectedArea = {};
+      }
+
+      if (fromX != null) currentSelectedArea.fromX = fromX;
+      if (fromY != null) currentSelectedArea.fromY = fromY;
+      if (toX != null) {
+        if (
+          currentSelectedArea.oldMouseMoveTo &&
+          currentSelectedArea.oldMouseMoveTo.toX &&
+          currentSelectedArea.oldMouseMoveTo.toX - toX > 0
+        ) {
+          // console.log("moving to left");
+          // console.log(toX, currentSelectedArea.toX);
+          if (toX < currentSelectedArea.fromX) {
+            currentSelectedArea.fromX = toX;
+          } else if (toX === currentSelectedArea.toX - 1) {
             currentSelectedArea.toX = toX;
           }
+        } else if (
+          currentSelectedArea.oldMouseMoveTo &&
+          currentSelectedArea.oldMouseMoveTo.toX &&
+          currentSelectedArea.oldMouseMoveTo.toX - toX < 0
+        ) {
+          // console.log("moving to right");
+          // console.log(toX, currentSelectedArea.toX);
+          if (toX > currentSelectedArea.toX) {
+            currentSelectedArea.toX = toX;
+          } else if (toX === currentSelectedArea.fromX + 1) {
+            currentSelectedArea.fromX = toX;
+          }
+        } else if (
+          !currentSelectedArea.oldMouseMoveTo ||
+          !currentSelectedArea.oldMouseMoveTo.toX
+        ) {
+          currentSelectedArea.toX = toX;
         }
-        if (toY != null) {
-          if (
-            currentSelectedArea.oldMouseMoveTo &&
-            currentSelectedArea.oldMouseMoveTo.toY &&
-            currentSelectedArea.oldMouseMoveTo.toY - toY > 0
-          ) {
-            // console.log("moving up");
-            if (toY < currentSelectedArea.fromY) {
-              currentSelectedArea.fromY = toY;
-            } else {
-              currentSelectedArea.toY = toY;
-            }
-          } else if (
-            currentSelectedArea.oldMouseMoveTo &&
-            currentSelectedArea.oldMouseMoveTo.toY &&
-            currentSelectedArea.oldMouseMoveTo.toY - toY < 0
-          ) {
-            // console.log("moving down");
-            if (toY > currentSelectedArea.toY) {
-              currentSelectedArea.toY = toY;
-            } else {
-              currentSelectedArea.fromY = toY;
-            }
-          } else if (
-            !currentSelectedArea.oldMouseMoveTo ||
-            !currentSelectedArea.oldMouseMoveTo.toY
-          ) {
+      }
+      if (toY != null) {
+        if (
+          currentSelectedArea.oldMouseMoveTo &&
+          currentSelectedArea.oldMouseMoveTo.toY &&
+          currentSelectedArea.oldMouseMoveTo.toY - toY > 0
+        ) {
+          // console.log("moving up");
+          if (toY < currentSelectedArea.fromY) {
+            currentSelectedArea.fromY = toY;
+          } else {
             currentSelectedArea.toY = toY;
           }
-        }
-
-        colspanForceAxis(currentSelectedArea);
-
-        //important to save last mouse move to check direction of the movement
-        const oldMouseMoveTo = {
-          toX: toX != null ? toX : currentSelectedArea.oldMouseMoveTo.toX,
-          toY: toY != null ? toY : currentSelectedArea.oldMouseMoveTo.toY,
-        };
-        currentSelectedArea.oldMouseMoveTo = oldMouseMoveTo;
-
-        if (
-          currentSelectedArea.fromX &&
-          currentSelectedArea.toX &&
-          currentSelectedArea.fromY &&
-          currentSelectedArea.toY
+        } else if (
+          currentSelectedArea.oldMouseMoveTo &&
+          currentSelectedArea.oldMouseMoveTo.toY &&
+          currentSelectedArea.oldMouseMoveTo.toY - toY < 0
         ) {
-          const containedBegin = getContainedArea(selectedAreas.slice(0, -1), {
-            x: currentSelectedArea.fromX,
-            y: currentSelectedArea.fromY,
-          });
-          const containedEnd = getContainedArea(selectedAreas.slice(0, -1), {
-            x: currentSelectedArea.toX,
-            y: currentSelectedArea.toY,
-          });
-          if (containedBegin && containedEnd) {
-            currentSelectedArea.isExclusion = true;
+          // console.log("moving down");
+          if (toY > currentSelectedArea.toY) {
+            currentSelectedArea.toY = toY;
           } else {
-            currentSelectedArea.isExclusion = false;
+            currentSelectedArea.fromY = toY;
           }
+        } else if (
+          !currentSelectedArea.oldMouseMoveTo ||
+          !currentSelectedArea.oldMouseMoveTo.toY
+        ) {
+          currentSelectedArea.toY = toY;
         }
-
-        return [...selectedAreas.slice(0, -1), currentSelectedArea];
-      });
-    };
-
-    /**
-     * When the mouse is moved, set the new coordinates
-     * Only run if x and y have changed from previous values. That is moved to next cell
-     * This was on mouseMove before that fires very often. Now we are using mouseOver so it might not be neccessary
-     * to check if x and y have changed, but I am leaving it in for now
-     */
-    let oldX = null;
-    let oldY = null;
-    const onMouseMove = (e) => {
-      if (trackMouseMove) {
-        setSelectColDraging(true);
-        let { x, y, colspan } = e.delegateTarget.dataset;
-          
-        if (x === undefined || y === undefined) return;
-
-        // only run if x and y have changed from previous values. That is moved to next cell
-        if (x !== oldX || y !== oldY) {
-          setMouseMoveColCord([x, y]);
-          updateCurrentSelectedArea({
-            //   fromX: oldX,
-            //   fromY: oldY,
-            toX: x,
-            toY: y,
-          });
-        }
-        oldX = x;
-        oldY = y;
       }
-    }
 
-    /**
-     * We are only using the mouseUp event to detect when the user has finished selecting
-     * the mouseUpColCords are not used but they might be useful in the future
-     */
-    const onMouseUp = (e) => {
-      trackMouseMove = false;
-      setSelectColDraging(false);
-      let { x, y } = e.delegateTarget.dataset;
-      if (x === undefined || y === undefined) return;
-      setMouseUpColCord([x, y]);
-    }
-    // this compoenent does not render anything
-    return <></>;
+      colspanForceAxis(currentSelectedArea);
+
+      //important to save last mouse move to check direction of the movement
+      const oldMouseMoveTo = {
+        toX: toX != null ? toX : currentSelectedArea.oldMouseMoveTo.toX,
+        toY: toY != null ? toY : currentSelectedArea.oldMouseMoveTo.toY,
+      };
+      currentSelectedArea.oldMouseMoveTo = oldMouseMoveTo;
+
+      if (
+        currentSelectedArea.fromX &&
+        currentSelectedArea.toX &&
+        currentSelectedArea.fromY &&
+        currentSelectedArea.toY
+      ) {
+        const containedBegin = getContainedArea(selectedAreas.slice(0, -1), {
+          x: currentSelectedArea.fromX,
+          y: currentSelectedArea.fromY,
+        });
+        const containedEnd = getContainedArea(selectedAreas.slice(0, -1), {
+          x: currentSelectedArea.toX,
+          y: currentSelectedArea.toY,
+        });
+        if (containedBegin && containedEnd) {
+          currentSelectedArea.isExclusion = true;
+        } else {
+          currentSelectedArea.isExclusion = false;
+        }
+      }
+
+      return [...selectedAreas.slice(0, -1), currentSelectedArea];
+    });
   };
+
+  /**
+   * When the mouse is moved, set the new coordinates
+   * Only run if x and y have changed from previous values. That is moved to next cell
+   * This was on mouseMove before that fires very often. Now we are using mouseOver so it might not be neccessary
+   * to check if x and y have changed, but I am leaving it in for now
+   */
+  let oldX = null;
+  let oldY = null;
+  const onMouseMove = (e) => {
+    if (trackMouseMove) {
+      setSelectColDraging(true);
+      let { x, y, colspan } = e.delegateTarget.dataset;
+
+      if (x === undefined || y === undefined) return;
+
+      // only run if x and y have changed from previous values. That is moved to next cell
+      if (x !== oldX || y !== oldY) {
+        setMouseMoveColCord([x, y]);
+        updateCurrentSelectedArea({
+          //   fromX: oldX,
+          //   fromY: oldY,
+          toX: x,
+          toY: y,
+        });
+      }
+      oldX = x;
+      oldY = y;
+    }
+  }
+
+  /**
+   * We are only using the mouseUp event to detect when the user has finished selecting
+   * the mouseUpColCords are not used but they might be useful in the future
+   */
+  const onMouseUp = (e) => {
+    trackMouseMove = false;
+    setSelectColDraging(false);
+    let { x, y } = e.delegateTarget.dataset;
+    if (x === undefined || y === undefined) return;
+    setMouseUpColCord([x, y]);
+  }
+  // this compoenent does not render anything
+  return <></>;
+};
 
 export const getContainedArea = (selectedAreas, { x, y }) => {
   let isX = false;
   let isY = false;
   let containedArea;
-  for (let index = selectedAreas.length-1; index >= 0 ; index--) {
+  for (let index = selectedAreas.length - 1; index >= 0; index--) {
     const area = selectedAreas[index];
     if (area.fromX === area.toX && x === area.fromX && x === area.toX) {
       isX = true;
@@ -312,7 +308,7 @@ export const getContainedArea = (selectedAreas, { x, y }) => {
     }
   }
   if (isX && isY && containedArea && !containedArea.isExclusion) {
-      return containedArea;
+    return containedArea;
   }
 
   return null;

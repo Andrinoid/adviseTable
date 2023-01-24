@@ -1,7 +1,5 @@
-import React, { useRef, useState, useEffect, useContext, memo } from 'react';
+import React, { useRef, useState, useEffect, memo } from 'react';
 import styled from 'styled-components';
-import Col from './';
-import { TableContext } from '../context';
 import Brick from './Brick';
 
 const Resizer = styled.div`
@@ -55,6 +53,8 @@ const ResizablelCol = memo(({
      type,
     horizontalAlign='right',
     location,
+    autoAdjustLabelColWidth,
+    autoAdjustTotalColWidth,
 }) => {
 
     const [w, setW] = useState(0);
@@ -62,11 +62,6 @@ const ResizablelCol = memo(({
     const [isResizing, setIsResizing] = useState(false);
     const resizeRef = useRef(null);
     const colRef = useRef(null);
-    // Get the context we need
-    const { 
-        autoAdjustLabelColWidth,
-        autoAdjustTotalColWidth, 
-    } = useContext(TableContext);
 
     // This is a hack to only run the effect once
     const isFirstRun = useRef(true);

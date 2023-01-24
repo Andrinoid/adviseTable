@@ -1,6 +1,5 @@
-import React, { useContext, memo } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
-import { TableContext } from '../context';
 
 const BrickElm = styled.div`
     display: flex;
@@ -34,13 +33,9 @@ const Brick =memo(({
     children,
     style,
     location, //top or left
+    theTheme,
+    showGrid,
 }) => {
-
-    // Get the context we need
-    const {
-        theTheme,
-        showGrid,
-    } = useContext(TableContext);
 
     return (
         <BrickElm
