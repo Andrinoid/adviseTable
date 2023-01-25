@@ -30,6 +30,7 @@ const Selection = ({
     useEffect(() => {
         console.log("selectedAreas", selectedAreas)
         if (selectedAreas.length === 0) {
+            setDimensions({top: 0, left: 0, width: 0, height: 0})
             return;
         }
 
