@@ -96,9 +96,9 @@ const Row = memo(({
 
   const updateRowNumber = useCallback(
     (value) => {
-      setTimeout(() => {
+      // setTimeout(() => {
         setRowNumber(value);
-      }, 10);
+      // }, 10);
     },
     [rowNumber, setRowNumber]
   );
@@ -107,6 +107,7 @@ const Row = memo(({
    * Count the instances of this component and set the row number
    */
   useEffect(() => {
+    console.log('instanceCount', instanceCount)
     if (rowNumber == null) {
       setInstanceCount((value) => {
         updateRowNumber(value);

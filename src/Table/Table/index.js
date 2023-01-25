@@ -420,7 +420,7 @@ const Table = (
     autoAdjustTotalColWidth, 
     colWidth, 
     colHeight, 
-    toolBoxWidth, 
+    toolBoxWidth,
     headerHeight, 
     numberOfDataCols, 
     instanceCount, 

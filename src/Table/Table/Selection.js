@@ -36,8 +36,6 @@ const Selection = ({
         let includesFirstCol = selectedAreas.some(area => area.fromX === 0);
         let includesLastCol = selectedAreas.some(area => area.toX === numberOfCols - 1);
 
-        
-    
 
         let {fromX, fromY, toX, toY} = selectedAreas[0];
         // console.log(fromX, fromY, toX, toY)
@@ -53,7 +51,6 @@ const Selection = ({
             // update left with the difference between the firstColWidth and colWidth
             left += firstColWidth - colWidth;
         }
-
         if(includesLastCol) {
             // update width with the difference between the LastColWidth and colWidth
              width += lastColWidth - colWidth;
@@ -65,6 +62,7 @@ const Selection = ({
     }, [selectedAreas])
 
     return <Box 
+        id="selBox"
         style={{...dimensions}}
     />;
 };
