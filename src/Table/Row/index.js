@@ -14,33 +14,33 @@ const RowElm = styled.div`
   }
 `;
 
-let Outliner = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0.5px dashed transparent;
-    pointer-events: none;
-    z-index: 100;
-    &.hightlighted {
-        background: rgba(33,150,243,0.2);
-    }
-    &.outline-top {
-        border-top: 1px dashed #65b2fe;
-        border-left: 1px dashed #65b2fe;
-        border-right: 1px dashed #65b2fe;
-    }
-    &.outline-bottom {
-        border-bottom: 1px dashed #65b2fe;
-        border-left: 1px dashed #65b2fe;
-        border-right: 1px dashed #65b2fe;
-    }
-    &.outline-middle {
-        border-left: 1px dashed #65b2fe;
-        border-right: 1px dashed #65b2fe;
-    }
-}`;
+// let Outliner = styled.div`
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     border: 0.5px dashed transparent;
+//     pointer-events: none;
+//     z-index: 100;
+//     &.hightlighted {
+//         background: rgba(33,150,243,0.2);
+//     }
+//     &.outline-top {
+//         border-top: 1px dashed #65b2fe;
+//         border-left: 1px dashed #65b2fe;
+//         border-right: 1px dashed #65b2fe;
+//     }
+//     &.outline-bottom {
+//         border-bottom: 1px dashed #65b2fe;
+//         border-left: 1px dashed #65b2fe;
+//         border-right: 1px dashed #65b2fe;
+//     }
+//     &.outline-middle {
+//         border-left: 1px dashed #65b2fe;
+//         border-right: 1px dashed #65b2fe;
+//     }
+// }`;
 
 const Label = styled.div`
   position: absolute;
@@ -74,22 +74,22 @@ const Row = memo(({
   colHeight,
   toolBoxWidth,
   numberOfDataCols,
-  selectedAreas,
+  // selectedAreas,
   instanceCount,
   tableMatrix,
-  mouseDownColCord,
-  mouseMoveColCord,
+  // mouseDownColCord,
+  // mouseMoveColCord,
   totalWidth,
   labelColWidth,
   totalColWidth,
   biggestLabelCellWidth,
   biggestTotalCellWidth,
   theTheme,
-  selectionMode,
+  // selectionMode,
   showGrid,
 }) => {
   const currentRowRef = useRef(null);
-  const [hover, setHover] = useState(false);
+  // const [hover, setHover] = useState(false);
   const [rowNumber, setRowNumber] = useState(null);
 
   const leftOffset = toolBoxWidth;
@@ -115,48 +115,48 @@ const Row = memo(({
     }
   }, [instanceCount]);
 
-  const createOutlineClasses = (min, max, rowNumber) => {
-    let classes = [];
-    if (rowNumber == min) {
-      classes.push("outline-top");
-    }
-    if (rowNumber == max) {
-      classes.push("outline-bottom");
-    }
-    if (rowNumber > min && rowNumber < max) {
-      classes.push("outline-middle");
-    }
-    classes.push("hightlighted");
-    return classes.join(" ");
-  };
+  // const createOutlineClasses = (min, max, rowNumber) => {
+  //   let classes = [];
+  //   if (rowNumber == min) {
+  //     classes.push("outline-top");
+  //   }
+  //   if (rowNumber == max) {
+  //     classes.push("outline-bottom");
+  //   }
+  //   if (rowNumber > min && rowNumber < max) {
+  //     classes.push("outline-middle");
+  //   }
+  //   classes.push("hightlighted");
+  //   return classes.join(" ");
+  // };
 
-  const isHightlighted = () => {
-    if (selectionMode !== "row") return false;
-    let isInSelection = false;
-    let min;
-    let max;
+  // const isHightlighted = () => {
+  //   if (selectionMode !== "row") return false;
+  //   let isInSelection = false;
+  //   let min;
+  //   let max;
 
-    if (mouseDownColCord && mouseMoveColCord) {
-      min = Math.min(mouseDownColCord[1], mouseMoveColCord[1]);
-      max = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
+  //   if (mouseDownColCord && mouseMoveColCord) {
+  //     min = Math.min(mouseDownColCord[1], mouseMoveColCord[1]);
+  //     max = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
 
-      if (rowNumber >= min && rowNumber <= max) {
-        isInSelection = true;
-      }
-    }
+  //     if (rowNumber >= min && rowNumber <= max) {
+  //       isInSelection = true;
+  //     }
+  //   }
 
-    if (mouseDownColCord && !mouseMoveColCord) {
-      if (rowNumber == mouseDownColCord[1]) {
-        isInSelection = true;
-        min = rowNumber;
-        max = rowNumber;
-      }
-    }
+  //   if (mouseDownColCord && !mouseMoveColCord) {
+  //     if (rowNumber == mouseDownColCord[1]) {
+  //       isInSelection = true;
+  //       min = rowNumber;
+  //       max = rowNumber;
+  //     }
+  //   }
 
-    if (isInSelection) {
-      return createOutlineClasses(min, max, rowNumber);
-    }
-  };
+  //   if (isInSelection) {
+  //     return createOutlineClasses(min, max, rowNumber);
+  //   }
+  // };
 
   const getValidChildren = (childrenFromProps) => {
     return React.Children.toArray(childrenFromProps).filter((child) => {
@@ -211,14 +211,14 @@ const Row = memo(({
           y: rowNumber,
           x: i,
           type: colType,
-          rowType: type,
-          rowHover: hover,
+          // rowType: type,
+          // rowHover: hover,
           style: { width: width, height: colHeight, top: 0, left: left },
-          selectedAreas,
+          // selectedAreas,
           setTableMatrix,
           tableMatrix,
           theTheme,
-          selectionMode,
+          // selectionMode,
           showGrid,
           totalWidth,
           setBiggestDataCellWidth,
@@ -241,7 +241,7 @@ const Row = memo(({
         // onMouseOver={() => setHover(true)}
         // onMouseOut={() => setHover(false)}
         type={type}
-        hover={hover}
+        // hover={hover}
         style={{ height: colHeight, width: totalWidth }}
         ref={currentRowRef}
         y={rowNumber}
@@ -249,7 +249,7 @@ const Row = memo(({
       >
         {label && <Label>{label}</Label>}
 
-        <Outliner className={isHightlighted()} />
+        {/* <Outliner className={isHightlighted()} /> */}
         {toolBoxContent && (
           <Brick
             theTheme={theTheme}

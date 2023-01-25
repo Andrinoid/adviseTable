@@ -26,7 +26,7 @@ const Header = React.forwardRef(({
     totalColWidth,
     colHeight,
     totalWidth,
-    viewportHeight,
+    // viewportHeight,
     onLabelColResize,
     onTotalColResize,
     onTableResize,
@@ -70,7 +70,7 @@ const Header = React.forwardRef(({
                                 <ResizablelCol
                                     location={'top'}
                                     onResize={onLabelColResize}
-                                    viewportHeight={viewportHeight}
+                                    // viewportHeight={viewportHeight}
                                     type="first"
                                     horizontalAlign="left"
                                     selectable={false}
@@ -96,7 +96,7 @@ const Header = React.forwardRef(({
                                     location={'top'}
                                     onResize={onTotalColResize}
                                     direction="left"
-                                    viewportHeight={viewportHeight}
+                                    // viewportHeight={viewportHeight}
                                     type="last"
                                     selectable={false}
                                     autoAdjustLabelColWidth={autoAdjustLabelColWidth}

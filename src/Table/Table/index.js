@@ -17,6 +17,7 @@ import Footer from "../Footer";
 import SelectedArea, { getContainedArea } from "./SelectedAreas";
 import Scroller from "./Scroller";
 import themes from "./themes";
+import Selection from "./Selection";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -363,53 +364,72 @@ const Table = (
     setChildrenRows(
       children({
         rowProps: {
-          setToolBoxWidth,
           setInstanceCount,
-          setSelectedAreas,
-          setSelectColDraging,
-          setMouseDownColCord,
-          setMouseMoveColCord,
-          setMouseUpColCord,
-          setSelectedCount,
-          setTotalWidth,
-          setlabelColWidth,
-          setTotalColWidth,
           setBiggestDataCellWidth,
           setBiggestLabelCellWidth,
           setBiggestTotalCellWidth,
           autoAdjustLabelColWidth,
           autoAdjustTotalColWidth,
-          setSelectedCol,
           setTableMatrix,
+          // setToolBoxWidth,
+          // setSelectedAreas,
+          // setSelectColDraging,
+          // setMouseDownColCord,
+          // setMouseMoveColCord,
+          // setMouseUpColCord,
+          // setSelectedCount,
+          // setTotalWidth,
+          // setlabelColWidth,
+          // setTotalColWidth,
+          // setSelectedCol,
           colWidth,
           colHeight,
           toolBoxWidth,
           topOffset: headerHeight,
           numberOfDataCols,
-          expandedIds,
-          selectedAreas,
           instanceCount,
           tableMatrix,
-          selectColDraging,
-          mouseDownColCord,
-          mouseMoveColCord,
-          mouseUpColCord,
           totalWidth,
           labelColWidth,
           totalColWidth,
           biggestDataCellWidth,
           biggestLabelCellWidth,
           biggestTotalCellWidth,
-          viewportHeight,
-          selectedCol,
           theTheme,
-          selectionMode,
-          tableId,
           showGrid,
+          // expandedIds,
+          // selectedAreas,
+          // selectColDraging,
+          // mouseDownColCord,
+          // mouseMoveColCord,
+          // mouseUpColCord,
+          // viewportHeight,
+          // selectedCol,
+          // selectionMode,
+          // tableId,
         },
       })
     );
-  }, [totalWidth, labelColWidth, totalColWidth, biggestDataCellWidth, selectedAreas, children, autoAdjustLabelColWidth, autoAdjustTotalColWidth, colWidth, colHeight, toolBoxWidth, headerHeight, numberOfDataCols, expandedIds, instanceCount, tableMatrix, selectColDraging, mouseDownColCord, mouseMoveColCord, mouseUpColCord, biggestLabelCellWidth, biggestTotalCellWidth, viewportHeight, selectedCol, theTheme, selectionMode, tableId, showGrid]);
+  }, [// Update on following changes
+    totalWidth, 
+    labelColWidth, 
+    totalColWidth, 
+    biggestDataCellWidth, 
+    children, 
+    autoAdjustLabelColWidth, 
+    autoAdjustTotalColWidth, 
+    colWidth, 
+    colHeight, 
+    toolBoxWidth, 
+    headerHeight, 
+    numberOfDataCols, 
+    instanceCount, 
+    tableMatrix, 
+    biggestLabelCellWidth, 
+    biggestTotalCellWidth,
+    theTheme,
+    showGrid
+  ]);
 
   return (
     <div ref={tableContainerRef}>
@@ -424,7 +444,7 @@ const Table = (
           toolBoxWidth={toolBoxWidth}
           totalColWidth={totalColWidth}
           totalWidth={totalWidth}
-          viewportHeight={viewportHeight}
+          // viewportHeight={viewportHeight}
           onLabelColResize={onLabelColResize}
           onTotalColResize={onTotalColResize}
           onTableResize={onTableResize}
@@ -452,7 +472,6 @@ const Table = (
           </div>
 
           <SelectedArea
-            onSelection={onSelection}
             tableId={tableId}
             setMouseDownColCord={setMouseDownColCord}
             setMouseMoveColCord={setMouseMoveColCord}
@@ -461,6 +480,15 @@ const Table = (
             setSelectedCount={setSelectedCount}
             setSelectedAreas={setSelectedAreas}
             tableMatrix={tableMatrix}
+          />
+          <Selection 
+            selectedAreas={selectedAreas} 
+            colWidth={colWidth}
+            colHeight={colHeight}
+            leftOffset={toolBoxWidth}
+            firstColWidth={labelColWidth}
+            lastColWidth={totalColWidth}
+            numberOfCols={numberOfDataCols + 2}
           />
           <Scroller active={selectColDraging} tableId={tableId} />
         </ViewPort>

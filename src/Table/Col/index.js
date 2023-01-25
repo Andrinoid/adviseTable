@@ -29,7 +29,7 @@ let Outliner = styled.div`
     pointer-events: none;
     z-index: 100;
     &.hightlighted {
-        background: rgba(33,150,243,0.2);;
+        background: rgba(33,150,243,0.2);
     }
     &.outline-left {
         border-left: 1px solid #65b2fe;
@@ -47,8 +47,8 @@ let Outliner = styled.div`
 
 const Col = memo(({
   horizontalAlign = "right",
-  rowType, // row is the parent row for this column
-  rowHover, // row is the parent row for this column
+  // rowType, // row is the parent row for this column
+  // rowHover, // row is the parent row for this column
   children,
   style = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
   type,
@@ -58,11 +58,11 @@ const Col = memo(({
   empty = false,
   colspan,
   showGrid,
-  selectedAreas,
+  // selectedAreas,
   setTableMatrix,
   tableMatrix,
   theTheme,
-  selectionMode,
+  // selectionMode,
   totalWidth,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
@@ -103,45 +103,45 @@ const Col = memo(({
   /**
    * Create the outline classes to show the selected area
    */
-  const createOutlineClasses = (minX, maxX, minY, maxY) => {
-    let classes = [];
-    // if (y === minY) classes.push("outline-top");
-    // if (y === maxY) classes.push("outline-bottom");
-    // if (x === minX) classes.push("outline-left");
-    // if (x === maxX) classes.push("outline-right");
-    classes.push("hightlighted");
+  // const createOutlineClasses = (minX, maxX, minY, maxY) => {
+  //   let classes = [];
+  //   // if (y === minY) classes.push("outline-top");
+  //   // if (y === maxY) classes.push("outline-bottom");
+  //   // if (x === minX) classes.push("outline-left");
+  //   // if (x === maxX) classes.push("outline-right");
+  //   classes.push("hightlighted");
 
-    return classes.join(" ");
-  };
+  //   return classes.join(" ");
+  // };
 
   /**
    * Calculate the selected area
    * Note that we can not draw the selected area here, because we are in a single column component
    * Selected is tracked in the SelectedAreas.js component on root level
    */
-  const isHightlighted = () => {
-    if (selectionMode !== "cell") return;
+  // const isHightlighted = () => {
+  //   if (selectionMode !== "cell") return;
 
-    const containedArea = getContainedArea(selectedAreas, { x, y });
-    if (containedArea) {
-      return createOutlineClasses(
-        containedArea.fromX,
-        containedArea.toX,
-        containedArea.fromY,
-        containedArea.toY,
-        x,
-        y
-      );
-    }
+  //   const containedArea = getContainedArea(selectedAreas, { x, y });
+  //   if (containedArea) {
+  //     return createOutlineClasses(
+  //       containedArea.fromX,
+  //       containedArea.toX,
+  //       containedArea.fromY,
+  //       containedArea.toY,
+  //       x,
+  //       y
+  //     );
+  //   }
 
-    return false;
-  };
+  //   return false;
+  // };
 
   return (
     <Column
       horizontalAlign={horizontalAlign}
-      rowHover={rowHover}
-      rowType={rowType}
+      // rowHover={rowHover}
+      // rowType={rowType}
       style={{ ...style }}
       theme={theTheme}
       showGrid={showGrid}
@@ -156,19 +156,17 @@ const Col = memo(({
       id={id}
       className={`tableCol`}
     >
-      <Outliner className={isHightlighted()} />
+      {/* <Outliner className={isHightlighted()} /> */}
       {!empty && (
         <Cell
           parentWidth={style.width}
           parentType={type}
-
           totalWidth={totalWidth}
           setBiggestDataCellWidth={setBiggestDataCellWidth}
           setBiggestLabelCellWidth={setBiggestLabelCellWidth}
           biggestLabelCellWidth={biggestLabelCellWidth}
           setBiggestTotalCellWidth={setBiggestTotalCellWidth}
           biggestTotalCellWidth={biggestTotalCellWidth}
-
         >
           {children}
         </Cell>

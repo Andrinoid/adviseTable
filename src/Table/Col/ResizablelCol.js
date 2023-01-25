@@ -9,8 +9,8 @@ const Resizer = styled.div`
     height: 100%;
     cursor: col-resize;
     background: ${props => props.isResizing ? '#64b2fe' : 'transparent'};
-    border-${({direction})=> direction}: solid 1px #ccc;
-    ${({direction})=> {
+    border-${({ direction }) => direction}: solid 1px #ccc;
+    ${({ direction }) => {
         return direction === 'right' ? 'right: 0;' : 'left: 0;'
     }}
     &:hover {
@@ -44,14 +44,13 @@ const Fill = styled.div`
     justify-content: ${props => props.horizontalAlign};
 `;
 
-const ResizablelCol = memo(({ 
-    children, 
-    viewportHeight,
-     onResize, 
-     direction='right', 
-     style, 
-     type,
-    horizontalAlign='right',
+const ResizablelCol = memo(({
+    children,
+    onResize,
+    direction = 'right',
+    style,
+    type,
+    horizontalAlign = 'right',
     location,
     autoAdjustLabelColWidth,
     autoAdjustTotalColWidth,
@@ -86,7 +85,7 @@ const ResizablelCol = memo(({
         setX(e.clientX);
         setW(colRef.current.offsetWidth);
     };
-    
+
     const mouseMoveHandler = (e) => {
         // How far the mouse has been moved
         setIsResizing(true);
@@ -111,32 +110,32 @@ const ResizablelCol = memo(({
     };
 
     const doubleClickHandler = () => {
-        if(type === 'first') {
+        if (type === 'first') {
             autoAdjustLabelColWidth();
         }
-        if(type === 'last') {
+        if (type === 'last') {
             autoAdjustTotalColWidth();
         }
     };
 
     return (
-        <Brick location={location} style={{...style }}>
-          {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}  
+        <Brick location={location} style={{ ...style }}>
+            {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}
             <Fill className='fill' ref={colRef} horizontalAlign={horizontalAlign}>
-            {children}
-            <Resizer
-                onMouseDown={mouseDownHandler}
-                onDoubleClick={doubleClickHandler}
-                direction={direction}
-                isResizing={isResizing}
-                ref={resizeRef}
-            >
-                {/* <Line
+                {children}
+                <Resizer
+                    onMouseDown={mouseDownHandler}
+                    onDoubleClick={doubleClickHandler}
+                    direction={direction}
+                    isResizing={isResizing}
+                    ref={resizeRef}
+                >
+                    {/* <Line
                     height={viewportHeight}
                     isResizing={isResizing}
                     direction={direction}
                 /> */}
-            </Resizer>
+                </Resizer>
             </Fill>
         </Brick>
     )
