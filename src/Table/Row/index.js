@@ -94,14 +94,14 @@ const Row = memo(({
 
   const leftOffset = toolBoxWidth;
 
-  const updateRowNumber = useCallback(
-    (value) => {
-      // setTimeout(() => {
-        setRowNumber(value);
-      // }, 10);
-    },
-    [rowNumber, setRowNumber]
-  );
+  // const updateRowNumber = useCallback(
+  //   (value) => {
+  //     setTimeout(() => {
+  //       setRowNumber(value);
+  //     }, 0);
+  //   },
+  //   [rowNumber, setRowNumber]
+  // );
 
   /**
    * Count the instances of this component and set the row number
@@ -110,7 +110,8 @@ const Row = memo(({
     console.log('instanceCount', instanceCount)
     if (rowNumber == null) {
       setInstanceCount((value) => {
-        updateRowNumber(value);
+
+        setRowNumber((_) => value);
         return value + 1;
       });
     }
