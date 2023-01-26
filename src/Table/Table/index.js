@@ -4,9 +4,9 @@ import React, {
   useRef,
   useLayoutEffect,
   useEffect,
-  useImperativeHandle,
+  // useImperativeHandle,
   useCallback,
-  memo
+  // memo
 } from "react";
 import styled from "styled-components";
 
@@ -37,7 +37,7 @@ const ViewPort = styled.div`
 
 const Table = (
   {
-    onSelection = () => {},
+    onSelection = () => { },
     headerStickyTopOffset = 0,
     selectionMode = "cell",
     leftBrickWidth = 50,
@@ -49,9 +49,8 @@ const Table = (
     tableId, // make required
     footer, //Boolean
     width,
-  },
-  ref
-) => {
+  }) => {
+    
   useEffect(() => {
     setTheTheme(themes[theme]);
   }, [theme]);
@@ -73,7 +72,7 @@ const Table = (
   const [totalColWidth, setTotalColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
     (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
-      numberOfDataCols
+    numberOfDataCols
   );
 
   const [mouseDownColCord, setMouseDownColCord] = useState(null);
@@ -163,11 +162,11 @@ const Table = (
    * autoAdjust() will adjust the width of the table data cols to fit the data
    * usage in app: tableRef.current.autoAdjust()
    */
-  useImperativeHandle(ref, () => ({
-    autoAdjust() {
-      autoAdjustDataColWidth();
-    },
-  }));
+  // useImperativeHandle(ref, () => ({
+  //   autoAdjust() {
+  //     autoAdjustDataColWidth();
+  //   },
+  // }));
 
   /**
    * Update the total With but applying validation to the minimun width
@@ -411,21 +410,21 @@ const Table = (
       })
     );
   }, [// Update on following changes
-    totalWidth, 
-    labelColWidth, 
-    totalColWidth, 
-    biggestDataCellWidth, 
-    children, 
-    autoAdjustLabelColWidth, 
-    autoAdjustTotalColWidth, 
-    colWidth, 
-    colHeight, 
+    totalWidth,
+    labelColWidth,
+    totalColWidth,
+    biggestDataCellWidth,
+    children,
+    autoAdjustLabelColWidth,
+    autoAdjustTotalColWidth,
+    colWidth,
+    colHeight,
     toolBoxWidth,
-    headerHeight, 
-    numberOfDataCols, 
-    instanceCount, 
-    tableMatrix, 
-    biggestLabelCellWidth, 
+    headerHeight,
+    numberOfDataCols,
+    instanceCount,
+    tableMatrix,
+    biggestLabelCellWidth,
     biggestTotalCellWidth,
     theTheme,
     showGrid
@@ -433,7 +432,7 @@ const Table = (
 
   return (
     <div ref={tableContainerRef}>
-      <Wrapper ref={ref} id={tableId}>
+      <Wrapper id={tableId}>
         <Header
           ref={headerScrollRef}
           className="scrollable"
@@ -481,8 +480,8 @@ const Table = (
             setSelectedAreas={setSelectedAreas}
             tableMatrix={tableMatrix}
           />
-          <Selection 
-            selectedAreas={selectedAreas} 
+          <Selection
+            selectedAreas={selectedAreas}
             colWidth={colWidth}
             colHeight={colHeight}
             leftOffset={toolBoxWidth}
@@ -507,4 +506,4 @@ const Table = (
   );
 };
 
-export default memo(React.forwardRef(Table));
+export default Table;

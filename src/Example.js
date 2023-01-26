@@ -26,19 +26,19 @@ function Example({
   showGrid,
 }) {
   const [expandedIds, setExpandedIds] = useState([]);
-  const [containerWidth, setContainerWidth] = useState(0);
+  // const [containerWidth, setContainerWidth] = useState(0);
   // const [selectionMode, setSelectionMode] = useState('row');
-  const tableRef = useRef(null);
-  const tableRef3 = useRef(null);
+  // const tableRef = useRef(null);
+  // const tableRef3 = useRef(null);
 
-  const isFirstRun = useRef(true);
-  useEffect(() => {
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
-      return;
-    }
-    tableRef.current.autoAdjust();
-  }, [autoAdjustTrigger]);
+  // const isFirstRun = useRef(true);
+  // useEffect(() => {
+  //   if (isFirstRun.current) {
+  //     isFirstRun.current = false;
+  //     return;
+  //   }
+  //   tableRef.current.autoAdjust();
+  // }, [autoAdjustTrigger]);
 
   let months = mo.map((m) => m.system);
   // select range of months based on selectedMonths
@@ -97,7 +97,7 @@ function Example({
   return (
     <div className="App">
       <Table
-        ref={tableRef}
+        // ref={tableRef}
         headerData={header}
         theme={theme}
         showGrid={showGrid}

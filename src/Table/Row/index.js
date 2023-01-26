@@ -110,8 +110,10 @@ const Row = memo(({
     console.log('instanceCount', instanceCount)
     if (rowNumber == null) {
       setInstanceCount((value) => {
-
-        setRowNumber((_) => value);
+        // SetTimout is a fix for: Cannot update a component from inside the function body of a different component.
+        setTimeout(() => {
+          setRowNumber((_) => value);
+        }, 0);
         return value + 1;
       });
     }
