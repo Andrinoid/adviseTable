@@ -34,6 +34,7 @@ const Table = (
   {
     onSelection = () => { },
     headerStickyTopOffset = 0,
+    lasColumnRisizeable = true,
     selectionMode = "cell",
     leftBrickWidth = 50,
     theme = "light",
@@ -409,6 +410,7 @@ const Table = (
           showGrid={showGrid}
           autoAdjustFirstColWidth={autoAdjustFirstColWidth}
           autoAdjustLastColWidth={autoAdjustLastColWidth}
+          lasColumnRisizeable={lasColumnRisizeable}
         />
 
         <ViewPort
