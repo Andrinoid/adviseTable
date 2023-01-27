@@ -98,19 +98,14 @@ const Row = memo(({
    * @returns the amount of cols that aren't being used
    */
   const getRemainingCols = () => {
-    const usedCols = getValidChildren(children).reduce((acc, child) => {
-      const { colspan } = child.props;
-
+    const usedCols = getValidChildren(children).reduce((acc, { props: { colspan }}) => {
       if (Number.isInteger(colspan)) {
-        acc += colspan;
-      } else {
-        acc++;
+        return acc += colspan;
       }
-
-      return acc;
+      return acc++;
     }, 0);
 
-    return lastCols - usedCols;
+    return totalCols - usedCols;
   }
 
   /**
