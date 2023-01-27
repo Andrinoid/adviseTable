@@ -133,7 +133,7 @@ const Row = memo(({
     * calculateFullWidthColspan(0, 3, 1) // returns 1 because it's not the last col
     */
   function calculateFullWidthColspan(i, k, remainingCols) {
-    const colspan = Math.ceil((remainingCols) / k);
+    const colspan = Math.floor((remainingCols) / k);
     const isLastCol = i == k - 1;
     const extraSpan = totalCols % k;
 

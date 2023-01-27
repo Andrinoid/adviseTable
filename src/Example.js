@@ -171,9 +171,9 @@ function Example({
 
                             {/* Last col will be bigger than ther others because 14 / 4 = 3.5 */}
                             {/* <Col colspan={"fullwidth"}>myLabel1</Col>
-                            <Col colspan={"fullwidth"}>myLabel1</Col>
                             <Col colspan={"fullwidth"}>myLabel2</Col>
-                            <Col colspan={"fullwidth"}>myLabel2</Col> */}
+                            <Col colspan={"fullwidth"}>myLabel3</Col>
+                            <Col colspan={"fullwidth"}>myLabel4</Col> */}
 
                             {/* it will fill all the columns space */}
                             {/* <Col colspan={"fullwidth"}>myLabel1</Col> */}
