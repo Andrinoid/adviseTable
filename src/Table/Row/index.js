@@ -34,7 +34,7 @@ const Row = memo(({
   children,
   type = "primary",
   label,
-  toolBoxContent,
+  leftBrickContent,
   setInstanceCount,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
@@ -42,13 +42,13 @@ const Row = memo(({
   setTableMatrix,
   colWidth,
   colHeight,
-  toolBoxWidth,
+  leftBrickWidth,
   numberOfDataCols,
   instanceCount,
   tableMatrix,
   totalWidth,
-  labelColWidth,
-  totalColWidth,
+  firstColWidth,
+  lastColWidth,
   biggestLabelCellWidth,
   biggestTotalCellWidth,
   tableId,
@@ -59,7 +59,7 @@ const Row = memo(({
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
 
-  const leftOffset = toolBoxWidth;
+  const leftOffset = leftBrickWidth;
 
   /**
    * Count the instances of this component and set the row number
@@ -110,7 +110,7 @@ const Row = memo(({
       return acc;
     }, 0);
 
-    return totalCols - usedCols;
+    return lastCols - usedCols;
   }
 
   /**
@@ -157,7 +157,7 @@ const Row = memo(({
    * and are rezisable. Data cols however are not resizable and have the same width
    */
   let numCols = 0;
-  let fullWidthColsCount =  0;
+  let fullWidthColsCount = 0;
   const remainingCols = getRemainingCols();
   const totalFullWidthCols = getFullWidthColsAmount();
   const childrenWithProps = React.Children.map(
@@ -170,8 +170,8 @@ const Row = memo(({
 
       if (remainingCols > 0 && colspan == "fullwidth") {
         colspan = calculateFullWidthColspan(
-          fullWidthColsCount, 
-          totalFullWidthCols, 
+          fullWidthColsCount,
+          totalFullWidthCols,
           remainingCols
         );
         fullWidthColsCount++;
@@ -182,19 +182,19 @@ const Row = memo(({
         if (i === 0) {
           colType = "first";
           left = leftOffset;
-          width = labelColWidth;
+          width = firstColWidth;
 
           if (colspan > 1) {
-            width = labelColWidth + (colspan - 1) * colWidth;
+            width = firstColWidth + (colspan - 1) * colWidth;
           }
         } else if (i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
-          left = leftOffset + numberOfDataCols * colWidth + labelColWidth;
-          width = totalColWidth;
+          left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
+          width = lastColWidth;
         } else {
           colType = "middle";
-          left = leftOffset + labelColWidth + (numCols - 1) * colWidth;
+          left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           width = colspan ? colspan * colWidth : colWidth;
         }
 
@@ -242,30 +242,30 @@ const Row = memo(({
       >
         {label && <Label>{label}</Label>}
 
-        {toolBoxContent && (
+        {leftBrickContent && (
           <Brick
             theTheme={theTheme}
             showGrid={showGrid}
             horizontalAlign="left"
             location={"left"}
             style={{
-              width: toolBoxWidth,
+              width: leftBrickWidth,
               height: colHeight,
               zIndex: 1,
               left: 0,
               position: "sticky",
             }}
           >
-            {toolBoxContent}
+            {leftBrickContent}
           </Brick>
         )}
-        {!toolBoxContent && (
+        {!leftBrickContent && (
           <Brick
             theTheme={theTheme}
             showGrid={showGrid}
             location={"left"}
             style={{
-              width: toolBoxWidth,
+              width: leftBrickWidth,
               height: colHeight,
               position: "sticky",
               left: 0,

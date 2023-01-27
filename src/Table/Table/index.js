@@ -34,6 +34,7 @@ const Table = (
   {
     onSelection = () => { },
     headerStickyTopOffset = 0,
+    lasColumnRisizeable = true,
     selectionMode = "cell",
     leftBrickWidth = 50,
     theme = "light",
@@ -54,17 +55,16 @@ const Table = (
 
   const [viewportWidth, setViewportWidth] = useState(0);
   // const [viewportHeight, setViewportHeight] = useState(0);
-  const [labelColWidth, setlabelColWidth] = useState(150);
+  const [firstColWidth, setfirstColWidth] = useState(150);
   const [numberOfDataCols, setNumberOfDataCols] = useState(
     headerData.length - 2
   );
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   const [totalWidth, setTotalWidth] = useState(1350);
-  const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
-  const [totalColWidth, setTotalColWidth] = useState(100);
+  const [lastColWidth, setLastColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
-    (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
+    (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
     numberOfDataCols
   );
   const [selectedAreas, setSelectedAreas] = useState([]);
@@ -133,15 +133,15 @@ const Table = (
    */
   const getAdjustedSize = useCallback(() => {
     return (
-      labelColWidth +
-      toolBoxWidth +
-      totalColWidth +
+      firstColWidth +
+      leftBrickWidth +
+      lastColWidth +
       biggestDataCellWidth * numberOfDataCols
     );
   }, [
-    labelColWidth,
-    toolBoxWidth,
-    totalColWidth,
+    firstColWidth,
+    leftBrickWidth,
+    lastColWidth,
     biggestDataCellWidth,
     numberOfDataCols,
   ]);
@@ -166,9 +166,9 @@ const Table = (
   }, [
     updateTableWith,
     width,
-    labelColWidth,
-    toolBoxWidth,
-    totalColWidth,
+    firstColWidth,
+    leftBrickWidth,
+    lastColWidth,
     biggestDataCellWidth,
     numberOfDataCols,
   ]);
@@ -185,7 +185,7 @@ const Table = (
    */
   useEffect(() => {
     setColWidth(calcColWidth);
-  }, [labelColWidth, totalColWidth, totalWidth, numberOfDataCols]);
+  }, [firstColWidth, lastColWidth, totalWidth, numberOfDataCols]);
 
   /**
    * Messure the viewport width and height.
@@ -229,16 +229,16 @@ const Table = (
    * This function auto adjusts the width of the first col to fit the biggest label
    * It is run by double clicking the first col resizer
    */
-  const autoAdjustLabelColWidth = useCallback(() => {
-    setlabelColWidth(biggestLabelCellWidth);
+  const autoAdjustFirstColWidth = useCallback(() => {
+    setfirstColWidth(biggestLabelCellWidth);
   }, [biggestLabelCellWidth]);
 
   /**
    * as above so bellow
    * This applies to last col
    */
-  const autoAdjustTotalColWidth = useCallback(() => {
-    setTotalColWidth(biggestTotalCellWidth);
+  const autoAdjustLastColWidth = useCallback(() => {
+    setLastColWidth(biggestTotalCellWidth);
   }, [biggestTotalCellWidth]);
 
   /**
@@ -251,15 +251,15 @@ const Table = (
   /**
    * callback function for the label col resizer
    */
-  const onLabelColResize = useCallback((width) => {
-    setlabelColWidth(width);
+  const onFirstColResize = useCallback((width) => {
+    setfirstColWidth(width);
   }, []);
 
   /**
    * callback function for the total col resizer
    */
-  const onTotalColResize = useCallback((width) => {
-    setTotalColWidth(width);
+  const onLastColResize = useCallback((width) => {
+    setLastColWidth(width);
   }, []);
 
   /**
@@ -275,7 +275,7 @@ const Table = (
    */
   const calcColWidth = () => {
     return (
-      (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
+      (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
       numberOfDataCols
     );
   };
@@ -344,19 +344,19 @@ const Table = (
           setBiggestDataCellWidth,
           setBiggestLabelCellWidth,
           setBiggestTotalCellWidth,
-          autoAdjustLabelColWidth,
-          autoAdjustTotalColWidth,
+          autoAdjustFirstColWidth,
+          autoAdjustLastColWidth,
           setTableMatrix,
           colWidth,
           colHeight,
-          toolBoxWidth,
+          leftBrickWidth,
           topOffset: headerHeight,
           numberOfDataCols,
           instanceCount,
           tableMatrix,
           totalWidth,
-          labelColWidth,
-          totalColWidth,
+          firstColWidth,
+          lastColWidth,
           biggestDataCellWidth,
           biggestLabelCellWidth,
           biggestTotalCellWidth,
@@ -369,15 +369,15 @@ const Table = (
     );
   }, [
     totalWidth,
-    labelColWidth,
-    totalColWidth,
+    firstColWidth,
+    lastColWidth,
     biggestDataCellWidth,
     children,
-    autoAdjustLabelColWidth,
-    autoAdjustTotalColWidth,
+    autoAdjustFirstColWidth,
+    autoAdjustLastColWidth,
     colWidth,
     colHeight,
-    toolBoxWidth,
+    leftBrickWidth,
     headerHeight,
     numberOfDataCols,
     instanceCount,
@@ -398,20 +398,21 @@ const Table = (
           width={viewportWidth}
           colHeight={headerHeight}
           colWidth={colWidth}
-          labelColWidth={labelColWidth}
-          toolBoxWidth={toolBoxWidth}
-          totalColWidth={totalColWidth}
+          firstColWidth={firstColWidth}
+          leftBrickWidth={leftBrickWidth}
+          lastColWidth={lastColWidth}
           totalWidth={totalWidth}
-          onLabelColResize={onLabelColResize}
-          onTotalColResize={onTotalColResize}
+          onFirstColResize={onFirstColResize}
+          onLastColResize={onLastColResize}
           onTableResize={onTableResize}
           numberOfDataCols={numberOfDataCols}
           theTheme={theTheme}
           data={headerData}
           stickyTopOffset={headerStickyTopOffset}
           showGrid={showGrid}
-          autoAdjustLabelColWidth={autoAdjustLabelColWidth}
-          autoAdjustTotalColWidth={autoAdjustTotalColWidth}
+          autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+          autoAdjustLastColWidth={autoAdjustLastColWidth}
+          lasColumnRisizeable={lasColumnRisizeable}
         />
 
         <ViewPort
@@ -442,9 +443,9 @@ const Table = (
             selectedAreas={selectedAreas}
             colWidth={colWidth}
             colHeight={colHeight}
-            leftOffset={toolBoxWidth}
-            firstColWidth={labelColWidth}
-            lastColWidth={totalColWidth}
+            leftOffset={leftBrickWidth}
+            firstColWidth={firstColWidth}
+            lastColWidth={lastColWidth}
             numberOfCols={numberOfDataCols + 2}
           />
           <Scroller active={selectColDraging} tableId={tableId} />

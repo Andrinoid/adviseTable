@@ -69,7 +69,7 @@ function Example({
     // updateview(items);
   };
 
-  const toolBoxContent = (dragHandleProps, rowId) => {
+  const leftBrickContent = (dragHandleProps, rowId) => {
     return (
       <Flex>
         {draggable && (
@@ -106,6 +106,7 @@ function Example({
         tableId={"bigTable"}
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
+        lasColumnRisizeable={false}
         onSelection={(selectedReport) => {
           // console.log("selectedReport", selectedReport);
         }}
@@ -197,7 +198,7 @@ function Example({
                             >
                               <Row
                                 key={i}
-                                toolBoxContent={toolBoxContent(
+                                leftBrickContent={leftBrickContent(
                                   provided.dragHandleProps,
                                   row.id
                                 )}

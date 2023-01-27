@@ -21,25 +21,26 @@ const Label = styled.div`
 
 const Header = React.forwardRef(({
     colWidth,
-    toolBoxWidth,
-    labelColWidth,
-    totalColWidth,
+    leftBrickWidth,
+    firstColWidth,
+    lastColWidth,
     colHeight,
     totalWidth,
     // viewportHeight,
-    onLabelColResize,
-    onTotalColResize,
+    onFirstColResize,
+    onLastColResize,
     onTableResize,
     numberOfDataCols,
     stickyTopOffset = 0,
     theTheme,
     showGrid,
     data,
-    autoAdjustLabelColWidth,
-    autoAdjustTotalColWidth,
+    autoAdjustFirstColWidth,
+    autoAdjustLastColWidth,
+    lasColumnRisizeable,
 }, ref) => {
 
-    const leftOffset = toolBoxWidth + labelColWidth;
+    const leftOffset = leftBrickWidth + firstColWidth;
 
     return (
         <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
@@ -49,7 +50,7 @@ const Header = React.forwardRef(({
                     theTheme={theTheme}
                     location={'top'}
                     style={{
-                        width: toolBoxWidth,
+                        width: leftBrickWidth,
                         height: colHeight,
                         theTheme,
                         zIndex: 101,
@@ -69,14 +70,14 @@ const Header = React.forwardRef(({
                             {index === 0 &&
                                 <ResizablelCol
                                     location={'top'}
-                                    onResize={onLabelColResize}
+                                    onResize={onFirstColResize}
                                     // viewportHeight={viewportHeight}
                                     type="first"
                                     horizontalAlign="left"
                                     selectable={false}
-                                    autoAdjustLabelColWidth={autoAdjustLabelColWidth}
-                                    autoAdjustTotalColWidth={autoAdjustTotalColWidth}
-                                    style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
+                                    autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+                                    autoAdjustLastColWidth={autoAdjustLastColWidth}
+                                    style={{ width: firstColWidth, height: colHeight, top: 0, left: leftBrickWidth }}
                                 >
                                     <Label>{item.title}</Label>
                                 </ResizablelCol>
@@ -92,22 +93,40 @@ const Header = React.forwardRef(({
                                 ><Label>{item.title}</Label></Brick>
                             }
                             {index === data.length - 1 &&
-                                <ResizablelCol
-                                    location={'top'}
-                                    onResize={onTotalColResize}
-                                    direction="left"
-                                    // viewportHeight={viewportHeight}
-                                    type="last"
-                                    selectable={false}
-                                    autoAdjustLabelColWidth={autoAdjustLabelColWidth}
-                                    autoAdjustTotalColWidth={autoAdjustTotalColWidth}
-                                    style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
-                                >
-                                    <>
-                                        <Label>{item.title}</Label>
-                                        <ResizableTable width={totalWidth} onResize={onTableResize} />
-                                    </>
-                                </ResizablelCol>
+                                <>
+                                    {lasColumnRisizeable &&
+                                        <ResizablelCol
+                                            location={'top'}
+                                            onResize={onLastColResize}
+                                            direction="left"
+                                            // viewportHeight={viewportHeight}
+                                            type="last"
+                                            selectable={false}
+                                            autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+                                            autoAdjustLastColWidth={autoAdjustLastColWidth}
+                                            style={{ width: lastColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
+                                        >
+                                            <>
+                                                <Label>{item.title}</Label>
+                                                <ResizableTable width={totalWidth} onResize={onTableResize} />
+                                            </>
+                                        </ResizablelCol>
+                                    }
+                                    {!lasColumnRisizeable &&
+                                        <Brick
+                                            location={'top'}
+                                            selectable={false}
+                                            type="last"
+                                            showGrid={showGrid}
+                                            theTheme={theTheme}
+                                            style={{ width: lastColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
+                                        >
+                                            <Label>{item.title}</Label>
+                                            <ResizableTable width={totalWidth} onResize={onTableResize} />
+                                        </Brick>
+
+                                    }
+                                </>
                             }
                         </React.Fragment>
                     )

@@ -52,8 +52,8 @@ const ResizablelCol = memo(({
     type,
     horizontalAlign = 'right',
     location,
-    autoAdjustLabelColWidth,
-    autoAdjustTotalColWidth,
+    autoAdjustFirstColWidth,
+    autoAdjustLastColWidth,
 }) => {
 
     const [w, setW] = useState(0);
@@ -111,10 +111,10 @@ const ResizablelCol = memo(({
 
     const doubleClickHandler = () => {
         if (type === 'first') {
-            autoAdjustLabelColWidth();
+            autoAdjustFirstColWidth();
         }
         if (type === 'last') {
-            autoAdjustTotalColWidth();
+            autoAdjustLastColWidth();
         }
     };
 
