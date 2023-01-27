@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, memo } from "react";
+import React, { useCallback, useEffect, useRef, useState, memo, useLayoutEffect } from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
@@ -13,34 +13,6 @@ const RowElm = styled.div`
     }
   }
 `;
-
-// let Outliner = styled.div`
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     border: 0.5px dashed transparent;
-//     pointer-events: none;
-//     z-index: 100;
-//     &.hightlighted {
-//         background: rgba(33,150,243,0.2);
-//     }
-//     &.outline-top {
-//         border-top: 1px dashed #65b2fe;
-//         border-left: 1px dashed #65b2fe;
-//         border-right: 1px dashed #65b2fe;
-//     }
-//     &.outline-bottom {
-//         border-bottom: 1px dashed #65b2fe;
-//         border-left: 1px dashed #65b2fe;
-//         border-right: 1px dashed #65b2fe;
-//     }
-//     &.outline-middle {
-//         border-left: 1px dashed #65b2fe;
-//         border-right: 1px dashed #65b2fe;
-//     }
-// }`;
 
 const Label = styled.div`
   position: absolute;
@@ -58,8 +30,6 @@ const Label = styled.div`
   z-index: 1;
 `;
 
-// Copunter for instances of this component used for row number
-
 const Row = memo(({
   children,
   type = "primary",
@@ -74,93 +44,48 @@ const Row = memo(({
   colHeight,
   toolBoxWidth,
   numberOfDataCols,
-  // selectedAreas,
   instanceCount,
   tableMatrix,
-  // mouseDownColCord,
-  // mouseMoveColCord,
   totalWidth,
   labelColWidth,
   totalColWidth,
   biggestLabelCellWidth,
   biggestTotalCellWidth,
+  tableId,
   theTheme,
-  // selectionMode,
   showGrid,
 }) => {
   const currentRowRef = useRef(null);
-  // const [hover, setHover] = useState(false);
   const [rowNumber, setRowNumber] = useState(null);
 
   const leftOffset = toolBoxWidth;
-
-  // const updateRowNumber = useCallback(
-  //   (value) => {
-  //     setTimeout(() => {
-  //       setRowNumber(value);
-  //     }, 0);
-  //   },
-  //   [rowNumber, setRowNumber]
-  // );
 
   /**
    * Count the instances of this component and set the row number
    */
   useEffect(() => {
-    console.log('instanceCount', instanceCount)
     if (rowNumber == null) {
-      setInstanceCount((value) => {
-        // SetTimout is a fix for: Cannot update a component from inside the function body of a different component.
-        setTimeout(() => {
-          setRowNumber((_) => value);
-        }, 0);
-        return value + 1;
+      let rows = document.querySelectorAll(`.${tableId}-tableRow`);
+      //find the current rowRef in the rows array
+      let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
+      setRowNumber((_) => index);
+      setInstanceCount(() => {
+        return index;
       });
     }
   }, [instanceCount]);
-
-  // const createOutlineClasses = (min, max, rowNumber) => {
-  //   let classes = [];
-  //   if (rowNumber == min) {
-  //     classes.push("outline-top");
+  // useEffect(() => {
+  //   console.log('instanceCount', instanceCount)
+  //   if (rowNumber == null) {
+  //     setInstanceCount((value) => {
+  //       // SetTimout is a fix for: Cannot update a component from inside the function body of a different component.
+  //       // setTimeout(() => {
+  //         setRowNumber((_) => value);
+  //       // }, 0);
+  //       return value + 1;
+  //     });
   //   }
-  //   if (rowNumber == max) {
-  //     classes.push("outline-bottom");
-  //   }
-  //   if (rowNumber > min && rowNumber < max) {
-  //     classes.push("outline-middle");
-  //   }
-  //   classes.push("hightlighted");
-  //   return classes.join(" ");
-  // };
-
-  // const isHightlighted = () => {
-  //   if (selectionMode !== "row") return false;
-  //   let isInSelection = false;
-  //   let min;
-  //   let max;
-
-  //   if (mouseDownColCord && mouseMoveColCord) {
-  //     min = Math.min(mouseDownColCord[1], mouseMoveColCord[1]);
-  //     max = Math.max(mouseDownColCord[1], mouseMoveColCord[1]);
-
-  //     if (rowNumber >= min && rowNumber <= max) {
-  //       isInSelection = true;
-  //     }
-  //   }
-
-  //   if (mouseDownColCord && !mouseMoveColCord) {
-  //     if (rowNumber == mouseDownColCord[1]) {
-  //       isInSelection = true;
-  //       min = rowNumber;
-  //       max = rowNumber;
-  //     }
-  //   }
-
-  //   if (isInSelection) {
-  //     return createOutlineClasses(min, max, rowNumber);
-  //   }
-  // };
+  // }, [instanceCount]);
 
   const getValidChildren = (childrenFromProps) => {
     return React.Children.toArray(childrenFromProps).filter((child) => {
@@ -215,14 +140,10 @@ const Row = memo(({
           y: rowNumber,
           x: i,
           type: colType,
-          // rowType: type,
-          // rowHover: hover,
           style: { width: width, height: colHeight, top: 0, left: left },
-          // selectedAreas,
           setTableMatrix,
           tableMatrix,
           theTheme,
-          // selectionMode,
           showGrid,
           totalWidth,
           setBiggestDataCellWidth,
@@ -242,10 +163,8 @@ const Row = memo(({
        * Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯
        */}
       <RowElm
-        // onMouseOver={() => setHover(true)}
-        // onMouseOut={() => setHover(false)}
+        className={`${tableId}-tableRow`}
         type={type}
-        // hover={hover}
         style={{ height: colHeight, width: totalWidth }}
         ref={currentRowRef}
         y={rowNumber}
@@ -253,7 +172,6 @@ const Row = memo(({
       >
         {label && <Label>{label}</Label>}
 
-        {/* <Outliner className={isHightlighted()} /> */}
         {toolBoxContent && (
           <Brick
             theTheme={theTheme}
