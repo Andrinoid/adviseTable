@@ -245,9 +245,9 @@ const Table = (
   /**
    * This function auto adjusts the width of the data cols to fit the biggest data cell
    */
-  const autoAdjustDataColWidth = () => {
-    updateTableWith(getAdjustedSize());
-  };
+  // const autoAdjustDataColWidth = () => {
+  //   updateTableWith(getAdjustedSize());
+  // };
 
   /**
    * callback function for the label col resizer
