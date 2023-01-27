@@ -184,6 +184,52 @@ function Example({
                       )}
                     </Draggable>
 
+                    <Draggable
+                      isDragDisabled={!draggable}
+                      draggableId={"id-" + view.length+2}
+                      key={"id-" + view.length+2}
+                      index={view.length}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <Row
+                            {...tableProvided.rowProps}
+                          >
+                            <Col colspan={"fullwidth"}>myLabel2</Col>
+                            <Col colspan={"fullwidth"}>myLabel3</Col>
+                            <Col colspan={"fullwidth"}>myLabel4</Col>
+
+                            {/* it will fill all the columns space */}
+                            {/* <Col colspan={"fullwidth"}>myLabel1</Col> */}
+
+                          </Row>
+                        </div>
+                      )}
+                    </Draggable>
+
+                    <Draggable
+                      isDragDisabled={!draggable}
+                      draggableId={"id-" + view.length+3}
+                      key={"id-" + view.length+3}
+                      index={view.length}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <Row
+                            {...tableProvided.rowProps}
+                          >
+                            <Col colspan={"fullwidth"}>myLabel1</Col>
+                          </Row>
+                        </div>
+                      )}
+                    </Draggable>
+
                     {view.map((row, i) => {
                       return (
                         <Draggable
