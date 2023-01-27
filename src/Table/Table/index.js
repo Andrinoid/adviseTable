@@ -62,9 +62,9 @@ const Table = (
   const [colHeight, setColHeight] = useState(40);
   const [totalWidth, setTotalWidth] = useState(1350);
   const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
-  const [totalColWidth, setTotalColWidth] = useState(100);
+  const [lastColWidth, setLastColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
-    (totalWidth - firstColWidth - toolBoxWidth - totalColWidth) /
+    (totalWidth - firstColWidth - toolBoxWidth - lastColWidth) /
     numberOfDataCols
   );
   const [selectedAreas, setSelectedAreas] = useState([]);
@@ -135,13 +135,13 @@ const Table = (
     return (
       firstColWidth +
       toolBoxWidth +
-      totalColWidth +
+      lastColWidth +
       biggestDataCellWidth * numberOfDataCols
     );
   }, [
     firstColWidth,
     toolBoxWidth,
-    totalColWidth,
+    lastColWidth,
     biggestDataCellWidth,
     numberOfDataCols,
   ]);
@@ -168,7 +168,7 @@ const Table = (
     width,
     firstColWidth,
     toolBoxWidth,
-    totalColWidth,
+    lastColWidth,
     biggestDataCellWidth,
     numberOfDataCols,
   ]);
@@ -185,7 +185,7 @@ const Table = (
    */
   useEffect(() => {
     setColWidth(calcColWidth);
-  }, [firstColWidth, totalColWidth, totalWidth, numberOfDataCols]);
+  }, [firstColWidth, lastColWidth, totalWidth, numberOfDataCols]);
 
   /**
    * Messure the viewport width and height.
@@ -237,8 +237,8 @@ const Table = (
    * as above so bellow
    * This applies to last col
    */
-  const autoAdjustTotalColWidth = useCallback(() => {
-    setTotalColWidth(biggestTotalCellWidth);
+  const autoAdjustLastColWidth = useCallback(() => {
+    setLastColWidth(biggestTotalCellWidth);
   }, [biggestTotalCellWidth]);
 
   /**
@@ -258,8 +258,8 @@ const Table = (
   /**
    * callback function for the total col resizer
    */
-  const onTotalColResize = useCallback((width) => {
-    setTotalColWidth(width);
+  const onLastColResize = useCallback((width) => {
+    setLastColWidth(width);
   }, []);
 
   /**
@@ -275,7 +275,7 @@ const Table = (
    */
   const calcColWidth = () => {
     return (
-      (totalWidth - firstColWidth - toolBoxWidth - totalColWidth) /
+      (totalWidth - firstColWidth - toolBoxWidth - lastColWidth) /
       numberOfDataCols
     );
   };
@@ -345,7 +345,7 @@ const Table = (
           setBiggestLabelCellWidth,
           setBiggestTotalCellWidth,
           autoAdjustFirstColWidth,
-          autoAdjustTotalColWidth,
+          autoAdjustLastColWidth,
           setTableMatrix,
           colWidth,
           colHeight,
@@ -356,7 +356,7 @@ const Table = (
           tableMatrix,
           totalWidth,
           firstColWidth,
-          totalColWidth,
+          lastColWidth,
           biggestDataCellWidth,
           biggestLabelCellWidth,
           biggestTotalCellWidth,
@@ -369,11 +369,11 @@ const Table = (
   }, [
     totalWidth,
     firstColWidth,
-    totalColWidth,
+    lastColWidth,
     biggestDataCellWidth,
     children,
     autoAdjustFirstColWidth,
-    autoAdjustTotalColWidth,
+    autoAdjustLastColWidth,
     colWidth,
     colHeight,
     toolBoxWidth,
@@ -398,10 +398,10 @@ const Table = (
           colWidth={colWidth}
           firstColWidth={firstColWidth}
           toolBoxWidth={toolBoxWidth}
-          totalColWidth={totalColWidth}
+          lastColWidth={lastColWidth}
           totalWidth={totalWidth}
           onFirstColResize={onFirstColResize}
-          onTotalColResize={onTotalColResize}
+          onLastColResize={onLastColResize}
           onTableResize={onTableResize}
           numberOfDataCols={numberOfDataCols}
           theTheme={theTheme}
@@ -409,7 +409,7 @@ const Table = (
           stickyTopOffset={headerStickyTopOffset}
           showGrid={showGrid}
           autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-          autoAdjustTotalColWidth={autoAdjustTotalColWidth}
+          autoAdjustLastColWidth={autoAdjustLastColWidth}
         />
 
         <ViewPort
@@ -442,7 +442,7 @@ const Table = (
             colHeight={colHeight}
             leftOffset={toolBoxWidth}
             firstColWidth={firstColWidth}
-            lastColWidth={totalColWidth}
+            lastColWidth={lastColWidth}
             numberOfCols={numberOfDataCols + 2}
           />
           <Scroller active={selectColDraging} tableId={tableId} />

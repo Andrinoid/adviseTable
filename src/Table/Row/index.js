@@ -48,7 +48,7 @@ const Row = memo(({
   tableMatrix,
   totalWidth,
   firstColWidth,
-  totalColWidth,
+  lastColWidth,
   biggestLabelCellWidth,
   biggestTotalCellWidth,
   tableId,
@@ -93,7 +93,7 @@ const Row = memo(({
     });
   };
 
-  const getRemainingCols = (totalCols) => {
+  const getRemainingCols = (lastCols) => {
     const usedCols = getValidChildren(children).reduce((acc, child) => {
       const { colspan } = child.props;
 
@@ -106,7 +106,7 @@ const Row = memo(({
       return acc;
     }, 0);
 
-    return totalCols - usedCols;
+    return lastCols - usedCols;
   }
 
   const remainingCols = getRemainingCols(14);
@@ -144,7 +144,7 @@ const Row = memo(({
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
           left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
-          width = totalColWidth;
+          width = lastColWidth;
         } else {
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;

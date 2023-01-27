@@ -23,12 +23,12 @@ const Header = React.forwardRef(({
     colWidth,
     toolBoxWidth,
     firstColWidth,
-    totalColWidth,
+    lastColWidth,
     colHeight,
     totalWidth,
     // viewportHeight,
     onFirstColResize,
-    onTotalColResize,
+    onLastColResize,
     onTableResize,
     numberOfDataCols,
     stickyTopOffset = 0,
@@ -36,7 +36,7 @@ const Header = React.forwardRef(({
     showGrid,
     data,
     autoAdjustFirstColWidth,
-    autoAdjustTotalColWidth,
+    autoAdjustLastColWidth,
 }, ref) => {
 
     const leftOffset = toolBoxWidth + firstColWidth;
@@ -75,7 +75,7 @@ const Header = React.forwardRef(({
                                     horizontalAlign="left"
                                     selectable={false}
                                     autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-                                    autoAdjustTotalColWidth={autoAdjustTotalColWidth}
+                                    autoAdjustLastColWidth={autoAdjustLastColWidth}
                                     style={{ width: firstColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
                                 >
                                     <Label>{item.title}</Label>
@@ -94,14 +94,14 @@ const Header = React.forwardRef(({
                             {index === data.length - 1 &&
                                 <ResizablelCol
                                     location={'top'}
-                                    onResize={onTotalColResize}
+                                    onResize={onLastColResize}
                                     direction="left"
                                     // viewportHeight={viewportHeight}
                                     type="last"
                                     selectable={false}
                                     autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-                                    autoAdjustTotalColWidth={autoAdjustTotalColWidth}
-                                    style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
+                                    autoAdjustLastColWidth={autoAdjustLastColWidth}
+                                    style={{ width: lastColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                                 >
                                     <>
                                         <Label>{item.title}</Label>
