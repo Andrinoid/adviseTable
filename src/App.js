@@ -27,7 +27,6 @@ const App = () => {
   const [tableTheme, setTableTheme] = useState('light');
   const [draggable, setDraggable] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
-  const [autoAdjustTrigger, setAutoAdjustTrigger] = useState(0);
   const [selectionMode, setSelectionMode] = useState('cell');
   const [footerVissible, setFooterVissible] = useState(true);
   const [headerOffset, setHeaderOffset] = useState(0);
@@ -39,9 +38,6 @@ const App = () => {
     setTableTheme(value);
   };
 
-  const autoAdjust = () => {
-    setAutoAdjustTrigger(autoAdjustTrigger + 1)
-  }
 
   const onSelectionModeChange = ({ target: { value } }) => {
     setSelectionMode(value);
@@ -80,14 +76,6 @@ const App = () => {
             <Text type="secondary">Show grid</Text>
           </div>
           <Switch checked={showGrid} onChange={(checked) => setShowGrid(checked)} />
-        </Panel>
-        <Hr />
-        <Panel>
-          <div style={{ marginBottom: 5 }}>
-            <Text type="secondary">Width</Text>
-          </div>
-          <Button block onClick={autoAdjust}>Auto adjust</Button>
-          <Text type="secondary">Adjust table size based on the column data width</Text>
         </Panel>
         <Hr />
         <Panel>
@@ -146,7 +134,6 @@ const App = () => {
             theme={tableTheme}
             draggable={draggable}
             showGrid={showGrid}
-            autoAdjustTrigger={autoAdjustTrigger}
             selectionMode={selectionMode}
             footerVissible={footerVissible}
             headerOffset={headerOffset}

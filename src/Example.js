@@ -97,18 +97,16 @@ function Example({
   return (
     <div className="App">
       <Table
-        // ref={tableRef}
         headerData={header}
         theme={theme}
         showGrid={showGrid}
         selectionMode={selectionMode}
-        expandedIds={expandedIds}
         tableId={"bigTable"}
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={false}
         onSelection={(selectedReport) => {
-          // console.log("selectedReport", selectedReport);
+          console.log("selectedReport", selectedReport);
         }}
       >
         {(tableProvided) => {

@@ -52,13 +52,9 @@ const Table = (
 
   const viewportRef = useRef(null);
   const [theTheme, setTheTheme] = useState(themes[theme]);
-
   const [viewportWidth, setViewportWidth] = useState(0);
-  // const [viewportHeight, setViewportHeight] = useState(0);
   const [firstColWidth, setfirstColWidth] = useState(150);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(
-    headerData.length - 2
-  );
+  const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   const [totalWidth, setTotalWidth] = useState(1350);
@@ -429,9 +425,6 @@ const Table = (
 
           <SelectedArea
             tableId={tableId}
-            // setMouseDownColCord={setMouseDownColCord}
-            // setMouseMoveColCord={setMouseMoveColCord}
-            // setMouseUpColCord={setMouseUpColCord}
             setSelectColDraging={setSelectColDraging}
             setSelectedCount={setSelectedCount}
             setSelectedAreas={setSelectedAreas}
@@ -445,6 +438,8 @@ const Table = (
             firstColWidth={firstColWidth}
             lastColWidth={lastColWidth}
             numberOfCols={numberOfDataCols + 2}
+            selectionMode={selectionMode}
+            totalWidth={totalWidth}
           />
           <Scroller active={selectColDraging} tableId={tableId} />
         </ViewPort>

@@ -24,9 +24,12 @@ const Selection = ({
     firstColWidth,
     lastColWidth,
     numberOfCols,
+    selectionMode,
+    totalWidth,
 }) => {
 
     const [dimensions, setDimensions] = useState([])
+
 
     const calculateDimensions = (selection = {}) => {
         
@@ -66,13 +69,20 @@ const Selection = ({
 
     }, [selectedAreas])
 
+    const rowSelectionStyles = {
+        width: totalWidth,
+        left:0,
+        zIndex: 101,
+    }
+
+
     return (
         <>
             {dimensions.map((dimension, index) => {
                 return (
                     <Box
                         key={index}
-                        style={{ ...dimension }}
+                        style={{ ...dimension, ...(selectionMode === 'row' && rowSelectionStyles) }}
                     />
                 )
             })}
