@@ -131,8 +131,6 @@ const Table = (
 
   const [instanceCount, setInstanceCount] = useState(0);
 
-  // create unique id for each table. Used for seperating events]
-  // const tableId = 'id-' + Math.random().toString(36).substr(2, 9);
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableContainerRef = useRef(null);
@@ -155,18 +153,6 @@ const Table = (
     biggestDataCellWidth,
     numberOfDataCols,
   ]);
-
-  /**
-   * expose method to parent component
-   * For this to work, the parent component must pass a ref to this component
-   * autoAdjust() will adjust the width of the table data cols to fit the data
-   * usage in app: tableRef.current.autoAdjust()
-   */
-  // useImperativeHandle(ref, () => ({
-  //   autoAdjust() {
-  //     autoAdjustDataColWidth();
-  //   },
-  // }));
 
   /**
    * Update the total With but applying validation to the minimun width
@@ -265,7 +251,6 @@ const Table = (
 
   /**
    * This function auto adjusts the width of the data cols to fit the biggest data cell
-   * it is exposed to the parent component to run if needed
    */
   const autoAdjustDataColWidth = () => {
     updateTableWith(getAdjustedSize());
@@ -370,17 +355,6 @@ const Table = (
           autoAdjustLabelColWidth,
           autoAdjustTotalColWidth,
           setTableMatrix,
-          // setToolBoxWidth,
-          // setSelectedAreas,
-          // setSelectColDraging,
-          // setMouseDownColCord,
-          // setMouseMoveColCord,
-          // setMouseUpColCord,
-          // setSelectedCount,
-          // setTotalWidth,
-          // setlabelColWidth,
-          // setTotalColWidth,
-          // setSelectedCol,
           colWidth,
           colHeight,
           toolBoxWidth,
@@ -394,18 +368,9 @@ const Table = (
           biggestDataCellWidth,
           biggestLabelCellWidth,
           biggestTotalCellWidth,
+          tableId,
           theTheme,
           showGrid,
-          // expandedIds,
-          // selectedAreas,
-          // selectColDraging,
-          // mouseDownColCord,
-          // mouseMoveColCord,
-          // mouseUpColCord,
-          // viewportHeight,
-          // selectedCol,
-          // selectionMode,
-          // tableId,
         },
       })
     );

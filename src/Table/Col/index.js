@@ -6,7 +6,6 @@ import { getContainedArea } from '../Table/SelectedAreas';
 
 
 const Column = styled.div`
-// transition: width 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
@@ -20,35 +19,8 @@ const Column = styled.div`
   }}
 `;
 
-let Outliner = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 100;
-    &.hightlighted {
-        background: rgba(33,150,243,0.2);
-    }
-    &.outline-left {
-        border-left: 1px solid #65b2fe;
-    }
-    &.outline-right {
-        border-right: 1px solid #65b2fe;
-    }
-    &.outline-top {
-        border-top: 1px solid #65b2fe;
-    }
-    &.outline-bottom {
-        border-bottom: 1px solid #65b2fe;
-    }
-}`;
-
 const Col = memo(({
   horizontalAlign = "right",
-  // rowType, // row is the parent row for this column
-  // rowHover, // row is the parent row for this column
   children,
   style = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
   type,
@@ -58,11 +30,9 @@ const Col = memo(({
   empty = false,
   colspan,
   showGrid,
-  // selectedAreas,
   setTableMatrix,
   tableMatrix,
   theTheme,
-  // selectionMode,
   totalWidth,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
@@ -99,43 +69,6 @@ const Col = memo(({
       });
     }
   }, [y, x]);
-
-  /**
-   * Create the outline classes to show the selected area
-   */
-  // const createOutlineClasses = (minX, maxX, minY, maxY) => {
-  //   let classes = [];
-  //   // if (y === minY) classes.push("outline-top");
-  //   // if (y === maxY) classes.push("outline-bottom");
-  //   // if (x === minX) classes.push("outline-left");
-  //   // if (x === maxX) classes.push("outline-right");
-  //   classes.push("hightlighted");
-
-  //   return classes.join(" ");
-  // };
-
-  /**
-   * Calculate the selected area
-   * Note that we can not draw the selected area here, because we are in a single column component
-   * Selected is tracked in the SelectedAreas.js component on root level
-   */
-  // const isHightlighted = () => {
-  //   if (selectionMode !== "cell") return;
-
-  //   const containedArea = getContainedArea(selectedAreas, { x, y });
-  //   if (containedArea) {
-  //     return createOutlineClasses(
-  //       containedArea.fromX,
-  //       containedArea.toX,
-  //       containedArea.fromY,
-  //       containedArea.toY,
-  //       x,
-  //       y
-  //     );
-  //   }
-
-  //   return false;
-  // };
 
   return (
     <Column

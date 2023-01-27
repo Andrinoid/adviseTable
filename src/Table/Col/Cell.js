@@ -6,7 +6,6 @@ const cellPaddingLeftRight = 5;
 const SpaceAround = styled.div`
     padding: 0 ${cellPaddingLeftRight}px;
     font-size: 14px;
-    // background: ${props => props.isOverflowing ? 'red' : 'transparent'};
 `;
 
 // x and y are only for debugging if needed
@@ -57,8 +56,6 @@ const Cell = memo(({
         setBiggestTotalCellWidth(getElementWidth(ref.current));
       }
     }
-    // im not sure if we should run on every render
-    // or cellWidth, biggestDataCellWidth. keeping this as reference
   }, []);
 
   /**
