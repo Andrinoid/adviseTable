@@ -110,7 +110,6 @@ const Row = memo(({
       return ++acc;
     }, 0);
 
-    console.log(totalCols, usedCols)
     return totalCols - usedCols;
   }
 
