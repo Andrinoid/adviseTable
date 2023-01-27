@@ -22,12 +22,12 @@ const Label = styled.div`
 const Header = React.forwardRef(({
     colWidth,
     toolBoxWidth,
-    labelColWidth,
+    firstColWidth,
     totalColWidth,
     colHeight,
     totalWidth,
     // viewportHeight,
-    onLabelColResize,
+    onFirstColResize,
     onTotalColResize,
     onTableResize,
     numberOfDataCols,
@@ -35,11 +35,11 @@ const Header = React.forwardRef(({
     theTheme,
     showGrid,
     data,
-    autoAdjustLabelColWidth,
+    autoAdjustFirstColWidth,
     autoAdjustTotalColWidth,
 }, ref) => {
 
-    const leftOffset = toolBoxWidth + labelColWidth;
+    const leftOffset = toolBoxWidth + firstColWidth;
 
     return (
         <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
@@ -69,14 +69,14 @@ const Header = React.forwardRef(({
                             {index === 0 &&
                                 <ResizablelCol
                                     location={'top'}
-                                    onResize={onLabelColResize}
+                                    onResize={onFirstColResize}
                                     // viewportHeight={viewportHeight}
                                     type="first"
                                     horizontalAlign="left"
                                     selectable={false}
-                                    autoAdjustLabelColWidth={autoAdjustLabelColWidth}
+                                    autoAdjustFirstColWidth={autoAdjustFirstColWidth}
                                     autoAdjustTotalColWidth={autoAdjustTotalColWidth}
-                                    style={{ width: labelColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
+                                    style={{ width: firstColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
                                 >
                                     <Label>{item.title}</Label>
                                 </ResizablelCol>
@@ -99,7 +99,7 @@ const Header = React.forwardRef(({
                                     // viewportHeight={viewportHeight}
                                     type="last"
                                     selectable={false}
-                                    autoAdjustLabelColWidth={autoAdjustLabelColWidth}
+                                    autoAdjustFirstColWidth={autoAdjustFirstColWidth}
                                     autoAdjustTotalColWidth={autoAdjustTotalColWidth}
                                     style={{ width: totalColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                                 >

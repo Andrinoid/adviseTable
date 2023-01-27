@@ -54,7 +54,7 @@ const Table = (
 
   const [viewportWidth, setViewportWidth] = useState(0);
   // const [viewportHeight, setViewportHeight] = useState(0);
-  const [labelColWidth, setlabelColWidth] = useState(150);
+  const [firstColWidth, setfirstColWidth] = useState(150);
   const [numberOfDataCols, setNumberOfDataCols] = useState(
     headerData.length - 2
   );
@@ -64,7 +64,7 @@ const Table = (
   const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
   const [totalColWidth, setTotalColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
-    (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
+    (totalWidth - firstColWidth - toolBoxWidth - totalColWidth) /
     numberOfDataCols
   );
   const [selectedAreas, setSelectedAreas] = useState([]);
@@ -133,13 +133,13 @@ const Table = (
    */
   const getAdjustedSize = useCallback(() => {
     return (
-      labelColWidth +
+      firstColWidth +
       toolBoxWidth +
       totalColWidth +
       biggestDataCellWidth * numberOfDataCols
     );
   }, [
-    labelColWidth,
+    firstColWidth,
     toolBoxWidth,
     totalColWidth,
     biggestDataCellWidth,
@@ -166,7 +166,7 @@ const Table = (
   }, [
     updateTableWith,
     width,
-    labelColWidth,
+    firstColWidth,
     toolBoxWidth,
     totalColWidth,
     biggestDataCellWidth,
@@ -185,7 +185,7 @@ const Table = (
    */
   useEffect(() => {
     setColWidth(calcColWidth);
-  }, [labelColWidth, totalColWidth, totalWidth, numberOfDataCols]);
+  }, [firstColWidth, totalColWidth, totalWidth, numberOfDataCols]);
 
   /**
    * Messure the viewport width and height.
@@ -229,8 +229,8 @@ const Table = (
    * This function auto adjusts the width of the first col to fit the biggest label
    * It is run by double clicking the first col resizer
    */
-  const autoAdjustLabelColWidth = useCallback(() => {
-    setlabelColWidth(biggestLabelCellWidth);
+  const autoAdjustFirstColWidth = useCallback(() => {
+    setfirstColWidth(biggestLabelCellWidth);
   }, [biggestLabelCellWidth]);
 
   /**
@@ -251,8 +251,8 @@ const Table = (
   /**
    * callback function for the label col resizer
    */
-  const onLabelColResize = useCallback((width) => {
-    setlabelColWidth(width);
+  const onFirstColResize = useCallback((width) => {
+    setfirstColWidth(width);
   }, []);
 
   /**
@@ -275,7 +275,7 @@ const Table = (
    */
   const calcColWidth = () => {
     return (
-      (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
+      (totalWidth - firstColWidth - toolBoxWidth - totalColWidth) /
       numberOfDataCols
     );
   };
@@ -344,7 +344,7 @@ const Table = (
           setBiggestDataCellWidth,
           setBiggestLabelCellWidth,
           setBiggestTotalCellWidth,
-          autoAdjustLabelColWidth,
+          autoAdjustFirstColWidth,
           autoAdjustTotalColWidth,
           setTableMatrix,
           colWidth,
@@ -355,7 +355,7 @@ const Table = (
           instanceCount,
           tableMatrix,
           totalWidth,
-          labelColWidth,
+          firstColWidth,
           totalColWidth,
           biggestDataCellWidth,
           biggestLabelCellWidth,
@@ -368,11 +368,11 @@ const Table = (
     );
   }, [
     totalWidth,
-    labelColWidth,
+    firstColWidth,
     totalColWidth,
     biggestDataCellWidth,
     children,
-    autoAdjustLabelColWidth,
+    autoAdjustFirstColWidth,
     autoAdjustTotalColWidth,
     colWidth,
     colHeight,
@@ -396,11 +396,11 @@ const Table = (
           width={viewportWidth}
           colHeight={headerHeight}
           colWidth={colWidth}
-          labelColWidth={labelColWidth}
+          firstColWidth={firstColWidth}
           toolBoxWidth={toolBoxWidth}
           totalColWidth={totalColWidth}
           totalWidth={totalWidth}
-          onLabelColResize={onLabelColResize}
+          onFirstColResize={onFirstColResize}
           onTotalColResize={onTotalColResize}
           onTableResize={onTableResize}
           numberOfDataCols={numberOfDataCols}
@@ -408,7 +408,7 @@ const Table = (
           data={headerData}
           stickyTopOffset={headerStickyTopOffset}
           showGrid={showGrid}
-          autoAdjustLabelColWidth={autoAdjustLabelColWidth}
+          autoAdjustFirstColWidth={autoAdjustFirstColWidth}
           autoAdjustTotalColWidth={autoAdjustTotalColWidth}
         />
 
@@ -441,7 +441,7 @@ const Table = (
             colWidth={colWidth}
             colHeight={colHeight}
             leftOffset={toolBoxWidth}
-            firstColWidth={labelColWidth}
+            firstColWidth={firstColWidth}
             lastColWidth={totalColWidth}
             numberOfCols={numberOfDataCols + 2}
           />

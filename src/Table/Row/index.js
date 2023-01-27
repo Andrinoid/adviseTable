@@ -47,7 +47,7 @@ const Row = memo(({
   instanceCount,
   tableMatrix,
   totalWidth,
-  labelColWidth,
+  firstColWidth,
   totalColWidth,
   biggestLabelCellWidth,
   biggestTotalCellWidth,
@@ -113,19 +113,19 @@ const Row = memo(({
         if (i === 0) {
           colType = "first";
           left = leftOffset;
-          width = labelColWidth;
+          width = firstColWidth;
 
           if (colspan > 1) {
-            width = labelColWidth + (colspan - 1) * colWidth;
+            width = firstColWidth + (colspan - 1) * colWidth;
           }
         } else if (i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
-          left = leftOffset + numberOfDataCols * colWidth + labelColWidth;
+          left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
           width = totalColWidth;
         } else {
           colType = "middle";
-          left = leftOffset + labelColWidth + (numCols - 1) * colWidth;
+          left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           width = colspan ? colspan * colWidth : colWidth;
         }
 
