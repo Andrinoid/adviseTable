@@ -166,8 +166,8 @@ function Example({
                             // type={"secondary"}
                           >
                             <Col colspan={7}>myLabel1</Col>
-                            <Col colspan={6}>myLabel2</Col>
-                            <Col>myLabel2</Col>
+                            <Col fullwidth>myLabel2</Col>
+                            {/* <Col>myLabel2</Col> */}
                           </Row>
                         </div>
                       )}
