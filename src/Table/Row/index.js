@@ -8,8 +8,8 @@ const RowElm = styled.div`
   &:hover {
     .tableCol {
       ${({ theTheme }) => {
-          return theTheme.rowHoverCol;
-      }}  
+    return theTheme.rowHoverCol;
+  }}  
     }
   }
 `;
@@ -93,6 +93,24 @@ const Row = memo(({
     });
   };
 
+  const getRemainingCols = (totalCols) => {
+    const usedCols = getValidChildren(children).reduce((acc, child) => {
+      const { colspan } = child.props;
+
+      if (Number.isInteger(colspan)) {
+        acc += colspan;
+      } else {
+        acc++;
+      }
+
+      return acc;
+    }, 0);
+
+    return totalCols - usedCols;
+  }
+
+  const remainingCols = getRemainingCols(14);
+
   /**
    * Map over the children that should be Col components and add the props we need
    * We want to keep the Col component simple for the user so we inject the props here
@@ -106,7 +124,11 @@ const Row = memo(({
       let colType;
       let left;
       let width;
-      const { colspan } = child.props;
+      let { colspan, fullwidth } = child.props;
+
+      if (remainingCols > 0 && fullwidth && !colspan) {
+        colspan = remainingCols + 1;
+      }
 
       if (React.isValidElement(child)) {
         const i = numCols;
@@ -151,6 +173,7 @@ const Row = memo(({
           biggestLabelCellWidth,
           setBiggestTotalCellWidth,
           biggestTotalCellWidth,
+          colspan
         });
       }
       return child;
