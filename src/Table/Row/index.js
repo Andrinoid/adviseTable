@@ -99,12 +99,18 @@ const Row = memo(({
    */
   const getRemainingCols = () => {
     const usedCols = getValidChildren(children).reduce((acc, { props: { colspan }}) => {
+      if (colspan == "fullwidth") {
+        return acc;
+      }
+
       if (Number.isInteger(colspan)) {
         return acc += colspan;
       }
-      return acc++;
+
+      return ++acc;
     }, 0);
 
+    console.log(totalCols, usedCols)
     return totalCols - usedCols;
   }
 
