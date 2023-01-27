@@ -133,9 +133,9 @@ const Row = memo(({
     * @param {number} colspan - the colspan of the col
     * @returns {number} the colspan of the col
     * @example totalCols = 14
-    * addNotDistributableSpaceToLastFullWidthCol(2, 3, 1) // returns 3 because 14 % 3 = 2 and 2 + 1 = 3
-    * addNotDistributableSpaceToLastFullWidthCol(1, 3, 1) // returns 1 because it's not the last col
-    * addNotDistributableSpaceToLastFullWidthCol(0, 3, 1) // returns 1 because it's not the last col
+    * calculateFullWidthColspan(2, 3, 1) // returns 3 because 14 % 3 = 2 and 2 + 1 = 3
+    * calculateFullWidthColspan(1, 3, 1) // returns 1 because it's not the last col
+    * calculateFullWidthColspan(0, 3, 1) // returns 1 because it's not the last col
     */
   function calculateFullWidthColspan(i, k, remainingCols) {
     const colspan = Math.ceil((remainingCols + 1) / k);
