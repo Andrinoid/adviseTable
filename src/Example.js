@@ -111,7 +111,6 @@ function Example({
         }}
       >
         {(tableProvided) => {
-          // console.log(tableProvided);
           return (
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="characters">
@@ -163,11 +162,21 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
-                            // type={"secondary"}
                           >
-                            <Col colspan={7}>myLabel1</Col>
-                            <Col fullwidth>myLabel2</Col>
-                            {/* <Col>myLabel2</Col> */}
+                            <Col colspan={2}>myLabel1</Col>
+                            <Col colspan={"fullwidth"}>myLabel1</Col>
+                            <Col colspan={"fullwidth"}>myLabel2</Col>
+                            <Col colspan={2}>myLabel2</Col>
+
+                            {/* Last col will be bigger than ther others because 14 / 4 = 3.5 */}
+                            {/* <Col colspan={"fullwidth"}>myLabel1</Col>
+                            <Col colspan={"fullwidth"}>myLabel1</Col>
+                            <Col colspan={"fullwidth"}>myLabel2</Col>
+                            <Col colspan={"fullwidth"}>myLabel2</Col> */}
+
+                            {/* it will fill all the columns space */}
+                            {/* <Col colspan={"fullwidth"}>myLabel1</Col> */}
+
                           </Row>
                         </div>
                       )}

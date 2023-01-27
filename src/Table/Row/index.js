@@ -54,6 +54,7 @@ const Row = memo(({
   tableId,
   theTheme,
   showGrid,
+  totalCols,
 }) => {
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
@@ -93,7 +94,10 @@ const Row = memo(({
     });
   };
 
-  const getRemainingCols = (totalCols) => {
+  /**
+   * @returns the amount of cols that aren't being used
+   */
+  const getRemainingCols = () => {
     const usedCols = getValidChildren(children).reduce((acc, child) => {
       const { colspan } = child.props;
 
@@ -109,7 +113,42 @@ const Row = memo(({
     return totalCols - usedCols;
   }
 
-  const remainingCols = getRemainingCols(14);
+  /**
+   * @returns the amount of cols that have the colspan prop set to "fullwidth"
+   */
+  const getFullWidthColsAmount = () => {
+    const amount = getValidChildren(children).filter((child) => {
+      return child.props.colspan == "fullwidth";
+    }).length
+
+    return amount;
+  }
+
+  /**
+    * If the last col is a fullwidth col, we need to add the remaining space to it
+    * e.g. if we have 3 fullwidth cols and 2 cols left, we need to add 2 to the last col
+    * so that it takes up the remaining space
+    * @param {number} i - the index of the col
+    * @param {number} k - the amount of fullwidth cols
+    * @param {number} colspan - the colspan of the col
+    * @returns {number} the colspan of the col
+    * @example totalCols = 14
+    * addNotDistributableSpaceToLastFullWidthCol(2, 3, 1) // returns 3 because 14 % 3 = 2 and 2 + 1 = 3
+    * addNotDistributableSpaceToLastFullWidthCol(1, 3, 1) // returns 1 because it's not the last col
+    * addNotDistributableSpaceToLastFullWidthCol(0, 3, 1) // returns 1 because it's not the last col
+    */
+  function calculateFullWidthColspan(i, k, remainingCols) {
+    const colspan = Math.ceil((remainingCols + 1) / k);
+    const isLastCol = i == k - 1;
+    const extraSpan = totalCols % k;
+
+    if (extraSpan != 0 && isLastCol) {
+      return colspan + extraSpan;
+    }
+
+    return colspan;
+  }
+
 
   /**
    * Map over the children that should be Col components and add the props we need
@@ -118,16 +157,24 @@ const Row = memo(({
    * and are rezisable. Data cols however are not resizable and have the same width
    */
   let numCols = 0;
+  let fullWidthColsCount =  0;
+  const remainingCols = getRemainingCols();
+  const totalFullWidthCols = getFullWidthColsAmount();
   const childrenWithProps = React.Children.map(
     getValidChildren(children),
     (child) => {
       let colType;
       let left;
       let width;
-      let { colspan, fullwidth } = child.props;
+      let { colspan } = child.props;
 
-      if (remainingCols > 0 && fullwidth && !colspan) {
-        colspan = remainingCols + 1;
+      if (remainingCols > 0 && colspan == "fullwidth") {
+        colspan = calculateFullWidthColspan(
+          fullWidthColsCount, 
+          totalFullWidthCols, 
+          remainingCols
+        );
+        fullWidthColsCount++;
       }
 
       if (React.isValidElement(child)) {
@@ -234,3 +281,5 @@ const Row = memo(({
 });
 
 export default Row;
+
+
