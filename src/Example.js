@@ -69,7 +69,7 @@ function Example({
     // updateview(items);
   };
 
-  const toolBoxContent = (dragHandleProps, rowId) => {
+  const leftBrickContent = (dragHandleProps, rowId) => {
     return (
       <Flex>
         {draggable && (
@@ -188,7 +188,7 @@ function Example({
                             >
                               <Row
                                 key={i}
-                                toolBoxContent={toolBoxContent(
+                                leftBrickContent={leftBrickContent(
                                   provided.dragHandleProps,
                                   row.id
                                 )}

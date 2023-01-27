@@ -61,10 +61,9 @@ const Table = (
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   const [totalWidth, setTotalWidth] = useState(1350);
-  const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
-    (totalWidth - firstColWidth - toolBoxWidth - lastColWidth) /
+    (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
     numberOfDataCols
   );
   const [selectedAreas, setSelectedAreas] = useState([]);
@@ -134,13 +133,13 @@ const Table = (
   const getAdjustedSize = useCallback(() => {
     return (
       firstColWidth +
-      toolBoxWidth +
+      leftBrickWidth +
       lastColWidth +
       biggestDataCellWidth * numberOfDataCols
     );
   }, [
     firstColWidth,
-    toolBoxWidth,
+    leftBrickWidth,
     lastColWidth,
     biggestDataCellWidth,
     numberOfDataCols,
@@ -167,7 +166,7 @@ const Table = (
     updateTableWith,
     width,
     firstColWidth,
-    toolBoxWidth,
+    leftBrickWidth,
     lastColWidth,
     biggestDataCellWidth,
     numberOfDataCols,
@@ -275,7 +274,7 @@ const Table = (
    */
   const calcColWidth = () => {
     return (
-      (totalWidth - firstColWidth - toolBoxWidth - lastColWidth) /
+      (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
       numberOfDataCols
     );
   };
@@ -349,7 +348,7 @@ const Table = (
           setTableMatrix,
           colWidth,
           colHeight,
-          toolBoxWidth,
+          leftBrickWidth,
           topOffset: headerHeight,
           numberOfDataCols,
           instanceCount,
@@ -376,7 +375,7 @@ const Table = (
     autoAdjustLastColWidth,
     colWidth,
     colHeight,
-    toolBoxWidth,
+    leftBrickWidth,
     headerHeight,
     numberOfDataCols,
     instanceCount,
@@ -397,7 +396,7 @@ const Table = (
           colHeight={headerHeight}
           colWidth={colWidth}
           firstColWidth={firstColWidth}
-          toolBoxWidth={toolBoxWidth}
+          leftBrickWidth={leftBrickWidth}
           lastColWidth={lastColWidth}
           totalWidth={totalWidth}
           onFirstColResize={onFirstColResize}
@@ -440,7 +439,7 @@ const Table = (
             selectedAreas={selectedAreas}
             colWidth={colWidth}
             colHeight={colHeight}
-            leftOffset={toolBoxWidth}
+            leftOffset={leftBrickWidth}
             firstColWidth={firstColWidth}
             lastColWidth={lastColWidth}
             numberOfCols={numberOfDataCols + 2}

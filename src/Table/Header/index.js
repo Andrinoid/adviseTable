@@ -21,7 +21,7 @@ const Label = styled.div`
 
 const Header = React.forwardRef(({
     colWidth,
-    toolBoxWidth,
+    leftBrickWidth,
     firstColWidth,
     lastColWidth,
     colHeight,
@@ -39,7 +39,7 @@ const Header = React.forwardRef(({
     autoAdjustLastColWidth,
 }, ref) => {
 
-    const leftOffset = toolBoxWidth + firstColWidth;
+    const leftOffset = leftBrickWidth + firstColWidth;
 
     return (
         <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
@@ -49,7 +49,7 @@ const Header = React.forwardRef(({
                     theTheme={theTheme}
                     location={'top'}
                     style={{
-                        width: toolBoxWidth,
+                        width: leftBrickWidth,
                         height: colHeight,
                         theTheme,
                         zIndex: 101,
@@ -76,7 +76,7 @@ const Header = React.forwardRef(({
                                     selectable={false}
                                     autoAdjustFirstColWidth={autoAdjustFirstColWidth}
                                     autoAdjustLastColWidth={autoAdjustLastColWidth}
-                                    style={{ width: firstColWidth, height: colHeight, top: 0, left: toolBoxWidth }}
+                                    style={{ width: firstColWidth, height: colHeight, top: 0, left: leftBrickWidth }}
                                 >
                                     <Label>{item.title}</Label>
                                 </ResizablelCol>

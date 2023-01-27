@@ -34,7 +34,7 @@ const Row = memo(({
   children,
   type = "primary",
   label,
-  toolBoxContent,
+  leftBrickContent,
   setInstanceCount,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
@@ -42,7 +42,7 @@ const Row = memo(({
   setTableMatrix,
   colWidth,
   colHeight,
-  toolBoxWidth,
+  leftBrickWidth,
   numberOfDataCols,
   instanceCount,
   tableMatrix,
@@ -58,7 +58,7 @@ const Row = memo(({
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
 
-  const leftOffset = toolBoxWidth;
+  const leftOffset = leftBrickWidth;
 
   /**
    * Count the instances of this component and set the row number
@@ -195,30 +195,30 @@ const Row = memo(({
       >
         {label && <Label>{label}</Label>}
 
-        {toolBoxContent && (
+        {leftBrickContent && (
           <Brick
             theTheme={theTheme}
             showGrid={showGrid}
             horizontalAlign="left"
             location={"left"}
             style={{
-              width: toolBoxWidth,
+              width: leftBrickWidth,
               height: colHeight,
               zIndex: 1,
               left: 0,
               position: "sticky",
             }}
           >
-            {toolBoxContent}
+            {leftBrickContent}
           </Brick>
         )}
-        {!toolBoxContent && (
+        {!leftBrickContent && (
           <Brick
             theTheme={theTheme}
             showGrid={showGrid}
             location={"left"}
             style={{
-              width: toolBoxWidth,
+              width: leftBrickWidth,
               height: colHeight,
               position: "sticky",
               left: 0,
