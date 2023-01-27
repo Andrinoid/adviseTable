@@ -43,7 +43,7 @@ const SelectedAreas = ({
     } else {
       if (e.shiftKey) {
         // Check if shift key is pressed and make selection acordingly
-        setMouseMoveColCord([x, y]);
+        // setMouseMoveColCord([x, y]);
         updateCurrentSelectedArea({ toX: x, toY: y });
         return;
       } else {
@@ -54,16 +54,16 @@ const SelectedAreas = ({
     trackMouseMove = true;
     // if x and y are undefined return
     if (x === undefined || y === undefined) {
-      setMouseMoveColCord(null);
-      setMouseDownColCord(null);
-      setMouseUpColCord(null);
+      // setMouseMoveColCord(null);
+      // setMouseDownColCord(null);
+      // setMouseUpColCord(null);
       setSelectedCount(0);
       clearSelectedAreas();
       return;
     };
     // only run setters if x and y have changed from previous values
-    setMouseMoveColCord(null);
-    setMouseDownColCord([x, y]);
+    // setMouseMoveColCord(null);
+    // setMouseDownColCord([x, y]);
     updateCurrentSelectedArea({ fromX: x, fromY: y, toX: x, toY: y });
   }
 
@@ -248,7 +248,7 @@ const SelectedAreas = ({
 
       // only run if x and y have changed from previous values. That is moved to next cell
       if (x !== oldX || y !== oldY) {
-        setMouseMoveColCord([x, y]);
+        // setMouseMoveColCord([x, y]);
         updateCurrentSelectedArea({
           //   fromX: oldX,
           //   fromY: oldY,
@@ -270,7 +270,7 @@ const SelectedAreas = ({
     setSelectColDraging(false);
     let { x, y } = e.delegateTarget.dataset;
     if (x === undefined || y === undefined) return;
-    setMouseUpColCord([x, y]);
+    // setMouseUpColCord([x, y]);
   }
   // this compoenent does not render anything
   return <></>;

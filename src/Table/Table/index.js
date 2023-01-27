@@ -4,14 +4,10 @@ import React, {
   useRef,
   useLayoutEffect,
   useEffect,
-  // useImperativeHandle,
   useCallback,
-  // memo
 } from "react";
 import styled from "styled-components";
-
 import { useSyncScroller } from "../utils/useSyncScroller";
-
 import Header from "../Header";
 import Footer from "../Footer";
 import SelectedArea, { getContainedArea } from "./SelectedAreas";
@@ -42,7 +38,6 @@ const Table = (
     selectionMode = "cell",
     leftBrickWidth = 50,
     theme = "light",
-    expandedIds,
     headerData,
     showGrid, // Boolean
     children,
@@ -50,7 +45,7 @@ const Table = (
     footer, //Boolean
     width,
   }) => {
-    
+
   useEffect(() => {
     setTheTheme(themes[theme]);
   }, [theme]);
@@ -59,14 +54,13 @@ const Table = (
   const [theTheme, setTheTheme] = useState(themes[theme]);
 
   const [viewportWidth, setViewportWidth] = useState(0);
-  const [viewportHeight, setViewportHeight] = useState(0);
+  // const [viewportHeight, setViewportHeight] = useState(0);
   const [labelColWidth, setlabelColWidth] = useState(150);
   const [numberOfDataCols, setNumberOfDataCols] = useState(
     headerData.length - 2
   );
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
-  // const [totalHeight, setTotalHeight] = useState(view.length * colHeight + headerHeight);
   const [totalWidth, setTotalWidth] = useState(1350);
   const [toolBoxWidth, setToolBoxWidth] = useState(leftBrickWidth);
   const [totalColWidth, setTotalColWidth] = useState(100);
@@ -74,14 +68,13 @@ const Table = (
     (totalWidth - labelColWidth - toolBoxWidth - totalColWidth) /
     numberOfDataCols
   );
-
-  const [mouseDownColCord, setMouseDownColCord] = useState(null);
-  const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
-  const [mouseUpColCord, setMouseUpColCord] = useState(null);
   const [selectedAreas, setSelectedAreas] = useState([]);
-
   const [selectColDraging, setSelectColDraging] = useState(false);
-  const [selectedCol, setSelectedCol] = useState(null);
+
+  // const [mouseDownColCord, setMouseDownColCord] = useState(null);
+  // const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
+  // const [mouseUpColCord, setMouseUpColCord] = useState(null);
+  // const [selectedCol, setSelectedCol] = useState(null);
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([
@@ -199,12 +192,12 @@ const Table = (
    * Messure the viewport width and height.
    * the width may vary based on the css applied to parent elements or the browser window width
    */
-  useLayoutEffect(() => {
-    if (viewportRef?.current?.offsetWidth)
-      setViewportWidth(viewportRef.current.offsetWidth);
-    if (viewportRef?.current?.offsetHeight)
-      setViewportHeight(viewportRef.current.offsetHeight);
-  }, []);
+  // useLayoutEffect(() => {
+  //   if (viewportRef?.current?.offsetWidth)
+  //     setViewportWidth(viewportRef.current.offsetWidth);
+  //   if (viewportRef?.current?.offsetHeight)
+  //     setViewportHeight(viewportRef.current.offsetHeight);
+  // }, []);
 
   useEffect(() => {
     const callback = () => {
@@ -374,7 +367,7 @@ const Table = (
         },
       })
     );
-  }, [// Update on following changes
+  }, [
     totalWidth,
     labelColWidth,
     totalColWidth,
@@ -408,7 +401,6 @@ const Table = (
           toolBoxWidth={toolBoxWidth}
           totalColWidth={totalColWidth}
           totalWidth={totalWidth}
-          // viewportHeight={viewportHeight}
           onLabelColResize={onLabelColResize}
           onTotalColResize={onTotalColResize}
           onTableResize={onTableResize}
@@ -437,9 +429,9 @@ const Table = (
 
           <SelectedArea
             tableId={tableId}
-            setMouseDownColCord={setMouseDownColCord}
-            setMouseMoveColCord={setMouseMoveColCord}
-            setMouseUpColCord={setMouseUpColCord}
+            // setMouseDownColCord={setMouseDownColCord}
+            // setMouseMoveColCord={setMouseMoveColCord}
+            // setMouseUpColCord={setMouseUpColCord}
             setSelectColDraging={setSelectColDraging}
             setSelectedCount={setSelectedCount}
             setSelectedAreas={setSelectedAreas}
