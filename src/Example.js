@@ -110,7 +110,6 @@ function Example({
         }}
       >
         {(tableProvided) => {
-          // console.log(tableProvided);
           return (
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="characters">
@@ -132,8 +131,9 @@ function Example({
                             // type={"secondary"}
                           >
                             <Col>myLabel1</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
+                            <Col colspan={"fullwidth"}>myLabel2</Col>
+
+                            {/* <Col>myLabel2</Col> */}
                             <Col>myLabel2</Col>
                             <Col>myLabel2</Col>
                             <Col>myLabel2</Col>
@@ -162,11 +162,67 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
-                            // type={"secondary"}
                           >
-                            <Col colspan={7}>myLabel1</Col>
-                            <Col fullwidth>myLabel2</Col>
-                            {/* <Col>myLabel2</Col> */}
+                            <Col colspan={2}>myLabel1</Col>
+                            <Col colspan={"fullwidth"}>myLabel1</Col>
+                            <Col colspan={"fullwidth"}>myLabel2</Col>
+                            <Col colspan={2}>myLabel2</Col>
+
+                            {/* Last col will be bigger than ther others because 14 / 4 = 3.5 */}
+                            {/* <Col colspan={"fullwidth"}>myLabel1</Col>
+                            <Col colspan={"fullwidth"}>myLabel2</Col>
+                            <Col colspan={"fullwidth"}>myLabel3</Col>
+                            <Col colspan={"fullwidth"}>myLabel4</Col> */}
+
+                            {/* it will fill all the columns space */}
+                            {/* <Col colspan={"fullwidth"}>myLabel1</Col> */}
+
+                          </Row>
+                        </div>
+                      )}
+                    </Draggable>
+
+                    <Draggable
+                      isDragDisabled={!draggable}
+                      draggableId={"id-" + view.length+2}
+                      key={"id-" + view.length+2}
+                      index={view.length}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <Row
+                            {...tableProvided.rowProps}
+                          >
+                            <Col colspan={"fullwidth"}>myLabel2</Col>
+                            <Col colspan={"fullwidth"}>myLabel3</Col>
+                            <Col colspan={"fullwidth"}>myLabel4</Col>
+
+                            {/* it will fill all the columns space */}
+                            {/* <Col colspan={"fullwidth"}>myLabel1</Col> */}
+
+                          </Row>
+                        </div>
+                      )}
+                    </Draggable>
+
+                    <Draggable
+                      isDragDisabled={!draggable}
+                      draggableId={"id-" + view.length+3}
+                      key={"id-" + view.length+3}
+                      index={view.length}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <Row
+                            {...tableProvided.rowProps}
+                          >
+                            <Col colspan={"fullwidth"}>myLabel1</Col>
                           </Row>
                         </div>
                       )}

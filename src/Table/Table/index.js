@@ -359,6 +359,7 @@ const Table = (
           tableId,
           theTheme,
           showGrid,
+          totalCols: headerData.length
         },
       })
     );
@@ -380,7 +381,8 @@ const Table = (
     biggestLabelCellWidth,
     biggestTotalCellWidth,
     theTheme,
-    showGrid
+    showGrid,
+    headerData,
   ]);
 
   return (
