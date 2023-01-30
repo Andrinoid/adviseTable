@@ -390,7 +390,6 @@ const Table = (
 
   return (
     <div ref={tableContainerRef}>
-      {JSON.stringify(selectedAreas)}
       <Wrapper id={tableId}>
         <Header
           ref={headerScrollRef}
