@@ -1,31 +1,49 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect } from "react";
 import delegate from "delegate";
 
 let trackMouseMove = false;
 
 const SelectedAreas = ({
+  selectionMode,  
   tableId,
   setSelectColDraging,
   setSelectedCount,
   setSelectedAreas,
   tableMatrix,
 }) => {
-
-
+  
   /** 
    * Add event listeners to all the cells in the table
    * As this can be a large number of cells, we use delegate the event listeners to the body for performance
    */
   useEffect(() => {
-    let mouseDown = delegate(document.body, `#${tableId} .tableCol`, 'mousedown', onMouseDown, false);
-    let mouseMove = delegate(document.body, `#${tableId} .tableCol`, 'mouseover', onMouseMove, false);
-    let mouseUp = delegate(document.body, `#${tableId} .tableCol`, 'mouseup', onMouseUp, false);
+    let mouseDown = delegate(
+      document.body,
+      `#${tableId} .tableCol`,
+      "mousedown",
+      onMouseDown,
+      false
+    );
+    let mouseMove = delegate(
+      document.body,
+      `#${tableId} .tableCol`,
+      "mouseover",
+      onMouseMove,
+      false
+    );
+    let mouseUp = delegate(
+      document.body,
+      `#${tableId} .tableCol`,
+      "mouseup",
+      onMouseUp,
+      false
+    );
     return () => {
       mouseDown.destroy();
       mouseMove.destroy();
       mouseUp.destroy();
     };
-  }, []);
+  }, [selectionMode]);
 
   /**
    * When the mouse is down, reset the selection and set the new coordinates
@@ -105,15 +123,15 @@ const SelectedAreas = ({
   }
 
   /** Edit the last selected area */
-  const updateCurrentSelectedArea = ({
+  let updateCurrentSelectedArea = ({
     fromX,
     fromY,
     toX,
     toY,
   } = {}) => {
-    if (toX) toX = parseInt(toX);
+    if (toX) toX = selectionMode === 'cell' ? parseInt(toX) : tableMatrix[0].length - 1;
     if (toY) toY = parseInt(toY);
-    if (fromX) fromX = parseInt(fromX);
+    if (fromX) fromX = selectionMode === 'cell' ?  parseInt(fromX) : 0;
     if (fromY) fromY = parseInt(fromY);
 
     setSelectedAreas((selectedAreas) => {
@@ -301,6 +319,6 @@ export const getContainedArea = (selectedAreas, { x, y }) => {
   return null;
 };
 
-export default memo(SelectedAreas);
+export default SelectedAreas;
 
 

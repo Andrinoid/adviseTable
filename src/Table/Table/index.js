@@ -66,10 +66,6 @@ const Table = (
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectColDraging, setSelectColDraging] = useState(false);
 
-  // const [mouseDownColCord, setMouseDownColCord] = useState(null);
-  // const [mouseMoveColCord, setMouseMoveColCord] = useState(null);
-  // const [mouseUpColCord, setMouseUpColCord] = useState(null);
-  // const [selectedCol, setSelectedCol] = useState(null);
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([
@@ -122,6 +118,13 @@ const Table = (
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableContainerRef = useRef(null);
+
+  /**
+   * When the selection mode changes, clear the selected areas
+  */
+  useEffect(() => {
+    setSelectedAreas([]);
+  }, [selectionMode]);
 
   /**
    *
@@ -387,6 +390,7 @@ const Table = (
 
   return (
     <div ref={tableContainerRef}>
+      {JSON.stringify(selectedAreas)}
       <Wrapper id={tableId}>
         <Header
           ref={headerScrollRef}
@@ -426,6 +430,7 @@ const Table = (
           </div>
 
           <SelectedArea
+            selectionMode={selectionMode}
             tableId={tableId}
             setSelectColDraging={setSelectColDraging}
             setSelectedCount={setSelectedCount}

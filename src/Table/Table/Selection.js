@@ -59,6 +59,7 @@ const Selection = ({
 
     useEffect(() => {
         if (selectedAreas.length === 0) {
+            setDimensions([]);
             return;
         }
         //for selectedAreas, calculate the dimensions
