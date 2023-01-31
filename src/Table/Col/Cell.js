@@ -36,7 +36,7 @@ const Cell = memo(({
   }
 
   /**
-   * Find the widest cell and set it as context so we can use it to auto adjust the width of the columns
+   * Find the widest cell and update the state so we can use it to auto adjust the width of the columns
    */
   useEffect(() => {
     if (parentType === "middle") {

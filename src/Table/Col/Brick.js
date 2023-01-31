@@ -8,6 +8,7 @@ const BrickElm = styled.div`
     user-select: none;
     box-sizing: border-box;
     font-size: 14px;
+    z-index: 1;
     justify-content: ${props => props.horizontalAlign};
     ${({ showGrid, theme }) => {
         if (showGrid) {
