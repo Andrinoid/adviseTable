@@ -56,6 +56,7 @@ const Row = memo(({
   showGrid,
   totalCols,
   lasColumnRisizeable,
+  onClick=()=>{},
 }) => {
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
@@ -240,6 +241,7 @@ const Row = memo(({
         ref={currentRowRef}
         y={rowNumber}
         theTheme={theTheme}
+        onClick={onClick}
       >
         {label && <Label>{label}</Label>}
 
