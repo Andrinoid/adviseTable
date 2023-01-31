@@ -27,7 +27,7 @@ const Label = styled.div`
   background: gray;
   color: white;
   padding: 0 5px;
-  z-index: 1;
+  // z-index: 1;
 `;
 
 const Row = memo(({
@@ -252,7 +252,7 @@ const Row = memo(({
             style={{
               width: leftBrickWidth,
               height: colHeight,
-              zIndex: 1,
+              // zIndex: 1,
               left: 0,
               position: "sticky",
             }}
@@ -270,7 +270,7 @@ const Row = memo(({
               height: colHeight,
               position: "sticky",
               left: 0,
-              zIndex: 101,
+              // zIndex: 101,
             }}
           />
         )}
