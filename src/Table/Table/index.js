@@ -362,7 +362,8 @@ const Table = (
           tableId,
           theTheme,
           showGrid,
-          totalCols: headerData.length
+          totalCols: headerData.length,
+          lasColumnRisizeable,
         },
       })
     );
@@ -446,6 +447,7 @@ const Table = (
             numberOfCols={numberOfDataCols + 2}
             selectionMode={selectionMode}
             totalWidth={totalWidth}
+            lasColumnRisizeable={lasColumnRisizeable}
           />
           <Scroller active={selectColDraging} tableId={tableId} />
         </ViewPort>

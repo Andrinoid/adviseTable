@@ -55,6 +55,7 @@ const Row = memo(({
   theTheme,
   showGrid,
   totalCols,
+  lasColumnRisizeable,
 }) => {
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
@@ -75,18 +76,6 @@ const Row = memo(({
       });
     }
   }, [instanceCount]);
-  // useEffect(() => {
-  //   console.log('instanceCount', instanceCount)
-  //   if (rowNumber == null) {
-  //     setInstanceCount((value) => {
-  //       // SetTimout is a fix for: Cannot update a component from inside the function body of a different component.
-  //       // setTimeout(() => {
-  //         setRowNumber((_) => value);
-  //       // }, 0);
-  //       return value + 1;
-  //     });
-  //   }
-  // }, [instanceCount]);
 
   const getValidChildren = (childrenFromProps) => {
     return React.Children.toArray(childrenFromProps).filter((child) => {
@@ -191,7 +180,7 @@ const Row = memo(({
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
           left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
-          width = lastColWidth;
+          width = lasColumnRisizeable ? lastColWidth : colWidth;
         } else {
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;

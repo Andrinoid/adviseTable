@@ -119,7 +119,7 @@ const Header = React.forwardRef(({
                                             type="last"
                                             showGrid={showGrid}
                                             theTheme={theTheme}
-                                            style={{ width: lastColWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
+                                            style={{ width: colWidth, height: colHeight, top: 0, left: leftOffset + (numberOfDataCols * colWidth) }}
                                         >
                                             <Label>{item.title}</Label>
                                             <ResizableTable width={totalWidth} onResize={onTableResize} />

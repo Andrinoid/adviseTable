@@ -26,6 +26,7 @@ const Selection = ({
     numberOfCols,
     selectionMode,
     totalWidth,
+    lasColumnRisizeable,
 }) => {
 
     const [dimensions, setDimensions] = useState([])
@@ -43,6 +44,7 @@ const Selection = ({
         let width = (toX - fromX + 1) * colWidth;
         let height = (toY - fromY + 1) * colHeight;
 
+        //Check if the first col is in the selection. It has it's own width so we need to take that into account.
         if (includesFirstCol) {
             // update width with the difference between the firstColWidth and colWidth
             width += firstColWidth - colWidth;
@@ -50,7 +52,8 @@ const Selection = ({
             // update left with the difference between the firstColWidth and colWidth
             left += firstColWidth - colWidth;
         }
-        if (includesLastCol) {
+        //Check if the last col is in the selection. It has it's own width so we need to take that into account.
+        if (includesLastCol && lasColumnRisizeable) {
             // update width with the difference between the LastColWidth and colWidth
             width += lastColWidth - colWidth;
         }
