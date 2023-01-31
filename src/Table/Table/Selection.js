@@ -71,7 +71,7 @@ const Selection = ({
         })
         setDimensions(dimensions)
 
-    }, [selectedAreas])
+    }, [selectedAreas, colWidth, lastColWidth, firstColWidth])
 
     const rowSelectionStyles = {
         width: totalWidth,
