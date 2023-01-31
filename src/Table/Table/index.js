@@ -184,7 +184,16 @@ const Table = (
    */
   useEffect(() => {
     setColWidth(calcColWidth);
-  }, [firstColWidth, lastColWidth, totalWidth, numberOfDataCols]);
+    if (!lasColumnRisizeable) {
+      setLastColWidth(calcColWidth);
+    }
+  }, [
+    firstColWidth,
+    lastColWidth,
+    totalWidth,
+    numberOfDataCols,
+    lasColumnRisizeable,
+  ]);
 
   /**
    * Messure the viewport width and height.

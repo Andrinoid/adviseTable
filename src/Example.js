@@ -104,7 +104,7 @@ function Example({
         tableId={"bigTable"}
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
-        lasColumnRisizeable={false}
+        lasColumnRisizeable={true}
         onSelection={(selectedReport) => {
           console.log("selectedReport", selectedReport);
         }}

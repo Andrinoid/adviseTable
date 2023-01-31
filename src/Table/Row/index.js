@@ -180,7 +180,7 @@ const Row = memo(({
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
           left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
-          width = lasColumnRisizeable ? lastColWidth : colWidth;
+          width = lastColWidth;
         } else {
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
