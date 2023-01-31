@@ -149,72 +149,84 @@ const Row = memo(({
   let fullWidthColsCount = 0;
   const remainingCols = getRemainingCols();
   const totalFullWidthCols = getFullWidthColsAmount();
-  const childrenWithProps = React.Children.map(
-    getValidChildren(children),
-    (child) => {
-      let colType;
-      let left;
-      let width;
-      let { colspan } = child.props;
+  const validChildren = getValidChildren(children);
+  const childrenWithProps = React.Children.map(validChildren, (child) => {
+    let colType;
+    let left;
+    let width;
+    let { colspan } = child.props;
 
-      if (remainingCols > 0 && colspan == "fullwidth") {
-        colspan = calculateFullWidthColspan(
-          fullWidthColsCount,
-          totalFullWidthCols,
-          remainingCols
-        );
-        fullWidthColsCount++;
-      }
+    if (remainingCols > 0 && colspan == "fullwidth") {
+      colspan = calculateFullWidthColspan(
+        fullWidthColsCount,
+        totalFullWidthCols,
+        remainingCols
+      );
+      fullWidthColsCount++;
+    }
 
-      if (React.isValidElement(child)) {
-        const i = numCols;
-        if (i === 0) {
-          colType = "first";
-          left = leftOffset;
-          width = firstColWidth;
+    if (React.isValidElement(child)) {
+      const i = numCols;
+      if (i === 0) {
+        colType = "first";
+        left = leftOffset;
+        width = firstColWidth;
 
-          if (colspan > 1) {
+        if (colspan > 1) {
+          if (colspan + numCols === tableMatrix[0].length) {
+            //it spans to the last col and custom width of the last col needs to be considered
+            width = firstColWidth + lastColWidth + (colspan - 2) * colWidth;
+          } else {
             width = firstColWidth + (colspan - 1) * colWidth;
           }
-        } else if (i === numberOfDataCols + 1) {
-          // plus one becuse the last col is not a dataCol e.g. total
-          colType = "last";
-          left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
-          width = lastColWidth;
-        } else {
-          colType = "middle";
-          left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
-          width = colspan ? colspan * colWidth : colWidth;
         }
-
+      } else if (i === numberOfDataCols + 1) {
+        // plus one becuse the last col is not a dataCol e.g. total
+        colType = "last";
+        left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
+        width = lastColWidth;
+      } else {
+        colType = "middle";
+        left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
         if (colspan) {
-          numCols += colspan;
-        } else {
-          numCols++;
+          if (colspan + numCols === tableMatrix[0].length) {
+            //it spans to the last col and custom width of the last col needs to be considered
+            width = (colspan - 1) * colWidth + lastColWidth;
+          } else {
+            width = colspan * colWidth;
+          }
+        } else { 
+          width = colWidth;
         }
-
-        return React.cloneElement(child, {
-          id: `x${i}y${rowNumber}`,
-          y: rowNumber,
-          x: i,
-          type: colType,
-          style: { width: width, height: colHeight, top: 0, left: left },
-          setTableMatrix,
-          tableMatrix,
-          theTheme,
-          showGrid,
-          totalWidth,
-          setBiggestDataCellWidth,
-          setBiggestLabelCellWidth,
-          biggestLabelCellWidth,
-          setBiggestTotalCellWidth,
-          biggestTotalCellWidth,
-          colspan
-        });
       }
-      return child;
+
+      if (colspan) {
+        numCols += colspan;
+      } else {
+        numCols++;
+      }
+
+      return React.cloneElement(child, {
+        id: `x${i}y${rowNumber}`,
+        y: rowNumber,
+        x: i,
+        type: colType,
+        style: { width: width, height: colHeight, top: 0, left: left },
+        setTableMatrix,
+        tableMatrix,
+        theTheme,
+        showGrid,
+        totalWidth,
+        setBiggestDataCellWidth,
+        setBiggestLabelCellWidth,
+        biggestLabelCellWidth,
+        setBiggestTotalCellWidth,
+        biggestTotalCellWidth,
+        colspan,
+      });
     }
-  );
+    return child;
+  });
 
   return (
     <>
