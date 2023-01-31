@@ -224,13 +224,6 @@ const Table = (
    */
   useEffect(() => {
     computeAreaData(selectedAreas);
-    onSelection({
-      selectedSum,
-      selectedAvg,
-      selectedMin,
-      selectedMax,
-      selectedCount,
-    });
   }, [JSON.stringify(selectedAreas)]);
 
   /**
@@ -289,11 +282,9 @@ const Table = (
   };
 
   /**
-   * This function figures out the selected area based on the mouseDownColCord and mouseMoveColCord
-   * and does basic calculations on the selected area values
-   * These culations are used to display the selected area values in the footer
-   * Better approach would be to run a prop function for the parent component to use the values,
-   * becuse the footer is not always visible
+   * Basic calculations on the selected area values
+   * It's sets the state variables selectedSum, selectedAvg, selectedMin, selectedMax, selectedCount
+   * and fires the onSelection callback
    */
   const computeAreaData = (selectedAreas) => {
     let count = 0;
@@ -341,6 +332,13 @@ const Table = (
     setSelectedMin(min);
     setSelectedMax(max);
     setSelectedAvg(avg);
+    onSelection({
+      selectedSum: sum,
+      selectedAvg: avg,
+      selectedMin: min,
+      selectedMax: max,
+      selectedCount: count,
+    });
   };
 
   const [childrenRows, setChildrenRows] = useState([]);
