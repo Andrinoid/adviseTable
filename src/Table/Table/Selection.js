@@ -75,7 +75,7 @@ const Selection = ({
   const rowSelectionStyles = {
     width: totalWidth,
     left: 0,
-    // zIndex: 101,
+    zIndex: 1,
   };
 
   return (

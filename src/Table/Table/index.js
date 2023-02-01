@@ -4,6 +4,7 @@ import React, {
   useRef,
   useEffect,
   useCallback,
+  useLayoutEffect
 } from "react";
 import styled from "styled-components";
 import { useSyncScroller } from "../utils/useSyncScroller";
@@ -118,6 +119,7 @@ const Table = (
 
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableContainerRef = useRef(null);
 
   /**
@@ -200,12 +202,12 @@ const Table = (
    * Messure the viewport width and height.
    * the width may vary based on the css applied to parent elements or the browser window width
    */
-  // useLayoutEffect(() => {
-  //   if (viewportRef?.current?.offsetWidth)
-  //     setViewportWidth(viewportRef.current.offsetWidth);
-  //   if (viewportRef?.current?.offsetHeight)
-  //     setViewportHeight(viewportRef.current.offsetHeight);
-  // }, []);
+  useLayoutEffect(() => {
+    if (viewportRef?.current?.offsetWidth)
+      setViewportWidth(viewportRef.current.offsetWidth);
+    // if (viewportRef?.current?.offsetHeight)
+      // setViewportHeight(viewportRef.current.offsetHeight);
+  }, []);
 
   useEffect(() => {
     const callback = () => {
@@ -446,7 +448,36 @@ const Table = (
             setSelectedAreas={setSelectedAreas}
             tableMatrix={tableMatrix}
           />
-          <Selection
+          
+          <Scroller active={selectColDraging} tableId={tableId} />
+        </ViewPort>
+        <div className="table-end"></div>
+        <Footer
+          maxWidth={totalWidth}
+          count={selectedCount}
+          sum={selectedSum}
+          min={selectedMin}
+          max={selectedMax}
+          avg={selectedAvg}
+          vissible={footer}
+        />
+      <div 
+      ref={tableLayerScrollRef}
+      className="scrollable"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        width: viewportWidth,
+        overflow: 'hidden',
+        overflowX: 'hidden',
+        // zIndex: 4,
+      }}>
+        <div style={{
+          position: 'absolute',
+          width: totalWidth,
+          height: '100%',
+        }}>
+        <Selection
             selectedAreas={selectedAreas}
             colWidth={colWidth}
             colHeight={colHeight}
@@ -460,18 +491,8 @@ const Table = (
             theTheme={theTheme}
             headerHeight={headerHeight}
           />
-          <Scroller active={selectColDraging} tableId={tableId} />
-        </ViewPort>
-        <div className="table-end"></div>
-        <Footer
-          maxWidth={totalWidth}
-          count={selectedCount}
-          sum={selectedSum}
-          min={selectedMin}
-          max={selectedMax}
-          avg={selectedAvg}
-          vissible={footer}
-        />
+          </div>
+      </div>
       </Wrapper>
     </div>
   );

@@ -20,6 +20,7 @@ const RowElm = styled.div`
 
 const RowMenu = styled.div`
   position: absolute;
+  left: -45px;
   display: none;
   padding-right: 5px;
 
@@ -72,7 +73,6 @@ const Row = memo(({
 }) => {
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
-  const [position, setPosition] = useState({ top: 0, left: 0 });
 
   const leftOffset = leftBrickWidth;
 
@@ -92,11 +92,6 @@ const Row = memo(({
     if (index !== rowNumber) {
       setRowNumber((_) => index);
     }
-
-    // Find the position of the row on the body for the row menu
-    const { top, left } = currentRowRef.current.getBoundingClientRect();
-    setPosition({ top, left });
-
 
   }, [instanceCount, rowNumber, setInstanceCount, tableId]);
 
@@ -275,7 +270,7 @@ const Row = memo(({
         theTheme={theTheme}
         onClick={onClick}
       >
-        <RowMenu className={`rowMenu`} style={{ left: - 45 }}>
+        <RowMenu className={`rowMenu`}>
           <div>
             <div>1</div>
             <div>+</div>
