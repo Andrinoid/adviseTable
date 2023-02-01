@@ -42,6 +42,7 @@ const Fill = styled.div`
     display: flex;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
+    position: relative;
 `;
 
 const ResizablelCol = memo(({

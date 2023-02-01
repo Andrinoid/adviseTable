@@ -9,26 +9,31 @@ const RowElm = styled.div`
   &:hover {
     .tableCol {
       ${({ theTheme }) => {
-    return theTheme.rowHoverCol;
-}}  
+        return theTheme.rowHoverCol;
+      }}  
+    }
+    .rowMenu {
+      display: block;
     }
   }
 `;
 
-const Label = styled.div`
+const RowMenu = styled.div`
   position: absolute;
-  inset: 0;
-  display: flex;
-  vertical-align: middle;
-  justify-content: flex-start;
-  align-content: center;
-  flex-wrap: wrap;
-  font-weight: 500;
-  pointer-events: none;
-  background: gray;
-  color: white;
-  padding: 0 5px;
-  // z-index: 1;
+  background: white;
+  width: 40px;
+  border: solid 1px #e8e8e8;
+  border-radius: 3px;
+  box-shadow: 0 0 4px 0px rgb(0 0 0 / 12%);
+  left: 0px;
+  z-index: 4;
+  display: none;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+  }
 `;
 
 const Row = memo(({
@@ -57,10 +62,11 @@ const Row = memo(({
   showGrid,
   totalCols,
   lasColumnRisizeable,
-  onClick=()=>{},
+  onClick = () => { },
 }) => {
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
 
   const leftOffset = leftBrickWidth;
 
@@ -80,6 +86,12 @@ const Row = memo(({
     if (index !== rowNumber) {
       setRowNumber((_) => index);
     }
+
+    // Find the position of the row on the body for the row menu
+    const { top, left } = currentRowRef.current.getBoundingClientRect();
+    setPosition({ top, left });
+
+
   }, [instanceCount, rowNumber, setInstanceCount, tableId]);
 
   useEffect(() => {
@@ -257,8 +269,11 @@ const Row = memo(({
         theTheme={theTheme}
         onClick={onClick}
       >
-        <div className="jimmypop" style={{position: 'absolute', left: -20, background: 'green'}}>hello</div>
-        {label && <Label>{label}</Label>}
+        <RowMenu className={`rowMenu`} style={{ left: position.left - 45 }}>
+          <div>1</div>
+          <div>+</div>
+          <div>©</div>
+        </RowMenu>
 
         {leftBrickContent && (
           <Brick

@@ -8,7 +8,7 @@ import Brick from '../Col/Brick';
 const RowElm = styled.div`
     position: sticky;
     top: ${({ stickyTopOffset }) => stickyTopOffset}px;
-    z-index: 1;
+    z-index: 2;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
@@ -53,6 +53,7 @@ const Header = React.forwardRef(({
             height: colHeight,
             width: totalWidth,
             boxSizing: "border-box",
+            display: "flex",
           }}
         >
           <Brick
