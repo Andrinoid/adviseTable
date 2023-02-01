@@ -4,7 +4,8 @@ import Col from "../Col";
 import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
-  position: relative;
+  // position: relative;
+  display: flex;
   &:hover {
     .tableCol {
       ${({ theTheme }) => {
@@ -256,6 +257,7 @@ const Row = memo(({
         theTheme={theTheme}
         onClick={onClick}
       >
+        <div className="jimmypop" style={{position: 'absolute', left: -20, background: 'green'}}>hello</div>
         {label && <Label>{label}</Label>}
 
         {leftBrickContent && (
@@ -267,7 +269,7 @@ const Row = memo(({
             style={{
               width: leftBrickWidth,
               height: colHeight,
-              // zIndex: 1,
+              zIndex: 3,
               left: 0,
               position: "sticky",
             }}
@@ -285,7 +287,7 @@ const Row = memo(({
               height: colHeight,
               position: "sticky",
               left: 0,
-              // zIndex: 101,
+              zIndex: 3,
             }}
           />
         )}

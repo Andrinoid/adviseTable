@@ -23,7 +23,7 @@ const ViewPort = styled.div`
   width: 100%;
   overflow: hidden;
   overflow-x: auto;
-  position: relative;
+  // position: relative;
   min-width: 0;
   flex-direction: row;
   display: flex;
@@ -431,7 +431,7 @@ const Table = (
           }}
         >
           <div
-            style={{ width: totalWidth, position: "relative", zIndex: 1 }}
+            style={{ width: totalWidth, zIndex: 1 }}
             className={`${tableId}container`}
           >
             {childrenRows}

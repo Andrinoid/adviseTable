@@ -6,10 +6,11 @@ import { getContainedArea } from '../Table/SelectedAreas';
 
 
 const Column = styled.div`
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
-    position: absolute;
+    // position: absolute;
+
     user-select: none;
     box-sizing: border-box;
     ${({ showGrid, theme }) => {

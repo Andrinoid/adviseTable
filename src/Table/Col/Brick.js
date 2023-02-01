@@ -2,9 +2,9 @@ import React, { memo } from "react";
 import styled from "styled-components";
 
 const BrickElm = styled.div`
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    position: absolute;
+    // position: absolute;
     user-select: none;
     box-sizing: border-box;
     font-size: 14px;
