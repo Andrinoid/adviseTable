@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { EditOutlined, VerticalAlignBottomOutlined, ClearOutlined } from '@ant-design/icons';
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
@@ -72,11 +73,7 @@ function Example({
   const leftBrickContent = (dragHandleProps, rowId) => {
     return (
       <Flex>
-        {draggable && (
-          <Flex {...dragHandleProps}>
-            <DragHandle />
-          </Flex>
-        )}
+
         <Flex
           cursor={"pointer"}
           style={{ marginLeft: 4 }}
@@ -92,6 +89,43 @@ function Example({
         </Flex>
       </Flex>
     );
+  };
+
+  const rowMenuContent = (dragHandleProps) => {
+    const MenuItem = styled.div`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      cursor: pointer;
+      ${({ hover }) => {
+        if (hover) {
+          return `
+            &:hover {
+              background-color: #e6f4ff;
+            }
+          `;
+        }
+      }
+      }
+    `;
+
+    return (
+      <>
+        <MenuItem {...dragHandleProps}>
+          <DragHandle />
+        </MenuItem>
+        <MenuItem hover>
+          <EditOutlined />
+        </MenuItem>
+        <MenuItem hover>
+          <ClearOutlined />
+        </MenuItem>
+        <MenuItem hover>
+          <VerticalAlignBottomOutlined />
+        </MenuItem>
+      </>
+    )
   };
 
   return (
@@ -128,7 +162,8 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
-                            // type={"secondary"}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
+                          // type={"secondary"}
                           >
                             <Col>myLabel1</Col>
                             <Col colspan={"fullwidth"}>myLabel2</Col>
@@ -151,8 +186,8 @@ function Example({
                     </Draggable>
                     <Draggable
                       isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length+1}
-                      key={"id-" + view.length+1}
+                      draggableId={"id-" + view.length + 1}
+                      key={"id-" + view.length + 1}
                       index={view.length}
                     >
                       {(provided) => (
@@ -162,6 +197,7 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
                           >
                             <Col colspan={2}>myLabel1</Col>
                             <Col colspan={"fullwidth"}>myLabel1</Col>
@@ -184,8 +220,8 @@ function Example({
 
                     <Draggable
                       isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length+2}
-                      key={"id-" + view.length+2}
+                      draggableId={"id-" + view.length + 2}
+                      key={"id-" + view.length + 2}
                       index={view.length}
                     >
                       {(provided) => (
@@ -195,6 +231,7 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
                           >
                             <Col colspan={"fullwidth"}>myLabel2</Col>
                             <Col colspan={"fullwidth"}>myLabel3</Col>
@@ -210,8 +247,8 @@ function Example({
 
                     <Draggable
                       isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length+3}
-                      key={"id-" + view.length+3}
+                      draggableId={"id-" + view.length + 3}
+                      key={"id-" + view.length + 3}
                       index={view.length}
                     >
                       {(provided) => (
@@ -221,6 +258,7 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
                           >
                             <Col colspan={"fullwidth"}>myLabel1</Col>
                           </Row>
@@ -248,6 +286,7 @@ function Example({
                                   row.id
                                 )}
                                 {...tableProvided.rowProps}
+                                menuContent={rowMenuContent(provided.dragHandleProps)}
                               >
                                 <Col horizontalAlign="left">{row.name}</Col>
 

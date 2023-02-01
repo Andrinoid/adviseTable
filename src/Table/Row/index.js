@@ -12,7 +12,7 @@ const RowElm = styled.div`
     return theTheme.rowHoverCol;
   }}  
     }
-    .rowMenu {
+    .${({ tableId }) => tableId}-rowMenu {
       display: block;
     }
   }
@@ -46,8 +46,8 @@ const RowMenu = styled.div`
 const Row = memo(({
   children,
   type = "primary",
-  label,
   leftBrickContent,
+  menuContent,
   setInstanceCount,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
@@ -258,11 +258,9 @@ const Row = memo(({
 
   return (
     <>
-      {/* We only need the height here because all cols are position absolute
-       * Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯
-       */}
       <RowElm
         className={`${tableId}-tableRow`}
+        tableId={tableId}
         type={type}
         style={{ height: colHeight, width: totalWidth }}
         ref={currentRowRef}
@@ -270,14 +268,13 @@ const Row = memo(({
         theTheme={theTheme}
         onClick={onClick}
       >
-        <RowMenu className={`rowMenu`}>
-          <div>
-            <div>1</div>
-            <div>+</div>
-            <div>©</div>
-            <div>©</div>
-          </div>
-        </RowMenu>
+        {menuContent &&
+          <RowMenu className={`${tableId}-rowMenu`}>
+            <div>
+              {menuContent}
+            </div>
+          </RowMenu>
+        }
 
         {leftBrickContent && (
           <Brick

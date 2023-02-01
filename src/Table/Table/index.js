@@ -207,7 +207,7 @@ const Table = (
       setViewportWidth(viewportRef.current.offsetWidth);
     // if (viewportRef?.current?.offsetHeight)
       // setViewportHeight(viewportRef.current.offsetHeight);
-  }, []);
+  }, [updateTableWith, biggestDataCellWidth]);
 
   useEffect(() => {
     const callback = () => {
@@ -461,6 +461,8 @@ const Table = (
           avg={selectedAvg}
           vissible={footer}
         />
+
+      {/* Refactor to make it pretty */}
       <div 
       ref={tableLayerScrollRef}
       className="scrollable"
@@ -469,8 +471,6 @@ const Table = (
         inset: 0,
         width: viewportWidth,
         overflow: 'hidden',
-        overflowX: 'hidden',
-        // zIndex: 4,
       }}>
         <div style={{
           position: 'absolute',
