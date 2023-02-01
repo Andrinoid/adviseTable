@@ -9,7 +9,7 @@ const RowElm = styled.div`
     .tableCol {
       ${({ theTheme }) => {
     return theTheme.rowHoverCol;
-  }}  
+}}  
     }
   }
 `;

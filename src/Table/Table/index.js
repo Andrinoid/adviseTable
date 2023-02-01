@@ -424,13 +424,14 @@ const Table = (
 
         <ViewPort
           className={`viewPort${tableId} scrollable`}
+          style={theTheme.secondary}
           ref={(el) => {
             viewportRef.current = el;
             viewportScrollRef.current = el;
           }}
         >
           <div
-            style={{ width: totalWidth, position: "relative" }}
+            style={{ width: totalWidth, position: "relative", zIndex: 1 }}
             className={`${tableId}container`}
           >
             {childrenRows}
@@ -455,6 +456,7 @@ const Table = (
             selectionMode={selectionMode}
             totalWidth={totalWidth}
             lasColumnRisizeable={lasColumnRisizeable}
+            theTheme={theTheme}
           />
           <Scroller active={selectColDraging} tableId={tableId} />
         </ViewPort>
