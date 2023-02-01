@@ -16,6 +16,23 @@ const Flex = styled.div`
   align-content: center;
   cursor: ${({ cursor }) => cursor || "default"};
 `;
+const MenuItem = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+height: 30px;
+cursor: pointer;
+${({ hover }) => {
+  if (hover) {
+    return `
+      &:hover {
+        background-color: #e6f4ff;
+      }
+    `;
+  }
+}
+}
+`;
 
 function Example({
   theme,
@@ -92,23 +109,7 @@ function Example({
   };
 
   const rowMenuContent = (dragHandleProps) => {
-    const MenuItem = styled.div`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 30px;
-      cursor: pointer;
-      ${({ hover }) => {
-        if (hover) {
-          return `
-            &:hover {
-              background-color: #e6f4ff;
-            }
-          `;
-        }
-      }
-      }
-    `;
+   
 
     return (
       <>
@@ -140,7 +141,7 @@ function Example({
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={true}
         onSelection={(selectedReport) => {
-          console.log("selectedReport", selectedReport);
+          // console.log("selectedReport", selectedReport);
         }}
       >
         {(tableProvided) => {

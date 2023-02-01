@@ -15,6 +15,12 @@ const RowElm = styled.div`
     .${({ tableId }) => tableId}-rowMenu {
       display: block;
     }
+    
+  }
+  &.menuVissible {
+    .${({ tableId }) => tableId}-rowMenu {
+      display: block;
+    }
   }
 `;
 
@@ -33,12 +39,6 @@ const RowMenu = styled.div`
     left: 0px;
     z-index: 4;
     margin-right: 10px;
-    > div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 30px;
-    } 
   }
  
 `;
@@ -69,6 +69,7 @@ const Row = memo(({
   showGrid,
   totalCols,
   lasColumnRisizeable,
+  className="",
   onClick = () => { },
 }) => {
   const currentRowRef = useRef(null);
@@ -259,7 +260,7 @@ const Row = memo(({
   return (
     <>
       <RowElm
-        className={`${tableId}-tableRow`}
+        className={`${tableId}-tableRow ${className}`}
         tableId={tableId}
         type={type}
         style={{ height: colHeight, width: totalWidth }}

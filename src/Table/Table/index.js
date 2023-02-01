@@ -60,7 +60,7 @@ const Table = (
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   const [totalWidth, setTotalWidth] = useState(1350);
-  const [lastColWidth, setLastColWidth] = useState(200);
+  const [lastColWidth, setLastColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
     numberOfDataCols
@@ -230,7 +230,7 @@ const Table = (
   }, [JSON.stringify(selectedAreas)]);
 
   /**
-   * This function auto adjusts the width of the first col to fit the biggest label
+   * This function auto adjusts the width of the first col to fit the biggest first col cell
    * It is run by double clicking the first col resizer
    */
   const autoAdjustFirstColWidth = useCallback(() => {
