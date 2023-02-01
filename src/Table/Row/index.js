@@ -9,8 +9,8 @@ const RowElm = styled.div`
   &:hover {
     .tableCol {
       ${({ theTheme }) => {
-        return theTheme.rowHoverCol;
-      }}  
+    return theTheme.rowHoverCol;
+  }}  
     }
     .rowMenu {
       display: block;
@@ -20,20 +20,26 @@ const RowElm = styled.div`
 
 const RowMenu = styled.div`
   position: absolute;
-  background: white;
-  width: 40px;
-  border: solid 1px #e8e8e8;
-  border-radius: 3px;
-  box-shadow: 0 0 4px 0px rgb(0 0 0 / 12%);
-  left: 0px;
-  z-index: 4;
   display: none;
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 30px;
+  padding-right: 5px;
+
+  > div {
+    background: white;
+    width: 40px;
+    border: solid 1px #e8e8e8;
+    border-radius: 3px;
+    box-shadow: 0 0 4px 0px rgb(0 0 0 / 12%);
+    left: 0px;
+    z-index: 4;
+    margin-right: 10px;
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+    } 
   }
+ 
 `;
 
 const Row = memo(({
@@ -269,10 +275,13 @@ const Row = memo(({
         theTheme={theTheme}
         onClick={onClick}
       >
-        <RowMenu className={`rowMenu`} style={{ left: position.left - 45 }}>
-          <div>1</div>
-          <div>+</div>
-          <div>©</div>
+        <RowMenu className={`rowMenu`} style={{ left: - 45 }}>
+          <div>
+            <div>1</div>
+            <div>+</div>
+            <div>©</div>
+            <div>©</div>
+          </div>
         </RowMenu>
 
         {leftBrickContent && (

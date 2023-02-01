@@ -29,6 +29,7 @@ const Selection = ({
   totalWidth,
   lasColumnRisizeable,
   theTheme,
+  headerHeight,
 }) => {
   const [dimensions, setDimensions] = useState([]);
 
@@ -38,7 +39,7 @@ const Selection = ({
 
     let { fromX, fromY, toX, toY } = selection;
     // console.log(fromX, fromY, toX, toY)
-    let top = fromY * colHeight;
+    let top = fromY * colHeight + headerHeight;
     let left = fromX * colWidth + leftOffset;
     let width = (toX - fromX + 1) * colWidth;
     let height = (toY - fromY + 1) * colHeight;

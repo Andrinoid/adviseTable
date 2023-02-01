@@ -23,12 +23,13 @@ const ViewPort = styled.div`
   width: 100%;
   overflow: hidden;
   overflow-x: auto;
-  // position: relative;
   min-width: 0;
   flex-direction: row;
   display: flex;
   flex: 1 1 auto;
 `;
+
+
 
 const Table = (
   {
@@ -397,7 +398,7 @@ const Table = (
   ]);
 
   return (
-    <div ref={tableContainerRef}>
+    <div ref={tableContainerRef} style={{position: 'relative'}}>
       <Wrapper id={tableId}>
         <Header
           ref={headerScrollRef}
@@ -457,6 +458,7 @@ const Table = (
             totalWidth={totalWidth}
             lasColumnRisizeable={lasColumnRisizeable}
             theTheme={theTheme}
+            headerHeight={headerHeight}
           />
           <Scroller active={selectColDraging} tableId={tableId} />
         </ViewPort>
