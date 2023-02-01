@@ -4,13 +4,12 @@ import styled from "styled-components";
 
 const Box = styled.div`
     position: absolute;
+    top: -10px;
+    left: -10px;
     background-color: rgb(14, 101, 235, 0.1);
     border: 1px solid #2196f3;
     z-index: 0;
-    width: 100px;
-    height: 100px;
     pointer-events: none
-
 `;
 
 /**
