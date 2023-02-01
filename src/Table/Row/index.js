@@ -67,16 +67,27 @@ const Row = memo(({
    * Count the instances of this component and set the row number
    */
   useEffect(() => {
+    let rows = document.querySelectorAll(`.${tableId}-tableRow`);
+    //find the current rowRef in the rows array
+    let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
+
     if (rowNumber == null) {
-      let rows = document.querySelectorAll(`.${tableId}-tableRow`);
-      //find the current rowRef in the rows array
-      let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
-      setRowNumber((_) => index);
-      setInstanceCount(() => {
-        return index;
+      setInstanceCount((count) => {
+        return count ? ++count : 1;
       });
     }
-  }, [instanceCount]);
+    if (index !== rowNumber) {
+      setRowNumber((_) => index);
+    }
+  }, [instanceCount, rowNumber, setInstanceCount, tableId]);
+
+  useEffect(() => {
+    return () => {
+      setInstanceCount((count) => {
+        return count ? --count : 0;
+      });
+    };
+  }, []);
 
   const getValidChildren = (childrenFromProps) => {
     return React.Children.toArray(childrenFromProps).filter((child) => {
@@ -88,20 +99,23 @@ const Row = memo(({
    * @returns the amount of cols that aren't being used
    */
   const getRemainingCols = () => {
-    const usedCols = getValidChildren(children).reduce((acc, { props: { colspan }}) => {
-      if (colspan == "fullwidth") {
-        return acc;
-      }
+    const usedCols = getValidChildren(children).reduce(
+      (acc, { props: { colspan } }) => {
+        if (colspan == "fullwidth") {
+          return acc;
+        }
 
-      if (Number.isInteger(colspan)) {
-        return acc += colspan;
-      }
+        if (Number.isInteger(colspan)) {
+          return (acc += colspan);
+        }
 
-      return ++acc;
-    }, 0);
+        return ++acc;
+      },
+      0
+    );
 
     return totalCols - usedCols;
-  }
+  };
 
   /**
    * @returns the amount of cols that have the colspan prop set to "fullwidth"
@@ -109,36 +123,35 @@ const Row = memo(({
   const getFullWidthColsAmount = () => {
     const amount = getValidChildren(children).filter((child) => {
       return child.props.colspan == "fullwidth";
-    }).length
+    }).length;
 
     return amount;
-  }
+  };
 
   /**
-    * If the last col is a fullwidth col, we need to add the remaining space to it
-    * e.g. if we have 3 fullwidth cols and 2 cols left, we need to add 2 to the last col
-    * so that it takes up the remaining space
-    * @param {number} i - the index of the col
-    * @param {number} k - the amount of fullwidth cols
-    * @param {number} colspan - the colspan of the col
-    * @returns {number} the colspan of the col
-    * @example totalCols = 14
-    * calculateFullWidthColspan(2, 3, 1) // returns 3 because 14 % 3 = 2 and 2 + 1 = 3
-    * calculateFullWidthColspan(1, 3, 1) // returns 1 because it's not the last col
-    * calculateFullWidthColspan(0, 3, 1) // returns 1 because it's not the last col
-    */
+   * If the last col is a fullwidth col, we need to add the remaining space to it
+   * e.g. if we have 3 fullwidth cols and 2 cols left, we need to add 2 to the last col
+   * so that it takes up the remaining space
+   * @param {number} i - the index of the col
+   * @param {number} k - the amount of fullwidth cols
+   * @param {number} colspan - the colspan of the col
+   * @returns {number} the colspan of the col
+   * @example totalCols = 14
+   * calculateFullWidthColspan(2, 3, 1) // returns 3 because 14 % 3 = 2 and 2 + 1 = 3
+   * calculateFullWidthColspan(1, 3, 1) // returns 1 because it's not the last col
+   * calculateFullWidthColspan(0, 3, 1) // returns 1 because it's not the last col
+   */
   function calculateFullWidthColspan(i, k, remainingCols) {
-    const colspan = Math.floor((remainingCols) / k);
+    const colspan = Math.floor(remainingCols / k);
     const isLastCol = i == k - 1;
     const extraSpan = totalCols % k;
 
     if (extraSpan != 0 && isLastCol) {
       return colspan + extraSpan;
     }
-    
+
     return colspan;
   }
-
 
   /**
    * Map over the children that should be Col components and add the props we need
@@ -196,7 +209,7 @@ const Row = memo(({
           } else {
             width = colspan * colWidth;
           }
-        } else { 
+        } else {
           width = colWidth;
         }
       }
