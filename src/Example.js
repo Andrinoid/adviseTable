@@ -113,7 +113,7 @@ function Example({
 
     return (
       <>
-        <MenuItem {...dragHandleProps}>
+        <MenuItem {...dragHandleProps} style={{cursor: 'grab'}}>
           <DragHandle />
         </MenuItem>
         <MenuItem hover>
