@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { EditOutlined, VerticalAlignBottomOutlined, ClearOutlined } from '@ant-design/icons';
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
@@ -14,6 +15,23 @@ const Flex = styled.div`
   flex-wrap: wrap;
   align-content: center;
   cursor: ${({ cursor }) => cursor || "default"};
+`;
+const MenuItem = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+height: 30px;
+cursor: pointer;
+${({ hover }) => {
+    if (hover) {
+      return `
+      &:hover {
+        background-color: #e6f4ff;
+      }
+    `;
+    }
+  }
+  }
 `;
 
 function Example({
@@ -72,11 +90,7 @@ function Example({
   const leftBrickContent = (dragHandleProps, rowId) => {
     return (
       <Flex>
-        {draggable && (
-          <Flex {...dragHandleProps}>
-            <DragHandle />
-          </Flex>
-        )}
+
         <Flex
           cursor={"pointer"}
           style={{ marginLeft: 4 }}
@@ -94,6 +108,26 @@ function Example({
     );
   };
 
+  const rowMenuContent = (dragHandleProps) => {
+
+    return (
+      <>
+        <MenuItem {...dragHandleProps} style={{ cursor: 'grab' }}>
+          <DragHandle />
+        </MenuItem>
+        <MenuItem hover>
+          <EditOutlined />
+        </MenuItem>
+        <MenuItem hover>
+          <ClearOutlined />
+        </MenuItem>
+        <MenuItem hover>
+          <VerticalAlignBottomOutlined />
+        </MenuItem>
+      </>
+    )
+  };
+
   return (
     <div className="App">
       <Table
@@ -106,7 +140,7 @@ function Example({
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={true}
         onSelection={(selectedReport) => {
-          console.log("selectedReport", selectedReport);
+          // console.log("selectedReport", selectedReport);
         }}
       >
         {(tableProvided) => {
@@ -128,7 +162,8 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
-                            // type={"secondary"}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
+                          // type={"secondary"}
                           >
                             <Col>myLabel1</Col>
                             <Col colspan={"fullwidth"}>myLabel2</Col>
@@ -151,8 +186,8 @@ function Example({
                     </Draggable>
                     <Draggable
                       isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length+1}
-                      key={"id-" + view.length+1}
+                      draggableId={"id-" + view.length + 1}
+                      key={"id-" + view.length + 1}
                       index={view.length}
                     >
                       {(provided) => (
@@ -162,6 +197,7 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
                           >
                             <Col colspan={2}>myLabel1</Col>
                             <Col colspan={"fullwidth"}>myLabel1</Col>
@@ -184,8 +220,8 @@ function Example({
 
                     <Draggable
                       isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length+2}
-                      key={"id-" + view.length+2}
+                      draggableId={"id-" + view.length + 2}
+                      key={"id-" + view.length + 2}
                       index={view.length}
                     >
                       {(provided) => (
@@ -195,6 +231,7 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
                           >
                             <Col colspan={"fullwidth"}>myLabel2</Col>
                             <Col colspan={"fullwidth"}>myLabel3</Col>
@@ -210,8 +247,8 @@ function Example({
 
                     <Draggable
                       isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length+3}
-                      key={"id-" + view.length+3}
+                      draggableId={"id-" + view.length + 3}
+                      key={"id-" + view.length + 3}
                       index={view.length}
                     >
                       {(provided) => (
@@ -221,6 +258,7 @@ function Example({
                         >
                           <Row
                             {...tableProvided.rowProps}
+                            menuContent={rowMenuContent(provided.dragHandleProps)}
                           >
                             <Col colspan={"fullwidth"}>myLabel1</Col>
                           </Row>
@@ -248,6 +286,7 @@ function Example({
                                   row.id
                                 )}
                                 {...tableProvided.rowProps}
+                                menuContent={rowMenuContent(provided.dragHandleProps)}
                               >
                                 <Col horizontalAlign="left">{row.name}</Col>
 
@@ -354,65 +393,8 @@ function Example({
           );
         }}
       </Table>
-      {/* <hr />
 
-      <p>problems</p>
-      <ul>
-        <li>rename label and total through all components</li>
-      </ul>
-
-      <div>
-        <button onClick={() => tableRef3.current.autoAdjust()}>
-          Auto adjust
-        </button>
-      </div>
-      <Table
-        ref={tableRef3}
-        headerData={[{ title: "foo" }, { title: "bar" }, { title: "baz" }]}
-        // theme={'dark'}
-        tableId={"smallTable"}
-        leftBrickWidth={0}
-      >
-        {(tableProvided) => (
-          <div>
-            <Row {...tableProvided.rowProps}>
-              <Col horizontalAlign="left">foo</Col>
-              <Col>bar</Col>
-              <Col>baz</Col>
-            </Row>
-
-            <Row
-              {...tableProvided.rowProps}
-              label="Operating ratios and other key figures"
-            >
-              <Col horizontalAlign="left"> </Col>
-              <Col horizontalAlign="left"> </Col>
-              <Col horizontalAlign="left"> </Col>
-            </Row>
-
-            <Row {...tableProvided.rowProps}>
-              <Col horizontalAlign="left">foo</Col>
-              <Col>bar</Col>
-              <Col>baz</Col>
-            </Row>
-
-            <Row {...tableProvided.rowProps}>
-              <Col horizontalAlign="left">foo</Col>
-              <Col>bar</Col>
-
-              <Col>baz</Col>
-            </Row>
-          </div>
-        )}
-      </Table>
-
-      <p>Todo</p>
-      <ul>
-        <li>Control styles</li>
-        <li>throttle on table resize or streach out method</li>
-        <li>Min and max size on cols</li>
-        <li>pinned columns</li>
-      </ul> */}
+    
     </div>
   );
 }

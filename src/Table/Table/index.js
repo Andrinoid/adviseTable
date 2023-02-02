@@ -18,7 +18,6 @@ const ViewPort = styled.div`
   width: 100%;
   overflow: hidden;
   overflow-x: auto;
-  position: relative;
   min-width: 0;
   flex-direction: row;
   display: flex;
@@ -53,7 +52,7 @@ const Table = ({
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   const [totalWidth, setTotalWidth] = useState(1350);
-  const [lastColWidth, setLastColWidth] = useState(200);
+  const [lastColWidth, setLastColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
       numberOfDataCols
@@ -111,6 +110,7 @@ const Table = ({
 
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableContainerRef = useRef(null);
 
   /**
@@ -156,6 +156,7 @@ const Table = ({
 
   useEffect(() => {
     updateTableWith(width ? width : tableContainerRef.current.offsetWidth);
+    measureViewport();
   }, [
     updateTableWith,
     width,
@@ -193,18 +194,17 @@ const Table = ({
    * Messure the viewport width and height.
    * the width may vary based on the css applied to parent elements or the browser window width
    */
-  // useLayoutEffect(() => {
-  //   if (viewportRef?.current?.offsetWidth)
-  //     setViewportWidth(viewportRef.current.offsetWidth);
-  //   if (viewportRef?.current?.offsetHeight)
-  //     setViewportHeight(viewportRef.current.offsetHeight);
-  // }, []);
+  const measureViewport = useCallback(() => {
+    if (viewportRef?.current?.offsetWidth)
+      setViewportWidth(viewportRef.current.offsetWidth);
+  }, [viewportRef]);
 
   useEffect(() => {
     const callback = () => {
       if (tableContainerRef?.current?.offsetWidth) {
         updateTableWith(tableContainerRef.current.offsetWidth);
       }
+      measureViewport();
     };
     window.addEventListener("resize", callback);
 
@@ -221,7 +221,7 @@ const Table = ({
   }, [JSON.stringify(selectedAreas)]);
 
   /**
-   * This function auto adjusts the width of the first col to fit the biggest label
+   * This function auto adjusts the width of the first col to fit the biggest first col cell
    * It is run by double clicking the first col resizer
    */
   const autoAdjustFirstColWidth = useCallback(() => {
@@ -403,7 +403,7 @@ const Table = ({
   ]);
 
   return (
-    <div ref={tableContainerRef}>
+    <div ref={tableContainerRef} style={{ position: "relative" }}>
       <Wrapper id={tableId}>
         <Header
           ref={headerScrollRef}
@@ -430,13 +430,14 @@ const Table = ({
 
         <ViewPort
           className={`viewPort${tableId} scrollable`}
+          style={theTheme.secondary}
           ref={(el) => {
             viewportRef.current = el;
             viewportScrollRef.current = el;
           }}
         >
           <div
-            style={{ width: totalWidth, position: "relative" }}
+            style={{ width: totalWidth, zIndex: 1 }}
             className={`${tableId}container`}
           >
             {childrenRows}
@@ -450,18 +451,7 @@ const Table = ({
             setSelectedAreas={setSelectedAreas}
             tableMatrix={tableMatrix}
           />
-          <Selection
-            selectedAreas={selectedAreas}
-            colWidth={colWidth}
-            colHeight={colHeight}
-            leftOffset={leftBrickWidth}
-            firstColWidth={firstColWidth}
-            lastColWidth={lastColWidth}
-            numberOfCols={numberOfDataCols + 2}
-            selectionMode={selectionMode}
-            totalWidth={totalWidth}
-            lasColumnRisizeable={lasColumnRisizeable}
-          />
+
           <Scroller active={selectColDraging} tableId={tableId} />
         </ViewPort>
         <div className="table-end"></div>
@@ -474,6 +464,41 @@ const Table = ({
           avg={selectedAvg}
           vissible={footer}
         />
+
+        {/* Refactor to make it pretty */}
+        <div
+          ref={tableLayerScrollRef}
+          className="scrollable"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: viewportWidth,
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              width: totalWidth,
+              height: "100%",
+            }}
+          >
+            <Selection
+              selectedAreas={selectedAreas}
+              colWidth={colWidth}
+              colHeight={colHeight}
+              leftOffset={leftBrickWidth}
+              firstColWidth={firstColWidth}
+              lastColWidth={lastColWidth}
+              numberOfCols={numberOfDataCols + 2}
+              selectionMode={selectionMode}
+              totalWidth={totalWidth}
+              lasColumnRisizeable={lasColumnRisizeable}
+              theTheme={theTheme}
+              headerHeight={headerHeight}
+            />
+          </div>
+        </div>
       </Wrapper>
     </div>
   );

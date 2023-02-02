@@ -4,37 +4,50 @@ import Col from "../Col";
 import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
-  position: relative;
+  // position: relative;
+  display: flex;
   &:hover {
     .tableCol {
       ${({ theTheme }) => {
     return theTheme.rowHoverCol;
   }}  
     }
+    .${({ tableId }) => tableId}-rowMenu {
+      display: block;
+    }
+    
+  }
+  &.menuVissible {
+    .${({ tableId }) => tableId}-rowMenu {
+      display: block;
+    }
   }
 `;
 
-const Label = styled.div`
+const RowMenu = styled.div`
   position: absolute;
-  inset: 0;
-  display: flex;
-  vertical-align: middle;
-  justify-content: flex-start;
-  align-content: center;
-  flex-wrap: wrap;
-  font-weight: 500;
-  pointer-events: none;
-  background: gray;
-  color: white;
-  padding: 0 5px;
-  // z-index: 1;
+  left: -45px;
+  display: none;
+  padding-right: 5px;
+
+  > div {
+    background: white;
+    width: 40px;
+    border: solid 1px #e8e8e8;
+    border-radius: 3px;
+    box-shadow: 0 0 4px 0px rgb(0 0 0 / 12%);
+    left: 0px;
+    z-index: 4;
+    margin-right: 10px;
+  }
+ 
 `;
 
 const Row = memo(({
   children,
   type = "primary",
-  label,
   leftBrickContent,
+  menuContent,
   setInstanceCount,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
@@ -56,7 +69,8 @@ const Row = memo(({
   showGrid,
   totalCols,
   lasColumnRisizeable,
-  onClick=()=>{},
+  className="",
+  onClick = () => { },
 }) => {
   const currentRowRef = useRef(null);
   const [rowNumber, setRowNumber] = useState(null);
@@ -67,16 +81,28 @@ const Row = memo(({
    * Count the instances of this component and set the row number
    */
   useEffect(() => {
+    let rows = document.querySelectorAll(`.${tableId}-tableRow`);
+    //find the current rowRef in the rows array
+    let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
+
     if (rowNumber == null) {
-      let rows = document.querySelectorAll(`.${tableId}-tableRow`);
-      //find the current rowRef in the rows array
-      let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
-      setRowNumber((_) => index);
-      setInstanceCount(() => {
-        return index;
+      setInstanceCount((count) => {
+        return count ? ++count : 1;
       });
     }
-  }, [instanceCount]);
+    if (index !== rowNumber) {
+      setRowNumber((_) => index);
+    }
+
+  }, [instanceCount, rowNumber, setInstanceCount, tableId]);
+
+  useEffect(() => {
+    return () => {
+      setInstanceCount((count) => {
+        return count ? --count : 0;
+      });
+    };
+  }, []);
 
   const getValidChildren = (childrenFromProps) => {
     return React.Children.toArray(childrenFromProps).filter((child) => {
@@ -88,20 +114,23 @@ const Row = memo(({
    * @returns the amount of cols that aren't being used
    */
   const getRemainingCols = () => {
-    const usedCols = getValidChildren(children).reduce((acc, { props: { colspan }}) => {
-      if (colspan == "fullwidth") {
-        return acc;
-      }
+    const usedCols = getValidChildren(children).reduce(
+      (acc, { props: { colspan } }) => {
+        if (colspan == "fullwidth") {
+          return acc;
+        }
 
-      if (Number.isInteger(colspan)) {
-        return acc += colspan;
-      }
+        if (Number.isInteger(colspan)) {
+          return (acc += colspan);
+        }
 
-      return ++acc;
-    }, 0);
+        return ++acc;
+      },
+      0
+    );
 
     return totalCols - usedCols;
-  }
+  };
 
   /**
    * @returns the amount of cols that have the colspan prop set to "fullwidth"
@@ -109,36 +138,35 @@ const Row = memo(({
   const getFullWidthColsAmount = () => {
     const amount = getValidChildren(children).filter((child) => {
       return child.props.colspan == "fullwidth";
-    }).length
+    }).length;
 
     return amount;
-  }
+  };
 
   /**
-    * If the last col is a fullwidth col, we need to add the remaining space to it
-    * e.g. if we have 3 fullwidth cols and 2 cols left, we need to add 2 to the last col
-    * so that it takes up the remaining space
-    * @param {number} i - the index of the col
-    * @param {number} k - the amount of fullwidth cols
-    * @param {number} colspan - the colspan of the col
-    * @returns {number} the colspan of the col
-    * @example totalCols = 14
-    * calculateFullWidthColspan(2, 3, 1) // returns 3 because 14 % 3 = 2 and 2 + 1 = 3
-    * calculateFullWidthColspan(1, 3, 1) // returns 1 because it's not the last col
-    * calculateFullWidthColspan(0, 3, 1) // returns 1 because it's not the last col
-    */
+   * If the last col is a fullwidth col, we need to add the remaining space to it
+   * e.g. if we have 3 fullwidth cols and 2 cols left, we need to add 2 to the last col
+   * so that it takes up the remaining space
+   * @param {number} i - the index of the col
+   * @param {number} k - the amount of fullwidth cols
+   * @param {number} colspan - the colspan of the col
+   * @returns {number} the colspan of the col
+   * @example totalCols = 14
+   * calculateFullWidthColspan(2, 3, 1) // returns 3 because 14 % 3 = 2 and 2 + 1 = 3
+   * calculateFullWidthColspan(1, 3, 1) // returns 1 because it's not the last col
+   * calculateFullWidthColspan(0, 3, 1) // returns 1 because it's not the last col
+   */
   function calculateFullWidthColspan(i, k, remainingCols) {
-    const colspan = Math.floor((remainingCols) / k);
+    const colspan = Math.floor(remainingCols / k);
     const isLastCol = i == k - 1;
     const extraSpan = totalCols % k;
 
     if (extraSpan != 0 && isLastCol) {
       return colspan + extraSpan;
     }
-    
+
     return colspan;
   }
-
 
   /**
    * Map over the children that should be Col components and add the props we need
@@ -196,7 +224,7 @@ const Row = memo(({
           } else {
             width = colspan * colWidth;
           }
-        } else { 
+        } else {
           width = colWidth;
         }
       }
@@ -231,11 +259,9 @@ const Row = memo(({
 
   return (
     <>
-      {/* We only need the height here because all cols are position absolute
-       * Having cols as position absolute has no purpose yet, they could be inline block  ¯\_(ツ)_/¯
-       */}
       <RowElm
-        className={`${tableId}-tableRow`}
+        className={`${tableId}-tableRow ${className}`}
+        tableId={tableId}
         type={type}
         style={{ height: colHeight, width: totalWidth }}
         ref={currentRowRef}
@@ -243,7 +269,13 @@ const Row = memo(({
         theTheme={theTheme}
         onClick={onClick}
       >
-        {label && <Label>{label}</Label>}
+        {menuContent &&
+          <RowMenu className={`${tableId}-rowMenu`}>
+            <div>
+              {menuContent}
+            </div>
+          </RowMenu>
+        }
 
         {leftBrickContent && (
           <Brick
@@ -254,7 +286,7 @@ const Row = memo(({
             style={{
               width: leftBrickWidth,
               height: colHeight,
-              // zIndex: 1,
+              zIndex: 3,
               left: 0,
               position: "sticky",
             }}
@@ -272,7 +304,7 @@ const Row = memo(({
               height: colHeight,
               position: "sticky",
               left: 0,
-              // zIndex: 101,
+              zIndex: 3,
             }}
           />
         )}
