@@ -1,5 +1,10 @@
 //jsx component
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import styled from "styled-components";
 import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
@@ -24,20 +29,22 @@ const ViewPort = styled.div`
   flex: 1 1 auto;
 `;
 
-const Table = ({
-  onSelection = () => {},
-  headerStickyTopOffset = 0,
-  lasColumnRisizeable = true,
-  selectionMode = "cell",
-  leftBrickWidth = 50,
-  theme = "light",
-  headerData,
-  showGrid, // Boolean
-  children,
-  tableId, // make required
-  footer, //Boolean
-  width,
-}) => {
+const Table = (
+  {
+    onSelection = () => { },
+    headerStickyTopOffset = 0,
+    lasColumnRisizeable = true,
+    selectionMode = "cell",
+    leftBrickWidth = 50,
+    theme = "light",
+    headerData,
+    showGrid, // Boolean
+    children,
+    tableId, // make required
+    footer, //Boolean
+    width,
+  }) => {
+
   useEffect(() => {
     setTheTheme(themes[theme]);
   }, [theme]);
@@ -46,19 +53,18 @@ const Table = ({
   const [theTheme, setTheTheme] = useState(themes[theme]);
   const [viewportWidth, setViewportWidth] = useState(0);
   const [firstColWidth, setfirstColWidth] = useState(150);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(
-    headerData.length - 2
-  );
+  const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
   const [headerHeight, setHeaderHeight] = useState(35);
   const [colHeight, setColHeight] = useState(40);
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-      numberOfDataCols
+    numberOfDataCols
   );
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectColDraging, setSelectColDraging] = useState(false);
+
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([
@@ -115,7 +121,7 @@ const Table = ({
 
   /**
    * When the selection mode changes, clear the selected areas
-   */
+  */
   useEffect(() => {
     setSelectedAreas([]);
   }, [selectionMode]);
@@ -366,13 +372,6 @@ const Table = ({
           totalCols: headerData.length,
           lasColumnRisizeable,
         },
-        tableProps: {
-          count: selectedCount,
-          sum: selectedSum,
-          min: selectedMin,
-          max: selectedMax,
-          avg: selectedAvg,
-        },
       })
     );
   }, [
@@ -395,11 +394,6 @@ const Table = ({
     theTheme,
     showGrid,
     headerData,
-    selectedCount,
-    selectedSum,
-    selectedMin,
-    selectedMax,
-    selectedAvg,
   ]);
 
   return (
