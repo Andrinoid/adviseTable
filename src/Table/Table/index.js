@@ -165,6 +165,7 @@ const Table = (
 
   useEffect(() => {
     updateTableWith(width ? width : tableContainerRef.current.offsetWidth);
+    measureViewport();
   }, [
     updateTableWith,
     width,
@@ -202,18 +203,17 @@ const Table = (
    * Messure the viewport width and height.
    * the width may vary based on the css applied to parent elements or the browser window width
    */
-  useLayoutEffect(() => {
+  const measureViewport = useCallback(() => {
     if (viewportRef?.current?.offsetWidth)
       setViewportWidth(viewportRef.current.offsetWidth);
-    // if (viewportRef?.current?.offsetHeight)
-      // setViewportHeight(viewportRef.current.offsetHeight);
-  }, [updateTableWith, biggestDataCellWidth]);
+  }, [viewportRef]);
 
   useEffect(() => {
     const callback = () => {
       if (tableContainerRef?.current?.offsetWidth) {
         updateTableWith(tableContainerRef.current.offsetWidth);
       }
+      measureViewport();
     };
     window.addEventListener("resize", callback);
 

@@ -23,15 +23,15 @@ justify-content: center;
 height: 30px;
 cursor: pointer;
 ${({ hover }) => {
-  if (hover) {
-    return `
+    if (hover) {
+      return `
       &:hover {
         background-color: #e6f4ff;
       }
     `;
+    }
   }
-}
-}
+  }
 `;
 
 function Example({
@@ -109,11 +109,10 @@ function Example({
   };
 
   const rowMenuContent = (dragHandleProps) => {
-   
 
     return (
       <>
-        <MenuItem {...dragHandleProps} style={{cursor: 'grab'}}>
+        <MenuItem {...dragHandleProps} style={{ cursor: 'grab' }}>
           <DragHandle />
         </MenuItem>
         <MenuItem hover>
@@ -394,65 +393,8 @@ function Example({
           );
         }}
       </Table>
-      {/* <hr />
 
-      <p>problems</p>
-      <ul>
-        <li>rename label and total through all components</li>
-      </ul>
-
-      <div>
-        <button onClick={() => tableRef3.current.autoAdjust()}>
-          Auto adjust
-        </button>
-      </div>
-      <Table
-        ref={tableRef3}
-        headerData={[{ title: "foo" }, { title: "bar" }, { title: "baz" }]}
-        // theme={'dark'}
-        tableId={"smallTable"}
-        leftBrickWidth={0}
-      >
-        {(tableProvided) => (
-          <div>
-            <Row {...tableProvided.rowProps}>
-              <Col horizontalAlign="left">foo</Col>
-              <Col>bar</Col>
-              <Col>baz</Col>
-            </Row>
-
-            <Row
-              {...tableProvided.rowProps}
-              label="Operating ratios and other key figures"
-            >
-              <Col horizontalAlign="left"> </Col>
-              <Col horizontalAlign="left"> </Col>
-              <Col horizontalAlign="left"> </Col>
-            </Row>
-
-            <Row {...tableProvided.rowProps}>
-              <Col horizontalAlign="left">foo</Col>
-              <Col>bar</Col>
-              <Col>baz</Col>
-            </Row>
-
-            <Row {...tableProvided.rowProps}>
-              <Col horizontalAlign="left">foo</Col>
-              <Col>bar</Col>
-
-              <Col>baz</Col>
-            </Row>
-          </div>
-        )}
-      </Table>
-
-      <p>Todo</p>
-      <ul>
-        <li>Control styles</li>
-        <li>throttle on table resize or streach out method</li>
-        <li>Min and max size on cols</li>
-        <li>pinned columns</li>
-      </ul> */}
+    
     </div>
   );
 }
