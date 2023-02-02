@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import delegate from "delegate";
 
 let trackMouseMove = false;
@@ -49,7 +49,10 @@ const SelectedAreas = ({
    * When the mouse is down, reset the selection and set the new coordinates
    */
   const onMouseDown = (e) => {
-    let { x, y, colspan } = e.delegateTarget.dataset;
+    let { x, y, selectable, colspan } = e.delegateTarget.dataset;
+    if (selectable == "false") {
+      return;
+    }
 
     if (e.metaKey || e.ctrlKey) {
       // if ctrl or command key is pressed, do not clear the selection
@@ -248,10 +251,13 @@ const SelectedAreas = ({
   let oldX = null;
   let oldY = null;
   const onMouseMove = (e) => {
+    let { x, y, selectable, colspan } = e.delegateTarget.dataset;
+    if (selectable == "false") {
+      trackMouseMove = false;
+      return;
+    }
     if (trackMouseMove) {
       setSelectColDraging(true);
-      let { x, y, colspan } = e.delegateTarget.dataset;
-
       if (x === undefined || y === undefined) return;
 
       // only run if x and y have changed from previous values. That is moved to next cell
@@ -273,9 +279,14 @@ const SelectedAreas = ({
    * the mouseUpColCords are not used but they might be useful in the future
    */
   const onMouseUp = (e) => {
+    let { x, y, selectable } = e.delegateTarget.dataset;
+    // console.log(selectable, e.delegateTarget);
+    if (selectable == 'false') {
+      // console.log("Uai...");
+      return;
+    }
     trackMouseMove = false;
     setSelectColDraging(false);
-    let { x, y } = e.delegateTarget.dataset;
     if (x === undefined || y === undefined) return;
   }
   // this compoenent does not render anything

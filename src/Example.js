@@ -286,7 +286,9 @@ function Example({
                                   row.id
                                 )}
                                 {...tableProvided.rowProps}
-                                menuContent={rowMenuContent(provided.dragHandleProps)}
+                                menuContent={rowMenuContent(
+                                  provided.dragHandleProps
+                                )}
                               >
                                 <Col horizontalAlign="left">{row.name}</Col>
 
@@ -333,6 +335,7 @@ function Example({
                                       {/* Optional animation ends */}
 
                                       <Row
+                                        selectable={false}
                                         {...tableProvided.rowProps}
                                         type={"secondary"}
                                       >
@@ -354,6 +357,7 @@ function Example({
                                         <Col>34567</Col>
                                       </Row>
                                       <Row
+                                        selectable={false}
                                         {...tableProvided.rowProps}
                                         type={"secondary"}
                                       >
