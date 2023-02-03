@@ -9,7 +9,9 @@ const Box = styled.div`
   background-color: ${({ exclude, theTheme }) =>
     exclude ? theTheme?.secondary.background : theTheme?.selection?.background};
   border: ${({ exclude, theTheme }) =>
-    exclude ? 'none' : theTheme?.selection?.border};
+    exclude ? "none" : theTheme?.selection?.border};
+  opacity: ${({ exclude, theTheme }) =>
+    exclude ? "0.7" : "1"};
   pointer-events: none;
   z-index: 3;
 `;
