@@ -5,6 +5,7 @@
   "main": "build/index.js",
   "dependencies": {
     "antd": "^5.0.7",
+    "copy-to-clipboard": "^3.3.3",
     "delegate": "^3.2.0",
     "framer-motion": "^7.6.19",
     "lodash": "^4.17.21",
@@ -35,9 +36,9 @@
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "babel": "^6.23.0",
+    "react-scripts": "^5.0.1",
     "rollup": "^3.9.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "react-scripts": "^5.0.1"
+    "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "browserslist": {
     "production": [
