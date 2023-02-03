@@ -11,7 +11,7 @@ const Box = styled.div`
   border: ${({ exclude, theTheme }) =>
     exclude ? 'none' : theTheme?.selection?.border};
   pointer-events: none;
-  z-index: 0;
+  z-index: 3;
 `;
 
 /**
@@ -75,7 +75,7 @@ const Selection = ({
   const rowSelectionStyles = {
     width: totalWidth,
     left: 0,
-    zIndex: 1,
+    zIndex: 3,
   };
 
   return (

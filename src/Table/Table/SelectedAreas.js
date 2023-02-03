@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import delegate from "delegate";
+import { cloneDeep, flatten } from "lodash";
 
 let trackMouseMove = false;
 
@@ -243,6 +244,84 @@ const SelectedAreas = ({
   };
 
   /**
+   * This function must remove the selected areas marked as exclusion areas and split the affected areas into smaller areas that are not excluded
+   */
+  const applySelectionExclusion = () => { 
+    setSelectedAreas((selectedAreas) => {
+      let newSelectionAreas = selectedAreas.filter((area) => !area.isExclusion);
+      let exclusionAreas = selectedAreas.filter((area) => area.isExclusion);
+      
+      if (!exclusionAreas || !newSelectionAreas)
+        return;
+      
+      exclusionAreas.forEach((exclusionArea) => {
+        newSelectionAreas = flatten(
+          newSelectionAreas.map((area) => {
+            if (
+              (
+                (exclusionArea.fromX >= area.fromX &&
+                  exclusionArea.fromX <= area.toX) ||
+                (exclusionArea.toX <= area.toX &&
+                  exclusionArea.toX >= area.fromX) ||
+                (exclusionArea.fromX <= area.fromX &&
+                  exclusionArea.toX >= area.toX)
+              ) && //x is overlaping
+              (
+                (exclusionArea.fromY <= area.toY &&
+                  exclusionArea.fromY >= area.fromY) ||
+                (exclusionArea.toY <= area.toY &&
+                  exclusionArea.toY >= area.fromY) ||
+                (exclusionArea.fromY <= area.fromY &&
+                  exclusionArea.toY >= area.toY)
+              ) //y is overlaping
+            ) {
+              //is affected
+              return splitArea(area, exclusionArea);
+            } else {
+              //is not affected
+              return area;
+            }
+          })
+        );
+      });
+      
+      return newSelectionAreas;
+    });
+  }
+  /**
+   * SPlit the area applying the exclusion cutoff
+   */
+  const splitArea = (area, exclusionArea) => { 
+    const splitedAreas = [];
+
+    const topCopy = cloneDeep(area);
+    topCopy.toY = exclusionArea.fromY - 1;
+    if (topCopy.toY >= topCopy.fromY)
+      splitedAreas.push(topCopy)
+
+    const bottomCopy = cloneDeep(area);
+    bottomCopy.fromY = exclusionArea.toY + 1;
+    if (bottomCopy.toY >= bottomCopy.fromY)
+      splitedAreas.push(bottomCopy);
+    
+    const leftCopy = cloneDeep(area);
+    leftCopy.fromY = Math.max(exclusionArea.fromY, area.fromY);
+    leftCopy.toY = Math.min(exclusionArea.toY, area.toY);
+    leftCopy.toX = exclusionArea.fromX - 1;
+    if (leftCopy.toY >= leftCopy.fromY && leftCopy.toX >= leftCopy.fromX)
+      splitedAreas.push(leftCopy);
+
+    const rightCopy = cloneDeep(area);
+    rightCopy.fromY = Math.max(exclusionArea.fromY, area.fromY);
+    rightCopy.toY = Math.min(exclusionArea.toY, area.toY);
+    rightCopy.fromX = exclusionArea.toX + 1;
+    if (rightCopy.toY >= rightCopy.fromY && rightCopy.toX >= rightCopy.fromX)
+      splitedAreas.push(rightCopy);
+
+    return splitedAreas;
+  }
+
+  /**
    * When the mouse is moved, set the new coordinates
    * Only run if x and y have changed from previous values. That is moved to next cell
    * This was on mouseMove before that fires very often. Now we are using mouseOver so it might not be neccessary
@@ -281,6 +360,7 @@ const SelectedAreas = ({
   const onMouseUp = (e) => {
     let { x, y, selectable } = e.delegateTarget.dataset;
     // console.log(selectable, e.delegateTarget);
+    applySelectionExclusion();
     if (selectable == 'false') {
       // console.log("Uai...");
       return;
