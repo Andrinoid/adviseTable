@@ -343,25 +343,18 @@ const Table = ({
       tableMatrix.forEach((row, rowIndex) => {
         let rowResult = "";
         row.forEach((cell, colIndex) => {
+          let rowLength = selectedAreas[0].toX - selectedAreas[0].fromX;
+          if (selectedAreas[0].fromX != 0) rowLength += 1;
+
           let containedArea = getContainedArea(selectedAreas, {
             x: colIndex,
             y: rowIndex,
           });
           if (containedArea && !containedArea.isExclusion) {
-            try {
-              let value = tableMatrix[rowIndex][colIndex].current.innerText;
+            let value = tableMatrix[rowIndex][colIndex].current.innerText;
 
-              if (value) {
-                rowResult += value;
-                if (
-                  colIndex <
-                  selectedAreas[0].toX - selectedAreas[0].fromX + 1
-                )
-                  rowResult += "\t";
-              }
-            } catch (error) {
-              console.warn(error);
-            }
+            rowResult += value;
+            if (colIndex < rowLength) rowResult += "\t";
           }
         });
 
