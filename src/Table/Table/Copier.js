@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import copy from "copy-to-clipboard";
 import { getContainedArea } from "./SelectedAreas";
 
@@ -6,7 +7,7 @@ let _selections;
 
 const options = { format: "text/plain" };
 
-export class Copier {
+class Copier {
   constructor(table, selections) {
     _table = table;
     _selections = selections;
@@ -73,4 +74,21 @@ export class Copier {
 
     return result;
   }
+}
+
+export default function useCopier(tableMatrix, selectedAreas) {
+  useEffect(() => {
+    function handleCopy(event) {
+      if (event.ctrlKey && event.key === "c") {
+        const copier = new Copier(tableMatrix, selectedAreas);
+        copier.copy();
+      }
+    }
+
+    document.addEventListener("keydown", handleCopy);
+
+    return () => {
+      document.removeEventListener("keydown", handleCopy);
+    };
+  }, [tableMatrix, selectedAreas]);
 }

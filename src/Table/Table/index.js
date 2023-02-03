@@ -8,7 +8,7 @@ import SelectedArea, { getContainedArea } from "./SelectedAreas";
 import Scroller from "./Scroller";
 import themes from "./themes";
 import Selection from "./Selection";
-import { Copier } from "./Copier";
+import useCopier from "./Copier";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -113,6 +113,8 @@ const Table = ({
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableContainerRef = useRef(null);
+
+  useCopier(tableMatrix, selectedAreas);
 
   /**
    * When the selection mode changes, clear the selected areas
@@ -335,15 +337,6 @@ const Table = ({
       selectedCount: count,
     });
   };
-
-  const copyToClipboard = (selectedAreas) => {
-    const copier = new Copier(tableMatrix, selectedAreas);
-    copier.copy();
-  };
-
-  useEffect(() => {
-    copyToClipboard(selectedAreas);
-  }, [selectedAreas]);
 
   const [childrenRows, setChildrenRows] = useState([]);
   useEffect(() => {
