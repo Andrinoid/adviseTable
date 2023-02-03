@@ -8,7 +8,7 @@ import SelectedArea, { getContainedArea } from "./SelectedAreas";
 import Scroller from "./Scroller";
 import themes from "./themes";
 import Selection from "./Selection";
-import copy from "copy-to-clipboard";
+import { Copier } from "./Copier";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -337,42 +337,9 @@ const Table = ({
   };
 
   const copyToClipboard = (selectedAreas) => {
-    let result = "";
-    let rowResult = "";
-
-    if (selectedAreas.length === 1) {
-      tableMatrix.forEach((row, rowIndex) => {
-        row.forEach((cell, colIndex) => {
-          console.log(cell);
-          let rowLength = xAxiosLength(selectedAreas[0]);
-
-          let containedArea = getContainedArea(selectedAreas, {
-            x: colIndex,
-            y: rowIndex,
-          });
-          if (containedArea && !containedArea.isExclusion) {
-            let value = tableMatrix[rowIndex][colIndex].current.innerText;
-
-            rowResult += value;
-            if (colIndex < rowLength) rowResult += "\t";
-          }
-        });
-
-        if (rowResult.length > 2) {
-          result += rowResult + "\n";
-          rowResult = "";
-        }
-      });
-    }
-
-    if (result != "") copy(result, { format: "text/plain" });
+    const copier = new Copier(tableMatrix, selectedAreas);
+    copier.copy();
   };
-
-  function xAxiosLength(selectedAreas) {
-    let rowLength = selectedAreas.toX - selectedAreas.fromX;
-    if (selectedAreas.fromX != 0) rowLength += 1;
-    return rowLength;
-  }
 
   useEffect(() => {
     copyToClipboard(selectedAreas);
