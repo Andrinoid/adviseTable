@@ -6,7 +6,10 @@ let _table;
 let _selections;
 
 const options = { format: "text/plain" };
-
+/**
+ * TODO
+ * 1. Solve the problem of the colspan between normal cells copying the wrong value
+ */
 class Copier {
   constructor(table, selections) {
     _table = table;
@@ -59,7 +62,25 @@ class Copier {
     for (let i = minY; i <= maxY; i++) {
       for (let j = minX; j <= maxX; j++) {
         if (getContainedArea(_selections, { x: j, y: i }) != null) {
-          result += _table[i][j].current.innerText;
+          const element = _table[i][j].current;
+          const colspan = element.getAttribute("data-colspan");
+
+          if (colspan != null) {
+            let actualColspan = colspan;
+
+            if (j === 0) {
+              actualColspan = colspan - 1;
+            }
+
+            for (let k = 0; k < actualColspan; k++) {
+              result += "\t";
+            }
+            result += element.innerText;
+            j += colspan - 1;
+            continue;
+          }
+
+          result += element.innerText;
         } else {
           result += " ";
         }
