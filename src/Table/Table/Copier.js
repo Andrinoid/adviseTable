@@ -19,43 +19,58 @@ export class Copier {
   }
 
   stringifyTable() {
-    let result = "";
+    let result = "",
+      minY,
+      minX,
+      maxY,
+      maxX;
 
-    if (_selections.length === 1) {
-      _table.forEach((row, rowIndex) => {
-        let rowResult = this.stringifyRow(row, rowIndex);
+    _selections.forEach((sel) => {
+      if (minY != null) {
+        minY = Math.min(minY, sel.fromY, sel.toY);
+      } else {
+        minY = Math.min(sel.fromY, sel.toY);
+      }
 
-        if (rowResult.length > 2) {
-          result += rowResult + "\n";
-        }
-      });
-    }
+      if (maxY != null) {
+        maxY = Math.max(maxY, sel.fromY, sel.toY);
+      } else {
+        maxY = Math.max(sel.fromY, sel.toY);
+      }
 
-    return result;
-  }
+      if (minX != null) {
+        minX = Math.min(minX, sel.fromX, sel.toX);
+      } else {
+        minX = Math.min(sel.fromX, sel.toX);
+      }
 
-  stringifyRow(rows, rowIndex) {
-    let rowResult = "";
-
-    rows.forEach((cell, colIndex) => {
-      let containedArea = getContainedArea(_selections, {
-        x: colIndex,
-        y: rowIndex,
-      });
-
-      if (containedArea && !containedArea.isExclusion) {
-        rowResult += _table[rowIndex][colIndex].current.innerText;
-
-        if (colIndex < this.rowLength()) rowResult += "\t";
+      if (maxX != null) {
+        maxX = Math.max(maxX, sel.fromX, sel.toX);
+      } else {
+        maxX = Math.max(sel.fromX, sel.toX);
       }
     });
 
-    return rowResult;
-  }
+    let length = maxX - minX;
 
-  rowLength() {
-    let result = _selections[0].toX - _selections[0].fromX;
-    if (_selections[0].fromX != 0) result += 1;
+    if (minX != 0) length += 1;
+
+    for (let i = minY; i <= maxY; i++) {
+      for (let j = minX; j <= maxX; j++) {
+        if (getContainedArea(_selections, { x: j, y: i }) != null) {
+          result += _table[i][j].current.innerText;
+        } else {
+          result += " ";
+        }
+
+        if (j < length) {
+          result += "\t";
+        }
+      }
+
+      result += "\n";
+    }
+
     return result;
   }
 }
