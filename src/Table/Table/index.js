@@ -494,6 +494,7 @@ const Table = (
           </div>
         </div>
       </Wrapper>
+      {/* {JSON.stringify(selectedAreas)} */}
     </div>
   );
 };
