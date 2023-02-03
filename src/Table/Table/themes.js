@@ -21,7 +21,7 @@ const themes = {
       background: "#fafafa",
     },
     rowHoverCol: {
-      background: "rgb(204 230 255 / 45%);",
+      background: "rgb(204 230 255 / 30%);",
     },
     grid: {
       boxShadow: "inset 0px 0px 0 0.5px #ebebeb",
@@ -33,6 +33,9 @@ const themes = {
       background: "rgb(14, 101, 235, 0.1)",
       border: "1px solid #2196f3",
     },
+    exludeArea: {
+      background: "rgba(255, 255, 255, 0.7)",
+    }
   },
   dark: {
     name: "dark",
@@ -68,6 +71,9 @@ const themes = {
       background: "rgb(14, 101, 235, 0.1)",
       border: "1px solid #2196f3",
     },
+    exludeArea: {
+      background: "rgba(255, 255, 255, 0.1)",
+    }
   },
 };
 

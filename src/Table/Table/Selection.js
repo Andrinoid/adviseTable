@@ -7,7 +7,7 @@ const Box = styled.div`
   top: -10px;
   left: -10px;
   background-color: ${({ exclude, theTheme }) =>
-    exclude ? theTheme?.secondary.background : theTheme?.selection?.background};
+    exclude ? theTheme?.exludeArea.background : theTheme?.selection?.background};
   border: ${({ exclude, theTheme }) =>
     exclude ? 'none' : theTheme?.selection?.border};
   pointer-events: none;

@@ -398,7 +398,7 @@ const Table = (
 
   return (
     <div ref={tableContainerRef} style={{ position: "relative" }}>
-      <Wrapper id={tableId}>
+      <Wrapper id={tableId} version="1.01">
         <Header
           ref={headerScrollRef}
           className="scrollable"
