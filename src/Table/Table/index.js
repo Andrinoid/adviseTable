@@ -338,13 +338,13 @@ const Table = ({
 
   const copyToClipboard = (selectedAreas) => {
     let result = "";
-    console.log(selectedAreas);
+    let rowResult = "";
+
     if (selectedAreas.length === 1) {
       tableMatrix.forEach((row, rowIndex) => {
-        let rowResult = "";
         row.forEach((cell, colIndex) => {
-          let rowLength = selectedAreas[0].toX - selectedAreas[0].fromX;
-          if (selectedAreas[0].fromX != 0) rowLength += 1;
+          console.log(cell);
+          let rowLength = xAxiosLength(selectedAreas[0]);
 
           let containedArea = getContainedArea(selectedAreas, {
             x: colIndex,
@@ -358,16 +358,21 @@ const Table = ({
           }
         });
 
-        // if (result[result.length - 1] == "t") {
-        if (rowResult.length > 3) {
+        if (rowResult.length > 2) {
           result += rowResult + "\n";
+          rowResult = "";
         }
-        // }
       });
     }
 
     if (result != "") copy(result, { format: "text/plain" });
   };
+
+  function xAxiosLength(selectedAreas) {
+    let rowLength = selectedAreas.toX - selectedAreas.fromX;
+    if (selectedAreas.fromX != 0) rowLength += 1;
+    return rowLength;
+  }
 
   useEffect(() => {
     copyToClipboard(selectedAreas);
