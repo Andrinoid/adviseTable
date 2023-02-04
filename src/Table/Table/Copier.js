@@ -4,7 +4,6 @@ import { getContainedArea } from "./SelectedAreas";
 let _table;
 let _selections;
 
-const options = { format: "text/plain" };
 /**
  * TODO
  * 1. Solve the problem of the colspan between normal cells copying the wrong value
@@ -90,39 +89,13 @@ export class Copier {
 
     return result;
   }
-
-  // mockTable() {
-  //   const newTable = [];
-  //   for (let i = 0; i < _table.length; i++) {
-  //     newTable.push([]);
-
-  //     for (let j = 0; j < _table[i].length; j++) {
-  //       if (_table[i][j].current) {
-  //         newTable[i].push({
-  //           current: {
-  //             innerText: `${_table[i][j].current.innerText}`,
-  //             getAttribute(attr) {
-  //               if ("data-colspan") {
-  //                 return this.colspan;
-  //               }
-  //               return null;
-  //             },
-  //             colspan: _table[i][j].current.getAttribute("data-colspan"),
-  //           },
-  //         });
-  //       } else {
-  //         newTable[0].push(null);
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 export default function useCopier(tableMatrix, selectedAreas) {
   useEffect(() => {
     function handleCopy(event) {
       if ((event.ctrlKey || event.metaKey) && event.key === "c") {
-        // console.log(JSON.stringify(selectedAreas));
+        console.log(JSON.stringify(selectedAreas));
         const copier = new Copier(tableMatrix, selectedAreas);
         copier.copy();
       }
