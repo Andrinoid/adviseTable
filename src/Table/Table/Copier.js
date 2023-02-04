@@ -99,7 +99,7 @@ class Copier {
 export default function useCopier(tableMatrix, selectedAreas) {
   useEffect(() => {
     function handleCopy(event) {
-      if (event.ctrlKey && event.key === "c") {
+      if ((event.ctrlKey || event.metaKey) && event.key === "c") {
         const copier = new Copier(tableMatrix, selectedAreas);
         copier.copy();
       }
