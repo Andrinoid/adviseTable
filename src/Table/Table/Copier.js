@@ -54,10 +54,6 @@ class Copier {
       }
     });
 
-    let length = maxX - minX;
-
-    if (minX != 0) length += 1;
-
     for (let i = minY; i <= maxY; i++) {
       for (let j = minX; j <= maxX; j++) {
         if (getContainedArea(_selections, { x: j, y: i }) != null) {
@@ -84,7 +80,7 @@ class Copier {
           result += " ";
         }
 
-        if (j < length) {
+        if (j < maxX) {
           result += "\t";
         }
       }
