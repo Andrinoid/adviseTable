@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import copy from "copy-to-clipboard";
 import { getContainedArea } from "./SelectedAreas";
 
 let _table;
@@ -19,7 +18,7 @@ class Copier {
   copy() {
     const result = this.stringifyTable();
 
-    if (result != "") copy(result, options);
+    if (result != "") navigator.clipboard.writeText(result);
   }
 
   stringifyTable() {
