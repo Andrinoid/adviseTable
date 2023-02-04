@@ -105,10 +105,10 @@ export default function useCopier(tableMatrix, selectedAreas) {
       }
     }
 
-    document.addEventListener("keydown", handleCopy);
+    window.addEventListener("keydown", handleCopy);
 
     return () => {
-      document.removeEventListener("keydown", handleCopy);
+      window.removeEventListener("keydown", handleCopy);
     };
   }, [tableMatrix, selectedAreas]);
 }
