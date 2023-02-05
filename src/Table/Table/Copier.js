@@ -55,9 +55,7 @@ export class Copier {
           const element = _table[i][j].current;
           const colspan = element.getAttribute("data-colspan");
           const previousColspan =
-            j > 0
-              ? _table[i][j - 1].current.getAttribute("data-colspan")
-              : null;
+            _table[i][j - 1]?.current?.getAttribute("data-colspan");
 
           if (colspan != null) {
             let originalColspan = colspan;
@@ -76,7 +74,7 @@ export class Copier {
             continue;
           }
 
-          if (j > 0 && previousColspan != null && colspan == null) {
+          if (previousColspan != null) {
             result += "\t";
           }
 
