@@ -30,5 +30,37 @@ describe("Copier", () => {
         `Skattar\t-1079711\t-1022849\nAfskriftir\t-4715000\t-4715000\nSérverk\t39284029\t35977158\nAðrar tekjur\t3300025\t2734444\n`
       );
     });
+
+    it("should return selection string from multiple selections", () => {
+      // -- x x x x x x x
+      // -- o o x o o x x
+      // -- o o x o o x x
+      // -- o o x o o x x
+      // -- o o x o o x x
+      const selection = [
+        {
+          fromX: 1,
+          fromY: 5,
+          toX: 2,
+          toY: 7,
+          oldMouseMoveTo: { toX: 2, toY: 7 },
+          isExclusion: false,
+        },
+        {
+          fromX: 4,
+          fromY: 5,
+          toX: 5,
+          toY: 7,
+          oldMouseMoveTo: { toX: 5, toY: 7 },
+          isExclusion: false,
+        },
+      ];
+
+      const copier = new Copier(table, selection);
+
+      expect(copier.stringifyTable()).toBe(
+        `-1079711\t-1022849\t \t-2991679\t144949\n-4715000\t-4715000\t \t-4715000\t-4715000\n39284029\t35977158\t \t30156737\t38093535\n`
+      );
+    });
   });
 });
