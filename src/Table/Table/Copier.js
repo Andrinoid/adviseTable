@@ -100,7 +100,6 @@ export default function useCopier(tableMatrix, selectedAreas) {
     function handleCopy(event) {
       event.preventDefault();
       if ((event.ctrlKey || event.metaKey) && event.key === "c") {
-        console.log(JSON.stringify(selectedAreas));
         new Copier(tableMatrix, selectedAreas).copy();
       }
     }
