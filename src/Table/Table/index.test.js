@@ -52,6 +52,28 @@ describe("Copier", () => {
         "Gamalt ekki notað\t\t\t\t\t\t-146580\t-146580\t-155772\t-146580\t-146580\t\t\t34567\n"
       );
     });
+
+    it("should return selection string from label cell taking full width", () => {
+      // -- x x x x x x x x x x x x x
+      // oo o o o o o o o o o o o o o
+      // -- x x x x x x x x x x x x x
+
+      const selection = [
+        {
+          fromX: 0,
+          fromY: 3,
+          toX: 13,
+          toY: 3,
+          oldMouseMoveTo: { toX: 0, toY: 3 },
+        },
+      ];
+
+      const copier = new Copier(table, selection);
+
+      expect(copier.stringifyTable()).toBe(
+        "\t\t\t\t\t\t\t\t\t\t\t\t\tmyLabel1\n"
+      );
+    });
   });
 
   describe("Multiple Selections", () => {
