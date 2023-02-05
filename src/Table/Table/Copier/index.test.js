@@ -1,5 +1,5 @@
 import table from "./TableMock";
-import { Copier } from "./Copier";
+import { Copier } from ".";
 
 // o  = cell selected
 // oo = selected label

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getContainedArea } from "./SelectedAreas";
+import { getContainedArea } from "../SelectedAreas";
 
 let _table;
 let _selections;
