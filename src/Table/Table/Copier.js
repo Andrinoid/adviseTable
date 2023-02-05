@@ -4,10 +4,6 @@ import { getContainedArea } from "./SelectedAreas";
 let _table;
 let _selections;
 
-/**
- * TODO
- * 1. Solve the problem of the colspan between normal cells copying the wrong value
- */
 export class Copier {
   constructor(table, selections) {
     _table = table;
@@ -58,20 +54,30 @@ export class Copier {
         if (getContainedArea(_selections, { x: j, y: i }) != null) {
           const element = _table[i][j].current;
           const colspan = element.getAttribute("data-colspan");
+          const previousColspan =
+            j > 0
+              ? _table[i][j - 1].current.getAttribute("data-colspan")
+              : null;
 
           if (colspan != null) {
-            let actualColspan = colspan;
+            let originalColspan = colspan;
 
-            if (j === 0) {
-              actualColspan = colspan - 1;
+            if (j === 0 || previousColspan == null) {
+              originalColspan = colspan - 1;
             }
 
-            for (let k = 0; k < actualColspan; k++) {
+            for (let k = 0; k < originalColspan; k++) {
               result += "\t";
             }
+
             result += element.innerText;
+
             j += colspan - 1;
             continue;
+          }
+
+          if (j > 0 && previousColspan != null && colspan == null) {
+            result += "\t";
           }
 
           result += element.innerText;

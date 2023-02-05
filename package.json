@@ -20,7 +20,7 @@
     "start": "react-scripts start",
     "build": "rollup -c",
     "prepare": "npm run build",
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "eslintConfig": {
     "extends": [
