@@ -74,6 +74,29 @@ describe("Copier", () => {
         "\t\t\t\t\t\t\t\t\t\t\t\t\tmyLabel1\n"
       );
     });
+
+    it("should return selection string from multiple label cells taking full width", () => {
+      // -- x x x x x x x x x x x x x
+      // oo o o o o o o o o o o o o o
+      // -- x x x x x x x x x x x x x
+
+      const selection = [
+        {
+          fromX: 0,
+          fromY: 2,
+          toX: 13,
+          toY: 2,
+          oldMouseMoveTo: { toX: 0, toY: 2 },
+          isExclusion: false,
+        },
+      ];
+
+      const copier = new Copier(table, selection);
+
+      expect(copier.stringifyTable()).toBe(
+        "\t\t\tmyLabel2\t\t\t\tmyLabel3\t\t\t\t\t\tmyLabel4\n"
+      );
+    });
   });
 
   describe("Multiple Selections", () => {
