@@ -43,6 +43,7 @@ function Example({
   headerOffset,
   showGrid,
 }) {
+  const [viewData, setViewData] = useState(view);
   const [expandedIds, setExpandedIds] = useState([]);
   // const [containerWidth, setContainerWidth] = useState(0);
   // const [selectionMode, setSelectionMode] = useState('row');
@@ -81,10 +82,10 @@ function Example({
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
-    // const items = Array.from(viewd);
-    // const [reorderedItem] = items.splice(result.source.index, 1);
-    // items.splice(result.destination.index, 0, reorderedItem);
-    // updateview(items);
+    const cloneViewData = [...viewData];
+    const [reorderedItem] = cloneViewData.splice(result.source.index, 1);
+    cloneViewData.splice(result.destination.index, 0, reorderedItem);
+    setViewData(cloneViewData);
   };
 
   const leftBrickContent = (dragHandleProps, rowId) => {
@@ -149,124 +150,7 @@ function Example({
               <Droppable droppableId="characters">
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
-                    <Draggable
-                      isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length}
-                      key={"id-" + view.length}
-                      index={view.length}
-                    >
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                        >
-                          <Row
-                            {...tableProvided.rowProps}
-                            menuContent={rowMenuContent(provided.dragHandleProps)}
-                          // type={"secondary"}
-                          >
-                            <Col>myLabel1</Col>
-                            <Col colspan={"fullwidth"}>myLabel2</Col>
-
-                            {/* <Col>myLabel2</Col> */}
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                            <Col>myLabel2</Col>
-                          </Row>
-                        </div>
-                      )}
-                    </Draggable>
-                    <Draggable
-                      isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length + 1}
-                      key={"id-" + view.length + 1}
-                      index={view.length}
-                    >
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                        >
-                          <Row
-                            {...tableProvided.rowProps}
-                            menuContent={rowMenuContent(provided.dragHandleProps)}
-                          >
-                            <Col colspan={2}>myLabel1</Col>
-                            <Col colspan={"fullwidth"}>myLabel1</Col>
-                            <Col colspan={"fullwidth"}>myLabel2</Col>
-                            <Col colspan={2}>myLabel2</Col>
-
-                            {/* Last col will be bigger than ther others because 14 / 4 = 3.5 */}
-                            {/* <Col colspan={"fullwidth"}>myLabel1</Col>
-                            <Col colspan={"fullwidth"}>myLabel2</Col>
-                            <Col colspan={"fullwidth"}>myLabel3</Col>
-                            <Col colspan={"fullwidth"}>myLabel4</Col> */}
-
-                            {/* it will fill all the columns space */}
-                            {/* <Col colspan={"fullwidth"}>myLabel1</Col> */}
-
-                          </Row>
-                        </div>
-                      )}
-                    </Draggable>
-
-                    <Draggable
-                      isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length + 2}
-                      key={"id-" + view.length + 2}
-                      index={view.length}
-                    >
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                        >
-                          <Row
-                            {...tableProvided.rowProps}
-                            menuContent={rowMenuContent(provided.dragHandleProps)}
-                          >
-                            <Col colspan={"fullwidth"}>myLabel2</Col>
-                            <Col colspan={"fullwidth"}>myLabel3</Col>
-                            <Col colspan={"fullwidth"}>myLabel4</Col>
-
-                            {/* it will fill all the columns space */}
-                            {/* <Col colspan={"fullwidth"}>myLabel1</Col> */}
-
-                          </Row>
-                        </div>
-                      )}
-                    </Draggable>
-
-                    <Draggable
-                      isDragDisabled={!draggable}
-                      draggableId={"id-" + view.length + 3}
-                      key={"id-" + view.length + 3}
-                      index={view.length}
-                    >
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                        >
-                          <Row
-                            {...tableProvided.rowProps}
-                            menuContent={rowMenuContent(provided.dragHandleProps)}
-                          >
-                            <Col colspan={"fullwidth"}>myLabel1</Col>
-                          </Row>
-                        </div>
-                      )}
-                    </Draggable>
-
-                    {view.map((row, i) => {
+                    {viewData.map((row, i) => {
                       return (
                         <Draggable
                           isDragDisabled={!draggable}
