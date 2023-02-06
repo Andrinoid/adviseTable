@@ -1,5 +1,11 @@
 //jsx component
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useImperativeHandle,
+} from "react";
 import styled from "styled-components";
 import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
@@ -25,20 +31,23 @@ const ViewPort = styled.div`
   flex: 1 1 auto;
 `;
 
-const Table = ({
-  onSelection = () => {},
-  headerStickyTopOffset = 0,
-  lasColumnRisizeable = true,
-  selectionMode = "cell",
-  leftBrickWidth = 50,
-  theme = "light",
-  headerData,
-  showGrid, // Boolean
-  children,
-  tableId, // make required
-  footer, //Boolean
-  width,
-}) => {
+const Table = (
+  {
+    onSelection = () => {},
+    headerStickyTopOffset = 0,
+    lasColumnRisizeable = true,
+    selectionMode = "cell",
+    leftBrickWidth = 50,
+    theme = "light",
+    headerData,
+    showGrid, // Boolean
+    children,
+    tableId, // make required
+    footer, //Boolean
+    width,
+  },
+  ref
+) => {
   useEffect(() => {
     setTheTheme(themes[theme]);
   }, [theme]);
@@ -115,6 +124,18 @@ const Table = ({
   const tableContainerRef = useRef(null);
 
   useCopier(tableMatrix, selectedAreas);
+
+  /**
+   * expose method to parent component
+   * For this to work, the parent component must pass a ref to this component
+   * autoAdjust() will adjust the width of the table data cols to fit the data
+   * usage in app: tableRef.current.autoAdjust()
+   */
+  useImperativeHandle(ref, () => ({
+    autoAdjust() {
+      updateTableWith(getAdjustedSize());
+    },
+  }));
 
   /**
    * When the selection mode changes, clear the selected areas
@@ -496,4 +517,4 @@ const Table = ({
   );
 };
 
-export default Table;
+export default React.forwardRef(Table);
