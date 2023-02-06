@@ -321,7 +321,7 @@ const Table = (
           try {
             let value = tableMatrix[rowIndex][colIndex].current.innerText;
             // try to convert value to number
-            value = Number(value);
+            value = Number(value.replace(".", "").replace(",", "."));
             if (!isNaN(value)) {
               sum += value;
             }
