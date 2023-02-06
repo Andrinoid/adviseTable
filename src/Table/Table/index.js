@@ -475,6 +475,7 @@ const Table = ({
             }}
           >
             <Selection
+              selectionString={JSON.stringify(selectedAreas)}
               selectedAreas={selectedAreas}
               colWidth={colWidth}
               colHeight={colHeight}
