@@ -144,12 +144,21 @@ function Example({
           // console.log("selectedReport", selectedReport);
         }}
       >
+       
         {(tableProvided) => {
           return (
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="characters">
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
+
+                    <Row {...tableProvided.rowProps}>
+                      <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
+                    </Row>
+                    <Row {...tableProvided.rowProps} height={60}>
+                      <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
+                    </Row>
+
                     {viewData.map((row, i) => {
                       return (
                         <Draggable

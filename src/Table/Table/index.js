@@ -55,6 +55,7 @@ const Table = (
   const viewportRef = useRef(null);
   const [theTheme, setTheTheme] = useState(themes[theme]);
   const [viewportWidth, setViewportWidth] = useState(0);
+  const [tableTopOffset, setTableTopOffset] = useState(0);
   const [firstColWidth, setfirstColWidth] = useState(150);
   const [numberOfDataCols, setNumberOfDataCols] = useState(
     headerData.length - 2
@@ -180,6 +181,7 @@ const Table = (
 
   useEffect(() => {
     updateTableWith(width ? width : tableContainerRef.current.offsetWidth);
+    setTableTopOffset(tableContainerRef.current.offsetTop);
     measureViewport();
   }, [
     updateTableWith,
@@ -509,6 +511,8 @@ const Table = (
               lasColumnRisizeable={lasColumnRisizeable}
               theTheme={theTheme}
               headerHeight={headerHeight}
+              tableMatrix={tableMatrix}
+              tableTopOffset={tableTopOffset}
             />
           </div>
         </div>

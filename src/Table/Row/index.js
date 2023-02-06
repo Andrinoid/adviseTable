@@ -73,6 +73,7 @@ const Row = memo(
     className = "",
     onClick = () => {},
     selectable = true,
+    height,
   }) => {
     const currentRowRef = useRef(null);
     const [rowNumber, setRowNumber] = useState(null);
@@ -241,7 +242,7 @@ const Row = memo(
           y: rowNumber,
           x: i,
           type: colType,
-          style: { width: width, height: colHeight, top: 0, left: left },
+          style: { width: width, top: 0, left: left },
           setTableMatrix,
           tableMatrix,
           theTheme,
@@ -265,7 +266,7 @@ const Row = memo(
           className={`${tableId}-tableRow ${className}`}
           tableId={tableId}
           type={type}
-          style={{ height: colHeight, width: totalWidth }}
+          style={{ width: totalWidth, height: '100%' }}
           ref={currentRowRef}
           y={rowNumber}
           theTheme={theTheme}
@@ -285,7 +286,6 @@ const Row = memo(
               location={"left"}
               style={{
                 width: leftBrickWidth,
-                height: colHeight,
                 zIndex: 3,
                 left: 0,
                 position: "sticky",
@@ -301,7 +301,6 @@ const Row = memo(
               location={"left"}
               style={{
                 width: leftBrickWidth,
-                height: colHeight,
                 position: "sticky",
                 left: 0,
                 zIndex: 3,
