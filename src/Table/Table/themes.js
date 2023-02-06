@@ -21,7 +21,7 @@ const themes = {
       background: "#fafafa",
     },
     rowHoverCol: {
-      background: "rgb(204 230 255 / 30%);",
+      background: "#f0f7ff",
     },
     grid: {
       boxShadow: "inset 0px 0px 0 0.5px #ebebeb",
@@ -55,7 +55,7 @@ const themes = {
       color: "#bdc6cf",
     },
     rowHoverCol: {
-      background: "rgb(255 255 255 / 15%);",
+      background: "#414245",
     },
     colSecondary: {
       background: "#202124",
