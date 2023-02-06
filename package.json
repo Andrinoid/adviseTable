@@ -7,6 +7,7 @@
     "antd": "^5.0.7",
     "delegate": "^3.2.0",
     "framer-motion": "^7.6.19",
+    "jest": "^27.5.1",
     "lodash": "^4.17.21",
     "react-beautiful-dnd": "^13.0.0",
     "styled-components": "^5.3.6"
@@ -18,7 +19,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "rollup -c",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "test": "jest --watchAll"
   },
   "eslintConfig": {
     "extends": [
@@ -35,9 +37,9 @@
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "babel": "^6.23.0",
+    "react-scripts": "^5.0.1",
     "rollup": "^3.9.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "react-scripts": "^5.0.1"
+    "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "browserslist": {
     "production": [
