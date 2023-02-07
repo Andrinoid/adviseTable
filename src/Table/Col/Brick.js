@@ -19,9 +19,9 @@ const BrickElm = styled.div`
         if (location === 'top') {
             return { ...theme.col, ...theme.header };
         }
-        else if (location === 'left') {
+        // else if (location === 'left') {
             // return theme.col;
-        }
+        // }
     }}
 `;
 /**
