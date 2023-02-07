@@ -83,15 +83,13 @@ const Col = memo(
     return (
       <Column
         horizontalAlign={horizontalAlign}
-        // rowHover={rowHover}
-        // rowType={rowType}
         style={{ ...style }}
         theme={theTheme}
         showGrid={showGrid}
         ref={currentColRef}
         x={x}
         y={y}
-        // ↓ In Selection component we use the dom to get the selected area. Data attr are simpler to get
+        // ↓ In SelectionAreas component we use the dom to get the selected area. Data attr are simpler to get
         data-x={x}
         data-y={y}
         data-colspan={colspan}

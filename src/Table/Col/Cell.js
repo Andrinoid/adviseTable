@@ -67,13 +67,11 @@ const Cell = memo(({
     } else {
       setIsOverflowing(false);
     }
-
   }, [parentWidth, totalWidth]);
 
   return (
     <SpaceAround ref={ref} isOverflowing={isOverflowing}>
       {children}
-      {/* x{x} y{y} */}
     </SpaceAround>
   );
 });
