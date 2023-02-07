@@ -1,20 +1,19 @@
-
 export const ui_prefs = {
-  months: [1,12]
-}
+  months: [1, 12],
+};
 
 export const view = [
   {
     id: 228,
     model_id: 41,
-    name: 'Category',
-    type: 'group',
+    name: "Category",
+    type: "group",
     data: {
-      group_id: 147
+      group_id: 147,
     },
     sort: 2,
-    updated_at: '2022-06-02T14:22:54.687Z',
-    created_at: '2022-06-02T14:22:48.195Z',
+    updated_at: "2022-06-02T14:22:54.687Z",
+    created_at: "2022-06-02T14:22:48.195Z",
     ui_prefs: null,
     configuration: {},
     jan: 41104807,
@@ -34,405 +33,405 @@ export const view = [
       {
         begin: 1,
         end: 1,
-        total: 41104807
+        total: 41104807,
       },
       {
         begin: 1,
         end: 2,
-        total: 88288538
+        total: 88288538,
       },
       {
         begin: 1,
         end: 3,
-        total: 135453087
+        total: 135453087,
       },
       {
         begin: 1,
         end: 4,
-        total: 172195563
+        total: 172195563,
       },
       {
         begin: 1,
         end: 5,
-        total: 229969526
+        total: 229969526,
       },
       {
         begin: 1,
         end: 6,
-        total: 312443153
+        total: 312443153,
       },
       {
         begin: 1,
         end: 7,
-        total: 416572255
+        total: 416572255,
       },
       {
         begin: 1,
         end: 8,
-        total: 504088060
+        total: 504088060,
       },
       {
         begin: 1,
         end: 9,
-        total: 551137947
+        total: 551137947,
       },
       {
         begin: 1,
         end: 10,
-        total: 598100894
+        total: 598100894,
       },
       {
         begin: 1,
         end: 11,
-        total: 642227057
+        total: 642227057,
       },
       {
         begin: 1,
         end: 12,
-        total: 684095474
+        total: 684095474,
       },
       {
         begin: 2,
         end: 2,
-        total: 47183731
+        total: 47183731,
       },
       {
         begin: 2,
         end: 3,
-        total: 94348280
+        total: 94348280,
       },
       {
         begin: 2,
         end: 4,
-        total: 13109075
+        total: 13109075,
       },
       {
         begin: 2,
         end: 5,
-        total: 18886471
+        total: 18886471,
       },
       {
         begin: 2,
         end: 6,
-        total: 271338346
+        total: 271338346,
       },
       {
         begin: 2,
         end: 7,
-        total: 375467448
+        total: 375467448,
       },
       {
         begin: 2,
         end: 8,
-        total: 462983253
+        total: 462983253,
       },
       {
         begin: 2,
         end: 9,
-        total: 510033140
+        total: 510033140,
       },
       {
         begin: 2,
         end: 10,
-        total: 556996087
+        total: 556996087,
       },
       {
         begin: 2,
         end: 11,
-        total: 601122250
+        total: 601122250,
       },
       {
         begin: 2,
         end: 12,
-        total: 642990667
+        total: 642990667,
       },
       {
         begin: 3,
         end: 3,
-        total: 47164549
+        total: 47164549,
       },
       {
         begin: 3,
         end: 4,
-        total: 83907025
+        total: 83907025,
       },
       {
         begin: 3,
         end: 5,
-        total: 141680988
+        total: 141680988,
       },
       {
         begin: 3,
         end: 6,
-        total: 224154615
+        total: 224154615,
       },
       {
         begin: 3,
         end: 7,
-        total: 328283717
+        total: 328283717,
       },
       {
         begin: 3,
         end: 8,
-        total: 415799522
+        total: 415799522,
       },
       {
         begin: 3,
         end: 9,
-        total: 462849409
+        total: 462849409,
       },
       {
         begin: 3,
         end: 10,
-        total: 509812356
+        total: 509812356,
       },
       {
         begin: 3,
         end: 11,
-        total: 553938519
+        total: 553938519,
       },
       {
         begin: 3,
         end: 12,
-        total: 59580693
+        total: 59580693,
       },
       {
         begin: 4,
         end: 4,
-        total: 36742476
+        total: 36742476,
       },
       {
         begin: 4,
         end: 5,
-        total: 94516439
+        total: 94516439,
       },
       {
         begin: 4,
         end: 6,
-        total: 176990066
+        total: 176990066,
       },
       {
         begin: 4,
         end: 7,
-        total: 281119168
+        total: 281119168,
       },
       {
         begin: 4,
         end: 8,
-        total: 368634973
+        total: 368634973,
       },
       {
         begin: 4,
         end: 9,
-        total: 415684860
+        total: 415684860,
       },
       {
         begin: 4,
         end: 10,
-        total: 462647807
+        total: 462647807,
       },
       {
         begin: 4,
         end: 11,
-        total: 506773970
+        total: 506773970,
       },
       {
         begin: 4,
         end: 12,
-        total: 548642387
+        total: 548642387,
       },
       {
         begin: 5,
         end: 5,
-        total: 57773963
+        total: 57773963,
       },
       {
         begin: 5,
         end: 6,
-        total: 140247590
+        total: 140247590,
       },
       {
         begin: 5,
         end: 7,
-        total: 244376692
+        total: 244376692,
       },
       {
         begin: 5,
         end: 8,
-        total: 331892497
+        total: 331892497,
       },
       {
         begin: 5,
         end: 9,
-        total: 378942384
+        total: 378942384,
       },
       {
         begin: 5,
         end: 10,
-        total: 425905331
+        total: 425905331,
       },
       {
         begin: 5,
         end: 11,
-        total: 470031494
+        total: 470031494,
       },
       {
         begin: 5,
         end: 12,
-        total: 511899911
+        total: 511899911,
       },
       {
         begin: 6,
         end: 6,
-        total: 82473627
+        total: 82473627,
       },
       {
         begin: 6,
         end: 7,
-        total: 186602729
+        total: 186602729,
       },
       {
         begin: 6,
         end: 8,
-        total: 274118534
+        total: 274118534,
       },
       {
         begin: 6,
         end: 9,
-        total: 321168421
+        total: 321168421,
       },
       {
         begin: 6,
         end: 10,
-        total: 368131368
+        total: 368131368,
       },
       {
         begin: 6,
         end: 11,
-        total: 412257531
+        total: 412257531,
       },
       {
         begin: 6,
         end: 12,
-        total: 454125948
+        total: 454125948,
       },
       {
         begin: 7,
         end: 7,
-        total: 104129102
+        total: 104129102,
       },
       {
         begin: 7,
         end: 8,
-        total: 191644907
+        total: 191644907,
       },
       {
         begin: 7,
         end: 9,
-        total: 238694794
+        total: 238694794,
       },
       {
         begin: 7,
         end: 10,
-        total: 285657741
+        total: 285657741,
       },
       {
         begin: 7,
         end: 11,
-        total: 329783904
+        total: 329783904,
       },
       {
         begin: 7,
         end: 12,
-        total: 371652321
+        total: 371652321,
       },
       {
         begin: 8,
         end: 8,
-        total: 87515805
+        total: 87515805,
       },
       {
         begin: 8,
         end: 9,
-        total: 134565692
+        total: 134565692,
       },
       {
         begin: 8,
         end: 10,
-        total: 181528639
+        total: 181528639,
       },
       {
         begin: 8,
         end: 11,
-        total: 225654802
+        total: 225654802,
       },
       {
         begin: 8,
         end: 12,
-        total: 267523219
+        total: 267523219,
       },
       {
         begin: 9,
         end: 9,
-        total: 47049887
+        total: 47049887,
       },
       {
         begin: 9,
         end: 10,
-        total: 94012834
+        total: 94012834,
       },
       {
         begin: 9,
         end: 11,
-        total: 138138997
+        total: 138138997,
       },
       {
         begin: 9,
         end: 12,
-        total: 180007414
+        total: 180007414,
       },
       {
         begin: 10,
         end: 10,
-        total: 46962947
+        total: 46962947,
       },
       {
         begin: 10,
         end: 11,
-        total: 91089110
+        total: 91089110,
       },
       {
         begin: 10,
         end: 12,
-        total: 132957527
+        total: 132957527,
       },
       {
         begin: 11,
         end: 11,
-        total: 44126163
+        total: 44126163,
       },
       {
         begin: 11,
         end: 12,
-        total: 85994580
+        total: 85994580,
       },
       {
         begin: 12,
         end: 12,
-        total: 41868417
-      }
+        total: 41868417,
+      },
     ],
-    count_children: '22',
+    count_children: "22",
     entry_id: 228,
     year: 2019,
-    dim: 'all',
+    dim: "all",
     plan: {
-      id: '228-plan',
-      created_at: '2022-06-02T14:23:49.600Z',
+      id: "228-plan",
+      created_at: "2022-06-02T14:23:49.600Z",
       updated_at: null,
       entry_id: 228,
       year: 2019,
-      dim: 'all',
+      dim: "all",
       jan: 500,
       feb: 500,
       mar: 500,
@@ -450,403 +449,403 @@ export const view = [
         {
           begin: 1,
           end: 1,
-          total: 500
+          total: 500,
         },
         {
           begin: 1,
           end: 2,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 1,
           end: 3,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 1,
           end: 4,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 1,
           end: 5,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 1,
           end: 6,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 1,
           end: 7,
-          total: 3500
+          total: 3500,
         },
         {
           begin: 1,
           end: 8,
-          total: 4000
+          total: 4000,
         },
         {
           begin: 1,
           end: 9,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 1,
           end: 10,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 1,
           end: 11,
-          total: 5500
+          total: 5500,
         },
         {
           begin: 1,
           end: 12,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 2,
           end: 2,
-          total: 500
+          total: 500,
         },
         {
           begin: 2,
           end: 3,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 2,
           end: 4,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 2,
           end: 5,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 2,
           end: 6,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 2,
           end: 7,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 2,
           end: 8,
-          total: 3500
+          total: 3500,
         },
         {
           begin: 2,
           end: 9,
-          total: 4000
+          total: 4000,
         },
         {
           begin: 2,
           end: 10,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 2,
           end: 11,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 2,
           end: 12,
-          total: 5500
+          total: 5500,
         },
         {
           begin: 3,
           end: 3,
-          total: 500
+          total: 500,
         },
         {
           begin: 3,
           end: 4,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 3,
           end: 5,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 3,
           end: 6,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 3,
           end: 7,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 3,
           end: 8,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 3,
           end: 9,
-          total: 3500
+          total: 3500,
         },
         {
           begin: 3,
           end: 10,
-          total: 4000
+          total: 4000,
         },
         {
           begin: 3,
           end: 11,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 3,
           end: 12,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 4,
           end: 4,
-          total: 500
+          total: 500,
         },
         {
           begin: 4,
           end: 5,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 4,
           end: 6,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 4,
           end: 7,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 4,
           end: 8,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 4,
           end: 9,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 4,
           end: 10,
-          total: 3500
+          total: 3500,
         },
         {
           begin: 4,
           end: 11,
-          total: 4000
+          total: 4000,
         },
         {
           begin: 4,
           end: 12,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 5,
           end: 5,
-          total: 500
+          total: 500,
         },
         {
           begin: 5,
           end: 6,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 5,
           end: 7,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 5,
           end: 8,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 5,
           end: 9,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 5,
           end: 10,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 5,
           end: 11,
-          total: 3500
+          total: 3500,
         },
         {
           begin: 5,
           end: 12,
-          total: 4000
+          total: 4000,
         },
         {
           begin: 6,
           end: 6,
-          total: 500
+          total: 500,
         },
         {
           begin: 6,
           end: 7,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 6,
           end: 8,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 6,
           end: 9,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 6,
           end: 10,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 6,
           end: 11,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 6,
           end: 12,
-          total: 3500
+          total: 3500,
         },
         {
           begin: 7,
           end: 7,
-          total: 500
+          total: 500,
         },
         {
           begin: 7,
           end: 8,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 7,
           end: 9,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 7,
           end: 10,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 7,
           end: 11,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 7,
           end: 12,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 8,
           end: 8,
-          total: 500
+          total: 500,
         },
         {
           begin: 8,
           end: 9,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 8,
           end: 10,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 8,
           end: 11,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 8,
           end: 12,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 9,
           end: 9,
-          total: 500
+          total: 500,
         },
         {
           begin: 9,
           end: 10,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 9,
           end: 11,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 9,
           end: 12,
-          total: 2000
+          total: 2000,
         },
         {
           begin: 10,
           end: 10,
-          total: 500
+          total: 500,
         },
         {
           begin: 10,
           end: 11,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 10,
           end: 12,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 11,
           end: 11,
-          total: 500
+          total: 500,
         },
         {
           begin: 11,
           end: 12,
-          total: 1000
+          total: 1000,
         },
         {
           begin: 12,
           end: 12,
-          total: 500
-        }
+          total: 500,
+        },
       ],
-      name: 'Budget - Category',
-      plan_level: 'all',
+      name: "Budget - Category",
+      plan_level: "all",
       isEmpty: false,
-      transientTotal: 6000
+      transientTotal: 6000,
     },
-    plan_level: 'all',
+    plan_level: "all",
     hasPlan: true,
     computed: true,
-    key: 'id-228'
+    key: "id-228",
   },
   {
     jan: 205524035,
@@ -865,407 +864,407 @@ export const view = [
       {
         begin: 1,
         end: 1,
-        total: 205524035
+        total: 205524035,
       },
       {
         begin: 1,
         end: 2,
-        total: 441442690
+        total: 441442690,
       },
       {
         begin: 1,
         end: 3,
-        total: 677265435.3999999
+        total: 677265435.3999999,
       },
       {
         begin: 1,
         end: 4,
-        total: 860977815.3999999
+        total: 860977815.3999999,
       },
       {
         begin: 1,
         end: 5,
-        total: 1149847630.3999999
+        total: 1149847630.3999999,
       },
       {
         begin: 1,
         end: 6,
-        total: 1562215765.3999999
+        total: 1562215765.3999999,
       },
       {
         begin: 1,
         end: 7,
-        total: 2082861275.3999999
+        total: 2082861275.3999999,
       },
       {
         begin: 1,
         end: 8,
-        total: 2520440300.4
+        total: 2520440300.4,
       },
       {
         begin: 1,
         end: 9,
-        total: 2755689735.4
+        total: 2755689735.4,
       },
       {
         begin: 1,
         end: 10,
-        total: 2990504470.4
+        total: 2990504470.4,
       },
       {
         begin: 1,
         end: 11,
-        total: 3211135285.4
+        total: 3211135285.4,
       },
       {
         begin: 1,
         end: 12,
-        total: 3420477370.4
+        total: 3420477370.4,
       },
       {
         begin: 2,
         end: 2,
-        total: 235918655
+        total: 235918655,
       },
       {
         begin: 2,
         end: 3,
-        total: 471741400.4
+        total: 471741400.4,
       },
       {
         begin: 2,
         end: 4,
-        total: 655453780.4
+        total: 655453780.4,
       },
       {
         begin: 2,
         end: 5,
-        total: 944323595.3999999
+        total: 944323595.3999999,
       },
       {
         begin: 2,
         end: 6,
-        total: 1356691730.3999999
+        total: 1356691730.3999999,
       },
       {
         begin: 2,
         end: 7,
-        total: 1877337240.3999999
+        total: 1877337240.3999999,
       },
       {
         begin: 2,
         end: 8,
-        total: 2314916265.4
+        total: 2314916265.4,
       },
       {
         begin: 2,
         end: 9,
-        total: 2550165700.4
+        total: 2550165700.4,
       },
       {
         begin: 2,
         end: 10,
-        total: 2784980435.4
+        total: 2784980435.4,
       },
       {
         begin: 2,
         end: 11,
-        total: 3005611250.4
+        total: 3005611250.4,
       },
       {
         begin: 2,
         end: 12,
-        total: 3214953335.4
+        total: 3214953335.4,
       },
       {
         begin: 3,
         end: 3,
-        total: 235822745.39999998
+        total: 235822745.39999998,
       },
       {
         begin: 3,
         end: 4,
-        total: 419535125.4
+        total: 419535125.4,
       },
       {
         begin: 3,
         end: 5,
-        total: 708404940.3999999
+        total: 708404940.3999999,
       },
       {
         begin: 3,
         end: 6,
-        total: 1120773075.3999999
+        total: 1120773075.3999999,
       },
       {
         begin: 3,
         end: 7,
-        total: 1641418585.3999999
+        total: 1641418585.3999999,
       },
       {
         begin: 3,
         end: 8,
-        total: 2078997610.3999999
+        total: 2078997610.3999999,
       },
       {
         begin: 3,
         end: 9,
-        total: 2314247045.4
+        total: 2314247045.4,
       },
       {
         begin: 3,
         end: 10,
-        total: 2549061780.4
+        total: 2549061780.4,
       },
       {
         begin: 3,
         end: 11,
-        total: 2769692595.4
+        total: 2769692595.4,
       },
       {
         begin: 3,
         end: 12,
-        total: 2979034680.4
+        total: 2979034680.4,
       },
       {
         begin: 4,
         end: 4,
-        total: 183712380
+        total: 183712380,
       },
       {
         begin: 4,
         end: 5,
-        total: 472582195
+        total: 472582195,
       },
       {
         begin: 4,
         end: 6,
-        total: 884950330
+        total: 884950330,
       },
       {
         begin: 4,
         end: 7,
-        total: 1405595840
+        total: 1405595840,
       },
       {
         begin: 4,
         end: 8,
-        total: 1843174865
+        total: 1843174865,
       },
       {
         begin: 4,
         end: 9,
-        total: 2078424300
+        total: 2078424300,
       },
       {
         begin: 4,
         end: 10,
-        total: 2313239035
+        total: 2313239035,
       },
       {
         begin: 4,
         end: 11,
-        total: 2533869850
+        total: 2533869850,
       },
       {
         begin: 4,
         end: 12,
-        total: 2743211935
+        total: 2743211935,
       },
       {
         begin: 5,
         end: 5,
-        total: 288869815
+        total: 288869815,
       },
       {
         begin: 5,
         end: 6,
-        total: 701237950
+        total: 701237950,
       },
       {
         begin: 5,
         end: 7,
-        total: 1221883460
+        total: 1221883460,
       },
       {
         begin: 5,
         end: 8,
-        total: 1659462485
+        total: 1659462485,
       },
       {
         begin: 5,
         end: 9,
-        total: 1894711920
+        total: 1894711920,
       },
       {
         begin: 5,
         end: 10,
-        total: 2129526655
+        total: 2129526655,
       },
       {
         begin: 5,
         end: 11,
-        total: 2350157470
+        total: 2350157470,
       },
       {
         begin: 5,
         end: 12,
-        total: 2559499555
+        total: 2559499555,
       },
       {
         begin: 6,
         end: 6,
-        total: 412368135
+        total: 412368135,
       },
       {
         begin: 6,
         end: 7,
-        total: 933013645
+        total: 933013645,
       },
       {
         begin: 6,
         end: 8,
-        total: 1370592670
+        total: 1370592670,
       },
       {
         begin: 6,
         end: 9,
-        total: 1605842105
+        total: 1605842105,
       },
       {
         begin: 6,
         end: 10,
-        total: 1840656840
+        total: 1840656840,
       },
       {
         begin: 6,
         end: 11,
-        total: 2061287655
+        total: 2061287655,
       },
       {
         begin: 6,
         end: 12,
-        total: 2270629740
+        total: 2270629740,
       },
       {
         begin: 7,
         end: 7,
-        total: 520645510
+        total: 520645510,
       },
       {
         begin: 7,
         end: 8,
-        total: 958224535
+        total: 958224535,
       },
       {
         begin: 7,
         end: 9,
-        total: 1193473970
+        total: 1193473970,
       },
       {
         begin: 7,
         end: 10,
-        total: 1428288705
+        total: 1428288705,
       },
       {
         begin: 7,
         end: 11,
-        total: 1648919520
+        total: 1648919520,
       },
       {
         begin: 7,
         end: 12,
-        total: 1858261605
+        total: 1858261605,
       },
       {
         begin: 8,
         end: 8,
-        total: 437579025
+        total: 437579025,
       },
       {
         begin: 8,
         end: 9,
-        total: 672828460
+        total: 672828460,
       },
       {
         begin: 8,
         end: 10,
-        total: 907643195
+        total: 907643195,
       },
       {
         begin: 8,
         end: 11,
-        total: 1128274010
+        total: 1128274010,
       },
       {
         begin: 8,
         end: 12,
-        total: 1337616095
+        total: 1337616095,
       },
       {
         begin: 9,
         end: 9,
-        total: 235249435
+        total: 235249435,
       },
       {
         begin: 9,
         end: 10,
-        total: 470064170
+        total: 470064170,
       },
       {
         begin: 9,
         end: 11,
-        total: 690694985
+        total: 690694985,
       },
       {
         begin: 9,
         end: 12,
-        total: 900037070
+        total: 900037070,
       },
       {
         begin: 10,
         end: 10,
-        total: 234814735
+        total: 234814735,
       },
       {
         begin: 10,
         end: 11,
-        total: 455445550
+        total: 455445550,
       },
       {
         begin: 10,
         end: 12,
-        total: 664787635
+        total: 664787635,
       },
       {
         begin: 11,
         end: 11,
-        total: 220630815
+        total: 220630815,
       },
       {
         begin: 11,
         end: 12,
-        total: 429972900
+        total: 429972900,
       },
       {
         begin: 12,
         end: 12,
-        total: 209342085
-      }
+        total: 209342085,
+      },
     ],
     entry_id: 229,
     year: 2019,
-    dim: 'all',
+    dim: "all",
     id: 229,
     model_id: 41,
-    name: 'Calculation1',
-    type: 'group-calc',
+    name: "Calculation1",
+    type: "group-calc",
     data: {
-      expr: '@Category_id228 * 5'
+      expr: "@Category_id228 * 5",
     },
     sort: 0,
-    updated_at: '2022-06-02T14:23:21.239Z',
-    created_at: '2022-06-02T14:23:21.239Z',
+    updated_at: "2022-06-02T14:23:21.239Z",
+    created_at: "2022-06-02T14:23:21.239Z",
     ui_prefs: null,
     configuration: {},
     plan: {
@@ -1285,411 +1284,411 @@ export const view = [
         {
           begin: 1,
           end: 1,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 1,
           end: 2,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 1,
           end: 3,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 1,
           end: 4,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 1,
           end: 5,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 1,
           end: 6,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 1,
           end: 7,
-          total: 17500
+          total: 17500,
         },
         {
           begin: 1,
           end: 8,
-          total: 20000
+          total: 20000,
         },
         {
           begin: 1,
           end: 9,
-          total: 22500
+          total: 22500,
         },
         {
           begin: 1,
           end: 10,
-          total: 25000
+          total: 25000,
         },
         {
           begin: 1,
           end: 11,
-          total: 27500
+          total: 27500,
         },
         {
           begin: 1,
           end: 12,
-          total: 30000
+          total: 30000,
         },
         {
           begin: 2,
           end: 2,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 2,
           end: 3,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 2,
           end: 4,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 2,
           end: 5,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 2,
           end: 6,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 2,
           end: 7,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 2,
           end: 8,
-          total: 17500
+          total: 17500,
         },
         {
           begin: 2,
           end: 9,
-          total: 20000
+          total: 20000,
         },
         {
           begin: 2,
           end: 10,
-          total: 22500
+          total: 22500,
         },
         {
           begin: 2,
           end: 11,
-          total: 25000
+          total: 25000,
         },
         {
           begin: 2,
           end: 12,
-          total: 27500
+          total: 27500,
         },
         {
           begin: 3,
           end: 3,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 3,
           end: 4,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 3,
           end: 5,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 3,
           end: 6,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 3,
           end: 7,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 3,
           end: 8,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 3,
           end: 9,
-          total: 17500
+          total: 17500,
         },
         {
           begin: 3,
           end: 10,
-          total: 20000
+          total: 20000,
         },
         {
           begin: 3,
           end: 11,
-          total: 22500
+          total: 22500,
         },
         {
           begin: 3,
           end: 12,
-          total: 25000
+          total: 25000,
         },
         {
           begin: 4,
           end: 4,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 4,
           end: 5,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 4,
           end: 6,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 4,
           end: 7,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 4,
           end: 8,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 4,
           end: 9,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 4,
           end: 10,
-          total: 17500
+          total: 17500,
         },
         {
           begin: 4,
           end: 11,
-          total: 20000
+          total: 20000,
         },
         {
           begin: 4,
           end: 12,
-          total: 22500
+          total: 22500,
         },
         {
           begin: 5,
           end: 5,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 5,
           end: 6,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 5,
           end: 7,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 5,
           end: 8,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 5,
           end: 9,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 5,
           end: 10,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 5,
           end: 11,
-          total: 17500
+          total: 17500,
         },
         {
           begin: 5,
           end: 12,
-          total: 20000
+          total: 20000,
         },
         {
           begin: 6,
           end: 6,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 6,
           end: 7,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 6,
           end: 8,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 6,
           end: 9,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 6,
           end: 10,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 6,
           end: 11,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 6,
           end: 12,
-          total: 17500
+          total: 17500,
         },
         {
           begin: 7,
           end: 7,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 7,
           end: 8,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 7,
           end: 9,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 7,
           end: 10,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 7,
           end: 11,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 7,
           end: 12,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 8,
           end: 8,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 8,
           end: 9,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 8,
           end: 10,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 8,
           end: 11,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 8,
           end: 12,
-          total: 12500
+          total: 12500,
         },
         {
           begin: 9,
           end: 9,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 9,
           end: 10,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 9,
           end: 11,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 9,
           end: 12,
-          total: 10000
+          total: 10000,
         },
         {
           begin: 10,
           end: 10,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 10,
           end: 11,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 10,
           end: 12,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 11,
           end: 11,
-          total: 2500
+          total: 2500,
         },
         {
           begin: 11,
           end: 12,
-          total: 5000
+          total: 5000,
         },
         {
           begin: 12,
           end: 12,
-          total: 2500
-        }
+          total: 2500,
+        },
       ],
       entry_id: 229,
       year: 2019,
-      dim: 'all',
+      dim: "all",
       automated_computed: true,
       child_id: null,
-      updated_at: '2022-11-07T10:10:46.008Z',
-      created_at: '2022-11-07T10:10:46.008Z',
-      name: 'Budget - Calculation1',
-      plan_level: 'all',
+      updated_at: "2022-11-07T10:10:46.008Z",
+      created_at: "2022-11-07T10:10:46.008Z",
+      name: "Budget - Calculation1",
+      plan_level: "all",
       isEmpty: false,
-      id: '229-plan',
-      transientTotal: 30000
+      id: "229-plan",
+      transientTotal: 30000,
     },
-    plan_level: 'all',
+    plan_level: "all",
     hasPlan: true,
     computed: true,
-    key: 'id-229'
+    key: "id-229",
   },
   {
     jan: 12331441,
@@ -1708,407 +1707,407 @@ export const view = [
       {
         begin: 1,
         end: 1,
-        total: 12331421
+        total: 12331421,
       },
       {
         begin: 1,
         end: 2,
-        total: 26486614
+        total: 26486614,
       },
       {
         begin: 1,
         end: 3,
-        total: 40635926
+        total: 40635926,
       },
       {
         begin: 1,
         end: 4,
-        total: 516586689
+        total: 516586689,
       },
       {
         begin: 1,
         end: 5,
-        total: 689908578
+        total: 689908578,
       },
       {
         begin: 1,
         end: 6,
-        total: 937329459
+        total: 937329459,
       },
       {
         begin: 1,
         end: 7,
-        total: 1249716765
+        total: 1249716765,
       },
       {
         begin: 1,
         end: 8,
-        total: 1512264180
+        total: 1512264180,
       },
       {
         begin: 1,
         end: 9,
-        total: 1653413841
+        total: 1653413841,
       },
       {
         begin: 1,
         end: 10,
-        total: 1794302682
+        total: 1794302682,
       },
       {
         begin: 1,
         end: 11,
-        total: 1926681171
+        total: 1926681171,
       },
       {
         begin: 1,
         end: 12,
-        total: 2052286422
+        total: 2052286422,
       },
       {
         begin: 2,
         end: 2,
-        total: 141551193
+        total: 141551193,
       },
       {
         begin: 2,
         end: 3,
-        total: 283044840.24
+        total: 283044840.24,
       },
       {
         begin: 2,
         end: 4,
-        total: 393272268.24
+        total: 393272268.24,
       },
       {
         begin: 2,
         end: 5,
-        total: 566594157.24
+        total: 566594157.24,
       },
       {
         begin: 2,
         end: 6,
-        total: 814015038.24
+        total: 814015038.24,
       },
       {
         begin: 2,
         end: 7,
-        total: 1126402344.24
+        total: 1126402344.24,
       },
       {
         begin: 2,
         end: 8,
-        total: 1388949759.24
+        total: 1388949759.24,
       },
       {
         begin: 2,
         end: 9,
-        total: 1530099420.24
+        total: 1530099420.24,
       },
       {
         begin: 2,
         end: 10,
-        total: 1670988261.2400002
+        total: 1670988261.2400002,
       },
       {
         begin: 2,
         end: 11,
-        total: 1803366750.2400002
+        total: 1803366750.2400002,
       },
       {
         begin: 2,
         end: 12,
-        total: 1928972001.2400002
+        total: 1928972001.2400002,
       },
       {
         begin: 3,
         end: 3,
-        total: 141493647.24
+        total: 141493647.24,
       },
       {
         begin: 3,
         end: 4,
-        total: 251721075.24
+        total: 251721075.24,
       },
       {
         begin: 3,
         end: 5,
-        total: 425042964.23999995
+        total: 425042964.23999995,
       },
       {
         begin: 3,
         end: 6,
-        total: 672463845.24
+        total: 672463845.24,
       },
       {
         begin: 3,
         end: 7,
-        total: 984851151.24
+        total: 984851151.24,
       },
       {
         begin: 3,
         end: 8,
-        total: 1247398566.24
+        total: 1247398566.24,
       },
       {
         begin: 3,
         end: 9,
-        total: 1388548227.24
+        total: 1388548227.24,
       },
       {
         begin: 3,
         end: 10,
-        total: 1529437068.24
+        total: 1529437068.24,
       },
       {
         begin: 3,
         end: 11,
-        total: 1661815557.2400002
+        total: 1661815557.2400002,
       },
       {
         begin: 3,
         end: 12,
-        total: 1787420808.2400002
+        total: 1787420808.2400002,
       },
       {
         begin: 4,
         end: 4,
-        total: 110227428
+        total: 110227428,
       },
       {
         begin: 4,
         end: 5,
-        total: 283549317
+        total: 283549317,
       },
       {
         begin: 4,
         end: 6,
-        total: 530970198
+        total: 530970198,
       },
       {
         begin: 4,
         end: 7,
-        total: 843357504
+        total: 843357504,
       },
       {
         begin: 4,
         end: 8,
-        total: 1105904919
+        total: 1105904919,
       },
       {
         begin: 4,
         end: 9,
-        total: 1247054580
+        total: 1247054580,
       },
       {
         begin: 4,
         end: 10,
-        total: 1387943421
+        total: 1387943421,
       },
       {
         begin: 4,
         end: 11,
-        total: 1520321910
+        total: 1520321910,
       },
       {
         begin: 4,
         end: 12,
-        total: 1645927161
+        total: 1645927161,
       },
       {
         begin: 5,
         end: 5,
-        total: 173321889
+        total: 173321889,
       },
       {
         begin: 5,
         end: 6,
-        total: 420742770
+        total: 420742770,
       },
       {
         begin: 5,
         end: 7,
-        total: 733130076
+        total: 733130076,
       },
       {
         begin: 5,
         end: 8,
-        total: 995677491
+        total: 995677491,
       },
       {
         begin: 5,
         end: 9,
-        total: 1136827152
+        total: 1136827152,
       },
       {
         begin: 5,
         end: 10,
-        total: 1277715993
+        total: 1277715993,
       },
       {
         begin: 5,
         end: 11,
-        total: 1410094482
+        total: 1410094482,
       },
       {
         begin: 5,
         end: 12,
-        total: 1535699733
+        total: 1535699733,
       },
       {
         begin: 6,
         end: 6,
-        total: 247420881
+        total: 247420881,
       },
       {
         begin: 6,
         end: 7,
-        total: 559808187
+        total: 559808187,
       },
       {
         begin: 6,
         end: 8,
-        total: 822355602
+        total: 822355602,
       },
       {
         begin: 6,
         end: 9,
-        total: 963505263
+        total: 963505263,
       },
       {
         begin: 6,
         end: 10,
-        total: 1104394104
+        total: 1104394104,
       },
       {
         begin: 6,
         end: 11,
-        total: 1236772593
+        total: 1236772593,
       },
       {
         begin: 6,
         end: 12,
-        total: 1362377844
+        total: 1362377844,
       },
       {
         begin: 7,
         end: 7,
-        total: 312387306
+        total: 312387306,
       },
       {
         begin: 7,
         end: 8,
-        total: 574934721
+        total: 574934721,
       },
       {
         begin: 7,
         end: 9,
-        total: 716084382
+        total: 716084382,
       },
       {
         begin: 7,
         end: 10,
-        total: 856973223
+        total: 856973223,
       },
       {
         begin: 7,
         end: 11,
-        total: 989351712
+        total: 989351712,
       },
       {
         begin: 7,
         end: 12,
-        total: 1114956963
+        total: 1114956963,
       },
       {
         begin: 8,
         end: 8,
-        total: 262547415
+        total: 262547415,
       },
       {
         begin: 8,
         end: 9,
-        total: 403697076
+        total: 403697076,
       },
       {
         begin: 8,
         end: 10,
-        total: 544585917
+        total: 544585917,
       },
       {
         begin: 8,
         end: 11,
-        total: 676964406
+        total: 676964406,
       },
       {
         begin: 8,
         end: 12,
-        total: 802569657
+        total: 802569657,
       },
       {
         begin: 9,
         end: 9,
-        total: 141149661
+        total: 141149661,
       },
       {
         begin: 9,
         end: 10,
-        total: 282038502
+        total: 282038502,
       },
       {
         begin: 9,
         end: 11,
-        total: 414416991
+        total: 414416991,
       },
       {
         begin: 9,
         end: 12,
-        total: 540022242
+        total: 540022242,
       },
       {
         begin: 10,
         end: 10,
-        total: 140888841
+        total: 140888841,
       },
       {
         begin: 10,
         end: 11,
-        total: 273267330
+        total: 273267330,
       },
       {
         begin: 10,
         end: 12,
-        total: 398872581
+        total: 398872581,
       },
       {
         begin: 11,
         end: 11,
-        total: 132378489
+        total: 132378489,
       },
       {
         begin: 11,
         end: 12,
-        total: 257983740
+        total: 257983740,
       },
       {
         begin: 12,
         end: 12,
-        total: 125605251
-      }
+        total: 125605251,
+      },
     ],
     entry_id: 230,
     year: 2019,
-    dim: 'all',
+    dim: "all",
     id: 230,
     model_id: 41,
-    name: 'Calculation2',
-    type: 'group-calc',
+    name: "Calculation2",
+    type: "group-calc",
     data: {
-      expr: '@Category_id228 * 3'
+      expr: "@Category_id228 * 3",
     },
     sort: 1,
-    updated_at: '2022-06-02T14:23:43.478Z',
-    created_at: '2022-06-02T14:23:42.021Z',
+    updated_at: "2022-06-02T14:23:43.478Z",
+    created_at: "2022-06-02T14:23:42.021Z",
     ui_prefs: null,
     configuration: {},
     plan: {
@@ -2128,411 +2127,410 @@ export const view = [
         {
           begin: 1,
           end: 1,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 1,
           end: 2,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 1,
           end: 3,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 1,
           end: 4,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 1,
           end: 5,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 1,
           end: 6,
-          total: 9000
+          total: 9000,
         },
         {
           begin: 1,
           end: 7,
-          total: 10500
+          total: 10500,
         },
         {
           begin: 1,
           end: 8,
-          total: 12000
+          total: 12000,
         },
         {
           begin: 1,
           end: 9,
-          total: 13500
+          total: 13500,
         },
         {
           begin: 1,
           end: 10,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 1,
           end: 11,
-          total: 16500
+          total: 16500,
         },
         {
           begin: 1,
           end: 12,
-          total: 18000
+          total: 18000,
         },
         {
           begin: 2,
           end: 2,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 2,
           end: 3,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 2,
           end: 4,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 2,
           end: 5,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 2,
           end: 6,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 2,
           end: 7,
-          total: 9000
+          total: 9000,
         },
         {
           begin: 2,
           end: 8,
-          total: 10500
+          total: 10500,
         },
         {
           begin: 2,
           end: 9,
-          total: 12000
+          total: 12000,
         },
         {
           begin: 2,
           end: 10,
-          total: 13500
+          total: 13500,
         },
         {
           begin: 2,
           end: 11,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 2,
           end: 12,
-          total: 16500
+          total: 16500,
         },
         {
           begin: 3,
           end: 3,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 3,
           end: 4,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 3,
           end: 5,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 3,
           end: 6,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 3,
           end: 7,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 3,
           end: 8,
-          total: 9000
+          total: 9000,
         },
         {
           begin: 3,
           end: 9,
-          total: 10500
+          total: 10500,
         },
         {
           begin: 3,
           end: 10,
-          total: 12000
+          total: 12000,
         },
         {
           begin: 3,
           end: 11,
-          total: 13500
+          total: 13500,
         },
         {
           begin: 3,
           end: 12,
-          total: 15000
+          total: 15000,
         },
         {
           begin: 4,
           end: 4,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 4,
           end: 5,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 4,
           end: 6,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 4,
           end: 7,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 4,
           end: 8,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 4,
           end: 9,
-          total: 9000
+          total: 9000,
         },
         {
           begin: 4,
           end: 10,
-          total: 10500
+          total: 10500,
         },
         {
           begin: 4,
           end: 11,
-          total: 12000
+          total: 12000,
         },
         {
           begin: 4,
           end: 12,
-          total: 13500
+          total: 13500,
         },
         {
           begin: 5,
           end: 5,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 5,
           end: 6,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 5,
           end: 7,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 5,
           end: 8,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 5,
           end: 9,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 5,
           end: 10,
-          total: 9000
+          total: 9000,
         },
         {
           begin: 5,
           end: 11,
-          total: 10500
+          total: 10500,
         },
         {
           begin: 5,
           end: 12,
-          total: 12000
+          total: 12000,
         },
         {
           begin: 6,
           end: 6,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 6,
           end: 7,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 6,
           end: 8,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 6,
           end: 9,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 6,
           end: 10,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 6,
           end: 11,
-          total: 9000
+          total: 9000,
         },
         {
           begin: 6,
           end: 12,
-          total: 10500
+          total: 10500,
         },
         {
           begin: 7,
           end: 7,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 7,
           end: 8,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 7,
           end: 9,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 7,
           end: 10,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 7,
           end: 11,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 7,
           end: 12,
-          total: 9000
+          total: 9000,
         },
         {
           begin: 8,
           end: 8,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 8,
           end: 9,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 8,
           end: 10,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 8,
           end: 11,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 8,
           end: 12,
-          total: 7500
+          total: 7500,
         },
         {
           begin: 9,
           end: 9,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 9,
           end: 10,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 9,
           end: 11,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 9,
           end: 12,
-          total: 6000
+          total: 6000,
         },
         {
           begin: 10,
           end: 10,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 10,
           end: 11,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 10,
           end: 12,
-          total: 4500
+          total: 4500,
         },
         {
           begin: 11,
           end: 11,
-          total: 1500
+          total: 1500,
         },
         {
           begin: 11,
           end: 12,
-          total: 3000
+          total: 3000,
         },
         {
           begin: 12,
           end: 12,
-          total: 1500
-        }
+          total: 1500,
+        },
       ],
       entry_id: 230,
       year: 2019,
-      dim: 'all',
+      dim: "all",
       automated_computed: true,
       child_id: null,
-      updated_at: '2022-11-07T10:10:46.008Z',
-      created_at: '2022-11-07T10:10:46.008Z',
-      name: 'Budget - Calculation2',
-      plan_level: 'all',
+      updated_at: "2022-11-07T10:10:46.008Z",
+      created_at: "2022-11-07T10:10:46.008Z",
+      name: "Budget - Calculation2",
+      plan_level: "all",
       isEmpty: false,
-      id: '230-plan',
-      transientTotal: 18000
+      id: "230-plan",
+      transientTotal: 18000,
     },
-    plan_level: 'all',
+    plan_level: "all",
     hasPlan: true,
     computed: true,
-    key: 'id-230'
-  }
+    key: "id-230",
+  },
 ];
-
