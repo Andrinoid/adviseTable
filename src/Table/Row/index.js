@@ -4,7 +4,6 @@ import Col from "../Col";
 import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
-  // position: relative;
   display: flex;
   &:hover {
     .tableCol {
@@ -46,6 +45,7 @@ const RowMenu = styled.div`
 const Row = memo(
   ({
     children,
+    style,
     type = "primary",
     leftBrickContent,
     menuContent,
@@ -263,7 +263,7 @@ const Row = memo(
           className={`${tableId}-tableRow ${className}`}
           tableId={tableId}
           type={type}
-          style={{ width: totalWidth, height: '100%' }}
+          style={{ ...style, width: totalWidth }}
           ref={currentRowRef}
           y={rowNumber}
           theTheme={theTheme}

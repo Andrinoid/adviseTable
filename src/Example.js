@@ -152,10 +152,10 @@ function Example({
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
 
-                    <Row {...tableProvided.rowProps}>
+                    <Row {...tableProvided.rowProps} style={{minHeight : 40}}>
                       <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
                     </Row>
-                    <Row {...tableProvided.rowProps} height={60}>
+                    <Row {...tableProvided.rowProps} style={{minHeight : 40}}>
                       <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
                     </Row>
 
@@ -174,6 +174,7 @@ function Example({
                             >
                               <Row
                                 key={i}
+                                style={{minHeight : 40}}
                                 leftBrickContent={leftBrickContent(
                                   provided.dragHandleProps,
                                   row.id
