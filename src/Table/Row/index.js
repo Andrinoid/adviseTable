@@ -55,7 +55,6 @@ const Row = memo(
     setBiggestTotalCellWidth,
     setTableMatrix,
     colWidth,
-    colHeight,
     leftBrickWidth,
     numberOfDataCols,
     instanceCount,
@@ -69,11 +68,9 @@ const Row = memo(
     theTheme,
     showGrid,
     totalCols,
-    lasColumnRisizeable,
     className = "",
     onClick = () => {},
     selectable = true,
-    height,
   }) => {
     const currentRowRef = useRef(null);
     const [rowNumber, setRowNumber] = useState(null);
