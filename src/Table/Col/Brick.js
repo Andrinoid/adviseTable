@@ -4,7 +4,7 @@ import styled from "styled-components";
 const BrickElm = styled.div`
     display: inline-flex;
     align-items: center;
-    // position: absolute;
+    background-color: inherit;
     user-select: none;
     box-sizing: border-box;
     font-size: 14px;
