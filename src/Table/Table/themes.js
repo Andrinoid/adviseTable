@@ -20,6 +20,9 @@ const themes = {
     colSecondary: {
       background: "#fafafa",
     },
+    row: {
+      background: "#fff",
+    },
     rowHoverCol: {
       background: "#f0f7ff",
     },
@@ -49,7 +52,9 @@ const themes = {
     header: {
       background: "#000",
     },
-    row: {},
+    row: {
+      background: "#202124",
+    },
     col: {
       background: "#202124",
       color: "#bdc6cf",

@@ -5,6 +5,9 @@ import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
   display: flex;
+  ${({ theTheme }) => {
+    return theTheme.row;
+  }}  
   &:hover {
     .tableCol {
       ${({ theTheme }) => {
