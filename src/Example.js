@@ -155,7 +155,7 @@ function Example({
                     <Row {...tableProvided.rowProps} style={{minHeight : 40}}>
                       <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
                     </Row>
-                    <Row {...tableProvided.rowProps} style={{minHeight : 40}}>
+                    <Row {...tableProvided.rowProps} style={{minHeight : 40, backgroundColor: 'black', color: 'white'}}>
                       <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
                     </Row>
 

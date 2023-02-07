@@ -21,7 +21,7 @@ const themes = {
       background: "#fafafa",
     },
     row: {
-      background: "#fff",
+      backgroundColor: "#fff",
     },
     rowHoverCol: {
       background: "#f0f7ff",
