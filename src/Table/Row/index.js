@@ -9,12 +9,8 @@ const RowElm = styled.div`
     return theTheme.row;
   }}  
   &:hover {
-    .tableCol {
-      // mix-blend-mode: darken;
-      mix-blend-mode: multiply;
-      ${({ theTheme }) => {
-    return theTheme.rowHoverCol;
-  }}  
+    .tableCol .hoverIndicator {
+      display: block;
     }
     .${({ tableId }) => tableId}-rowMenu {
       display: block;

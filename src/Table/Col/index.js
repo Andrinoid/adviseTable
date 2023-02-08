@@ -7,6 +7,7 @@ import { getContainedArea } from '../Table/SelectedAreas';
 
 const Column = styled.div`
     display: inline-flex;
+    position: relative;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
     // position: absolute;
@@ -18,6 +19,14 @@ const Column = styled.div`
       return theme.grid;
     }
   }}
+`;
+
+const HoverIndicator = styled.div`
+  position: absolute;
+  inset: 0;
+  background: #5b95d6;
+  opacity: 0.1;
+  display: none;
 `;
 
 const Col = memo(
@@ -79,7 +88,7 @@ const Col = memo(
           return prev;
         });
       }
-    }, [y, x]);
+    }, [y, x]); 
 
     return (
       <Column
@@ -99,7 +108,7 @@ const Col = memo(
         data-selectable={selectable}
         className={`tableCol`}
       >
-        {/* <Outliner className={isHightlighted()} /> */}
+        <HoverIndicator className='hoverIndicator' />
         {!empty && (
           <Cell
             parentWidth={internalStyle.width}

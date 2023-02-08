@@ -5,11 +5,10 @@ const BrickElm = styled.div`
     display: inline-flex;
     align-items: center;
     background-color: inherit;
-    user-select: none;
     box-sizing: border-box;
+    user-select: none;
     font-size: 14px;
     z-index: 1;
-    mix-blend-mode: normal !important;
     justify-content: ${props => props.horizontalAlign};
     ${({ showGrid, theme }) => {
         if (showGrid) {
@@ -24,6 +23,13 @@ const BrickElm = styled.div`
             // return theme.col;
         // }
     }}
+`;
+const HoverIndicator = styled.div`
+  position: absolute;
+  inset: 0;
+  background: #5b95d6;
+  opacity: 0.1;
+  display: none;
 `;
 /**
  * The Brick component is the Columns of the table that does not hold data
@@ -48,7 +54,9 @@ const Brick =memo(({
             theme={theTheme}
             showGrid={showGrid}
             style={{ ...style }}
-        >
+        >   
+         <HoverIndicator className='hoverIndicator' />
+
             {children}
         </BrickElm>
     );
