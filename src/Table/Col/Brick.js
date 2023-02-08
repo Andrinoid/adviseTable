@@ -12,17 +12,23 @@ const BrickElm = styled.div`
     font-size: 14px;
     z-index: 1;
     justify-content: ${props => props.horizontalAlign};
-    &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: -1px;
-        width: 30px;
-        transform: translateX(100%);
-        transition: box-shadow .3s;
-        pointer-events: none;
-    }
+    ${({ style }) => {
+        if (style?.position === 'sticky') {
+            return `
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: -1px;
+                    width: 30px;
+                    transform: translateX(100%);
+                    transition: box-shadow .3s;
+                    pointer-events: none;
+                }
+            `;
+        }
+    }}
     ${({ showGrid, theme }) => {
         if (showGrid) {
             return theme.grid;
@@ -33,7 +39,7 @@ const BrickElm = styled.div`
             return { ...theme.col, ...theme.header };
         }
         // else if (location === 'left') {
-            // return theme.col;
+        // return theme.col;
         // }
     }}
 `;
@@ -43,7 +49,7 @@ const BrickElm = styled.div`
  * they are used in the header and as the first column in every row
  * TODO ADD PARENT TYPE AS PROP TO ALLOW FOR HEADER STYLES
  */
-const Brick =memo(({
+const Brick = memo(({
     horizontalAlign = 'right',
     children,
     style,
@@ -62,8 +68,8 @@ const Brick =memo(({
             theme={theTheme}
             showGrid={showGrid}
             style={{ ...style }}
-        >   
-         <HoverIndicator className='hoverIndicator' />
+        >
+            <HoverIndicator className='hoverIndicator' />
 
             {children}
         </BrickElm>
