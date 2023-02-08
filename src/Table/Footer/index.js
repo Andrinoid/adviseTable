@@ -43,88 +43,56 @@ const Box = styled.div`
  * If the footer is not desired, it can be rendered with white or transparent background and no content
  * TODO make the footer optional with a prop from the table
  */
-const Footer = memo(({ count, sum, min, max, avg, maxWidth, vissible }) => {
-  /**
-   * Simple number formatter
-   */
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const Footer = memo(
+  ({ count, sum, min, max, avg, maxWidth, vissible, numberFormat }) => {
+    return (
+      <TableFooter
+        style={{ maxWidth: maxWidth }}
+        className="tableCol tableFooter"
+        data-end={true}
+        vissible={vissible}
+      >
+        {vissible && (
+          <>
+            <Left></Left>
+            <Middle></Middle>
+            <Right>
+              {/* This needs more work to account for some scenarios like when one column is selected after bigger selection */}
+              {count > 1 && (
+                <>
+                  <Box>
+                    count: <span>{count}</span>
+                  </Box>
+                  {!isNaN(min) && (
+                    <Box>
+                      min: <span>{formatNumber(min, numberFormat)}</span>
+                    </Box>
+                  )}
+                  {!isNaN(max) && (
+                    <Box>
+                      max: <span>{formatNumber(max, numberFormat)}</span>
+                    </Box>
+                  )}
+                  {!isNaN(avg) && (
+                    <Box>
+                      avg:{" "}
+                      <span>{formatNumber(toInteger(avg), numberFormat)}</span>
+                    </Box>
+                  )}
+                  {!isNaN(sum) && (
+                    <Box>
+                      sum: <span>{formatNumber(sum, numberFormat)}</span>
+                    </Box>
+                  )}
+                </>
+              )}
+              {count === 1 && <></>}
+            </Right>
+          </>
+        )}
+      </TableFooter>
+    );
   }
-
-  return (
-    <TableFooter
-      style={{ maxWidth: maxWidth }}
-      className="tableCol tableFooter"
-      data-end={true}
-      vissible={vissible}
-    >
-      {vissible && (
-        <>
-          <Left></Left>
-          <Middle></Middle>
-          <Right>
-            {/* This needs more work to account for some scenarios like when one column is selected after bigger selection */}
-            {count > 1 && (
-              <>
-                <Box>
-                  count: <span>{count}</span>
-                </Box>
-                {!isNaN(min) && (
-                  <Box>
-                    min:{" "}
-                    <span>
-                      {formatNumber(min, {
-                        showIn: "none",
-                        decimalPoints: 2,
-                        display: "",
-                      })}
-                    </span>
-                  </Box>
-                )}
-                {!isNaN(max) && (
-                  <Box>
-                    max:{" "}
-                    <span>
-                      {formatNumber(max, {
-                        showIn: "none",
-                        decimalPoints: 2,
-                        display: "",
-                      })}
-                    </span>
-                  </Box>
-                )}
-                {!isNaN(avg) && (
-                  <Box>
-                    avg:{" "}
-                    <span>
-                      {formatNumber(toInteger(avg), {
-                        showIn: "none",
-                        decimalPoints: 2,
-                        display: "",
-                      })}
-                    </span>
-                  </Box>
-                )}
-                {!isNaN(sum) && (
-                  <Box>
-                    sum:{" "}
-                    <span>
-                      {formatNumber(sum, {
-                        showIn: "none",
-                        decimalPoints: 2,
-                        display: "",
-                      })}
-                    </span>
-                  </Box>
-                )}
-              </>
-            )}
-            {count === 1 && <></>}
-          </Right>
-        </>
-      )}
-    </TableFooter>
-  );
-});
+);
 
 export default Footer;

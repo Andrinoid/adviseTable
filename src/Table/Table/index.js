@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import styled from "styled-components";
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
   ${({ scrollStatus }) => {
-    if (scrollStatus === 'middle' || scrollStatus === 'end') {
+    if (scrollStatus === "middle" || scrollStatus === "end") {
       return `
         .brick {
           &:after {
@@ -30,7 +30,6 @@ const Wrapper = styled.div`
         }
       `;
     }
-    
   }}
 `;
 
@@ -46,7 +45,7 @@ const ViewPort = styled.div`
 
 const Table = (
   {
-    onSelection = () => { },
+    onSelection = () => {},
     headerStickyTopOffset = 0,
     lasColumnRisizeable = true,
     selectionMode = "cell",
@@ -58,6 +57,11 @@ const Table = (
     tableId, // make required
     footer, //Boolean
     width,
+    numberFormat = {
+      showIn: "none",
+      decimalPoints: 2,
+      display: "",
+    },
   },
   ref
 ) => {
@@ -69,7 +73,7 @@ const Table = (
   const [theTheme, setTheTheme] = useState(themes[theme]);
   const [viewportWidth, setViewportWidth] = useState(0);
   // const [viewportScrollState, setViewportScrollState] = useState({ position: 'start' }); // start, middle, end
-  const [scrollStatus, setScrollStatus] = useState('');
+  const [scrollStatus, setScrollStatus] = useState("");
 
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [firstColWidth, setfirstColWidth] = useState(150);
@@ -82,7 +86,7 @@ const Table = (
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colWidth, setColWidth] = useState(
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-    numberOfDataCols
+      numberOfDataCols
   );
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectColDraging, setSelectColDraging] = useState(false);
@@ -242,32 +246,30 @@ const Table = (
    */
   const measureViewport = useCallback(() => {
     const element = viewportRef.current;
-    if(!element) return;
-    
+    if (!element) return;
+
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
     }
 
-      const handleScroll = debounce(() => {
-        if (element.scrollLeft === 0) {
-          setScrollStatus("start");
-        }
-        else if (element.scrollLeft + element.offsetWidth === element.scrollWidth) {
-          setScrollStatus("end");
-        }
-        else {
-          setScrollStatus("middle");
-        }
-      }, 80);
-    
-      element.addEventListener("scroll", handleScroll);
+    const handleScroll = debounce(() => {
+      if (element.scrollLeft === 0) {
+        setScrollStatus("start");
+      } else if (
+        element.scrollLeft + element.offsetWidth ===
+        element.scrollWidth
+      ) {
+        setScrollStatus("end");
+      } else {
+        setScrollStatus("middle");
+      }
+    }, 80);
 
-      return () => {
-        element.removeEventListener("scroll", handleScroll);
-      };
- 
+    element.addEventListener("scroll", handleScroll);
 
-
+    return () => {
+      element.removeEventListener("scroll", handleScroll);
+    };
   }, [viewportRef]);
 
   useEffect(() => {
@@ -515,6 +517,7 @@ const Table = (
         </ViewPort>
         <div className="table-end"></div>
         <Footer
+          numberFormat={numberFormat}
           maxWidth={totalWidth}
           count={selectedCount}
           sum={selectedSum}
