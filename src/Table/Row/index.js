@@ -9,8 +9,7 @@ const RowElm = styled.div`
     return theTheme.row;
   }}  
   &:hover {
-    .tableCol .hoverIndicator {
-      display: block;
+    .tableCol {
       ${({ theTheme }) => {
     return theTheme.rowHoverCol;
   }}  
@@ -243,7 +242,7 @@ const Row = memo(
           y: rowNumber,
           x: i,
           type: colType,
-          style: { width: width },
+          style: { width: width, top: 0, left: left },
           setTableMatrix,
           tableMatrix,
           theTheme,
