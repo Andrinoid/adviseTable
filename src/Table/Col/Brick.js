@@ -6,11 +6,23 @@ const BrickElm = styled.div`
     display: inline-flex;
     align-items: center;
     background-color: inherit;
+    transition: box-shadow 0.3s cubic-bezier(0.7,0.3,0.1,1),all 0.3s cubic-bezier(0.7,0.3,0.1,1);
     box-sizing: border-box;
     user-select: none;
     font-size: 14px;
     z-index: 1;
     justify-content: ${props => props.horizontalAlign};
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: -1px;
+        width: 30px;
+        transform: translateX(100%);
+        transition: box-shadow .3s;
+        pointer-events: none;
+    }
     ${({ showGrid, theme }) => {
         if (showGrid) {
             return theme.grid;
