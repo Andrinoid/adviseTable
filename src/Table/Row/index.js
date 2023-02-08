@@ -244,7 +244,7 @@ const Row = memo(
           y: rowNumber,
           x: i,
           type: colType,
-          style: { width: width, top: 0, left: left },
+          internalStyle: { width: width },
           setTableMatrix,
           tableMatrix,
           theTheme,
