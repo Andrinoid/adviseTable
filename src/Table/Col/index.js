@@ -24,7 +24,8 @@ const Col = memo(
   ({
     horizontalAlign = "right",
     children,
-    style = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
+    style,
+    internalStyle = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
     type,
     id,
     x,
@@ -83,7 +84,7 @@ const Col = memo(
     return (
       <Column
         horizontalAlign={horizontalAlign}
-        style={{ ...style }}
+        style={{ ...style, ...internalStyle }}
         theme={theTheme}
         showGrid={showGrid}
         ref={currentColRef}
@@ -101,7 +102,7 @@ const Col = memo(
         {/* <Outliner className={isHightlighted()} /> */}
         {!empty && (
           <Cell
-            parentWidth={style.width}
+            parentWidth={internalStyle.width}
             parentType={type}
             totalWidth={totalWidth}
             setBiggestDataCellWidth={setBiggestDataCellWidth}
