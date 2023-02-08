@@ -9,6 +9,7 @@ const BrickElm = styled.div`
     box-sizing: border-box;
     font-size: 14px;
     z-index: 1;
+    mix-blend-mode: normal !important;
     justify-content: ${props => props.horizontalAlign};
     ${({ showGrid, theme }) => {
         if (showGrid) {
