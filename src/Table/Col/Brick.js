@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
+import HoverIndicator from "./HoverIndicator";
 
 const BrickElm = styled.div`
     display: inline-flex;
@@ -24,13 +25,7 @@ const BrickElm = styled.div`
         // }
     }}
 `;
-const HoverIndicator = styled.div`
-  position: absolute;
-  inset: 0;
-  background: #5b95d6;
-  opacity: 0.1;
-  display: none;
-`;
+
 /**
  * The Brick component is the Columns of the table that does not hold data
  * they are used in the header and as the first column in every row

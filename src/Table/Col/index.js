@@ -2,16 +2,13 @@
 import React, { useRef, useEffect, memo } from 'react';
 import styled from 'styled-components';
 import Cell from './Cell';
-import { getContainedArea } from '../Table/SelectedAreas';
-
+import HoverIndicator from './HoverIndicator';
 
 const Column = styled.div`
     display: inline-flex;
     position: relative;
     align-items: center;
     justify-content: ${props => props.horizontalAlign};
-    // position: absolute;
-
     user-select: none;
     box-sizing: border-box;
     ${({ showGrid, theme }) => {
@@ -19,14 +16,6 @@ const Column = styled.div`
       return theme.grid;
     }
   }}
-`;
-
-const HoverIndicator = styled.div`
-  position: absolute;
-  inset: 0;
-  background: #5b95d6;
-  opacity: 0.1;
-  display: none;
 `;
 
 const Col = memo(
