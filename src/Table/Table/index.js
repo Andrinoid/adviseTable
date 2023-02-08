@@ -19,19 +19,9 @@ import useCopier from "./Copier";
 const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
-`;
-
-const ViewPort = styled.div`
-  width: 100%;
-  overflow: hidden;
-  overflow-x: auto;
-  min-width: 0;
-  flex-direction: row;
-  display: flex;
-  flex: 1 1 auto;
   ${({ scrollState }) => {
     if (scrollState.position === 'middle') {
-
+      console.log('middle');
       return `
         .brick {
           &:after {
@@ -50,6 +40,16 @@ const ViewPort = styled.div`
       `;
     }
   }}
+`;
+
+const ViewPort = styled.div`
+  width: 100%;
+  overflow: hidden;
+  overflow-x: auto;
+  min-width: 0;
+  flex-direction: row;
+  display: flex;
+  flex: 1 1 auto;
 `;
 
 const Table = (
@@ -247,14 +247,13 @@ const Table = (
    * the width may vary based on the css applied to parent elements or the browser window width
    */
   const measureViewport = useCallback(() => {
-    if (viewportRef?.current?.offsetWidth)
+    if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
+    }
 
     let element = viewportRef.current;
     let initialScrollPosition = element.scrollLeft;
-
-    if (element.scrollWidth > element.offsetWidth) {
-      setViewportScrollState({ overflow: true });
+    // if (totalWidth > element.offsetWidth) {
       element.addEventListener("scroll", function () {
         if (element.scrollLeft === initialScrollPosition) {
           setViewportScrollState({ ...viewportScrollState, position: 'start' });
@@ -266,9 +265,9 @@ const Table = (
           setViewportScrollState({ overflow: true, position: 'middle' });
         }
       });
-    } else {
-      setViewportScrollState({ overflow: false, position: 'start' });
-    }
+    // } else {
+    //   setViewportScrollState({ overflow: false, position: 'start' });
+    // }
 
 
   }, [viewportRef]);
@@ -466,7 +465,7 @@ const Table = (
 
   return (
     <div ref={tableContainerRef} style={{ position: "relative" }}>
-      <Wrapper id={tableId} version="1.03">
+      <Wrapper id={tableId} version="1.03" scrollState={viewportScrollState}>
         <Header
           ref={headerScrollRef}
           className="scrollable"
@@ -492,7 +491,6 @@ const Table = (
 
         <ViewPort
           className={`viewPort${tableId} scrollable`}
-          scrollState={viewportScrollState}
           style={theTheme.secondary}
           ref={(el) => {
             viewportRef.current = el;

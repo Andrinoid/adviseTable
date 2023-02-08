@@ -5,6 +5,7 @@ import ResizablelCol from '../Col/ResizablelCol';
 import ResizableTable from './ResizableTable';
 import Brick from '../Col/Brick';
 
+
 const RowElm = styled.div`
     position: sticky;
     top: ${({ stickyTopOffset }) => stickyTopOffset}px;
@@ -64,7 +65,7 @@ const Header = React.forwardRef(({
               width: leftBrickWidth,
               height: colHeight,
               theTheme,
-              // zIndex: 101,
+              zIndex: 3,
               position: "sticky",
               top: 0,
               left: 0,

@@ -57,6 +57,7 @@ const Brick =memo(({
             data-location={location}
             location={location}
             className="brick tableCol"
+            data-selectable="false"
             horizontalAlign={horizontalAlign}
             theme={theTheme}
             showGrid={showGrid}
