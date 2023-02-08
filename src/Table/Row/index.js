@@ -10,6 +10,8 @@ const RowElm = styled.div`
   }}  
   &:hover {
     .tableCol {
+      // mix-blend-mode: darken;
+      mix-blend-mode: multiply;
       ${({ theTheme }) => {
     return theTheme.rowHoverCol;
   }}  

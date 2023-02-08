@@ -152,10 +152,10 @@ function Example({
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
 
-                    <Row {...tableProvided.rowProps} style={{minHeight : 40}}>
+                    <Row {...tableProvided.rowProps} style={{minHeight : 40, background: 'orange'}}>
                       <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
                     </Row>
-                    <Row {...tableProvided.rowProps} style={{minHeight : 40}}>
+                    <Row {...tableProvided.rowProps} style={{minHeight : 40, background: 'darkgray'}}>
                       <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
                     </Row>
 
