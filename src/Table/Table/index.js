@@ -7,6 +7,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import styled from "styled-components";
+import { debounce } from 'lodash';
 import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -19,26 +20,17 @@ import useCopier from "./Copier";
 const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
-  ${({ scrollState }) => {
-    if (scrollState.position === 'middle') {
-      console.log('middle');
+  ${({ scrollStatus }) => {
+    if (scrollStatus === 'middle' || scrollStatus === 'end') {
       return `
         .brick {
           &:after {
-            box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%) !important;
+            box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
           }
         }
       `;
     }
-    if (scrollState.position === 'end') {
-      return `
-        .brick {
-          &:after {
-            box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%) !important;
-          }
-        }
-      `;
-    }
+    
   }}
 `;
 
@@ -76,7 +68,9 @@ const Table = (
   const viewportRef = useRef(null);
   const [theTheme, setTheTheme] = useState(themes[theme]);
   const [viewportWidth, setViewportWidth] = useState(0);
-  const [viewportScrollState, setViewportScrollState] = useState({ position: 'start' }); // start, middle, end
+  // const [viewportScrollState, setViewportScrollState] = useState({ position: 'start' }); // start, middle, end
+  const [scrollStatus, setScrollStatus] = useState('');
+
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [firstColWidth, setfirstColWidth] = useState(150);
   const [numberOfDataCols, setNumberOfDataCols] = useState(
@@ -146,9 +140,9 @@ const Table = (
   const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableContainerRef = useRef(null);
 
-  useEffect(() => {
-    console.log('viewportScrollState', viewportScrollState);
-  }, [viewportScrollState]);
+  // useEffect(() => {
+  //   console.log('viewportScrollState', scrollStatus);
+  // }, [scrollStatus]);
 
   useCopier(tableMatrix, selectedAreas);
 
@@ -247,27 +241,31 @@ const Table = (
    * the width may vary based on the css applied to parent elements or the browser window width
    */
   const measureViewport = useCallback(() => {
+    const element = viewportRef.current;
+    if(!element) return;
+    
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
     }
 
-    let element = viewportRef.current;
-    let initialScrollPosition = element.scrollLeft;
-    // if (totalWidth > element.offsetWidth) {
-      element.addEventListener("scroll", function () {
-        if (element.scrollLeft === initialScrollPosition) {
-          setViewportScrollState({ ...viewportScrollState, position: 'start' });
+      const handleScroll = debounce(() => {
+        if (element.scrollLeft === 0) {
+          setScrollStatus("start");
         }
         else if (element.scrollLeft + element.offsetWidth === element.scrollWidth) {
-          setViewportScrollState({ overflow: true, position: 'end' });
+          setScrollStatus("end");
         }
         else {
-          setViewportScrollState({ overflow: true, position: 'middle' });
+          setScrollStatus("middle");
         }
-      });
-    // } else {
-    //   setViewportScrollState({ overflow: false, position: 'start' });
-    // }
+      }, 80);
+    
+      element.addEventListener("scroll", handleScroll);
+
+      return () => {
+        element.removeEventListener("scroll", handleScroll);
+      };
+ 
 
 
   }, [viewportRef]);
@@ -465,7 +463,7 @@ const Table = (
 
   return (
     <div ref={tableContainerRef} style={{ position: "relative" }}>
-      <Wrapper id={tableId} version="1.03" scrollState={viewportScrollState}>
+      <Wrapper id={tableId} version="1.03" scrollStatus={scrollStatus}>
         <Header
           ref={headerScrollRef}
           className="scrollable"
