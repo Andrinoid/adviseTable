@@ -368,9 +368,13 @@ const Table = (
         if (containedArea && !containedArea.isExclusion) {
           count++;
           try {
-            let value = tableMatrix[rowIndex][colIndex].current.innerText;
+            let value =
+              tableMatrix[rowIndex][colIndex].current.getAttribute(
+                "data-value"
+              );
+
             // try to convert value to number
-            value = Number(value.replace(".", "").replace(",", "."));
+            value = Number(value);
             if (!isNaN(value)) {
               sum += value;
             }

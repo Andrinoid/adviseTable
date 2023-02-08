@@ -1,17 +1,18 @@
-//react component  
-import React, { useRef, useEffect, memo } from 'react';
-import styled from 'styled-components';
-import Cell from './Cell';
-import HoverIndicator from './HoverIndicator';
+//react component
+import React, { useRef, useEffect, memo } from "react";
+import styled from "styled-components";
+import Cell from "./Cell";
+import HoverIndicator from "./HoverIndicator";
+import { formatNumber } from "../utils";
 
 const Column = styled.div`
-    display: inline-flex;
-    position: relative;
-    align-items: center;
-    justify-content: ${props => props.horizontalAlign};
-    user-select: none;
-    box-sizing: border-box;
-    ${({ showGrid, theme }) => {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: ${(props) => props.horizontalAlign};
+  user-select: none;
+  box-sizing: border-box;
+  ${({ showGrid, theme }) => {
     if (showGrid) {
       return theme.grid;
     }
@@ -41,6 +42,7 @@ const Col = memo(
     setBiggestTotalCellWidth,
     biggestTotalCellWidth,
     selectable,
+    numberFormat,
   }) => {
     const currentColRef = useRef(null);
     /*
@@ -77,7 +79,7 @@ const Col = memo(
           return prev;
         });
       }
-    }, [y, x]); 
+    }, [y, x]);
 
     return (
       <Column
@@ -96,8 +98,9 @@ const Col = memo(
         id={id}
         data-selectable={selectable}
         className={`tableCol`}
+        data-value={children}
       >
-        <HoverIndicator className='hoverIndicator' />
+        <HoverIndicator className="hoverIndicator" />
         {!empty && (
           <Cell
             parentWidth={internalStyle.width}
@@ -109,7 +112,7 @@ const Col = memo(
             setBiggestTotalCellWidth={setBiggestTotalCellWidth}
             biggestTotalCellWidth={biggestTotalCellWidth}
           >
-            {children}
+            {numberFormat ? formatNumber(children, numberFormat) : children}
           </Cell>
         )}
         {/* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell,
