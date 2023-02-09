@@ -44,6 +44,7 @@ const Col = memo(
     biggestTotalCellWidth,
     selectable,
     numberFormat,
+    onClick,
   }) => {
     const currentColRef = useRef(null);
     /*
@@ -100,6 +101,7 @@ const Col = memo(
         data-selectable={selectable}
         className={`tableCol`}
         data-value={children}
+        onClick={onClick}
       >
         <HoverIndicator className="hoverIndicator" />
         {!empty && (
