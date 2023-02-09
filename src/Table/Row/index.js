@@ -1,13 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState, memo, useLayoutEffect } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  memo,
+  useLayoutEffect,
+} from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
+import RowMenu from "./Menu";
 
 const RowElm = styled.div`
   display: flex;
   ${({ theTheme }) => {
     return theTheme.row;
-  }}  
+  }}
   &:hover {
     .tableCol .hoverIndicator {
       display: block;
@@ -15,32 +23,12 @@ const RowElm = styled.div`
     .${({ tableId }) => tableId}-rowMenu {
       display: block;
     }
-    
   }
   &.menuVissible {
     .${({ tableId }) => tableId}-rowMenu {
       display: block;
     }
   }
-`;
-
-const RowMenu = styled.div`
-  position: absolute;
-  left: -45px;
-  display: none;
-  padding-right: 5px;
-
-  > div {
-    background: white;
-    width: 40px;
-    border: solid 1px #e8e8e8;
-    border-radius: 3px;
-    box-shadow: 0 0 4px 0px rgb(0 0 0 / 12%);
-    left: 0px;
-    z-index: 4;
-    margin-right: 10px;
-  }
- 
 `;
 
 const Row = memo(
@@ -184,6 +172,8 @@ const Row = memo(
       let left;
       let width;
       let { colspan } = child.props;
+      const tableLength =
+        tableMatrix && tableMatrix[0] ? tableMatrix[0].length : 0;
 
       if (remainingCols > 0 && colspan == "fullwidth") {
         colspan = calculateFullWidthColspan(
@@ -202,7 +192,7 @@ const Row = memo(
           width = firstColWidth;
 
           if (colspan > 1) {
-            if (colspan + numCols === tableMatrix[0].length) {
+            if (colspan + numCols === tableLength) {
               //it spans to the last col and custom width of the last col needs to be considered
               width = firstColWidth + lastColWidth + (colspan - 2) * colWidth;
             } else {
@@ -218,7 +208,7 @@ const Row = memo(
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           if (colspan) {
-            if (colspan + numCols === tableMatrix[0].length) {
+            if (colspan + numCols === tableLength) {
               //it spans to the last col and custom width of the last col needs to be considered
               width = (colspan - 1) * colWidth + lastColWidth;
             } else {
@@ -239,6 +229,7 @@ const Row = memo(
           id: `x${i}y${rowNumber}`,
           y: rowNumber,
           x: i,
+          left,
           type: colType,
           internalStyle: { width: width },
           setTableMatrix,
@@ -270,11 +261,7 @@ const Row = memo(
           theTheme={theTheme}
           onClick={onClick}
         >
-          {menuContent && (
-            <RowMenu className={`${tableId}-rowMenu`}>
-              <div>{menuContent}</div>
-            </RowMenu>
-          )}
+          {menuContent && <RowMenu tableId={tableId}>{menuContent}</RowMenu>}
 
           {leftBrickContent && (
             <Brick
@@ -314,5 +301,3 @@ const Row = memo(
 );
 
 export default Row;
-
-

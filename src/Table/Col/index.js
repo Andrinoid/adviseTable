@@ -29,6 +29,7 @@ const Col = memo(
     id,
     x,
     y,
+    left,
     empty = false,
     colspan,
     showGrid,
@@ -43,6 +44,7 @@ const Col = memo(
     biggestTotalCellWidth,
     selectable,
     dataValue,
+    onClick,
   }) => {
     const currentColRef = useRef(null);
     /*
@@ -99,6 +101,7 @@ const Col = memo(
         data-selectable={selectable}
         className={`tableCol`}
         data-value={dataValue ? dataValue : children}
+        onClick={onClick}
       >
         <HoverIndicator className="hoverIndicator" />
         {!empty && (

@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, memo } from 'react';
-import styled from 'styled-components';
-import Brick from './Brick';
+import React, { useRef, useState, useEffect, memo } from "react";
+import styled from "styled-components";
+import Brick from "./Brick";
 
 const Resizer = styled.div`
     position: absolute;
@@ -8,10 +8,10 @@ const Resizer = styled.div`
     width: 5px;
     height: 100%;
     cursor: col-resize;
-    background: ${props => props.isResizing ? '#64b2fe' : 'transparent'};
+    background: ${(props) => (props.isResizing ? "#64b2fe" : "transparent")};
     border-${({ direction }) => direction}: solid 1px #ccc;
     ${({ direction }) => {
-        return direction === 'right' ? 'right: 0;' : 'left: 0;'
+      return direction === "right" ? "right: 0;" : "left: 0;";
     }}
     &:hover {
         background: #64b2fe;
@@ -36,27 +36,27 @@ const Resizer = styled.div`
 // `;
 
 const Fill = styled.div`
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: ${props => props.horizontalAlign};
-    position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: ${(props) => props.horizontalAlign};
+  position: relative;
 `;
 
-const ResizablelCol = memo(({
+const ResizablelCol = memo(
+  ({
     children,
     onResize,
-    direction = 'right',
+    direction = "right",
     style,
     type,
-    horizontalAlign = 'right',
+    horizontalAlign = "right",
     location,
     autoAdjustFirstColWidth,
     autoAdjustLastColWidth,
-}) => {
-
+  }) => {
     const [w, setW] = useState(0);
     const [x, setX] = useState(0);
     const [isResizing, setIsResizing] = useState(false);
@@ -66,80 +66,80 @@ const ResizablelCol = memo(({
     // This is a hack to only run the effect once
     const isFirstRun = useRef(true);
     useEffect(() => {
-        if (isFirstRun.current) {
-            isFirstRun.current = false;
-            return;
-        }
-        // Attach the listeners to `document`
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
-        return () => {
-            // Remove the listeners from `document`
-            document.removeEventListener('mousemove', mouseMoveHandler);
-            document.removeEventListener('mouseup', mouseUpHandler);
-        };
-
+      if (isFirstRun.current) {
+        isFirstRun.current = false;
+        return;
+      }
+      // Attach the listeners to `document`
+      document.addEventListener("mousemove", mouseMoveHandler);
+      document.addEventListener("mouseup", mouseUpHandler);
+      return () => {
+        // Remove the listeners from `document`
+        document.removeEventListener("mousemove", mouseMoveHandler);
+        document.removeEventListener("mouseup", mouseUpHandler);
+      };
     }, [x]);
 
     const mouseDownHandler = (e) => {
-        // Get the current mouse position
-        setX(e.clientX);
-        setW(colRef.current.offsetWidth);
+      // Get the current mouse position
+      setX(e.clientX);
+      setW(colRef.current.offsetWidth);
     };
 
     const mouseMoveHandler = (e) => {
-        // How far the mouse has been moved
-        setIsResizing(true);
-        let newWidth;
-        let dx;
-        // revert logic based on direction
-        if (direction === 'right') {
-            dx = e.clientX - x;
-            newWidth = w + dx;
-        } else {
-            dx = x - e.clientX;
-            newWidth = w + dx;
-        }
-        onResize(newWidth);
+      // How far the mouse has been moved
+      setIsResizing(true);
+      let newWidth;
+      let dx;
+      // revert logic based on direction
+      if (direction === "right") {
+        dx = e.clientX - x;
+        newWidth = w + dx;
+      } else {
+        dx = x - e.clientX;
+        newWidth = w + dx;
+      }
+      onResize(newWidth);
     };
 
     const mouseUpHandler = () => {
-        // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
-        setIsResizing(false);
+      // Remove the handlers of `mousemove` and `mouseup`
+      document.removeEventListener("mousemove", mouseMoveHandler);
+      document.removeEventListener("mouseup", mouseUpHandler);
+      setIsResizing(false);
     };
 
     const doubleClickHandler = () => {
-        if (type === 'first') {
-            autoAdjustFirstColWidth();
-        }
-        if (type === 'last') {
-            autoAdjustLastColWidth();
-        }
+      if (type === "first") {
+        autoAdjustFirstColWidth();
+      }
+      if (type === "last") {
+        autoAdjustLastColWidth();
+      }
     };
 
     return (
-        <Brick location={location} style={{ ...style }}>
-            {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}
-            <Fill className='fill' ref={colRef} horizontalAlign={horizontalAlign}>
-                {children}
-                <Resizer
-                    onMouseDown={mouseDownHandler}
-                    onDoubleClick={doubleClickHandler}
-                    direction={direction}
-                    isResizing={isResizing}
-                    ref={resizeRef}
-                >
-                    {/* <Line
+      <Brick location={location} style={{ ...style }}>
+        {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}
+        <Fill className="fill" ref={colRef} horizontalAlign={horizontalAlign}>
+          {children}
+          <Resizer
+            onMouseDown={mouseDownHandler}
+            onDoubleClick={doubleClickHandler}
+            direction={direction}
+            isResizing={isResizing}
+            ref={resizeRef}
+          >
+            {/* <Line
                     height={viewportHeight}
                     isResizing={isResizing}
                     direction={direction}
                 /> */}
-                </Resizer>
-            </Fill>
-        </Brick>
-    )
-});
+          </Resizer>
+        </Fill>
+      </Brick>
+    );
+  }
+);
 
 export default ResizablelCol;

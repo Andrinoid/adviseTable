@@ -43,6 +43,26 @@ const ViewPort = styled.div`
   flex: 1 1 auto;
 `;
 
+const Edge = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  bottom: -1px;
+  width: 30px;
+  // transform: translateX(100%);
+  transition: box-shadow 0.3s;
+  pointer-events: none;
+  ${({ isViewPortOverflow, scrollStatus }) => {
+    if (isViewPortOverflow && scrollStatus !== "end") {
+      return `
+        box-shadow: inset -10px 0 8px -8px rgb(5 5 5 / 6%);
+      `;
+    }
+  }}
+`;
+
 const Table = (
   {
     onSelection = () => {},
@@ -69,63 +89,39 @@ const Table = (
     setTheTheme(themes[theme]);
   }, [theme]);
 
+  // ======= refs =======
   const viewportRef = useRef(null);
-  const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [viewportWidth, setViewportWidth] = useState(0);
-  // const [viewportScrollState, setViewportScrollState] = useState({ position: 'start' }); // start, middle, end
-  const [scrollStatus, setScrollStatus] = useState("");
+  const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const tableContainerRef = useRef(null);
 
-  const [tableTopOffset, setTableTopOffset] = useState(0);
-  const [firstColWidth, setfirstColWidth] = useState(150);
+  // ======= states =======
+  const [theTheme, setTheTheme] = useState(themes[theme]);
   const [numberOfDataCols, setNumberOfDataCols] = useState(
     headerData.length - 2
   );
   const [headerHeight, setHeaderHeight] = useState(35);
-  const [colHeight, setColHeight] = useState(40);
+  // viewport states
+  const [viewportWidth, setViewportWidth] = useState(0);
+  const [scrollStatus, setScrollStatus] = useState("");
+  const [isViewPortOverflow, setIsViewPortOverflow] = useState(false);
+  // mesurements states
+  const [firstColWidth, setfirstColWidth] = useState(150);
+  const [tableTopOffset, setTableTopOffset] = useState(0);
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
+  const [colHeight, setColHeight] = useState(40);
   const [colWidth, setColWidth] = useState(
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
       numberOfDataCols
   );
+
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectColDraging, setSelectColDraging] = useState(false);
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
-  const [tableMatrix, setTableMatrix] = useState([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ]);
+  const [tableMatrix, setTableMatrix] = useState([]);
 
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
   const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
@@ -139,13 +135,12 @@ const Table = (
 
   const [instanceCount, setInstanceCount] = useState(0);
 
-  const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
-  const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
-  const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
-  const tableContainerRef = useRef(null);
+  // useEffect(() => {
+  //   console.log("isViewPortOverflow", isViewPortOverflow);
+  // }, [isViewPortOverflow]);
 
   // useEffect(() => {
-  //   console.log('viewportScrollState', scrollStatus);
+  //   console.log("scrollstatus", scrollStatus);
   // }, [scrollStatus]);
 
   useCopier(tableMatrix, selectedAreas);
@@ -158,7 +153,7 @@ const Table = (
    */
   useImperativeHandle(ref, () => ({
     autoAdjust() {
-      updateTableWith(getAdjustedSize());
+      updateTableWidth(getAdjustedSize());
     },
   }));
 
@@ -191,8 +186,10 @@ const Table = (
   /**
    * Update the total With but applying validation to the minimun width
    */
-  const updateTableWith = useCallback(
+  const updateTableWidth = useCallback(
     (width) => {
+      autoAdjustFirstColWidth();
+      autoAdjustLastColWidth();
       const minSize = getAdjustedSize();
       if (!width || width < minSize) {
         setTotalWidth(minSize);
@@ -204,11 +201,11 @@ const Table = (
   );
 
   useEffect(() => {
-    updateTableWith(width ? width : tableContainerRef.current.offsetWidth);
+    updateTableWidth(width ? width : tableContainerRef.current.offsetWidth);
     setTableTopOffset(tableContainerRef.current.offsetTop);
     measureViewport();
   }, [
-    updateTableWith,
+    updateTableWidth,
     width,
     firstColWidth,
     leftBrickWidth,
@@ -231,7 +228,10 @@ const Table = (
     setColWidth(calcColWidth);
     if (!lasColumnRisizeable) {
       setLastColWidth(calcColWidth);
+    } else {
+      setLastColWidth(lastColWidth);
     }
+    setfirstColWidth(firstColWidth);
   }, [
     firstColWidth,
     lastColWidth,
@@ -250,20 +250,24 @@ const Table = (
 
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
+      if (viewportRef.current.offsetWidth < totalWidth) {
+        console.log("table can scroll");
+        setIsViewPortOverflow(true);
+      }
     }
 
     const handleScroll = debounce(() => {
       if (element.scrollLeft === 0) {
         setScrollStatus("start");
       } else if (
-        element.scrollLeft + element.offsetWidth ===
+        Math.ceil(element.scrollLeft) + element.offsetWidth ===
         element.scrollWidth
       ) {
         setScrollStatus("end");
       } else {
         setScrollStatus("middle");
       }
-    }, 80);
+    }, 10);
 
     element.addEventListener("scroll", handleScroll);
 
@@ -275,7 +279,7 @@ const Table = (
   useEffect(() => {
     const callback = () => {
       if (tableContainerRef?.current?.offsetWidth) {
-        updateTableWith(tableContainerRef.current.offsetWidth);
+        updateTableWidth(tableContainerRef.current.offsetWidth);
       }
       measureViewport();
     };
@@ -284,7 +288,7 @@ const Table = (
     return () => {
       window.removeEventListener("resize", callback);
     };
-  }, [updateTableWith, biggestDataCellWidth]);
+  }, [updateTableWidth, biggestDataCellWidth]);
 
   /**
    *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
@@ -334,7 +338,7 @@ const Table = (
    * callback function for the table resizer
    */
   const onTableResize = useCallback((width) => {
-    updateTableWith(width);
+    updateTableWidth(width);
   }, []);
 
   /**
@@ -518,6 +522,11 @@ const Table = (
           />
 
           <Scroller active={selectColDraging} tableId={tableId} />
+          <Edge
+            className="edge"
+            isViewPortOverflow={isViewPortOverflow}
+            scrollStatus={scrollStatus}
+          />
         </ViewPort>
         <div className="table-end"></div>
         <Footer
