@@ -100,7 +100,9 @@ const Table = (
 
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
+  const [numberOfDataCols, setNumberOfDataCols] = useState(
+    headerData.length - 2
+  );
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -116,45 +118,12 @@ const Table = (
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
       numberOfDataCols
   );
-  
+
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectColDraging, setSelectColDraging] = useState(false);
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
-  const [tableMatrix, setTableMatrix] = useState([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ]);
+  const [tableMatrix, setTableMatrix] = useState([]);
 
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
   const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
@@ -168,15 +137,13 @@ const Table = (
 
   const [instanceCount, setInstanceCount] = useState(0);
 
-  
+  // useEffect(() => {
+  //   console.log("isViewPortOverflow", isViewPortOverflow);
+  // }, [isViewPortOverflow]);
 
-  useEffect(() => {
-    console.log("isViewPortOverflow", isViewPortOverflow);
-  }, [isViewPortOverflow]);
-
-  useEffect(() => {
-    console.log("scrollstatus", scrollStatus);
-  }, [scrollStatus]);
+  // useEffect(() => {
+  //   console.log("scrollstatus", scrollStatus);
+  // }, [scrollStatus]);
 
   useCopier(tableMatrix, selectedAreas);
 

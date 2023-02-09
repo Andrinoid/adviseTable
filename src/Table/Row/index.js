@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState, memo, useLayoutEffect } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  memo,
+  useLayoutEffect,
+} from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
@@ -8,7 +15,7 @@ const RowElm = styled.div`
   display: flex;
   ${({ theTheme }) => {
     return theTheme.row;
-  }}  
+  }}
   &:hover {
     .tableCol .hoverIndicator {
       display: block;
@@ -16,7 +23,6 @@ const RowElm = styled.div`
     .${({ tableId }) => tableId}-rowMenu {
       display: block;
     }
-    
   }
   &.menuVissible {
     .${({ tableId }) => tableId}-rowMenu {
@@ -166,6 +172,8 @@ const Row = memo(
       let left;
       let width;
       let { colspan } = child.props;
+      const tableLength =
+        tableMatrix && tableMatrix[0] ? tableMatrix[0].length : 0;
 
       if (remainingCols > 0 && colspan == "fullwidth") {
         colspan = calculateFullWidthColspan(
@@ -184,7 +192,7 @@ const Row = memo(
           width = firstColWidth;
 
           if (colspan > 1) {
-            if (colspan + numCols === tableMatrix[0].length) {
+            if (colspan + numCols === tableLength) {
               //it spans to the last col and custom width of the last col needs to be considered
               width = firstColWidth + lastColWidth + (colspan - 2) * colWidth;
             } else {
@@ -200,7 +208,7 @@ const Row = memo(
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           if (colspan) {
-            if (colspan + numCols === tableMatrix[0].length) {
+            if (colspan + numCols === tableLength) {
               //it spans to the last col and custom width of the last col needs to be considered
               width = (colspan - 1) * colWidth + lastColWidth;
             } else {
@@ -252,11 +260,7 @@ const Row = memo(
           theTheme={theTheme}
           onClick={onClick}
         >
-          {menuContent && (
-            <RowMenu tableId={tableId}>
-              {menuContent}
-            </RowMenu>
-          )}
+          {menuContent && <RowMenu tableId={tableId}>{menuContent}</RowMenu>}
 
           {leftBrickContent && (
             <Brick
@@ -296,5 +300,3 @@ const Row = memo(
 );
 
 export default Row;
-
-
