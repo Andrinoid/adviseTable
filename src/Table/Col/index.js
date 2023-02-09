@@ -29,6 +29,7 @@ const Col = memo(
     id,
     x,
     y,
+    left,
     empty = false,
     colspan,
     showGrid,

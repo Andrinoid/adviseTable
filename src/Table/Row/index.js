@@ -229,6 +229,7 @@ const Row = memo(
           id: `x${i}y${rowNumber}`,
           y: rowNumber,
           x: i,
+          left,
           type: colType,
           internalStyle: { width: width },
           setTableMatrix,
