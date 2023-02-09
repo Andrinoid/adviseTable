@@ -43,6 +43,28 @@ const ViewPort = styled.div`
   flex: 1 1 auto;
 `;
 
+const Edge = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;     
+  bottom: -1px;
+  width: 30px;
+  // transform: translateX(100%);
+  transition: box-shadow .3s;
+  pointer-events: none;  
+  ${({ isViewPortOverflow, scrollStatus }) => {
+    if (isViewPortOverflow && scrollStatus !== "end") {
+      return `
+        box-shadow: inset -10px 0 8px -8px rgb(5 5 5 / 6%);
+      `;
+    }
+  }}
+
+
+`;
+
 const Table = (
   {
     onSelection = () => {},
@@ -83,6 +105,7 @@ const Table = (
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
   const [scrollStatus, setScrollStatus] = useState('');
+  const [isViewPortOverflow, setIsViewPortOverflow] = useState(false);
   // mesurements states
   const [firstColWidth, setfirstColWidth] = useState(150);
   const [tableTopOffset, setTableTopOffset] = useState(0);
@@ -147,9 +170,13 @@ const Table = (
 
   
 
-  // useEffect(() => {
-  //   console.log('viewportScrollState', scrollStatus);
-  // }, [scrollStatus]);
+  useEffect(() => {
+    console.log("isViewPortOverflow", isViewPortOverflow);
+  }, [isViewPortOverflow]);
+
+  useEffect(() => {
+    console.log("scrollstatus", scrollStatus);
+  }, [scrollStatus]);
 
   useCopier(tableMatrix, selectedAreas);
 
@@ -196,6 +223,7 @@ const Table = (
    */
   const updateTableWith = useCallback(
     (width) => {
+      // return;
       const minSize = getAdjustedSize();
       if (!width || width < minSize) {
         setTotalWidth(minSize);
@@ -255,17 +283,15 @@ const Table = (
       setViewportWidth(viewportRef.current.offsetWidth);
       if(viewportRef.current.offsetWidth < totalWidth) {
         console.log('table can scroll')
-        //show shadow at the end of the table
+        setIsViewPortOverflow(true);
       }
     }
 
     const handleScroll = debounce(() => {
       if (element.scrollLeft === 0) {
         setScrollStatus("start");
-      } else if (
-        element.scrollLeft + element.offsetWidth ===
-        element.scrollWidth
-      ) {
+      } 
+      else if (Math.ceil(element.scrollLeft) + element.offsetWidth === element.scrollWidth) {
         setScrollStatus("end");
       } else {
         setScrollStatus("middle");
@@ -525,6 +551,7 @@ const Table = (
           />
 
           <Scroller active={selectColDraging} tableId={tableId} />
+          <Edge className="edge" isViewPortOverflow={isViewPortOverflow} scrollStatus={scrollStatus} />
         </ViewPort>
         <div className="table-end"></div>
         <Footer
