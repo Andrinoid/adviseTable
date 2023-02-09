@@ -163,6 +163,8 @@ const Table = (
    */
   const updateTableWith = useCallback(
     (width) => {
+      autoAdjustFirstColWidth();
+      autoAdjustLastColWidth();
       const minSize = getAdjustedSize();
       if (!width || width < minSize) {
         setTotalWidth(minSize);
@@ -280,6 +282,7 @@ const Table = (
    * This applies to last col
    */
   const autoAdjustLastColWidth = useCallback(() => {
+    console.log(biggestTotalCellWidth);
     setLastColWidth(biggestTotalCellWidth);
   }, [biggestTotalCellWidth]);
 
