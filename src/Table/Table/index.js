@@ -78,11 +78,13 @@ const Table = (
 
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
+  const [numberOfDataCols, setNumberOfDataCols] = useState(
+    headerData.length - 2
+  );
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
-  const [scrollStatus, setScrollStatus] = useState('');
+  const [scrollStatus, setScrollStatus] = useState("");
   // mesurements states
   const [firstColWidth, setfirstColWidth] = useState(150);
   const [tableTopOffset, setTableTopOffset] = useState(0);
@@ -93,45 +95,12 @@ const Table = (
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
       numberOfDataCols
   );
-  
+
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectColDraging, setSelectColDraging] = useState(false);
 
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
-  const [tableMatrix, setTableMatrix] = useState([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ]);
+  const [tableMatrix, setTableMatrix] = useState([]);
 
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
   const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
@@ -144,8 +113,6 @@ const Table = (
   const [selectedAvg, setSelectedAvg] = useState(0);
 
   const [instanceCount, setInstanceCount] = useState(0);
-
-  
 
   // useEffect(() => {
   //   console.log('viewportScrollState', scrollStatus);
@@ -253,8 +220,8 @@ const Table = (
 
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
-      if(viewportRef.current.offsetWidth < totalWidth) {
-        console.log('table can scroll')
+      if (viewportRef.current.offsetWidth < totalWidth) {
+        console.log("table can scroll");
         //show shadow at the end of the table
       }
     }
