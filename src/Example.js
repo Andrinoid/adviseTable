@@ -135,7 +135,7 @@ function Example({
       <Table
         headerData={header}
         theme={theme}
-        showGrid={showGrid}
+        showGrid={true}
         selectionMode={selectionMode}
         tableId={"bigTable"}
         footer={footerVissible}

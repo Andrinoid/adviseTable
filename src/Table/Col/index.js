@@ -7,9 +7,11 @@ import { formatNumber } from "../utils";
 
 const Column = styled.div`
   display: inline-flex;
+  flex-shrink: 0;
   position: relative;
   align-items: center;
   justify-content: ${(props) => props.horizontalAlign};
+  overflow: ${(props) => (props.type === "first" ? "hidden" : "visible")};
   user-select: none;
   box-sizing: border-box;
   ${({ showGrid, theme }) => {

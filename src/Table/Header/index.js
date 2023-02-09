@@ -1,53 +1,51 @@
-//react component  
-import React, { memo } from 'react';
-import styled from 'styled-components';
-import ResizablelCol from '../Col/ResizablelCol';
-import ResizableTable from './ResizableTable';
-import Brick from '../Col/Brick';
-
+//react component
+import React, { memo } from "react";
+import styled from "styled-components";
+import ResizablelCol from "../Col/ResizablelCol";
+import ResizableTable from "./ResizableTable";
+import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
-    position: sticky;
-    top: ${({ stickyTopOffset }) => stickyTopOffset}px;
-    z-index: 2;
-    white-space: nowrap;
-    width: 100%;
-    overflow: hidden;
+  position: sticky;
+  top: ${({ stickyTopOffset }) => stickyTopOffset}px;
+  z-index: 2;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
 `;
 
 const Label = styled.div`
-    padding: 5px;
-    font-weight: bold;
+  padding: 5px;
+  font-weight: bold;
 `;
 
-const Header = React.forwardRef(({
-    colWidth,
-    leftBrickWidth,
-    firstColWidth,
-    lastColWidth,
-    colHeight,
-    totalWidth,
-    // viewportHeight,
-    onFirstColResize,
-    onLastColResize,
-    onTableResize,
-    numberOfDataCols,
-    stickyTopOffset = 0,
-    theTheme,
-    showGrid,
-    data,
-    autoAdjustFirstColWidth,
-    autoAdjustLastColWidth,
-    lasColumnRisizeable,
-}, ref) => {
-
+const Header = React.forwardRef(
+  (
+    {
+      colWidth,
+      leftBrickWidth,
+      firstColWidth,
+      lastColWidth,
+      colHeight,
+      totalWidth,
+      // viewportHeight,
+      onFirstColResize,
+      onLastColResize,
+      numberOfDataCols,
+      stickyTopOffset = 0,
+      theTheme,
+      showGrid,
+      data,
+      autoAdjustFirstColWidth,
+      autoAdjustLastColWidth,
+      lasColumnRisizeable,
+    },
+    ref
+  ) => {
     const leftOffset = leftBrickWidth + firstColWidth;
 
     return (
-      <RowElm
-        ref={ref}
-        stickyTopOffset={stickyTopOffset}
-      >
+      <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
         <div
           style={{
             ...theTheme.header,
@@ -92,8 +90,6 @@ const Header = React.forwardRef(({
                     style={{
                       width: firstColWidth,
                       height: colHeight,
-                      top: 0,
-                      left: leftBrickWidth,
                     }}
                   >
                     <Label>{item.title}</Label>
@@ -109,8 +105,6 @@ const Header = React.forwardRef(({
                     style={{
                       width: colWidth,
                       height: colHeight,
-                      top: 0,
-                      left: left,
                     }}
                   >
                     <Label>{item.title}</Label>
@@ -131,16 +125,11 @@ const Header = React.forwardRef(({
                         style={{
                           width: lastColWidth,
                           height: colHeight,
-                          top: 0,
-                          left: leftOffset + numberOfDataCols * colWidth,
                         }}
                       >
                         <>
                           <Label>{item.title}</Label>
-                          <ResizableTable
-                            width={totalWidth}
-                            onResize={onTableResize}
-                          />
+                          <ResizableTable width={totalWidth} />
                         </>
                       </ResizablelCol>
                     )}
@@ -154,15 +143,10 @@ const Header = React.forwardRef(({
                         style={{
                           width: lastColWidth,
                           height: colHeight,
-                          top: 0,
-                          left: leftOffset + numberOfDataCols * colWidth,
                         }}
                       >
                         <Label>{item.title}</Label>
-                        <ResizableTable
-                          width={totalWidth}
-                          onResize={onTableResize}
-                        />
+                        <ResizableTable width={totalWidth} />
                       </Brick>
                     )}
                   </>
@@ -173,7 +157,7 @@ const Header = React.forwardRef(({
         </div>
       </RowElm>
     );
-});
-
+  }
+);
 
 export default memo(Header);
