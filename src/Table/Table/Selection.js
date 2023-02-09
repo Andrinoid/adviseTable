@@ -53,9 +53,11 @@ const Selection = ({
 
     console.log(dimensions);
     setTimeout(() => {
-      let dimensions = selectedAreas.map((selection) => {
-        return { ...calculateDimensions(selection), motionDelay };
-      });
+      let dimensions = selectedAreas
+        .filter((selection) => selection && selection.length != 0)
+        .map((selection) => {
+          return { ...calculateDimensions(selection), motionDelay };
+        });
       setDimensions(dimensions);
     }, motionDelay);
   };
