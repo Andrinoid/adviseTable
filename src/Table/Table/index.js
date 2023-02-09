@@ -48,12 +48,12 @@ const Edge = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  z-index: 2;     
+  z-index: 2;
   bottom: -1px;
   width: 30px;
   // transform: translateX(100%);
-  transition: box-shadow .3s;
-  pointer-events: none;  
+  transition: box-shadow 0.3s;
+  pointer-events: none;
   ${({ isViewPortOverflow, scrollStatus }) => {
     if (isViewPortOverflow && scrollStatus !== "end") {
       return `
@@ -61,8 +61,6 @@ const Edge = styled.div`
       `;
     }
   }}
-
-
 `;
 
 const Table = (
@@ -106,7 +104,7 @@ const Table = (
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
-  const [scrollStatus, setScrollStatus] = useState('');
+  const [scrollStatus, setScrollStatus] = useState("");
   const [isViewPortOverflow, setIsViewPortOverflow] = useState(false);
   // mesurements states
   const [firstColWidth, setfirstColWidth] = useState(150);
@@ -190,7 +188,8 @@ const Table = (
    */
   const updateTableWith = useCallback(
     (width) => {
-      // return;
+      autoAdjustFirstColWidth();
+      autoAdjustLastColWidth();
       const minSize = getAdjustedSize();
       if (!width || width < minSize) {
         setTotalWidth(minSize);
@@ -248,8 +247,8 @@ const Table = (
 
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
-      if(viewportRef.current.offsetWidth < totalWidth) {
-        console.log('table can scroll')
+      if (viewportRef.current.offsetWidth < totalWidth) {
+        console.log("table can scroll");
         setIsViewPortOverflow(true);
       }
     }
@@ -257,8 +256,10 @@ const Table = (
     const handleScroll = debounce(() => {
       if (element.scrollLeft === 0) {
         setScrollStatus("start");
-      } 
-      else if (Math.ceil(element.scrollLeft) + element.offsetWidth === element.scrollWidth) {
+      } else if (
+        Math.ceil(element.scrollLeft) + element.offsetWidth ===
+        element.scrollWidth
+      ) {
         setScrollStatus("end");
       } else {
         setScrollStatus("middle");
@@ -306,6 +307,7 @@ const Table = (
    * This applies to last col
    */
   const autoAdjustLastColWidth = useCallback(() => {
+    console.log(biggestTotalCellWidth);
     setLastColWidth(biggestTotalCellWidth);
   }, [biggestTotalCellWidth]);
 
@@ -518,7 +520,11 @@ const Table = (
           />
 
           <Scroller active={selectColDraging} tableId={tableId} />
-          <Edge className="edge" isViewPortOverflow={isViewPortOverflow} scrollStatus={scrollStatus} />
+          <Edge
+            className="edge"
+            isViewPortOverflow={isViewPortOverflow}
+            scrollStatus={scrollStatus}
+          />
         </ViewPort>
         <div className="table-end"></div>
         <Footer

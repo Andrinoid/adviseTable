@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { EditOutlined, VerticalAlignBottomOutlined, ClearOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  VerticalAlignBottomOutlined,
+  ClearOutlined,
+} from "@ant-design/icons";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
@@ -8,7 +12,7 @@ import DragHandle from "./icons/DragHandle";
 import { Table, Row, Col } from "./Table";
 import { view, ui_prefs } from "./data/example2";
 import { default as mo } from "./data/months";
-import Plus from './icons/Plus';
+import Plus from "./icons/Plus";
 
 const Flex = styled.div`
   display: flex;
@@ -17,12 +21,12 @@ const Flex = styled.div`
   cursor: ${({ cursor }) => cursor || "default"};
 `;
 const MenuItem = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-height: 30px;
-cursor: pointer;
-${({ hover }) => {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  cursor: pointer;
+  ${({ hover }) => {
     if (hover) {
       return `
       &:hover {
@@ -30,8 +34,7 @@ ${({ hover }) => {
       }
     `;
     }
-  }
-  }
+  }}
 `;
 
 function Example({
@@ -91,7 +94,6 @@ function Example({
   const leftBrickContent = (dragHandleProps, rowId) => {
     return (
       <Flex>
-
         <Flex
           cursor={"pointer"}
           style={{ marginLeft: 4 }}
@@ -110,10 +112,9 @@ function Example({
   };
 
   const rowMenuContent = (dragHandleProps) => {
-
     return (
       <>
-        <MenuItem {...dragHandleProps} style={{ cursor: 'grab' }}>
+        <MenuItem {...dragHandleProps} style={{ cursor: "grab" }}>
           <DragHandle />
         </MenuItem>
         <MenuItem hover>
@@ -126,7 +127,7 @@ function Example({
           <VerticalAlignBottomOutlined />
         </MenuItem>
       </>
-    )
+    );
   };
 
   return (
@@ -144,19 +145,27 @@ function Example({
           // console.log("selectedReport", selectedReport);
         }}
       >
-       
         {(tableProvided) => {
           return (
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="characters">
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
-
-                    <Row {...tableProvided.rowProps} style={{minHeight : 40, background: 'orange'}}>
-                      <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
+                    <Row
+                      {...tableProvided.rowProps}
+                      style={{ minHeight: 40, background: "orange" }}
+                    >
+                      <Col colspan={"fullwidth"} horizontalAlign="left">
+                        <b>Label Row</b>
+                      </Col>
                     </Row>
-                    <Row {...tableProvided.rowProps} style={{minHeight : 40, background: 'darkgray'}}>
-                      <Col colspan={"fullwidth"} horizontalAlign="left"><b>Label Row</b></Col>
+                    <Row
+                      {...tableProvided.rowProps}
+                      style={{ minHeight: 40, background: "darkgray" }}
+                    >
+                      <Col colspan={"fullwidth"} horizontalAlign="left">
+                        <b>Label Row</b>
+                      </Col>
                     </Row>
 
                     {viewData.map((row, i) => {
@@ -174,7 +183,7 @@ function Example({
                             >
                               <Row
                                 key={i}
-                                style={{minHeight : 40}}
+                                style={{ minHeight: 40 }}
                                 leftBrickContent={leftBrickContent(
                                   provided.dragHandleProps,
                                   row.id
@@ -190,7 +199,7 @@ function Example({
                                   <Col key={i}>{row[month]}</Col>
                                 ))}
 
-                                <Col>34567</Col>
+                                <Col>345670000000000</Col>
                               </Row>
 
                               {
@@ -291,8 +300,6 @@ function Example({
           );
         }}
       </Table>
-
-    
     </div>
   );
 }
