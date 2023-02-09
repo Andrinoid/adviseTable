@@ -263,7 +263,7 @@ const Table = (
       } else {
         setScrollStatus("middle");
       }
-    }, 80);
+    }, 10);
 
     element.addEventListener("scroll", handleScroll);
 
