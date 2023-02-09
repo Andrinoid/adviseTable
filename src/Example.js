@@ -241,6 +241,7 @@ function Example({
                                         selectable={false}
                                         {...tableProvided.rowProps}
                                         type={"secondary"}
+                                        style={{ minHeight: 40, background: "#f7f7f7" }}
                                       >
                                         <Col horizontalAlign="left">
                                           lykill 1004
@@ -263,6 +264,7 @@ function Example({
                                         selectable={false}
                                         {...tableProvided.rowProps}
                                         type={"secondary"}
+                                        style={{ minHeight: 40, background: "#f7f7f7" }}
                                       >
                                         <Col horizontalAlign="left">
                                           lykill 1006
