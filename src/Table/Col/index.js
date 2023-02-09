@@ -42,7 +42,7 @@ const Col = memo(
     setBiggestTotalCellWidth,
     biggestTotalCellWidth,
     selectable,
-    numberFormat,
+    dataValue,
   }) => {
     const currentColRef = useRef(null);
     /*
@@ -98,7 +98,7 @@ const Col = memo(
         id={id}
         data-selectable={selectable}
         className={`tableCol`}
-        data-value={children}
+        data-value={dataValue ? dataValue : children}
       >
         <HoverIndicator className="hoverIndicator" />
         {!empty && (
@@ -112,7 +112,7 @@ const Col = memo(
             setBiggestTotalCellWidth={setBiggestTotalCellWidth}
             biggestTotalCellWidth={biggestTotalCellWidth}
           >
-            {numberFormat ? formatNumber(children, numberFormat) : children}
+            {children}
           </Cell>
         )}
         {/* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell,
