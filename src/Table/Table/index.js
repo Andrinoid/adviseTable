@@ -153,7 +153,7 @@ const Table = (
    */
   useImperativeHandle(ref, () => ({
     autoAdjust() {
-      updateTableWith(getAdjustedSize());
+      updateTableWidth(getAdjustedSize());
     },
   }));
 
@@ -186,7 +186,7 @@ const Table = (
   /**
    * Update the total With but applying validation to the minimun width
    */
-  const updateTableWith = useCallback(
+  const updateTableWidth = useCallback(
     (width) => {
       autoAdjustFirstColWidth();
       autoAdjustLastColWidth();
@@ -201,11 +201,11 @@ const Table = (
   );
 
   useEffect(() => {
-    updateTableWith(width ? width : tableContainerRef.current.offsetWidth);
+    updateTableWidth(width ? width : tableContainerRef.current.offsetWidth);
     setTableTopOffset(tableContainerRef.current.offsetTop);
     measureViewport();
   }, [
-    updateTableWith,
+    updateTableWidth,
     width,
     firstColWidth,
     leftBrickWidth,
@@ -228,7 +228,10 @@ const Table = (
     setColWidth(calcColWidth);
     if (!lasColumnRisizeable) {
       setLastColWidth(calcColWidth);
+    } else {
+      setLastColWidth(lastColWidth);
     }
+    setfirstColWidth(firstColWidth);
   }, [
     firstColWidth,
     lastColWidth,
@@ -276,7 +279,7 @@ const Table = (
   useEffect(() => {
     const callback = () => {
       if (tableContainerRef?.current?.offsetWidth) {
-        updateTableWith(tableContainerRef.current.offsetWidth);
+        updateTableWidth(tableContainerRef.current.offsetWidth);
       }
       measureViewport();
     };
@@ -285,7 +288,7 @@ const Table = (
     return () => {
       window.removeEventListener("resize", callback);
     };
-  }, [updateTableWith, biggestDataCellWidth]);
+  }, [updateTableWidth, biggestDataCellWidth]);
 
   /**
    *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
@@ -307,7 +310,6 @@ const Table = (
    * This applies to last col
    */
   const autoAdjustLastColWidth = useCallback(() => {
-    console.log(biggestTotalCellWidth);
     setLastColWidth(biggestTotalCellWidth);
   }, [biggestTotalCellWidth]);
 
@@ -336,7 +338,7 @@ const Table = (
    * callback function for the table resizer
    */
   const onTableResize = useCallback((width) => {
-    updateTableWith(width);
+    updateTableWidth(width);
   }, []);
 
   /**
