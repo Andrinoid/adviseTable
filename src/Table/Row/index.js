@@ -1,10 +1,8 @@
 import React, {
-  useCallback,
   useEffect,
   useRef,
   useState,
   memo,
-  useLayoutEffect,
 } from "react";
 import styled from "styled-components";
 import Col from "../Col";

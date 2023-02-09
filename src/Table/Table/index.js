@@ -65,7 +65,7 @@ const Edge = styled.div`
 
 const Table = (
   {
-    onSelection = () => {},
+    onSelection = () => { },
     headerStickyTopOffset = 0,
     lasColumnRisizeable = true,
     selectionMode = "cell",
@@ -98,9 +98,7 @@ const Table = (
 
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(
-    headerData.length - 2
-  );
+  const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -112,36 +110,30 @@ const Table = (
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colHeight, setColHeight] = useState(40);
-  const [colWidth, setColWidth] = useState(
-    (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-      numberOfDataCols
-  );
-
-  const [selectedAreas, setSelectedAreas] = useState([]);
-  const [selectColDraging, setSelectColDraging] = useState(false);
-
-  // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
-  const [tableMatrix, setTableMatrix] = useState([]);
-
+  const [colWidth, setColWidth] = useState((totalWidth - firstColWidth - leftBrickWidth - lastColWidth) / numberOfDataCols);
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
   const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
   const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
-
+  // selection states
+  const [selectedAreas, setSelectedAreas] = useState([]);
+  const [selectColDraging, setSelectColDraging] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
   const [selectedSum, setSelectedSum] = useState(0);
   const [selectedMin, setSelectedMin] = useState(0);
   const [selectedMax, setSelectedMax] = useState(0);
   const [selectedAvg, setSelectedAvg] = useState(0);
-
+  // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
+  const [tableMatrix, setTableMatrix] = useState([]);
+  // Counter to keep track of how many rows are rendered in the table
   const [instanceCount, setInstanceCount] = useState(0);
 
-  // useEffect(() => {
-  //   console.log("isViewPortOverflow", isViewPortOverflow);
-  // }, [isViewPortOverflow]);
+  useEffect(() => {
+    console.log("isViewPortOverflow", isViewPortOverflow);
+  }, [isViewPortOverflow]);
 
-  // useEffect(() => {
-  //   console.log("scrollstatus", scrollStatus);
-  // }, [scrollStatus]);
+  useEffect(() => {
+    console.log("scrollstatus", scrollStatus);
+  }, [scrollStatus]);
 
   useCopier(tableMatrix, selectedAreas);
 
@@ -251,7 +243,6 @@ const Table = (
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
       if (viewportRef.current.offsetWidth < totalWidth) {
-        console.log("table can scroll");
         setIsViewPortOverflow(true);
       }
     }
@@ -274,7 +265,7 @@ const Table = (
     return () => {
       element.removeEventListener("scroll", handleScroll);
     };
-  }, [viewportRef]);
+  }, [viewportRef, totalWidth]);
 
   useEffect(() => {
     const callback = () => {

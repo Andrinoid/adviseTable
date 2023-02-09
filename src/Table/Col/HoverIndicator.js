@@ -6,6 +6,7 @@ const HoverIndicator = styled.div`
   background: #5b95d6;
   opacity: 0.1;
   display: none;
+  pointer-events: none;
 `;
 
 export default HoverIndicator;
