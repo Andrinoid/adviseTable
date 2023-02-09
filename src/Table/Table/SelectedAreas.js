@@ -5,15 +5,14 @@ import { cloneDeep, flatten } from "lodash";
 let trackMouseMove = false;
 
 const SelectedAreas = ({
-  selectionMode,  
+  selectionMode,
   tableId,
   setSelectColDraging,
   setSelectedCount,
   setSelectedAreas,
   tableMatrix,
 }) => {
-  
-  /** 
+  /**
    * Add event listeners to all the cells in the table
    * As this can be a large number of cells, we use delegate the event listeners to the body for performance
    */
@@ -75,13 +74,13 @@ const SelectedAreas = ({
       setSelectedCount(0);
       clearSelectedAreas();
       return;
-    };
+    }
     updateCurrentSelectedArea({ fromX: x, fromY: y, toX: x, toY: y });
-  }
+  };
 
   /** Start a new selected area if you are using command or ctrl key */
   const startNewSelectedArea = () => {
-    setSelectedAreas(selectedAreas => [...selectedAreas, {}]);
+    setSelectedAreas((selectedAreas) => [...selectedAreas, {}]);
   };
   /** Represents the initial state where nothing is selected */
   const clearSelectedAreas = () => {
@@ -93,11 +92,7 @@ const SelectedAreas = ({
     let forceMinX = null;
     let forceMaxX = null;
 
-    for (
-      let i = currentSelectedArea.fromY;
-      i <= currentSelectedArea.toY;
-      i++
-    ) {
+    for (let i = currentSelectedArea.fromY; i <= currentSelectedArea.toY; i++) {
       for (
         let j = currentSelectedArea.fromX;
         j <= currentSelectedArea.toX;
@@ -109,11 +104,24 @@ const SelectedAreas = ({
             const currentForceMinX = forceMinX;
             const currentForceMaxX = forceMaxX;
 
-            forceMinX = forceMinX == null || parseInt(x) < forceMinX ? parseInt(x) : forceMinX;
-            forceMaxX = forceMaxX == null || parseInt(x) + (colspan ? colspan - 1 : 0) > forceMaxX ? parseInt(x) + (colspan ? colspan - 1 : 0) : forceMaxX;
+            forceMinX =
+              forceMinX == null || parseInt(x) < forceMinX
+                ? parseInt(x)
+                : forceMinX;
+            forceMaxX =
+              forceMaxX == null ||
+              parseInt(x) + (colspan ? colspan - 1 : 0) > forceMaxX
+                ? parseInt(x) + (colspan ? colspan - 1 : 0)
+                : forceMaxX;
 
-            forceMinX = currentForceMinX != null && currentForceMinX < forceMinX ? currentForceMinX : forceMinX;
-            forceMaxX = currentForceMaxX != null && currentForceMaxX > forceMaxX ? currentForceMaxX : forceMaxX;
+            forceMinX =
+              currentForceMinX != null && currentForceMinX < forceMinX
+                ? currentForceMinX
+                : forceMinX;
+            forceMaxX =
+              currentForceMaxX != null && currentForceMaxX > forceMaxX
+                ? currentForceMaxX
+                : forceMaxX;
             // console.log(forceMinX, forceMaxX);
           }
         }
@@ -124,18 +132,15 @@ const SelectedAreas = ({
       currentSelectedArea.fromX = forceMinX;
     if (forceMaxX != null && forceMaxX > currentSelectedArea.toX)
       currentSelectedArea.toX = forceMaxX;
-  }
+  };
 
   /** Edit the last selected area */
-  let updateCurrentSelectedArea = ({
-    fromX,
-    fromY,
-    toX,
-    toY,
-  } = {}) => {
-    if (toX) toX = selectionMode === 'cell' ? parseInt(toX) : tableMatrix[0].length - 1;
+  let updateCurrentSelectedArea = ({ fromX, fromY, toX, toY } = {}) => {
+    if (toX)
+      toX =
+        selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length - 1;
     if (toY) toY = parseInt(toY);
-    if (fromX) fromX = selectionMode === 'cell' ?  parseInt(fromX) : 0;
+    if (fromX) fromX = selectionMode === "cell" ? parseInt(fromX) : 0;
     if (fromY) fromY = parseInt(fromY);
 
     setSelectedAreas((selectedAreas) => {
@@ -246,34 +251,29 @@ const SelectedAreas = ({
   /**
    * This function must remove the selected areas marked as exclusion areas and split the affected areas into smaller areas that are not excluded
    */
-  const applySelectionExclusion = () => { 
+  const applySelectionExclusion = () => {
     setSelectedAreas((selectedAreas) => {
       let newSelectionAreas = selectedAreas.filter((area) => !area.isExclusion);
       let exclusionAreas = selectedAreas.filter((area) => area.isExclusion);
-      
-      if (!exclusionAreas || !newSelectionAreas)
-        return;
-      
+
+      if (!exclusionAreas || !newSelectionAreas) return;
+
       exclusionAreas.forEach((exclusionArea) => {
         newSelectionAreas = flatten(
           newSelectionAreas.map((area) => {
             if (
-              (
-                (exclusionArea.fromX >= area.fromX &&
-                  exclusionArea.fromX <= area.toX) ||
+              ((exclusionArea.fromX >= area.fromX &&
+                exclusionArea.fromX <= area.toX) ||
                 (exclusionArea.toX <= area.toX &&
                   exclusionArea.toX >= area.fromX) ||
                 (exclusionArea.fromX <= area.fromX &&
-                  exclusionArea.toX >= area.toX)
-              ) && //x is overlaping
-              (
-                (exclusionArea.fromY <= area.toY &&
-                  exclusionArea.fromY >= area.fromY) ||
+                  exclusionArea.toX >= area.toX)) && //x is overlaping
+              ((exclusionArea.fromY <= area.toY &&
+                exclusionArea.fromY >= area.fromY) ||
                 (exclusionArea.toY <= area.toY &&
                   exclusionArea.toY >= area.fromY) ||
                 (exclusionArea.fromY <= area.fromY &&
-                  exclusionArea.toY >= area.toY)
-              ) //y is overlaping
+                  exclusionArea.toY >= area.toY)) //y is overlaping
             ) {
               //is affected
               return splitArea(area, exclusionArea);
@@ -284,26 +284,24 @@ const SelectedAreas = ({
           })
         );
       });
-      
+
       return newSelectionAreas;
     });
-  }
+  };
   /**
    * SPlit the area applying the exclusion cutoff
    */
-  const splitArea = (area, exclusionArea) => { 
+  const splitArea = (area, exclusionArea) => {
     const splitedAreas = [];
 
     const topCopy = cloneDeep(area);
     topCopy.toY = exclusionArea.fromY - 1;
-    if (topCopy.toY >= topCopy.fromY)
-      splitedAreas.push(topCopy)
+    if (topCopy.toY >= topCopy.fromY) splitedAreas.push(topCopy);
 
     const bottomCopy = cloneDeep(area);
     bottomCopy.fromY = exclusionArea.toY + 1;
-    if (bottomCopy.toY >= bottomCopy.fromY)
-      splitedAreas.push(bottomCopy);
-    
+    if (bottomCopy.toY >= bottomCopy.fromY) splitedAreas.push(bottomCopy);
+
     const leftCopy = cloneDeep(area);
     leftCopy.fromY = Math.max(exclusionArea.fromY, area.fromY);
     leftCopy.toY = Math.min(exclusionArea.toY, area.toY);
@@ -319,7 +317,7 @@ const SelectedAreas = ({
       splitedAreas.push(rightCopy);
 
     return splitedAreas;
-  }
+  };
 
   /**
    * When the mouse is moved, set the new coordinates
@@ -351,7 +349,7 @@ const SelectedAreas = ({
       oldX = x;
       oldY = y;
     }
-  }
+  };
 
   /**
    * We are only using the mouseUp event to detect when the user has finished selecting
@@ -361,14 +359,14 @@ const SelectedAreas = ({
     let { x, y, selectable } = e.delegateTarget.dataset;
     // console.log(selectable, e.delegateTarget);
     applySelectionExclusion();
-    if (selectable == 'false') {
+    if (selectable == "false") {
       // console.log("Uai...");
       return;
     }
     trackMouseMove = false;
     setSelectColDraging(false);
     if (x === undefined || y === undefined) return;
-  }
+  };
   // this compoenent does not render anything
   return <></>;
 };
@@ -411,5 +409,3 @@ export const getContainedArea = (selectedAreas, { x, y }) => {
 };
 
 export default SelectedAreas;
-
-
