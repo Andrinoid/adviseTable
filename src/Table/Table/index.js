@@ -16,6 +16,7 @@ import Scroller from "./Scroller";
 import themes from "./themes";
 import Selection from "./Selection";
 import useCopier from "./Copier";
+import { useLayoutEffect } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -65,7 +66,7 @@ const Edge = styled.div`
 
 const Table = (
   {
-    onSelection = () => { },
+    onSelection = () => {},
     headerStickyTopOffset = 0,
     lasColumnRisizeable = true,
     selectionMode = "cell",
@@ -98,7 +99,9 @@ const Table = (
 
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
+  const [numberOfDataCols, setNumberOfDataCols] = useState(
+    headerData.length - 2
+  );
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -110,7 +113,10 @@ const Table = (
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colHeight, setColHeight] = useState(40);
-  const [colWidth, setColWidth] = useState((totalWidth - firstColWidth - leftBrickWidth - lastColWidth) / numberOfDataCols);
+  const [colWidth, setColWidth] = useState(
+    (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
+      numberOfDataCols
+  );
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
   const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
   const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
@@ -126,6 +132,7 @@ const Table = (
   const [tableMatrix, setTableMatrix] = useState([]);
   // Counter to keep track of how many rows are rendered in the table
   const [instanceCount, setInstanceCount] = useState(0);
+  const [initialLoaded, setInitialLoaded] = useState(false);
 
   useEffect(() => {
     console.log("isViewPortOverflow", isViewPortOverflow);
@@ -145,7 +152,7 @@ const Table = (
    */
   useImperativeHandle(ref, () => ({
     autoAdjust() {
-      updateTableWidth(getAdjustedSize());
+      autoAdjustTable();
     },
   }));
 
@@ -161,50 +168,63 @@ const Table = (
    * Computes the minimun size allowed to the table without overflowing the numbers
    */
   const getAdjustedSize = useCallback(() => {
-    return (
-      firstColWidth +
+    const minSize =
+      biggestLabelCellWidth +
       leftBrickWidth +
-      lastColWidth +
-      biggestDataCellWidth * numberOfDataCols
-    );
+      biggestTotalCellWidth +
+      biggestDataCellWidth * numberOfDataCols;
+
+    console.log("minSize", minSize);
+    const tableContainerSize = tableContainerRef?.current?.offsetWidth;
+    console.log("tableContainerSize", tableContainerSize);
+    return tableContainerSize > minSize ? tableContainerSize : minSize;
   }, [
-    firstColWidth,
-    leftBrickWidth,
-    lastColWidth,
+    biggestLabelCellWidth,
+    biggestTotalCellWidth,
     biggestDataCellWidth,
+    leftBrickWidth,
     numberOfDataCols,
   ]);
 
-  /**
-   * Update the total With but applying validation to the minimun width
-   */
-  const updateTableWidth = useCallback(
-    (width) => {
-      autoAdjustFirstColWidth();
-      autoAdjustLastColWidth();
-      const minSize = getAdjustedSize();
-      if (!width || width < minSize) {
-        setTotalWidth(minSize);
-      } else {
-        setTotalWidth(width);
-      }
-    },
-    [getAdjustedSize]
-  );
+  const autoAdjustTable = () => {
+    const adjustedSize = getAdjustedSize();
+    if (adjustedSize !== totalWidth) setTotalWidth(getAdjustedSize());
 
-  useEffect(() => {
-    updateTableWidth(width ? width : tableContainerRef.current.offsetWidth);
+    autoAdjustFirstColWidth();
+    autoAdjustLastColWidth();
+    autoAdjustDataColWidth();
+
     setTableTopOffset(tableContainerRef.current.offsetTop);
     measureViewport();
+    setTimeout(() => {
+      setInitialLoaded(true);
+    }, 1);
+  };
+
+  /**
+   * when the width of the table changes, recalculate the width of the data cols
+   */
+  useLayoutEffect(() => {
+    autoAdjustTable();
   }, [
-    updateTableWidth,
-    width,
-    firstColWidth,
-    leftBrickWidth,
-    lastColWidth,
+    totalWidth,
+    biggestLabelCellWidth,
     biggestDataCellWidth,
     numberOfDataCols,
+    biggestTotalCellWidth,
+    leftBrickWidth,
   ]);
+
+  useEffect(() => {
+    const callback = () => {
+      setTotalWidth(getAdjustedSize());
+    };
+    window.addEventListener("resize", callback);
+
+    return () => {
+      window.removeEventListener("resize", callback);
+    };
+  }, []);
 
   /**
    * Updates the number of columns when headerData.length changes
@@ -212,25 +232,6 @@ const Table = (
   useEffect(() => {
     setNumberOfDataCols(headerData.length - 2);
   }, [headerData]);
-
-  /**
-   * when the width of the table changes, recalculate the width of the data cols
-   */
-  useEffect(() => {
-    setColWidth(calcColWidth);
-    if (!lasColumnRisizeable) {
-      setLastColWidth(calcColWidth);
-    } else {
-      setLastColWidth(lastColWidth);
-    }
-    setfirstColWidth(firstColWidth);
-  }, [
-    firstColWidth,
-    lastColWidth,
-    totalWidth,
-    numberOfDataCols,
-    lasColumnRisizeable,
-  ]);
 
   /**
    * Messure the viewport width and height.
@@ -267,20 +268,6 @@ const Table = (
     };
   }, [viewportRef, totalWidth]);
 
-  useEffect(() => {
-    const callback = () => {
-      if (tableContainerRef?.current?.offsetWidth) {
-        updateTableWidth(tableContainerRef.current.offsetWidth);
-      }
-      measureViewport();
-    };
-    window.addEventListener("resize", callback);
-
-    return () => {
-      window.removeEventListener("resize", callback);
-    };
-  }, [updateTableWidth, biggestDataCellWidth]);
-
   /**
    *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
    */
@@ -307,9 +294,17 @@ const Table = (
   /**
    * This function auto adjusts the width of the data cols to fit the biggest data cell
    */
-  // const autoAdjustDataColWidth = () => {
-  //   updateTableWith(getAdjustedSize());
-  // };
+  const autoAdjustDataColWidth = () => {
+    const extraColSpace =
+      totalWidth -
+      biggestLabelCellWidth -
+      biggestDataCellWidth * numberOfDataCols -
+      biggestTotalCellWidth -
+      leftBrickWidth;
+
+    console.log("extraColSpace", extraColSpace);
+    setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
+  };
 
   /**
    * callback function for the label col resizer
@@ -326,22 +321,15 @@ const Table = (
   }, []);
 
   /**
-   * callback function for the table resizer
-   */
-  const onTableResize = useCallback((width) => {
-    updateTableWidth(width);
-  }, []);
-
-  /**
    *  Calculate the width of the data cols based on moving parts
    *  changes to the all other parts of the table will affect the width of the data cols
    */
-  const calcColWidth = () => {
-    return (
-      (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-      numberOfDataCols
-    );
-  };
+  // const calcColWidth = () => {
+  //   return (
+  //     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
+  //     numberOfDataCols
+  //   );
+  // };
 
   /**
    * Basic calculations on the selected area values
@@ -464,7 +452,12 @@ const Table = (
 
   return (
     <div ref={tableContainerRef} style={{ position: "relative" }}>
-      <Wrapper id={tableId} version="1.03" scrollStatus={scrollStatus}>
+      <Wrapper
+        id={tableId}
+        version="1.03"
+        scrollStatus={scrollStatus}
+        style={{ opacity: !initialLoaded ? 0 : 1 }}
+      >
         <Header
           ref={headerScrollRef}
           className="scrollable"
@@ -477,7 +470,6 @@ const Table = (
           totalWidth={totalWidth}
           onFirstColResize={onFirstColResize}
           onLastColResize={onLastColResize}
-          onTableResize={onTableResize}
           numberOfDataCols={numberOfDataCols}
           theTheme={theTheme}
           data={headerData}
@@ -557,7 +549,9 @@ const Table = (
               leftOffset={leftBrickWidth}
               firstColWidth={firstColWidth}
               lastColWidth={lastColWidth}
-              numberOfCols={numberOfDataCols + 2}
+              numberOfCols={
+                tableMatrix && tableMatrix[0] ? tableMatrix[0].length : 0
+              }
               selectionMode={selectionMode}
               totalWidth={totalWidth}
               lasColumnRisizeable={lasColumnRisizeable}

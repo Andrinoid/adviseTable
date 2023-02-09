@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  memo,
-} from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";

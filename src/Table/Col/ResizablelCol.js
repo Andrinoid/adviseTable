@@ -40,6 +40,7 @@ const Fill = styled.div`
   height: 100%;
   font-size: 14px;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: ${(props) => props.horizontalAlign};
   position: relative;
