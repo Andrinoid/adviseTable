@@ -1,20 +1,22 @@
-import { set } from "lodash";
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import { motion } from "framer-motion";
 
-const Box = styled.div`
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  background-color: ${({ exclude, theTheme }) =>
-    exclude ? theTheme?.exludeArea.background : theTheme?.selection?.background};
-  border: ${({ exclude, theTheme }) =>
-    exclude ? "none" : theTheme?.selection?.border};
-  opacity: ${({ exclude, theTheme }) =>
-    exclude ? "0.7" : "1"};
-  pointer-events: none;
-  z-index: 3;
-`;
+const getBoxStyle = (exclude, theTheme) => {
+  return {
+    position: "absolute",
+    top: "-10px",
+    left: "-10px",
+    backgroundColor: `${
+      exclude
+        ? theTheme?.exludeArea.background
+        : theTheme?.selection?.background
+    }`,
+    border: `${exclude ? "none" : theTheme?.selection?.border}`,
+    opacity: `${exclude ? "0.7" : "1"}`,
+    pointerEvents: "none",
+    zIndex: 3,
+  };
+};
 
 /**
  * This component renders elements showing the selectedAreas
@@ -34,27 +36,37 @@ const Selection = ({
   const calculateDimensions = (selection = {}) => {
     const firstElement = tableMatrix[selection.fromY][selection.fromX].current;
     const lastElement = tableMatrix[selection.toY][selection.toX].current;
-    
+
     let top = firstElement.offsetTop;
     let left = firstElement.offsetLeft;
     let width = lastElement.offsetLeft + lastElement.offsetWidth - left;
     let height = lastElement.offsetTop + lastElement.offsetHeight - top;
-  
+
     return { top, left, width, height, selection };
   };
 
-  useEffect(() => {
+  const updateDimentions = (motionDelay = 0) => {
     if (selectedAreas.length === 0) {
       setDimensions([]);
       return;
     }
 
-    //for selectedAreas, calculate the dimensions
-    let dimensions = selectedAreas.map((selection) => {
-      return calculateDimensions(selection);
-    });
-    setDimensions(dimensions);
-  }, [selectedAreas, colWidth, lastColWidth, firstColWidth]);
+    console.log(dimensions);
+    setTimeout(() => {
+      let dimensions = selectedAreas.map((selection) => {
+        return { ...calculateDimensions(selection), motionDelay };
+      });
+      setDimensions(dimensions);
+    }, motionDelay);
+  };
+
+  useEffect(() => {
+    updateDimentions(0);
+  }, [selectedAreas]);
+
+  useEffect(() => {
+    updateDimentions(100);
+  }, [colWidth, lastColWidth, firstColWidth]);
 
   const rowSelectionStyles = {
     width: totalWidth,
@@ -66,15 +78,18 @@ const Selection = ({
     <>
       {dimensions.map((dimension, index) => {
         return (
-          <Box
+          <motion.div
             key={index}
-            theTheme={theTheme}
-            exclude={dimension.selection.isExclusion}
+            animate={dimension}
+            transition={{
+              duration: dimension.motionDelay ? dimension.motionDelay / 200 : 0,
+            }}
             style={{
+              ...getBoxStyle(dimension.selection.isExclusion, theTheme),
               ...dimension,
               ...(selectionMode === "row" && rowSelectionStyles),
             }}
-          />
+          ></motion.div>
         );
       })}
     </>
