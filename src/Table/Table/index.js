@@ -135,13 +135,13 @@ const Table = (
 
   const [instanceCount, setInstanceCount] = useState(0);
 
-  // useEffect(() => {
-  //   console.log("isViewPortOverflow", isViewPortOverflow);
-  // }, [isViewPortOverflow]);
+  useEffect(() => {
+    console.log("isViewPortOverflow", isViewPortOverflow);
+  }, [isViewPortOverflow]);
 
-  // useEffect(() => {
-  //   console.log("scrollstatus", scrollStatus);
-  // }, [scrollStatus]);
+  useEffect(() => {
+    console.log("scrollstatus", scrollStatus);
+  }, [scrollStatus]);
 
   useCopier(tableMatrix, selectedAreas);
 
@@ -251,7 +251,6 @@ const Table = (
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
       if (viewportRef.current.offsetWidth < totalWidth) {
-        console.log("table can scroll");
         setIsViewPortOverflow(true);
       }
     }
@@ -274,7 +273,7 @@ const Table = (
     return () => {
       element.removeEventListener("scroll", handleScroll);
     };
-  }, [viewportRef]);
+  }, [viewportRef, totalWidth]);
 
   useEffect(() => {
     const callback = () => {

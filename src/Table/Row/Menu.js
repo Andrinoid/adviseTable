@@ -3,9 +3,8 @@ import styled from "styled-components";
 
 const Menu = styled.div`
     position: absolute;
-    left: -45px;
+    left: -50px;
     display: none;
-    padding-right: 5px;
 
     > div {
         background: white;
