@@ -69,25 +69,31 @@ const Table = (
     setTheTheme(themes[theme]);
   }, [theme]);
 
+  // ======= refs =======
   const viewportRef = useRef(null);
-  const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [viewportWidth, setViewportWidth] = useState(0);
-  // const [viewportScrollState, setViewportScrollState] = useState({ position: 'start' }); // start, middle, end
-  const [scrollStatus, setScrollStatus] = useState("");
+  const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
+  const tableContainerRef = useRef(null);
 
-  const [tableTopOffset, setTableTopOffset] = useState(0);
-  const [firstColWidth, setfirstColWidth] = useState(150);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(
-    headerData.length - 2
-  );
+  // ======= states =======
+  const [theTheme, setTheTheme] = useState(themes[theme]);
+  const [numberOfDataCols, setNumberOfDataCols] = useState(headerData.length - 2);
   const [headerHeight, setHeaderHeight] = useState(35);
-  const [colHeight, setColHeight] = useState(40);
+  // viewport states
+  const [viewportWidth, setViewportWidth] = useState(0);
+  const [scrollStatus, setScrollStatus] = useState('');
+  // mesurements states
+  const [firstColWidth, setfirstColWidth] = useState(150);
+  const [tableTopOffset, setTableTopOffset] = useState(0);
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
+  const [colHeight, setColHeight] = useState(40);
   const [colWidth, setColWidth] = useState(
     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
       numberOfDataCols
   );
+  
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectColDraging, setSelectColDraging] = useState(false);
 
@@ -139,10 +145,7 @@ const Table = (
 
   const [instanceCount, setInstanceCount] = useState(0);
 
-  const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
-  const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
-  const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
-  const tableContainerRef = useRef(null);
+  
 
   // useEffect(() => {
   //   console.log('viewportScrollState', scrollStatus);
@@ -250,6 +253,10 @@ const Table = (
 
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
+      if(viewportRef.current.offsetWidth < totalWidth) {
+        console.log('table can scroll')
+        //show shadow at the end of the table
+      }
     }
 
     const handleScroll = debounce(() => {
