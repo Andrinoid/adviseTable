@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
-const getBoxStyle = (exclude, theTheme) => {
+const getBoxStyle = (exclude, theTheme, motionDelay) => {
   return {
     position: "absolute",
     top: "-10px",
@@ -15,6 +15,7 @@ const getBoxStyle = (exclude, theTheme) => {
     opacity: `${exclude ? "0.7" : "1"}`,
     pointerEvents: "none",
     zIndex: 3,
+    transition: `${motionDelay ? "all 0.2s ease-in-out" : "none"}`,
   };
 };
 
@@ -51,17 +52,20 @@ const Selection = ({
       return;
     }
 
-    console.log(dimensions);
+    console.log('selection dimentions', dimensions);
     setTimeout(() => {
-      let dimensions = selectedAreas.map((selection) => {
-        return { ...calculateDimensions(selection), motionDelay };
-      });
+      let dimensions = selectedAreas
+        .filter((selection) => selection && selection.length != 0)
+        .map((selection) => {
+          return { ...calculateDimensions(selection), motionDelay };
+        });
       setDimensions(dimensions);
     }, motionDelay);
   };
 
   useEffect(() => {
     updateDimentions(0);
+    console.log('selectedAreas', selectedAreas);
   }, [selectedAreas]);
 
   useEffect(() => {
@@ -78,18 +82,26 @@ const Selection = ({
     <>
       {dimensions.map((dimension, index) => {
         return (
-          <motion.div
-            key={index}
-            animate={dimension}
-            transition={{
-              duration: dimension.motionDelay ? dimension.motionDelay / 200 : 0,
-            }}
+          // <motion.div
+          //   key={index}
+          //   animate={dimension}
+          //   transition={{
+          //     duration: dimension.motionDelay ? dimension.motionDelay / 200 : 0,
+          //   }}
+          //   style={{
+          //     ...getBoxStyle(dimension.selection.isExclusion, theTheme),
+          //     ...dimension,
+          //     ...(selectionMode === "row" && rowSelectionStyles),
+          //   }}
+          // ></motion.div>
+          <div 
             style={{
-              ...getBoxStyle(dimension.selection.isExclusion, theTheme),
+              ...getBoxStyle(dimension.selection.isExclusion, theTheme, dimension.motionDelay),
               ...dimension,
               ...(selectionMode === "row" && rowSelectionStyles),
-            }}
-          ></motion.div>
+            }}>
+
+          </div>
         );
       })}
     </>
