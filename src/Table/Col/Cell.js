@@ -45,6 +45,7 @@ const Cell = memo(
 
     useEffect(() => {
       if (ref.current) {
+        console.log(ref.current.offsetWidth);
         setRefOffsetWidth(ref.current.offsetWidth);
       }
     }, [ref?.current?.offsetWidth]);
