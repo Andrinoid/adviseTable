@@ -47,7 +47,7 @@ const Cell = memo(
       if (ref.current) {
         setRefOffsetWidth(ref.current.offsetWidth);
       }
-    }, [ref]);
+    }, [ref?.current?.offsetWidth]);
 
     /**
      * Find the widest cell and update the state so we can use it to auto adjust the width of the columns

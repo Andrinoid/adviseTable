@@ -130,6 +130,12 @@ function Example({
     );
   };
 
+  const [total, setTotal] = useState(1000);
+  setInterval(() => {
+    //create random number between 1000 and 10000
+    let random = Math.floor(Math.random() * 9000) + 1000;
+    setTotal((total) => random);
+  }, 10000);
   return (
     <div className="App">
       <Table
@@ -199,7 +205,7 @@ function Example({
                                   <Col key={i}>{row[month]}</Col>
                                 ))}
 
-                                <Col>345670000000000</Col>
+                                <Col>{total}</Col>
                               </Row>
 
                               {
@@ -241,7 +247,10 @@ function Example({
                                         selectable={false}
                                         {...tableProvided.rowProps}
                                         type={"secondary"}
-                                        style={{ minHeight: 40, background: "#f7f7f7" }}
+                                        style={{
+                                          minHeight: 40,
+                                          background: "#f7f7f7",
+                                        }}
                                       >
                                         <Col horizontalAlign="left">
                                           lykill 1004
@@ -264,7 +273,10 @@ function Example({
                                         selectable={false}
                                         {...tableProvided.rowProps}
                                         type={"secondary"}
-                                        style={{ minHeight: 40, background: "#f7f7f7" }}
+                                        style={{
+                                          minHeight: 40,
+                                          background: "#f7f7f7",
+                                        }}
                                       >
                                         <Col horizontalAlign="left">
                                           lykill 1006
