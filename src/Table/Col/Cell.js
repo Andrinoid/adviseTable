@@ -58,14 +58,22 @@ const Cell = ({
       });
     }
     if (parentType === "first") {
-      if (refOffsetWidth > biggestLabelCellWidth) {
-        setBiggestLabelCellWidth(refOffsetWidth);
-      }
+      setBiggestLabelCellWidth((value) => {
+        if (refOffsetWidth > value) {
+          return refOffsetWidth;
+        } else {
+          return value;
+        }
+      });
     }
     if (parentType === "last") {
-      if (refOffsetWidth > biggestTotalCellWidth) {
-        setBiggestTotalCellWidth(refOffsetWidth);
-      }
+      setBiggestTotalCellWidth((value) => {
+        if (refOffsetWidth > value) {
+          return refOffsetWidth;
+        } else {
+          return value;
+        }
+      });
     }
   }, [refOffsetWidth]);
 
