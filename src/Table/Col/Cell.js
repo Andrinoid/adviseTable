@@ -30,21 +30,21 @@ const Cell = ({
   /**
    * This function gets the total width of an element, we use it to check if the cell is overflowing
    */
-  // function getElementWidth(element) {
-  //   const style = element.currentStyle || window.getComputedStyle(element);
-  //   const width = element.offsetWidth;
-  //   const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
-  //   const padding =
-  //     parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
-  //   const border =
-  //     parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
-  //   return width + margin + padding + border;
-  // }
+  function getElementWidth(element) {
+    const style = element.currentStyle || window.getComputedStyle(element);
+    const width = element.offsetWidth;
+    const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+    const padding =
+      parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+    const border =
+      parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
+    return width + margin + padding + border;
+  }
 
   useLayoutEffect(() => {
     if (ref && ref.current && ref.current.offsetWidth !== refOffsetWidth) {
       console.log("ref.current.offsetWidth", ref.current.offsetWidth);
-      setRefOffsetWidth(ref.current.offsetWidth);
+      setRefOffsetWidth(getElementWidth(ref.current));
     }
   });
 
