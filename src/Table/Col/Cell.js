@@ -23,6 +23,9 @@ const Cell = memo(
     setBiggestTotalCellWidth,
   }) => {
     const ref = useRef(null);
+    const [refOffsetWidth, setRefOffsetWidth] = useState(
+      ref && ref.current ? ref.current.offsetWidth : null
+    );
     const [isOverflowing, setIsOverflowing] = useState(false);
 
     /**
@@ -39,6 +42,12 @@ const Cell = memo(
         parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
       return width + margin + padding + border;
     }
+
+    useEffect(() => {
+      if (ref.current) {
+        setRefOffsetWidth(ref.current.offsetWidth);
+      }
+    }, [ref]);
 
     /**
      * Find the widest cell and update the state so we can use it to auto adjust the width of the columns
@@ -61,7 +70,7 @@ const Cell = memo(
           setBiggestTotalCellWidth(getElementWidth(ref.current));
         }
       }
-    }, [ref]);
+    }, [refOffsetWidth]);
 
     /**
      * Check if the cell is overflowing and set the state
