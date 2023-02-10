@@ -42,11 +42,8 @@ const Cell = ({
   }
 
   useLayoutEffect(() => {
-    if (ref && ref.current && ref.current.offsetWidth !== refOffsetWidth) {
-      console.log("ref.current.offsetWidth", ref.current.offsetWidth);
-      setRefOffsetWidth(getElementWidth(ref.current));
-    }
-  });
+    setRefOffsetWidth(getElementWidth(ref.current));
+  }, [ref?.current?.offsetWidth]);
 
   /**
    * Find the widest cell and update the state so we can use it to auto adjust the width of the columns

@@ -169,7 +169,7 @@ const Table = (
    */
   const getAdjustedSize = useCallback(() => {
     const minSize =
-      biggestLabelCellWidth +
+      (firstColWidth ? firstColWidth : biggestLabelCellWidth) +
       leftBrickWidth +
       biggestTotalCellWidth +
       biggestDataCellWidth * numberOfDataCols;
@@ -190,7 +190,7 @@ const Table = (
     const adjustedSize = getAdjustedSize();
     if (adjustedSize !== totalWidth) setTotalWidth(getAdjustedSize());
 
-    autoAdjustFirstColWidth();
+    if (!firstColWidth) autoAdjustFirstColWidth();
     autoAdjustLastColWidth();
     autoAdjustDataColWidth();
 
@@ -207,6 +207,7 @@ const Table = (
   useLayoutEffect(() => {
     autoAdjustTable();
   }, [
+    firstColWidth,
     totalWidth,
     biggestLabelCellWidth,
     biggestDataCellWidth,
@@ -297,7 +298,7 @@ const Table = (
   const autoAdjustDataColWidth = () => {
     const extraColSpace =
       totalWidth -
-      biggestLabelCellWidth -
+      (firstColWidth ? firstColWidth : biggestLabelCellWidth) -
       biggestDataCellWidth * numberOfDataCols -
       biggestTotalCellWidth -
       leftBrickWidth;
@@ -311,7 +312,7 @@ const Table = (
    */
   const onFirstColResize = useCallback((width) => {
     setfirstColWidth(width);
-  }, []);
+  });
 
   /**
    * callback function for the total col resizer
