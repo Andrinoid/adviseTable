@@ -7,6 +7,9 @@ const cellPaddingLeftRight = 5;
 const SpaceAround = styled.div`
   padding: 0 ${cellPaddingLeftRight}px;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 // x and y are only for debugging if needed
