@@ -68,7 +68,6 @@ const Table = (
   {
     onSelection = () => {},
     headerStickyTopOffset = 0,
-    lasColumnRisizeable = true,
     selectionMode = "cell",
     leftBrickWidth = 30,
     theme = "light",
@@ -86,6 +85,7 @@ const Table = (
   },
   ref
 ) => {
+  const lasColumnRisizeable = false; //just put this in props if want to make the totals resizeable. There is a issue on the resize though.
   useEffect(() => {
     setTheTheme(themes[theme]);
   }, [theme]);
@@ -296,22 +296,39 @@ const Table = (
    * This function auto adjusts the width of the data cols to fit the biggest data cell
    */
   const autoAdjustDataColWidth = () => {
-    const extraColSpace =
-      totalWidth -
-      (firstColWidth ? firstColWidth : biggestLabelCellWidth) -
-      biggestDataCellWidth * numberOfDataCols -
-      biggestTotalCellWidth -
-      leftBrickWidth;
+    const extraColSpace = getExtraColSpace();
 
     console.log("extraColSpace", extraColSpace);
     setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
   };
 
+  const getExtraColSpace = useCallback(() => {
+    return (
+      totalWidth -
+      (firstColWidth ? firstColWidth : biggestLabelCellWidth) -
+      biggestDataCellWidth * numberOfDataCols -
+      biggestTotalCellWidth -
+      leftBrickWidth
+    );
+  }, [
+    totalWidth,
+    firstColWidth,
+    biggestLabelCellWidth,
+    biggestDataCellWidth,
+    numberOfDataCols,
+    biggestTotalCellWidth,
+    leftBrickWidth,
+  ]);
+
   /**
    * callback function for the label col resizer
    */
   const onFirstColResize = useCallback((width) => {
-    setfirstColWidth(width);
+    const extraColSpace = getExtraColSpace();
+    console.log("A", extraColSpace);
+    if (extraColSpace - (width - firstColWidth) > 0) {
+      setfirstColWidth(width);
+    }
   });
 
   /**
