@@ -41,18 +41,12 @@ const Cell = ({
     return width + margin + padding + border;
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref && ref.current && ref.current.offsetWidth !== refOffsetWidth) {
       console.log("ref.current.offsetWidth", ref.current.offsetWidth);
       setRefOffsetWidth(ref.current.offsetWidth);
     }
   });
-  useEffect(() => {
-    if (ref && ref.current && ref.current.offsetWidth !== refOffsetWidth) {
-      console.log("ref.current.offsetWidth", ref.current.offsetWidth);
-      setRefOffsetWidth(ref.current.offsetWidth);
-    }
-  }, [ref.current]);
 
   /**
    * Find the widest cell and update the state so we can use it to auto adjust the width of the columns
