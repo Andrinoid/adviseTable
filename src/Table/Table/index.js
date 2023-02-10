@@ -92,6 +92,10 @@ const Table = (
 
   // ======= refs =======
   const viewportRef = useRef(null);
+
+  // const headerScrollRef = useRef(null);
+  // const viewportScrollRef = useRef(null);
+  // const tableLayerScrollRef = useRef(null);
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
@@ -258,7 +262,7 @@ const Table = (
       } else {
         setScrollStatus("middle");
       }
-    }, 10);
+    }, 100);
 
     element.addEventListener("scroll", handleScroll);
 
