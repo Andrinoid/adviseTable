@@ -51,7 +51,7 @@ const Selection = ({
       return;
     }
 
-    console.log(dimensions);
+    console.log('selection dimentions', dimensions);
     setTimeout(() => {
       let dimensions = selectedAreas
         .filter((selection) => selection && selection.length != 0)
@@ -64,7 +64,7 @@ const Selection = ({
 
   useEffect(() => {
     updateDimentions(0);
-    console.log(selectedAreas)
+    console.log('selectedAreas', selectedAreas);
   }, [selectedAreas]);
 
   useEffect(() => {
