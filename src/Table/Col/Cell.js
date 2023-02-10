@@ -44,11 +44,11 @@ const Cell = memo(
     }
 
     useEffect(() => {
-      if (ref.current) {
-        console.log(ref.current.offsetWidth);
+      if (ref && ref.current && ref.current.offsetWidth !== refOffsetWidth) {
+        console.log("ref.current.offsetWidth", ref.current.offsetWidth);
         setRefOffsetWidth(ref.current.offsetWidth);
       }
-    }, [ref?.current?.offsetWidth]);
+    });
 
     /**
      * Find the widest cell and update the state so we can use it to auto adjust the width of the columns
