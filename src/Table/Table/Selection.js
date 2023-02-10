@@ -64,6 +64,7 @@ const Selection = ({
 
   useEffect(() => {
     updateDimentions(0);
+    console.log(selectedAreas)
   }, [selectedAreas]);
 
   useEffect(() => {
