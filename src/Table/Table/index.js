@@ -174,9 +174,7 @@ const Table = (
       biggestTotalCellWidth +
       biggestDataCellWidth * numberOfDataCols;
 
-    console.log("minSize", minSize);
     const tableContainerSize = tableContainerRef?.current?.offsetWidth;
-    console.log("tableContainerSize", tableContainerSize);
     return tableContainerSize > minSize ? tableContainerSize : minSize;
   }, [
     biggestLabelCellWidth,
@@ -297,9 +295,11 @@ const Table = (
    */
   const autoAdjustDataColWidth = () => {
     const extraColSpace = getExtraColSpace();
-
-    console.log("extraColSpace", extraColSpace);
-    setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
+    if (extraColSpace > 0) {
+      setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
+    } else {
+      setColWidth(biggestDataCellWidth);
+    }
   };
 
   const getExtraColSpace = useCallback(() => {
@@ -325,8 +325,9 @@ const Table = (
    */
   const onFirstColResize = useCallback((width) => {
     const extraColSpace = getExtraColSpace();
-    console.log("A", extraColSpace);
     if (extraColSpace - (width - firstColWidth) > 0) {
+      setfirstColWidth(width);
+    } else {
       setfirstColWidth(width);
     }
   });
