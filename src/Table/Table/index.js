@@ -26,7 +26,7 @@ const Wrapper = styled.div`
       return `
         .brick {
           &:after {
-            box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
+            // box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
           }
         }
       `;
@@ -44,6 +44,34 @@ const ViewPort = styled.div`
   flex: 1 1 auto;
 `;
 
+const LeftBrickSpace = styled.div`
+  position: absolute;
+  left: 0;
+  width: 30px;
+  bottom: 0;
+  top: 0;
+  background-color: inherit;
+  z-index: 2
+`;
+
+const LeftEdge = styled.div` 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: -1px;
+  width: 30px;
+  transform: translateX(100%);
+  transition: box-shadow .3s;
+  pointer-events: none;
+  ${({ scrollStatus }) => {
+    if (scrollStatus === "middle" || scrollStatus === "end") {
+      return `
+        box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
+      `;
+    }
+  }}
+`;
+
 const Edge = styled.div`
   position: absolute;
   top: 0;
@@ -52,7 +80,6 @@ const Edge = styled.div`
   z-index: 2;
   bottom: -1px;
   width: 30px;
-  // transform: translateX(100%);
   transition: box-shadow 0.3s;
   pointer-events: none;
   ${({ isViewPortOverflow, scrollStatus }) => {
@@ -516,6 +543,7 @@ const Table = (
             className={`${tableId}container`}
           >
             {childrenRows}
+            <LeftBrickSpace />
           </div>
 
           <SelectedArea
@@ -528,8 +556,8 @@ const Table = (
           />
 
           <Scroller active={selectColDraging} tableId={tableId} />
+          <LeftEdge scrollStatus={scrollStatus} />
           <Edge
-            className="edge"
             isViewPortOverflow={isViewPortOverflow}
             scrollStatus={scrollStatus}
           />
