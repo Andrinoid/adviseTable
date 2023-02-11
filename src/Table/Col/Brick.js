@@ -12,7 +12,7 @@ const BrickElm = styled.div`
   box-sizing: border-box;
   user-select: none;
   font-size: 14px;
-  z-index: 4;
+  z-index: 3;
   justify-content: ${(props) => props.horizontalAlign};
   ${({ style }) => {
     if (style?.position === "sticky") {
