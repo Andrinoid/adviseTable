@@ -56,7 +56,7 @@ const Edge = styled.div`
   bottom: 0;
   right: 0;
   z-index: 2;
-  bottom: -1px;
+  height: calc(100% - 30px);
   width: 30px;
   transition: box-shadow 0.3s;
   pointer-events: none;
@@ -260,7 +260,7 @@ const Table = (
       if (element.scrollLeft === 0) {
         setScrollStatus("start");
       } else if (
-        Math.ceil(element.scrollLeft) + element.offsetWidth ===
+        Math.ceil(element.scrollLeft) + element.offsetWidth >=
         element.scrollWidth
       ) {
         setScrollStatus("end");
