@@ -50,7 +50,7 @@ const LeftBrickSpace = styled.div`
   width: 30px;
   bottom: 0;
   top: 0;
-  background-color: inherit;
+  background-color: #f7f7f7;
   z-index: 2
 `;
 
@@ -504,7 +504,7 @@ const Table = (
     <div ref={tableContainerRef} style={{ position: "relative" }}>
       <Wrapper
         id={tableId}
-        version="1.05"
+        version="1.06"
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
