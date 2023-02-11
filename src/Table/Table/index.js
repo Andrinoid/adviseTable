@@ -482,7 +482,7 @@ const Table = (
     <div ref={tableContainerRef} style={{ position: "relative" }}>
       <Wrapper
         id={tableId}
-        version="1.06"
+        version="1.07"
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
