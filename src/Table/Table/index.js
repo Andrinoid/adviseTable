@@ -48,8 +48,8 @@ const LeftBrickSpace = styled.div`
   position: absolute;
   left: 0;
   width: 30px;
-  bottom: 0;
   top: 0;
+  height: calc(100% - 30px);
   background-color: #f7f7f7;
   z-index: 2
 `;
