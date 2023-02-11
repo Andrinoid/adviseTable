@@ -21,17 +21,6 @@ import { useLayoutEffect } from "react";
 const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
-  ${({ scrollStatus }) => {
-    if (scrollStatus === "middle" || scrollStatus === "end") {
-      return `
-        .brick {
-          &:after {
-            // box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
-          }
-        }
-      `;
-    }
-  }}
 `;
 
 const ViewPort = styled.div`
@@ -51,22 +40,11 @@ const LeftBrickSpace = styled.div`
   top: 0;
   height: calc(100% - 30px);
   background-color: #f7f7f7;
-  z-index: 2
-`;
-
-const LeftEdge = styled.div` 
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: -1px;
-  width: 30px;
-  transform: translateX(100%);
-  transition: box-shadow .3s;
-  pointer-events: none;
+  z-index: 2;
   ${({ scrollStatus }) => {
     if (scrollStatus === "middle" || scrollStatus === "end") {
       return `
-        box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
+        box-shadow: 10px 0 8px -8px rgb(5 5 5 / 6%);
       `;
     }
   }}
@@ -543,7 +521,7 @@ const Table = (
             className={`${tableId}container`}
           >
             {childrenRows}
-            <LeftBrickSpace />
+            <LeftBrickSpace scrollStatus={scrollStatus} />
           </div>
 
           <SelectedArea
@@ -556,7 +534,7 @@ const Table = (
           />
 
           <Scroller active={selectColDraging} tableId={tableId} />
-          <LeftEdge scrollStatus={scrollStatus} />
+
           <Edge
             isViewPortOverflow={isViewPortOverflow}
             scrollStatus={scrollStatus}
