@@ -157,7 +157,7 @@ function Example({
               <Droppable droppableId="characters">
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
-                    <Row
+                    {/* <Row
                       {...tableProvided.rowProps}
                       style={{ minHeight: 40, background: "orange" }}
                     >
@@ -172,7 +172,7 @@ function Example({
                       <Col colspan={"fullwidth"} horizontalAlign="left">
                         <b>Label Row</b>
                       </Col>
-                    </Row>
+                    </Row> */}
 
                     {viewData.map((row, i) => {
                       return (
