@@ -17,18 +17,18 @@ const BrickElm = styled.div`
   ${({ style }) => {
     if (style?.position === "sticky") {
       return `
-                &:after {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    bottom: -1px;
-                    width: 30px;
-                    transform: translateX(100%);
-                    transition: box-shadow .3s;
-                    pointer-events: none;
-                }
-            `;
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: -1px;
+            width: 30px;
+            transform: translateX(100%);
+            transition: box-shadow .3s;
+            pointer-events: none;
+        }
+    `;
     }
   }}
   ${({ showGrid, theme }) => {

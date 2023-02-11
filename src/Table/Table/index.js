@@ -41,14 +41,27 @@ const LeftBrickSpace = styled.div`
   height: calc(100% - 30px);
   background-color: #f7f7f7;
   z-index: 2;
+`;
+
+const LeftEdge = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30px;
+  z-index: 2;
+  height: calc(100% - 30px);
+  width: 30px;
+  transition: box-shadow 0.3s;
+  pointer-events: none;
   ${({ scrollStatus }) => {
     if (scrollStatus === "middle" || scrollStatus === "end") {
       return `
-        box-shadow: 10px 0 8px -8px rgb(5 5 5 / 6%);
+        box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
       `;
     }
   }}
 `;
+
 
 const Edge = styled.div`
   position: absolute;
@@ -534,7 +547,7 @@ const Table = (
           />
 
           <Scroller active={selectColDraging} tableId={tableId} />
-
+          <LeftEdge scrollStatus={scrollStatus} />
           <Edge
             isViewPortOverflow={isViewPortOverflow}
             scrollStatus={scrollStatus}
