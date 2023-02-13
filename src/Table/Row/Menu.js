@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Menu = styled.div`
     position: absolute;
-    left: -50px;
+    left: -45px;
     display: none;
 
     > div {
@@ -14,7 +14,8 @@ const Menu = styled.div`
         box-shadow: 0 0 4px 0px rgb(0 0 0 / 12%);
         left: 0px;
         z-index: 4;
-        margin-right: 10px;
+        margin-right: 5px;
+        font-size: 16px;
     }
 `;
 
