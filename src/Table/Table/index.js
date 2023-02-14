@@ -62,7 +62,6 @@ const LeftEdge = styled.div`
   }}
 `;
 
-
 const Edge = styled.div`
   position: absolute;
   top: 0;
@@ -177,6 +176,11 @@ const Table = (
       autoAdjustTable();
     },
   }));
+  useImperativeHandle(ref, () => ({
+    cleartSelection() {
+      cleartSelectionTable();
+    },
+  }));
 
   /**
    * When the selection mode changes, clear the selected areas
@@ -206,10 +210,9 @@ const Table = (
     numberOfDataCols,
   ]);
 
-  useEffect(() => {
-    console.log('totalwidth', totalWidth)
-  }, [totalWidth])
-
+  const cleartSelectionTable = () => {
+    setSelectedAreas([]);
+  };
 
   const autoAdjustTable = () => {
     const adjustedSize = getAdjustedSize();
@@ -225,6 +228,13 @@ const Table = (
       setInitialLoaded(true);
     }, 1);
   };
+
+  /**
+   * When we need to clean selection
+   * */
+  useEffect(() => {
+    cleartSelectionTable();
+  }, [tableMatrix.length, tableMatrix[0]?.length]);
 
   /**
    * when the width of the table changes, recalculate the width of the data cols
@@ -541,7 +551,11 @@ const Table = (
             className={`${tableId}container`}
           >
             {childrenRows}
-            <LeftBrickSpace scrollStatus={scrollStatus} className="leftBrickSpace" width={leftBrickWidth} />
+            <LeftBrickSpace
+              scrollStatus={scrollStatus}
+              className="leftBrickSpace"
+              width={leftBrickWidth}
+            />
           </div>
 
           <SelectedArea
