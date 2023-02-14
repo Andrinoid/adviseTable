@@ -99,9 +99,12 @@ const SelectedAreas = ({
         j++
       ) {
         if (tableMatrix[i][j] && tableMatrix[i][j].current) {
-          const { x, colspan, spanselection } =
+          const { x, y, colspan, spanselection } =
             tableMatrix[i][j].current.dataset;
-          if (colspan && spanselection === "true") {
+          if (colspan && (
+            spanselection === "true" ||
+            (currentSelectedArea.fromY == y)
+          )) {
             const currentForceMinX = forceMinX;
             const currentForceMaxX = forceMaxX;
 
