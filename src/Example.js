@@ -131,11 +131,11 @@ function Example({
   };
 
   const [total, setTotal] = useState(1000);
-  // setInterval(() => {
-  //   //create random number between 1000 and 10000
-  //   let random = Math.floor(Math.random() * 100000) + 1000;
-  //   setTotal((total) => random);
-  // }, 10000);
+  setInterval(() => {
+    //create random number between 1000 and 10000
+    let random = Math.floor(Math.random() * 100000) + 1000;
+    setTotal((total) => random);
+  }, 10000);
   return (
     <div className="App">
       <Table
@@ -157,7 +157,7 @@ function Example({
               <Droppable droppableId="characters">
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {/* <Row
+                    <Row
                       {...tableProvided.rowProps}
                       style={{ minHeight: 40, background: "orange" }}
                     >
@@ -169,10 +169,14 @@ function Example({
                       {...tableProvided.rowProps}
                       style={{ minHeight: 40, background: "darkgray" }}
                     >
-                      <Col colspan={"fullwidth"} horizontalAlign="left">
+                      <Col
+                        colspan={"fullwidth"}
+                        spanSelection={false}
+                        horizontalAlign="left"
+                      >
                         <b>Label Row</b>
                       </Col>
-                    </Row> */}
+                    </Row>
 
                     {viewData.map((row, i) => {
                       return (

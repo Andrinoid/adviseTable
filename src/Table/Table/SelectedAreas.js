@@ -99,8 +99,9 @@ const SelectedAreas = ({
         j++
       ) {
         if (tableMatrix[i][j] && tableMatrix[i][j].current) {
-          const { x, colspan } = tableMatrix[i][j].current.dataset;
-          if (colspan) {
+          const { x, colspan, spanselection } =
+            tableMatrix[i][j].current.dataset;
+          if (colspan && spanselection === "true") {
             const currentForceMinX = forceMinX;
             const currentForceMaxX = forceMaxX;
 
@@ -127,7 +128,6 @@ const SelectedAreas = ({
         }
       }
     }
-
     if (forceMinX != null && forceMinX < currentSelectedArea.fromX)
       currentSelectedArea.fromX = forceMinX;
     if (forceMaxX != null && forceMaxX > currentSelectedArea.toX)
@@ -213,7 +213,7 @@ const SelectedAreas = ({
           currentSelectedArea.toY = toY;
         }
       }
-
+      
       colspanForceAxis(currentSelectedArea);
 
       //important to save last mouse move to check direction of the movement
@@ -328,12 +328,16 @@ const SelectedAreas = ({
   let oldX = null;
   let oldY = null;
   const onMouseMove = (e) => {
-    let { x, y, selectable, colspan } = e.delegateTarget.dataset;
+    let { x, y, selectable, colspan, spanselection } = e.delegateTarget.dataset;
     if (selectable == "false") {
       trackMouseMove = false;
       return;
     }
     if (trackMouseMove) {
+      if (colspan != null && spanselection == 'false') {
+        return;
+      }
+
       setSelectColDraging(true);
       if (x === undefined || y === undefined) return;
 

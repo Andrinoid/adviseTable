@@ -33,6 +33,7 @@ const Col = ({
   left,
   empty = false,
   colspan,
+  spanSelection = true,
   showGrid,
   setTableMatrix,
   tableMatrix,
@@ -97,6 +98,7 @@ const Col = ({
       data-x={x}
       data-y={y}
       data-colspan={colspan}
+      data-spanselection={spanSelection}
       type={type}
       id={id}
       data-selectable={selectable}
