@@ -19,7 +19,7 @@ const SelectedAreas = ({
   useEffect(() => {
     let mouseDownClear = delegate(
       document.body,
-      `#${tableId} .brick`,
+      `#${tableId} .brick`, //it would be nice to find a selector that applies this to all cells but not .tableCol
       "mousedown",
       () => {
         clearSelectedAreas();
