@@ -36,6 +36,7 @@ const Col = ({
   spanSelection = true,
   showGrid,
   setTableMatrix,
+  cleartSelectionTable,
   tableMatrix,
   theTheme,
   totalWidth,
@@ -54,6 +55,7 @@ const Col = ({
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
    */
   useEffect(() => {
+    cleartSelectionTable();
     if (tableMatrix[y]) {
       setTableMatrix((prev) => {
         // console.log("A", currentColRef.current.dataset.colspan);
@@ -65,7 +67,7 @@ const Col = ({
         ) {
           prev[y][index] = currentColRef;
         }
-        return [...prev];
+        return prev;
       });
     } else {
       setTableMatrix((prev) => {
@@ -80,7 +82,7 @@ const Col = ({
           colRefs[index] = currentColRef;
         }
         prev.push([colRefs]);
-        return [...prev];
+        return prev;
       });
     }
   }, [y, x]);

@@ -92,14 +92,18 @@ const Selection = ({
           //     ...(selectionMode === "row" && rowSelectionStyles),
           //   }}
           // ></motion.div>
-          <div 
+          <div
+            key={index}
             style={{
-              ...getBoxStyle(dimension.selection.isExclusion, theTheme, dimension.motionDelay),
+              ...getBoxStyle(
+                dimension.selection.isExclusion,
+                theTheme,
+                dimension.motionDelay
+              ),
               ...dimension,
               ...(selectionMode === "row" && rowSelectionStyles),
-            }}>
-
-          </div>
+            }}
+          ></div>
         );
       })}
     </>

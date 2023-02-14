@@ -101,10 +101,10 @@ const SelectedAreas = ({
         if (tableMatrix[i][j] && tableMatrix[i][j].current) {
           const { x, y, colspan, spanselection } =
             tableMatrix[i][j].current.dataset;
-          if (colspan && (
-            spanselection === "true" ||
-            (currentSelectedArea.fromY == y)
-          )) {
+          if (
+            colspan &&
+            (spanselection === "true" || currentSelectedArea.fromY == y)
+          ) {
             const currentForceMinX = forceMinX;
             const currentForceMaxX = forceMaxX;
 
@@ -216,7 +216,7 @@ const SelectedAreas = ({
           currentSelectedArea.toY = toY;
         }
       }
-      
+
       colspanForceAxis(currentSelectedArea);
 
       //important to save last mouse move to check direction of the movement
@@ -337,7 +337,7 @@ const SelectedAreas = ({
       return;
     }
     if (trackMouseMove) {
-      if (colspan != null && spanselection == 'false') {
+      if (colspan != null && spanselection == "false") {
         return;
       }
 

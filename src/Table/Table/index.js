@@ -465,6 +465,7 @@ const Table = (
           autoAdjustFirstColWidth,
           autoAdjustLastColWidth,
           setTableMatrix,
+          cleartSelectionTable,
           colWidth,
           colHeight,
           leftBrickWidth,
