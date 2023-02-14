@@ -65,7 +65,7 @@ const Col = ({
         ) {
           prev[y][index] = currentColRef;
         }
-        return prev;
+        return [...prev];
       });
     } else {
       setTableMatrix((prev) => {
@@ -80,7 +80,7 @@ const Col = ({
           colRefs[index] = currentColRef;
         }
         prev.push([colRefs]);
-        return { ...prev };
+        return [...prev];
       });
     }
   }, [y, x]);
