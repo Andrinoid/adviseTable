@@ -541,7 +541,7 @@ const Table = (
             className={`${tableId}container`}
           >
             {childrenRows}
-            <LeftBrickSpace scrollStatus={scrollStatus} width={leftBrickWidth} />
+            <LeftBrickSpace scrollStatus={scrollStatus} className="leftBrickSpace" width={leftBrickWidth} />
           </div>
 
           <SelectedArea
