@@ -17,6 +17,15 @@ const SelectedAreas = ({
    * As this can be a large number of cells, we use delegate the event listeners to the body for performance
    */
   useEffect(() => {
+    let mouseDownClear = delegate(
+      document.body,
+      `#${tableId} .brick`,
+      "mousedown",
+      () => {
+        clearSelectedAreas();
+      },
+      false
+    );
     let mouseDown = delegate(
       document.body,
       `#${tableId} .tableCol`,
@@ -39,6 +48,7 @@ const SelectedAreas = ({
       false
     );
     return () => {
+      mouseDownClear.destroy();
       mouseDown.destroy();
       mouseMove.destroy();
       mouseUp.destroy();
