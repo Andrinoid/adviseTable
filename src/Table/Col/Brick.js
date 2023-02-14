@@ -7,8 +7,8 @@ const BrickElm = styled.div`
   display: inline-flex;
   align-items: center;
   background-color: inherit;
-  transition: box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
-    all 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+  // transition: box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
+  // all 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
   box-sizing: border-box;
   user-select: none;
   font-size: 14px;

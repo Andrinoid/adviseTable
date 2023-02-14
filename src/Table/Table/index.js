@@ -36,7 +36,7 @@ const ViewPort = styled.div`
 const LeftBrickSpace = styled.div`
   position: absolute;
   left: 0;
-  width: 30px;
+  width: ${({ width }) => width}px;
   top: 0;
   height: calc(100% - 30px);
   background-color: #f7f7f7;
@@ -47,7 +47,7 @@ const LeftEdge = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 30px;
+  left: ${({ offsetLeft }) => offsetLeft}px;
   z-index: 2;
   height: calc(100% - 30px);
   width: 30px;
@@ -534,7 +534,7 @@ const Table = (
             className={`${tableId}container`}
           >
             {childrenRows}
-            <LeftBrickSpace scrollStatus={scrollStatus} />
+            <LeftBrickSpace scrollStatus={scrollStatus} width={leftBrickWidth} />
           </div>
 
           <SelectedArea
@@ -547,7 +547,7 @@ const Table = (
           />
 
           <Scroller active={selectColDraging} tableId={tableId} />
-          <LeftEdge scrollStatus={scrollStatus} />
+          <LeftEdge scrollStatus={scrollStatus} offsetLeft={leftBrickWidth} />
           <Edge
             isViewPortOverflow={isViewPortOverflow}
             scrollStatus={scrollStatus}

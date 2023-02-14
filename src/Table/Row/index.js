@@ -260,7 +260,7 @@ const Row = memo(
             <Brick
               theTheme={theTheme}
               showGrid={showGrid}
-              horizontalAlign="left"
+              horizontalAlign="center"
               location={"left"}
               style={{
                 width: leftBrickWidth,
