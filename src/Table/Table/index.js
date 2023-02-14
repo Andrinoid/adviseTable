@@ -195,16 +195,21 @@ const Table = (
       leftBrickWidth +
       biggestTotalCellWidth +
       biggestDataCellWidth * numberOfDataCols;
-
     const tableContainerSize = tableContainerRef?.current?.offsetWidth;
     return tableContainerSize > minSize ? tableContainerSize : minSize;
   }, [
     biggestLabelCellWidth,
     biggestTotalCellWidth,
     biggestDataCellWidth,
+    firstColWidth,
     leftBrickWidth,
     numberOfDataCols,
   ]);
+
+  useEffect(() => {
+    console.log('totalwidth', totalWidth)
+  }, [totalWidth])
+
 
   const autoAdjustTable = () => {
     const adjustedSize = getAdjustedSize();
@@ -349,8 +354,10 @@ const Table = (
     const extraColSpace = getExtraColSpace();
     if (extraColSpace - (width - firstColWidth) > 0) {
       setfirstColWidth(width);
+      setTotalWidth(getAdjustedSize());
     } else {
       setfirstColWidth(width);
+      setTotalWidth(getAdjustedSize());
     }
   });
 

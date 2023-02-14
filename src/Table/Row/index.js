@@ -160,6 +160,7 @@ const Row = memo(
     const remainingCols = getRemainingCols();
     const totalFullWidthCols = getFullWidthColsAmount();
     const validChildren = getValidChildren(children);
+
     const childrenWithProps = React.Children.map(validChildren, (child) => {
       let colType;
       let left;
@@ -248,7 +249,7 @@ const Row = memo(
           className={`${tableId}-tableRow ${className}`}
           tableId={tableId}
           type={type}
-          style={{ ...style, width: totalWidth }}
+          style={{ ...style }}
           ref={currentRowRef}
           y={rowNumber}
           theTheme={theTheme}
