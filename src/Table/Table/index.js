@@ -186,7 +186,7 @@ const Table = (
    * When the selection mode changes, clear the selected areas
    */
   useEffect(() => {
-    setSelectedAreas([]);
+    cleartSelectionTable();
   }, [selectionMode]);
 
   /**
@@ -234,7 +234,7 @@ const Table = (
    * */
   useEffect(() => {
     cleartSelectionTable();
-  }, [tableMatrix.length, tableMatrix[0]?.length]);
+  }, [tableMatrix]);
 
   /**
    * when the width of the table changes, recalculate the width of the data cols

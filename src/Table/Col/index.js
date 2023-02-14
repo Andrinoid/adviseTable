@@ -80,7 +80,7 @@ const Col = ({
           colRefs[index] = currentColRef;
         }
         prev.push([colRefs]);
-        return prev;
+        return { ...prev };
       });
     }
   }, [y, x]);
