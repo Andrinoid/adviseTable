@@ -528,7 +528,6 @@ const Table = (
             totalWidth={totalWidth}
             onFirstColResize={onFirstColResize}
             onLastColResize={onLastColResize}
-            numberOfDataCols={numberOfDataCols}
             totalCols={totalCols}
             theTheme={theTheme}
             data={headerData}

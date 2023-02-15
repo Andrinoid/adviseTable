@@ -10,8 +10,8 @@ const Resizer = styled.div`
     cursor: col-resize;
     background: ${(props) => (props.isResizing ? "#64b2fe" : "transparent")};
     border-${({ direction }) => direction}: solid 1px #ccc;
-    ${({ direction }) => {
-      return direction === "right" ? "right: 0;" : "left: 0;";
+    ${({ direction, position = 0 }) => {
+    return direction === "right" ? `right: ${0 - position}px;` : `left: ${position}px;`;
     }}
     &:hover {
         background: #64b2fe;
@@ -46,7 +46,8 @@ const Fill = styled.div`
   position: relative;
 `;
 
-const ResizablelCol = memo(
+const ResizablelCol = 
+
   ({
     children,
     onResize,
@@ -60,6 +61,8 @@ const ResizablelCol = memo(
   }) => {
     const [w, setW] = useState(0);
     const [x, setX] = useState(0);
+    const newWidthRef = useRef(null);
+    const [position, setPosition] = useState(0);
     const [isResizing, setIsResizing] = useState(false);
     const resizeRef = useRef(null);
     const colRef = useRef(null);
@@ -84,6 +87,7 @@ const ResizablelCol = memo(
     const mouseDownHandler = (e) => {
       // Get the current mouse position
       setX(e.clientX);
+      // Get current width of the column
       setW(colRef.current.offsetWidth);
     };
 
@@ -100,7 +104,8 @@ const ResizablelCol = memo(
         dx = x - e.clientX;
         newWidth = w + dx;
       }
-      onResize(newWidth);
+      newWidthRef.current = newWidth;
+      setPosition(dx);
     };
 
     const mouseUpHandler = () => {
@@ -108,6 +113,8 @@ const ResizablelCol = memo(
       document.removeEventListener("mousemove", mouseMoveHandler);
       document.removeEventListener("mouseup", mouseUpHandler);
       setIsResizing(false);
+      onResize(newWidthRef.current);
+      setPosition(0);
     };
 
     const doubleClickHandler = () => {
@@ -120,7 +127,7 @@ const ResizablelCol = memo(
     };
 
     return (
-      <Brick location={location} style={{ ...style }}>
+      <Brick location={location} style={{ ...style, zIndex: 4 }}>
         {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}
         <Fill className="fill" ref={colRef} horizontalAlign={horizontalAlign}>
           {children}
@@ -128,19 +135,16 @@ const ResizablelCol = memo(
             onMouseDown={mouseDownHandler}
             onDoubleClick={doubleClickHandler}
             direction={direction}
+            position={position}
             isResizing={isResizing}
             ref={resizeRef}
           >
-            {/* <Line
-                    height={viewportHeight}
-                    isResizing={isResizing}
-                    direction={direction}
-                /> */}
+
           </Resizer>
         </Fill>
       </Brick>
     );
   }
-);
+
 
 export default ResizablelCol;
