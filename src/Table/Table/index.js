@@ -93,6 +93,7 @@ const Table = (
     children,
     tableId, // make required
     footer, //Boolean
+    hasTotalColumn = true,
     width,
     numberFormat = {
       showIn: "none",
@@ -120,9 +121,7 @@ const Table = (
 
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(
-    headerData.length - 2
-  );
+  const [numberOfDataCols, setNumberOfDataCols] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -208,6 +207,7 @@ const Table = (
     firstColWidth,
     leftBrickWidth,
     numberOfDataCols,
+    hasTotalColumn,
   ]);
 
   const cleartSelectionTable = () => {
@@ -249,6 +249,7 @@ const Table = (
     numberOfDataCols,
     biggestTotalCellWidth,
     leftBrickWidth,
+    hasTotalColumn,
   ]);
 
   useEffect(() => {
@@ -266,8 +267,16 @@ const Table = (
    * Updates the number of columns when headerData.length changes
    * */
   useEffect(() => {
-    setNumberOfDataCols(headerData.length - 2);
-  }, [headerData]);
+    setNumberOfDataCols((num) => {
+      if (tableMatrix && tableMatrix[0]) {
+        return hasTotalColumn
+          ? tableMatrix[0].length - 2
+          : tableMatrix[0].length - 1;
+      } else {
+        return 0;
+      }
+    });
+  }, [tableMatrix, tableMatrix[0]?.length, hasTotalColumn]);
 
   /**
    * Messure the viewport width and height.
@@ -355,6 +364,7 @@ const Table = (
     numberOfDataCols,
     biggestTotalCellWidth,
     leftBrickWidth,
+    hasTotalColumn,
   ]);
 
   /**
@@ -377,17 +387,6 @@ const Table = (
   const onLastColResize = useCallback((width) => {
     setLastColWidth(width);
   }, []);
-
-  /**
-   *  Calculate the width of the data cols based on moving parts
-   *  changes to the all other parts of the table will affect the width of the data cols
-   */
-  // const calcColWidth = () => {
-  //   return (
-  //     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-  //     numberOfDataCols
-  //   );
-  // };
 
   /**
    * Basic calculations on the selected area values
@@ -476,6 +475,7 @@ const Table = (
           totalWidth,
           firstColWidth,
           lastColWidth,
+          hasTotalColumn,
           biggestDataCellWidth,
           biggestLabelCellWidth,
           biggestTotalCellWidth,
@@ -532,6 +532,7 @@ const Table = (
           numberOfDataCols={numberOfDataCols}
           theTheme={theTheme}
           data={headerData}
+          hasTotalColumn={hasTotalColumn}
           stickyTopOffset={headerStickyTopOffset}
           showGrid={showGrid}
           autoAdjustFirstColWidth={autoAdjustFirstColWidth}

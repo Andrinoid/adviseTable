@@ -147,6 +147,7 @@ function Example({
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={true}
+        hasTotalColumn={false}
         onSelection={(selectedReport) => {
           // console.log("selectedReport", selectedReport);
         }}
@@ -162,6 +163,12 @@ function Example({
                       style={{ minHeight: 40, background: "orange" }}
                     >
                       <Col colspan={"fullwidth"} horizontalAlign="left">
+                        <b>Label Row</b>
+                      </Col>
+                      <Col horizontalAlign="left">
+                        <b>Label Row</b>
+                      </Col>
+                      <Col horizontalAlign="left">
                         <b>Label Row</b>
                       </Col>
                     </Row>

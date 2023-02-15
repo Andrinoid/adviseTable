@@ -28,6 +28,7 @@ const Header = React.forwardRef(
       lastColWidth,
       colHeight,
       totalWidth,
+      hasTotalColumn,
       // viewportHeight,
       onFirstColResize,
       onLastColResize,
@@ -95,7 +96,7 @@ const Header = React.forwardRef(
                     <Label>{item.title}</Label>
                   </ResizablelCol>
                 )}
-                {index > 0 && index < data.length - 1 && (
+                {index > 0 && (index < data.length - 1 || !hasTotalColumn) && (
                   <Brick
                     location={"top"}
                     selectable={false}
@@ -110,7 +111,7 @@ const Header = React.forwardRef(
                     <Label>{item.title}</Label>
                   </Brick>
                 )}
-                {index === data.length - 1 && (
+                {index === data.length - 1 && hasTotalColumn && (
                   <>
                     {lasColumnRisizeable && (
                       <ResizablelCol

@@ -18,6 +18,8 @@ const Cell = ({
   parentWidth,
   parentType,
   totalWidth,
+  hasTotalColumn,
+  biggestDataCellWidth,
   biggestLabelCellWidth,
   biggestTotalCellWidth,
   setBiggestDataCellWidth,
@@ -71,7 +73,7 @@ const Cell = ({
         if (refOffsetWidth > value) {
           return refOffsetWidth;
         } else {
-          return value;
+          return value >= 80 ? value : 80;
         }
       });
     }
