@@ -147,7 +147,7 @@ function Example({
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={true}
-        hasTotalColumn={false}
+        hasTotalColumn={true}
         onSelection={(selectedReport) => {
           // console.log("selectedReport", selectedReport);
         }}

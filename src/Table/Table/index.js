@@ -333,8 +333,13 @@ const Table = (
    * This applies to last col
    */
   const autoAdjustLastColWidth = useCallback(() => {
-    setLastColWidth(biggestTotalCellWidth);
-  }, [biggestTotalCellWidth]);
+    if (hasTotalColumn) {
+      setLastColWidth(biggestTotalCellWidth);
+    } else {
+      setBiggestTotalCellWidth(0);
+      setLastColWidth(0);
+    }
+  }, [biggestTotalCellWidth, hasTotalColumn]);
 
   /**
    * This function auto adjusts the width of the data cols to fit the biggest data cell
