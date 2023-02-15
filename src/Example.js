@@ -68,15 +68,6 @@ function Example({
     months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1])
   );
 
-  // setInterval(() => {
-  //   if (monthRange.length > 1) {
-  //     monthRange.pop();
-  //   } else {
-  //     months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1]);
-  //   }
-  //   setMonthRange(monthRange);
-  // }, 10000);
-
   const header = [
     { title: "" },
     { title: "Jan" },
@@ -150,7 +141,7 @@ function Example({
   return (
     <div className="App">
       <Table
-        // headerData={header}
+        headerData={header}
         theme={theme}
         showGrid={true}
         selectionMode={selectionMode}

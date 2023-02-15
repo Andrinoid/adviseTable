@@ -11,6 +11,7 @@ const SelectedAreas = ({
   setSelectedCount,
   setSelectedAreas,
   tableMatrix,
+  numberOfCols,
 }) => {
   /**
    * Add event listeners to all the cells in the table
@@ -53,7 +54,7 @@ const SelectedAreas = ({
       mouseMove.destroy();
       mouseUp.destroy();
     };
-  }, [selectionMode]);
+  }, [selectionMode, tableMatrix]);
 
   /**
    * When the mouse is down, reset the selection and set the new coordinates
@@ -149,9 +150,7 @@ const SelectedAreas = ({
 
   /** Edit the last selected area */
   let updateCurrentSelectedArea = ({ fromX, fromY, toX, toY } = {}) => {
-    if (toX)
-      toX =
-        selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length - 1;
+    if (toX) toX = selectionMode === "cell" ? parseInt(toX) : numberOfCols - 1;
     if (toY) toY = parseInt(toY);
     if (fromX) fromX = selectionMode === "cell" ? parseInt(fromX) : 0;
     if (fromY) fromY = parseInt(fromY);

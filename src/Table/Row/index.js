@@ -36,6 +36,8 @@ const Row = memo(
     setBiggestLabelCellWidth,
     setBiggestTotalCellWidth,
     setTableMatrix,
+    setTotalCols,
+    setNumberOfDataCols,
     cleartSelectionTable,
     colWidth,
     leftBrickWidth,
@@ -87,12 +89,6 @@ const Row = memo(
         });
       };
     }, []);
-
-    const getValidChildren = (childrenFromProps) => {
-      return React.Children.toArray(childrenFromProps).filter((child) => {
-        return child.type === Col;
-      });
-    };
 
     /**
      * @returns the amount of cols that aren't being used
@@ -219,6 +215,8 @@ const Row = memo(
           internalStyle: { width: width },
           setTableMatrix,
           cleartSelectionTable,
+          setTotalCols,
+          setNumberOfDataCols,
           tableMatrix,
           theTheme,
           showGrid,
@@ -288,4 +286,9 @@ const Row = memo(
   }
 );
 
+export const getValidChildren = (childrenFromProps) => {
+  return React.Children.toArray(childrenFromProps).filter((child) => {
+    return child.type === Col;
+  });
+};
 export default Row;

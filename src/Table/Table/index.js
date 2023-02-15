@@ -17,6 +17,7 @@ import themes from "./themes";
 import Selection from "./Selection";
 import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
+import { getValidChildren } from "../Row";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -124,6 +125,7 @@ const Table = (
   const [numberOfDataCols, setNumberOfDataCols] = useState(0);
   const [totalCols, setTotalCols] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(35);
+  const [childrenRows, setChildrenRows] = useState([]);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
   const [scrollStatus, setScrollStatus] = useState("");
@@ -260,28 +262,6 @@ const Table = (
       window.removeEventListener("resize", callback);
     };
   }, []);
-
-  /**
-   * Updates the number of columns when the matrix changes changes
-   * */
-  useEffect(() => {
-    setNumberOfDataCols((num) => {
-      console.log(
-        "Changed the number of cols",
-        tableMatrix[0]?.length ? tableMatrix[0]?.length - 1 : 0
-      );
-      setTotalCols((total) =>
-        tableMatrix[0]?.length ? tableMatrix[0]?.length - 1 : 0
-      );
-      if (tableMatrix[0]?.length) {
-        return hasTotalColumn
-          ? tableMatrix[0].length - 2
-          : tableMatrix[0].length - 1;
-      } else {
-        return 0;
-      }
-    });
-  }, [tableMatrix, tableMatrix[0]?.length, hasTotalColumn]);
 
   /**
    * Messure the viewport width and height.
@@ -466,7 +446,6 @@ const Table = (
     });
   };
 
-  const [childrenRows, setChildrenRows] = useState([]);
   useEffect(() => {
     setChildrenRows(
       children({
@@ -478,6 +457,8 @@ const Table = (
           autoAdjustFirstColWidth,
           autoAdjustLastColWidth,
           setTableMatrix,
+          setTotalCols,
+          setNumberOfDataCols,
           cleartSelectionTable,
           colWidth,
           colHeight,
@@ -532,6 +513,8 @@ const Table = (
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
+        {/* {"AAAAAAAAAAAAA" + JSON.stringify(totalCols)}
+        {"AAAAAAAAAAAAA" + JSON.stringify(numberOfDataCols)} */}
         {headerData ? (
           <Header
             ref={headerScrollRef}
@@ -579,6 +562,7 @@ const Table = (
           </div>
 
           <SelectedArea
+            numberOfCols={totalCols}
             selectionMode={selectionMode}
             tableId={tableId}
             setSelectColDraging={setSelectColDraging}
@@ -632,9 +616,7 @@ const Table = (
               leftOffset={leftBrickWidth}
               firstColWidth={firstColWidth}
               lastColWidth={lastColWidth}
-              numberOfCols={
-                tableMatrix && tableMatrix[0] ? tableMatrix[0].length : 0
-              }
+              numberOfCols={totalCols}
               selectionMode={selectionMode}
               totalWidth={totalWidth}
               lasColumnRisizeable={lasColumnRisizeable}

@@ -1,9 +1,10 @@
 //react component
-import React, { useRef, useEffect, memo } from "react";
+import React, { useRef, useEffect, memo, useLayoutEffect } from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
 import HoverIndicator from "./HoverIndicator";
 import { formatNumber } from "../utils";
+import { clone } from "lodash";
 
 const Column = styled.div`
   display: inline-flex;
@@ -36,6 +37,8 @@ const Col = ({
   spanSelection = true,
   showGrid,
   setTableMatrix,
+  setTotalCols,
+  setNumberOfDataCols,
   cleartSelectionTable,
   tableMatrix,
   theTheme,
@@ -56,37 +59,34 @@ const Col = ({
    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
    */
-  useEffect(() => {
+  useLayoutEffect(() => {
     cleartSelectionTable();
-    if (tableMatrix[y]) {
-      setTableMatrix((prev) => {
-        // console.log("A", currentColRef.current.dataset.colspan);
-        const { colspan } = currentColRef.current.dataset;
-        for (
-          let index = x;
-          index <= (colspan ? x + (colspan - 1) : x);
-          index++
-        ) {
+    setTableMatrix((prev) => {
+      const { colspan } = currentColRef.current.dataset;
+      let nextValue = prev;
+      let index = x;
+      if (prev[y]) {
+        for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
           prev[y][index] = currentColRef;
         }
-        return prev;
-      });
-    } else {
-      setTableMatrix((prev) => {
-        // console.log("A", currentColRef.current.dataset.colspan);
-        const { colspan } = currentColRef.current.dataset;
-        const colRefs = [];
-        for (
-          let index = x;
-          index <= (colspan ? x + (colspan - 1) : x);
-          index++
-        ) {
-          colRefs[index] = currentColRef;
+        nextValue = clone(prev);
+      } else {
+        prev[y] = [];
+        for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
+          prev[y][index] = currentColRef;
         }
-        prev.push([colRefs]);
-        return prev;
+        nextValue = clone(prev);
+      }
+
+      setTotalCols((prev) => {
+        setNumberOfDataCols(() => {
+          return hasTotalColumn ? index - 2 : index - 1;
+        });
+        return index;
       });
-    }
+
+      return nextValue;
+    });
   }, [y, x]);
 
   return (
