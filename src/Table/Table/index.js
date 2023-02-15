@@ -122,6 +122,7 @@ const Table = (
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
   const [numberOfDataCols, setNumberOfDataCols] = useState(0);
+  const [totalCols, setTotalCols] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -133,10 +134,7 @@ const Table = (
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colHeight, setColHeight] = useState(40);
-  const [colWidth, setColWidth] = useState(
-    (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-      numberOfDataCols
-  );
+  const [colWidth, setColWidth] = useState(0);
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
   const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
   const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
@@ -264,11 +262,18 @@ const Table = (
   }, []);
 
   /**
-   * Updates the number of columns when headerData.length changes
+   * Updates the number of columns when the matrix changes changes
    * */
   useEffect(() => {
     setNumberOfDataCols((num) => {
-      if (tableMatrix && tableMatrix[0]) {
+      console.log(
+        "Changed the number of cols",
+        tableMatrix[0]?.length ? tableMatrix[0]?.length - 1 : 0
+      );
+      setTotalCols((total) =>
+        tableMatrix[0]?.length ? tableMatrix[0]?.length - 1 : 0
+      );
+      if (tableMatrix[0]?.length) {
         return hasTotalColumn
           ? tableMatrix[0].length - 2
           : tableMatrix[0].length - 1;
@@ -347,7 +352,11 @@ const Table = (
   const autoAdjustDataColWidth = () => {
     const extraColSpace = getExtraColSpace();
     if (extraColSpace > 0) {
-      setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
+      if (!numberOfDataCols) {
+        setColWidth(0);
+      } else {
+        setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
+      }
     } else {
       setColWidth(biggestDataCellWidth);
     }
@@ -487,12 +496,13 @@ const Table = (
           tableId,
           theTheme,
           showGrid,
-          totalCols: headerData.length,
+          totalCols,
           lasColumnRisizeable,
         },
       })
     );
   }, [
+    totalCols,
     totalWidth,
     firstColWidth,
     lastColWidth,
@@ -535,6 +545,7 @@ const Table = (
           onFirstColResize={onFirstColResize}
           onLastColResize={onLastColResize}
           numberOfDataCols={numberOfDataCols}
+          totalCols={totalCols}
           theTheme={theTheme}
           data={headerData}
           hasTotalColumn={hasTotalColumn}

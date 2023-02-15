@@ -158,33 +158,6 @@ function Example({
               <Droppable droppableId="characters">
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
-                    <Row
-                      {...tableProvided.rowProps}
-                      style={{ minHeight: 40, background: "orange" }}
-                    >
-                      <Col colspan={"fullwidth"} horizontalAlign="left">
-                        <b>Label Row</b>
-                      </Col>
-                      <Col horizontalAlign="left">
-                        <b>Label Row</b>
-                      </Col>
-                      <Col horizontalAlign="left">
-                        <b>Label Row</b>
-                      </Col>
-                    </Row>
-                    <Row
-                      {...tableProvided.rowProps}
-                      style={{ minHeight: 40, background: "darkgray" }}
-                    >
-                      <Col
-                        colspan={"fullwidth"}
-                        spanSelection={false}
-                        horizontalAlign="left"
-                      >
-                        <b>Label Row</b>
-                      </Col>
-                    </Row>
-
                     {viewData.map((row, i) => {
                       return (
                         <Draggable
