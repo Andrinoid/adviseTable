@@ -352,6 +352,7 @@ const Table = (
       leftBrickWidth
     );
   }, [
+    totalCols,
     totalWidth,
     firstColWidth,
     biggestLabelCellWidth,
