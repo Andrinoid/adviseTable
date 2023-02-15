@@ -93,6 +93,7 @@ const Table = (
     children,
     tableId, // make required
     footer, //Boolean
+    hasTotalColumn = true,
     width,
     numberFormat = {
       showIn: "none",
@@ -120,9 +121,8 @@ const Table = (
 
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
-  const [numberOfDataCols, setNumberOfDataCols] = useState(
-    headerData.length - 2
-  );
+  const [numberOfDataCols, setNumberOfDataCols] = useState(0);
+  const [totalCols, setTotalCols] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(35);
   // viewport states
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -134,10 +134,7 @@ const Table = (
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colHeight, setColHeight] = useState(40);
-  const [colWidth, setColWidth] = useState(
-    (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-      numberOfDataCols
-  );
+  const [colWidth, setColWidth] = useState(0);
   const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
   const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
   const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
@@ -208,6 +205,7 @@ const Table = (
     firstColWidth,
     leftBrickWidth,
     numberOfDataCols,
+    hasTotalColumn,
   ]);
 
   const cleartSelectionTable = () => {
@@ -249,6 +247,7 @@ const Table = (
     numberOfDataCols,
     biggestTotalCellWidth,
     leftBrickWidth,
+    hasTotalColumn,
   ]);
 
   useEffect(() => {
@@ -263,11 +262,26 @@ const Table = (
   }, []);
 
   /**
-   * Updates the number of columns when headerData.length changes
+   * Updates the number of columns when the matrix changes changes
    * */
   useEffect(() => {
-    setNumberOfDataCols(headerData.length - 2);
-  }, [headerData]);
+    setNumberOfDataCols((num) => {
+      console.log(
+        "Changed the number of cols",
+        tableMatrix[0]?.length ? tableMatrix[0]?.length - 1 : 0
+      );
+      setTotalCols((total) =>
+        tableMatrix[0]?.length ? tableMatrix[0]?.length - 1 : 0
+      );
+      if (tableMatrix[0]?.length) {
+        return hasTotalColumn
+          ? tableMatrix[0].length - 2
+          : tableMatrix[0].length - 1;
+      } else {
+        return 0;
+      }
+    });
+  }, [tableMatrix, tableMatrix[0]?.length, hasTotalColumn]);
 
   /**
    * Messure the viewport width and height.
@@ -324,8 +338,13 @@ const Table = (
    * This applies to last col
    */
   const autoAdjustLastColWidth = useCallback(() => {
-    setLastColWidth(biggestTotalCellWidth);
-  }, [biggestTotalCellWidth]);
+    if (hasTotalColumn) {
+      setLastColWidth(biggestTotalCellWidth);
+    } else {
+      setBiggestTotalCellWidth(0);
+      setLastColWidth(0);
+    }
+  }, [biggestTotalCellWidth, hasTotalColumn]);
 
   /**
    * This function auto adjusts the width of the data cols to fit the biggest data cell
@@ -333,7 +352,11 @@ const Table = (
   const autoAdjustDataColWidth = () => {
     const extraColSpace = getExtraColSpace();
     if (extraColSpace > 0) {
-      setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
+      if (!numberOfDataCols) {
+        setColWidth(0);
+      } else {
+        setColWidth(biggestDataCellWidth + extraColSpace / numberOfDataCols);
+      }
     } else {
       setColWidth(biggestDataCellWidth);
     }
@@ -355,6 +378,7 @@ const Table = (
     numberOfDataCols,
     biggestTotalCellWidth,
     leftBrickWidth,
+    hasTotalColumn,
   ]);
 
   /**
@@ -377,17 +401,6 @@ const Table = (
   const onLastColResize = useCallback((width) => {
     setLastColWidth(width);
   }, []);
-
-  /**
-   *  Calculate the width of the data cols based on moving parts
-   *  changes to the all other parts of the table will affect the width of the data cols
-   */
-  // const calcColWidth = () => {
-  //   return (
-  //     (totalWidth - firstColWidth - leftBrickWidth - lastColWidth) /
-  //     numberOfDataCols
-  //   );
-  // };
 
   /**
    * Basic calculations on the selected area values
@@ -476,18 +489,20 @@ const Table = (
           totalWidth,
           firstColWidth,
           lastColWidth,
+          hasTotalColumn,
           biggestDataCellWidth,
           biggestLabelCellWidth,
           biggestTotalCellWidth,
           tableId,
           theTheme,
           showGrid,
-          totalCols: headerData.length,
+          totalCols,
           lasColumnRisizeable,
         },
       })
     );
   }, [
+    totalCols,
     totalWidth,
     firstColWidth,
     lastColWidth,
@@ -517,27 +532,31 @@ const Table = (
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
-        <Header
-          ref={headerScrollRef}
-          className="scrollable"
-          width={viewportWidth}
-          colHeight={headerHeight}
-          colWidth={colWidth}
-          firstColWidth={firstColWidth}
-          leftBrickWidth={leftBrickWidth}
-          lastColWidth={lastColWidth}
-          totalWidth={totalWidth}
-          onFirstColResize={onFirstColResize}
-          onLastColResize={onLastColResize}
-          numberOfDataCols={numberOfDataCols}
-          theTheme={theTheme}
-          data={headerData}
-          stickyTopOffset={headerStickyTopOffset}
-          showGrid={showGrid}
-          autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-          autoAdjustLastColWidth={autoAdjustLastColWidth}
-          lasColumnRisizeable={lasColumnRisizeable}
-        />
+        {headerData ? (
+          <Header
+            ref={headerScrollRef}
+            className="scrollable"
+            width={viewportWidth}
+            colHeight={headerHeight}
+            colWidth={colWidth}
+            firstColWidth={firstColWidth}
+            leftBrickWidth={leftBrickWidth}
+            lastColWidth={lastColWidth}
+            totalWidth={totalWidth}
+            onFirstColResize={onFirstColResize}
+            onLastColResize={onLastColResize}
+            numberOfDataCols={numberOfDataCols}
+            totalCols={totalCols}
+            theTheme={theTheme}
+            data={headerData}
+            hasTotalColumn={hasTotalColumn}
+            stickyTopOffset={headerStickyTopOffset}
+            showGrid={showGrid}
+            autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+            autoAdjustLastColWidth={autoAdjustLastColWidth}
+            lasColumnRisizeable={lasColumnRisizeable}
+          />
+        ) : null}
 
         <ViewPort
           className={`viewPort${tableId} scrollable`}

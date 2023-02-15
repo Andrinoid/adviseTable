@@ -45,6 +45,8 @@ const Row = memo(
     totalWidth,
     firstColWidth,
     lastColWidth,
+    hasTotalColumn,
+    biggestDataCellWidth,
     biggestLabelCellWidth,
     biggestTotalCellWidth,
     tableId,
@@ -167,8 +169,6 @@ const Row = memo(
       let left;
       let width;
       let { colspan } = child.props;
-      const tableLength =
-        tableMatrix && tableMatrix[0] ? tableMatrix[0].length : 0;
 
       if (remainingCols > 0 && colspan == "fullwidth") {
         colspan = calculateFullWidthColspan(
@@ -187,14 +187,9 @@ const Row = memo(
           width = firstColWidth;
 
           if (colspan > 1) {
-            if (colspan + numCols === tableLength) {
-              //it spans to the last col and custom width of the last col needs to be considered
-              width = firstColWidth + lastColWidth + (colspan - 2) * colWidth;
-            } else {
-              width = firstColWidth + (colspan - 1) * colWidth;
-            }
+            width = firstColWidth + (colspan - 1) * colWidth;
           }
-        } else if (i === numberOfDataCols + 1) {
+        } else if (hasTotalColumn && i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
           left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
@@ -203,12 +198,7 @@ const Row = memo(
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           if (colspan) {
-            if (colspan + numCols === tableLength) {
-              //it spans to the last col and custom width of the last col needs to be considered
-              width = (colspan - 1) * colWidth + lastColWidth;
-            } else {
-              width = colspan * colWidth;
-            }
+            width = colspan * colWidth;
           } else {
             width = colWidth;
           }
@@ -233,10 +223,12 @@ const Row = memo(
           theTheme,
           showGrid,
           totalWidth,
+          hasTotalColumn,
           setBiggestDataCellWidth,
           setBiggestLabelCellWidth,
-          biggestLabelCellWidth,
           setBiggestTotalCellWidth,
+          biggestDataCellWidth,
+          biggestLabelCellWidth,
           biggestTotalCellWidth,
           colspan,
           selectable,

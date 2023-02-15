@@ -28,6 +28,7 @@ const Header = React.forwardRef(
       lastColWidth,
       colHeight,
       totalWidth,
+      hasTotalColumn,
       // viewportHeight,
       onFirstColResize,
       onLastColResize,
@@ -42,8 +43,6 @@ const Header = React.forwardRef(
     },
     ref
   ) => {
-    const leftOffset = leftBrickWidth + firstColWidth;
-
     return (
       <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
         <div
@@ -72,8 +71,6 @@ const Header = React.forwardRef(
 
           {data.map((item, index) => {
             // we need index to be zero after the first col wich has it's own width
-            let i = index - 1;
-            const left = leftOffset + i * colWidth;
             return (
               // we need to use the verbose syntax here because we need to set the key
               <React.Fragment key={index}>
@@ -95,7 +92,7 @@ const Header = React.forwardRef(
                     <Label>{item.title}</Label>
                   </ResizablelCol>
                 )}
-                {index > 0 && index < data.length - 1 && (
+                {index > 0 && (index < data.length - 1 || !hasTotalColumn) && (
                   <Brick
                     location={"top"}
                     selectable={false}
@@ -103,14 +100,14 @@ const Header = React.forwardRef(
                     showGrid={showGrid}
                     theTheme={theTheme}
                     style={{
-                      width: colWidth,
+                      width: colWidth ? colWidth : "auto",
                       height: colHeight,
                     }}
                   >
                     <Label>{item.title}</Label>
                   </Brick>
                 )}
-                {index === data.length - 1 && (
+                {index === data.length - 1 && hasTotalColumn && (
                   <>
                     {lasColumnRisizeable && (
                       <ResizablelCol
@@ -123,7 +120,7 @@ const Header = React.forwardRef(
                         autoAdjustFirstColWidth={autoAdjustFirstColWidth}
                         autoAdjustLastColWidth={autoAdjustLastColWidth}
                         style={{
-                          width: lastColWidth,
+                          width: lastColWidth ? lastColWidth : "auto",
                           height: colHeight,
                         }}
                       >
@@ -141,7 +138,7 @@ const Header = React.forwardRef(
                         showGrid={showGrid}
                         theTheme={theTheme}
                         style={{
-                          width: lastColWidth,
+                          width: lastColWidth ? lastColWidth : "auto",
                           height: colHeight,
                         }}
                       >

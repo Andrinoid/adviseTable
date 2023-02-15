@@ -40,10 +40,12 @@ const Col = ({
   tableMatrix,
   theTheme,
   totalWidth,
+  hasTotalColumn,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
-  biggestLabelCellWidth,
   setBiggestTotalCellWidth,
+  biggestDataCellWidth,
+  biggestLabelCellWidth,
   biggestTotalCellWidth,
   selectable,
   dataValue,
@@ -114,11 +116,13 @@ const Col = ({
           parentWidth={internalStyle.width}
           parentType={type}
           totalWidth={totalWidth}
+          hasTotalColumn={hasTotalColumn}
           setBiggestDataCellWidth={setBiggestDataCellWidth}
           setBiggestLabelCellWidth={setBiggestLabelCellWidth}
-          biggestLabelCellWidth={biggestLabelCellWidth}
           setBiggestTotalCellWidth={setBiggestTotalCellWidth}
+          biggestLabelCellWidth={biggestLabelCellWidth}
           biggestTotalCellWidth={biggestTotalCellWidth}
+          biggestDataCellWidth={biggestDataCellWidth}
         >
           {children}
         </Cell>
