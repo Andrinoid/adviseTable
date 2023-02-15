@@ -242,6 +242,7 @@ const Table = (
   useLayoutEffect(() => {
     autoAdjustTable();
   }, [
+    totalCols,
     firstColWidth,
     totalWidth,
     biggestLabelCellWidth,
