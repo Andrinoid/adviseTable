@@ -64,11 +64,11 @@ export class Copier {
               originalColspan = colspan - 1;
             }
 
+            result += element.innerText;
+
             for (let k = 0; k < originalColspan; k++) {
               result += "\t";
             }
-
-            result += element.innerText;
 
             j += colspan - 1;
             continue;
