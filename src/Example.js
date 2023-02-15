@@ -64,7 +64,18 @@ function Example({
 
   let months = mo.map((m) => m.system);
   // select range of months based on selectedMonths
-  let monthRange = months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1]);
+  let [monthRange, setMonthRange] = useState(
+    months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1])
+  );
+
+  // setInterval(() => {
+  //   if (monthRange.length > 1) {
+  //     monthRange.pop();
+  //   } else {
+  //     months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1]);
+  //   }
+  //   setMonthRange(monthRange);
+  // }, 10000);
 
   const header = [
     { title: "" },
@@ -139,7 +150,7 @@ function Example({
   return (
     <div className="App">
       <Table
-        headerData={header}
+        // headerData={header}
         theme={theme}
         showGrid={true}
         selectionMode={selectionMode}
@@ -147,7 +158,7 @@ function Example({
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={true}
-        hasTotalColumn={true}
+        hasTotalColumn={false}
         onSelection={(selectedReport) => {
           // console.log("selectedReport", selectedReport);
         }}

@@ -532,29 +532,31 @@ const Table = (
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
-        <Header
-          ref={headerScrollRef}
-          className="scrollable"
-          width={viewportWidth}
-          colHeight={headerHeight}
-          colWidth={colWidth}
-          firstColWidth={firstColWidth}
-          leftBrickWidth={leftBrickWidth}
-          lastColWidth={lastColWidth}
-          totalWidth={totalWidth}
-          onFirstColResize={onFirstColResize}
-          onLastColResize={onLastColResize}
-          numberOfDataCols={numberOfDataCols}
-          totalCols={totalCols}
-          theTheme={theTheme}
-          data={headerData}
-          hasTotalColumn={hasTotalColumn}
-          stickyTopOffset={headerStickyTopOffset}
-          showGrid={showGrid}
-          autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-          autoAdjustLastColWidth={autoAdjustLastColWidth}
-          lasColumnRisizeable={lasColumnRisizeable}
-        />
+        {headerData ? (
+          <Header
+            ref={headerScrollRef}
+            className="scrollable"
+            width={viewportWidth}
+            colHeight={headerHeight}
+            colWidth={colWidth}
+            firstColWidth={firstColWidth}
+            leftBrickWidth={leftBrickWidth}
+            lastColWidth={lastColWidth}
+            totalWidth={totalWidth}
+            onFirstColResize={onFirstColResize}
+            onLastColResize={onLastColResize}
+            numberOfDataCols={numberOfDataCols}
+            totalCols={totalCols}
+            theTheme={theTheme}
+            data={headerData}
+            hasTotalColumn={hasTotalColumn}
+            stickyTopOffset={headerStickyTopOffset}
+            showGrid={showGrid}
+            autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+            autoAdjustLastColWidth={autoAdjustLastColWidth}
+            lasColumnRisizeable={lasColumnRisizeable}
+          />
+        ) : null}
 
         <ViewPort
           className={`viewPort${tableId} scrollable`}

@@ -169,8 +169,6 @@ const Row = memo(
       let left;
       let width;
       let { colspan } = child.props;
-      const tableLength =
-        tableMatrix && tableMatrix[0] ? tableMatrix[0].length : 0;
 
       if (remainingCols > 0 && colspan == "fullwidth") {
         colspan = calculateFullWidthColspan(
