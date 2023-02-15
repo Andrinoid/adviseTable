@@ -95,7 +95,6 @@ const Table = (
     tableId, // make required
     footer, //Boolean
     hasTotalColumn = true,
-    width,
     numberFormat = {
       showIn: "none",
       decimalPoints: 2,

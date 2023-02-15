@@ -12,16 +12,11 @@ const SpaceAround = styled.div`
   white-space: nowrap;
 `;
 
-// x and y are only for debugging if needed
 const Cell = ({
   children,
   parentWidth,
   parentType,
   totalWidth,
-  hasTotalColumn,
-  biggestDataCellWidth,
-  biggestLabelCellWidth,
-  biggestTotalCellWidth,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
   setBiggestTotalCellWidth,

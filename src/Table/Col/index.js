@@ -1,9 +1,8 @@
 //react component
-import React, { useRef, useEffect, memo, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect } from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
 import HoverIndicator from "./HoverIndicator";
-import { formatNumber } from "../utils";
 import { clone } from "lodash";
 
 const Column = styled.div`
@@ -23,35 +22,33 @@ const Column = styled.div`
 `;
 
 const Col = ({
-  horizontalAlign = "right",
+  // internal props from Row
   children,
-  style,
-  internalStyle = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
-  type,
   id,
-  x,
   y,
+  x,
   left,
-  empty = false,
-  colspan,
-  spanSelection = true,
-  showGrid,
+  type,
+  internalStyle = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
   setTableMatrix,
   setTotalCols,
   setNumberOfDataCols,
-  cleartSelectionTable,
-  tableMatrix,
   theTheme,
+  colspan,
+  showGrid,
   totalWidth,
   hasTotalColumn,
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
   setBiggestTotalCellWidth,
-  biggestDataCellWidth,
-  biggestLabelCellWidth,
-  biggestTotalCellWidth,
   selectable,
+  cleartSelectionTable,
+  // outer props
   dataValue,
+  spanSelection = true,
+  empty = false,
+  horizontalAlign = "right",
+  style,
   onClick,
 }) => {
   const currentColRef = useRef(null);
@@ -116,13 +113,9 @@ const Col = ({
           parentWidth={internalStyle.width}
           parentType={type}
           totalWidth={totalWidth}
-          hasTotalColumn={hasTotalColumn}
           setBiggestDataCellWidth={setBiggestDataCellWidth}
           setBiggestLabelCellWidth={setBiggestLabelCellWidth}
           setBiggestTotalCellWidth={setBiggestTotalCellWidth}
-          biggestLabelCellWidth={biggestLabelCellWidth}
-          biggestTotalCellWidth={biggestTotalCellWidth}
-          biggestDataCellWidth={biggestDataCellWidth}
         >
           {children}
         </Cell>

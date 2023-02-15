@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { motion } from "framer-motion";
 
 const getBoxStyle = (exclude, theTheme, motionDelay) => {
   return {
@@ -80,18 +79,6 @@ const Selection = ({
     <>
       {dimensions.map((dimension, index) => {
         return (
-          // <motion.div
-          //   key={index}
-          //   animate={dimension}
-          //   transition={{
-          //     duration: dimension.motionDelay ? dimension.motionDelay / 200 : 0,
-          //   }}
-          //   style={{
-          //     ...getBoxStyle(dimension.selection.isExclusion, theTheme),
-          //     ...dimension,
-          //     ...(selectionMode === "row" && rowSelectionStyles),
-          //   }}
-          // ></motion.div>
           <div
             key={index}
             style={{

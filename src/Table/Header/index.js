@@ -2,7 +2,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 import ResizablelCol from "../Col/ResizablelCol";
-import ResizableTable from "./ResizableTable";
 import Brick from "../Col/Brick";
 
 const RowElm = styled.div`
@@ -76,7 +75,6 @@ const Header = React.forwardRef(
                   <ResizablelCol
                     location={"top"}
                     onResize={onFirstColResize}
-                    // viewportHeight={viewportHeight}
                     type="first"
                     horizontalAlign="left"
                     selectable={false}
@@ -112,7 +110,6 @@ const Header = React.forwardRef(
                         location={"top"}
                         onResize={onLastColResize}
                         direction="left"
-                        // viewportHeight={viewportHeight}
                         type="last"
                         selectable={false}
                         autoAdjustFirstColWidth={autoAdjustFirstColWidth}
@@ -124,7 +121,6 @@ const Header = React.forwardRef(
                       >
                         <>
                           <Label>{item.title}</Label>
-                          <ResizableTable width={totalWidth} />
                         </>
                       </ResizablelCol>
                     )}
@@ -141,7 +137,6 @@ const Header = React.forwardRef(
                         }}
                       >
                         <Label>{item.title}</Label>
-                        <ResizableTable width={totalWidth} />
                       </Brick>
                     )}
                   </>

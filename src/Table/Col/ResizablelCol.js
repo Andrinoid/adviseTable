@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, memo } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import Brick from "./Brick";
 
@@ -17,23 +17,6 @@ const Resizer = styled.div`
         background: #64b2fe;
     }
 `;
-
-// The line was good idea to show the resizing, but it was not working well with the scroll position
-// Im keeping it here as a reminder to try to fix it later
-
-// const Line = styled.div`
-//     position: absolute;
-//     top: 0;
-//     ${({direction})=> {
-//         return direction === 'right' ? 'right: 1px;' : 'left: 1px;'
-//     }}
-//     right: 1px;
-//     width: 1px;
-//     height: ${props => props.height}px;
-//     background: #64b2fe;
-//     z-index: 1;
-//     display: ${props => props.isResizing ? 'block' : 'none'};
-// `;
 
 const Fill = styled.div`
   width: 100%;

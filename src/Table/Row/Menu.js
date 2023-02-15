@@ -20,7 +20,6 @@ const Menu = styled.div`
 `;
 
 const RowMenu = ({ tableId, children }) => {
-
     return (
         <Menu className={`${tableId}-rowMenu`}>
             <div>
