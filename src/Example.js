@@ -71,6 +71,8 @@ function Example({
 
   function updateTableData() {
     monthRange.pop();
+    monthRange.pop();
+    monthRange.pop();
     setMonthRange([...monthRange]);
     // console.log("monthRange", monthRange);
 

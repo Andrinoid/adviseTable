@@ -54,6 +54,29 @@ const Col = ({
 }) => {
   const currentColRef = useRef(null);
 
+  useLayoutEffect(() => {
+    let lastColumn = null;
+    for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
+      const row = tableMatrix[rowIndex];
+      for (let colIndex = 0; colIndex < row.length; colIndex++) {
+        const col = row[colIndex];
+        if (col) {
+          lastColumn = lastColumn > colIndex ? lastColumn : colIndex;
+        }
+      }
+    }
+
+    for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
+      tableMatrix[rowIndex] = tableMatrix[rowIndex].slice(0, lastColumn + 1);
+    }
+    setTableMatrix(tableMatrix);
+    setTotalCols((prev) => {
+      setNumberOfDataCols((prevDataCols) => {
+        return hasTotalColumn ? lastColumn - 1 : lastColumn;
+      });
+      return lastColumn + 1;
+    });
+  }, [tableMatrix]);
   /*
    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
@@ -97,16 +120,19 @@ const Col = ({
             return nextValue;
           }
         }
-        for (let index = 0; index <= y; index++) {
-          delete nextValue[index][x];
-        }
-        console.log(nextValue);
-        setTotalCols((prev) => {
-          setNumberOfDataCols((prevDataCols) => {
-            return hasTotalColumn ? x - 2 : x - 1;
-          });
-          return x;
-        });
+        // for (let index = 0; index <= y; index++) {
+        //   if (nextValue && nextValue[index] && nextValue[index][x] == null) {
+        //     nextValue[index].splice(x, 1);
+        //     console.log("After remove");
+        //     console.log(nextValue);
+        //   }
+        // }
+        // setTotalCols((prev) => {
+        //   setNumberOfDataCols((prevDataCols) => {
+        //     return hasTotalColumn ? x - 2 : x - 1;
+        //   });
+        //   return x;
+        // });
         return nextValue;
       });
     };
