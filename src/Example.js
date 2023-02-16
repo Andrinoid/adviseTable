@@ -67,21 +67,27 @@ function Example({
   let [monthRange, setMonthRange] = useState(
     months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1])
   );
+  const [total, setTotal] = useState(1000);
+
+  function updateTableData() {
+    monthRange.pop();
+    setMonthRange(monthRange);
+
+    let random = Math.floor(Math.random() * 100000) + 1000;
+    setTotal((total) => random);
+    console.log("monthRange", monthRange);
+  }
+
+  useEffect(() => {
+    console.log("register updateTableData");
+    // setInterval(updateTableData, 10000);
+  }, []);
 
   const header = [
     { title: "" },
-    { title: "Jan" },
-    { title: "Feb" },
-    { title: "Mar" },
-    { title: "Apr" },
-    { title: "May" },
-    { title: "Jun" },
-    { title: "Jul" },
-    { title: "Aug" },
-    { title: "Sep" },
-    { title: "Oct" },
-    { title: "Nov" },
-    { title: "Dec" },
+    ...monthRange.map((m) => {
+      return { title: m };
+    }),
     { title: "Total" },
   ];
 
@@ -132,12 +138,6 @@ function Example({
     );
   };
 
-  const [total, setTotal] = useState(1000);
-  setInterval(() => {
-    //create random number between 1000 and 10000
-    let random = Math.floor(Math.random() * 100000) + 1000;
-    setTotal((total) => random);
-  }, 10000);
   return (
     <div className="App">
       <Table
