@@ -97,7 +97,10 @@ const Col = ({
             return nextValue;
           }
         }
-        delete nextValue[y];
+        for (let index = 0; index <= y; index++) {
+          delete nextValue[index][x];
+        }
+        console.log(nextValue);
         setTotalCols((prev) => {
           setNumberOfDataCols((prevDataCols) => {
             return hasTotalColumn ? x - 2 : x - 1;
