@@ -170,13 +170,11 @@ const Table = (
    * usage in app: tableRef.current.autoAdjust()
    */
   useImperativeHandle(ref, () => ({
-    autoAdjust() {
-      autoAdjustTable();
-    },
-  }));
-  useImperativeHandle(ref, () => ({
     cleartSelection() {
       cleartSelectionTable();
+    },
+    autoAdjust() {
+      autoAdjustTable();
     },
   }));
 
