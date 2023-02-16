@@ -343,6 +343,17 @@ const Table = (
   };
 
   const getExtraColSpace = useCallback(() => {
+    console.log(
+      totalCols,
+      totalWidth,
+      firstColWidth,
+      biggestLabelCellWidth,
+      biggestDataCellWidth,
+      numberOfDataCols,
+      biggestTotalCellWidth,
+      leftBrickWidth,
+      hasTotalColumn
+    );
     return (
       totalWidth -
       (firstColWidth ? firstColWidth : biggestLabelCellWidth) -
