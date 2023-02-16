@@ -237,6 +237,7 @@ const Table = (
    * when the width of the table changes, recalculate the width of the data cols
    */
   useLayoutEffect(() => {
+    console.log("Adjust table?");
     autoAdjustTable();
   }, [
     totalCols,
@@ -329,6 +330,7 @@ const Table = (
    */
   const autoAdjustDataColWidth = () => {
     const extraColSpace = getExtraColSpace();
+    console.log("extraColSpace", extraColSpace);
     if (extraColSpace > 0) {
       if (!numberOfDataCols) {
         setColWidth(0);

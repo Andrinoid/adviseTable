@@ -71,16 +71,16 @@ function Example({
 
   function updateTableData() {
     monthRange.pop();
-    setMonthRange(monthRange);
+    setMonthRange([...monthRange]);
+    // console.log("monthRange", monthRange);
 
     let random = Math.floor(Math.random() * 100000) + 1000;
-    setTotal((total) => random);
-    console.log("monthRange", monthRange);
+    // setTotal((total) => random);
   }
 
   useEffect(() => {
     console.log("register updateTableData");
-    // setInterval(updateTableData, 10000);
+    setInterval(updateTableData, 10000);
   }, []);
 
   const header = [
@@ -88,7 +88,7 @@ function Example({
     ...monthRange.map((m) => {
       return { title: m };
     }),
-    { title: "Total" },
+    // { title: "Total" },
   ];
 
   const handleOnDragEnd = (result) => {
@@ -191,7 +191,7 @@ function Example({
                                   <Col key={i}>{row[month]}</Col>
                                 ))}
 
-                                <Col>{total}</Col>
+                                {/* <Col>{total}</Col> */}
                               </Row>
 
                               {

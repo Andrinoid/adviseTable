@@ -1,9 +1,9 @@
 //react component
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useEffect } from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
 import HoverIndicator from "./HoverIndicator";
-import { clone } from "lodash";
+import { clone, cloneDeep } from "lodash";
 
 const Column = styled.div`
   display: inline-flex;
@@ -31,6 +31,7 @@ const Col = ({
   type,
   internalStyle = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
   setTableMatrix,
+  tableMatrix,
   setTotalCols,
   setNumberOfDataCols,
   theTheme,
@@ -52,6 +53,7 @@ const Col = ({
   onClick,
 }) => {
   const currentColRef = useRef(null);
+
   /*
    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
@@ -66,13 +68,13 @@ const Col = ({
         for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
           prev[y][index] = currentColRef;
         }
-        nextValue = clone(prev);
+        nextValue = cloneDeep(prev);
       } else {
         prev[y] = [];
         for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
           prev[y][index] = currentColRef;
         }
-        nextValue = clone(prev);
+        nextValue = cloneDeep(prev);
       }
 
       setTotalCols((prev) => {
@@ -81,9 +83,30 @@ const Col = ({
         });
         return index;
       });
-
       return nextValue;
     });
+    return () => {
+      setTableMatrix((prev) => {
+        let nextValue = cloneDeep(prev);
+        if (nextValue[y]) {
+          nextValue[y][x] = null;
+        }
+        for (let index = 0; index <= y; index++) {
+          const row = nextValue[index];
+          if (row && row[x] != null) {
+            return nextValue;
+          }
+        }
+        delete nextValue[y];
+        setTotalCols((prev) => {
+          setNumberOfDataCols((prevDataCols) => {
+            return hasTotalColumn ? x - 2 : x - 1;
+          });
+          return x;
+        });
+        return nextValue;
+      });
+    };
   }, [y, x]);
 
   return (

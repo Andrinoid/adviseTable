@@ -214,6 +214,7 @@ const Row = memo(
           type: colType,
           internalStyle: { width: width },
           setTableMatrix,
+          tableMatrix,
           setTotalCols,
           setNumberOfDataCols,
           theTheme,
