@@ -1,5 +1,5 @@
 //react component
-import React, { useRef, useLayoutEffect, useEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
 import HoverIndicator from "./HoverIndicator";
@@ -54,7 +54,8 @@ const Col = ({
 }) => {
   const currentColRef = useRef(null);
 
-  useLayoutEffect(() => {
+  const cleanMatrix = (tableMatrix) => {
+    console.log("CLEANING THIS UP");
     let lastColumn = null;
     for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
       const row = tableMatrix[rowIndex];
@@ -69,14 +70,8 @@ const Col = ({
     for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
       tableMatrix[rowIndex] = tableMatrix[rowIndex].slice(0, lastColumn + 1);
     }
-    setTableMatrix(tableMatrix);
-    setTotalCols((prev) => {
-      setNumberOfDataCols((prevDataCols) => {
-        return hasTotalColumn ? lastColumn - 1 : lastColumn;
-      });
-      return lastColumn + 1;
-    });
-  }, [tableMatrix]);
+    return tableMatrix;
+  };
   /*
    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
@@ -91,13 +86,13 @@ const Col = ({
         for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
           prev[y][index] = currentColRef;
         }
-        nextValue = cloneDeep(prev);
-      } else {
+        nextValue = prev;
+      } else if (y != null) {
         prev[y] = [];
         for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
           prev[y][index] = currentColRef;
         }
-        nextValue = cloneDeep(prev);
+        nextValue = prev;
       }
 
       setTotalCols((prev) => {
@@ -110,29 +105,29 @@ const Col = ({
     });
     return () => {
       setTableMatrix((prev) => {
-        let nextValue = cloneDeep(prev);
+        console.log("UNMOUNT");
+        let nextValue = prev;
         if (nextValue[y]) {
           nextValue[y][x] = null;
         }
-        for (let index = 0; index <= y; index++) {
+        for (let index = 0; index < nextValue.length; index++) {
           const row = nextValue[index];
           if (row && row[x] != null) {
             return nextValue;
           }
         }
-        // for (let index = 0; index <= y; index++) {
-        //   if (nextValue && nextValue[index] && nextValue[index][x] == null) {
-        //     nextValue[index].splice(x, 1);
-        //     console.log("After remove");
-        //     console.log(nextValue);
-        //   }
-        // }
-        // setTotalCols((prev) => {
-        //   setNumberOfDataCols((prevDataCols) => {
-        //     return hasTotalColumn ? x - 2 : x - 1;
-        //   });
-        //   return x;
-        // });
+        if (nextValue.length > 0) {
+          console.log("What?", nextValue);
+          nextValue = cleanMatrix(nextValue);
+          setTotalCols((prev) => {
+            setNumberOfDataCols((prevDataCols) => {
+              return hasTotalColumn
+                ? nextValue[0].length - 2
+                : nextValue[0].length - 1;
+            });
+            return nextValue[0].length;
+          });
+        }
         return nextValue;
       });
     };
