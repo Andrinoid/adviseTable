@@ -55,7 +55,6 @@ const Col = ({
   const currentColRef = useRef(null);
 
   const cleanMatrix = (tableMatrix) => {
-    console.log("CLEANING THIS UP");
     let lastColumn = null;
     for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
       const row = tableMatrix[rowIndex];
@@ -105,7 +104,6 @@ const Col = ({
     });
     return () => {
       setTableMatrix((prev) => {
-        console.log("UNMOUNT");
         let nextValue = prev;
         if (nextValue[y]) {
           nextValue[y][x] = null;
@@ -117,7 +115,6 @@ const Col = ({
           }
         }
         if (nextValue.length > 0) {
-          console.log("What?", nextValue);
           nextValue = cleanMatrix(nextValue);
           setTotalCols((prev) => {
             setNumberOfDataCols((prevDataCols) => {

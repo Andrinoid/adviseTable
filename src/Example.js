@@ -74,14 +74,9 @@ function Example({
     monthRange.pop();
     monthRange.pop();
     setMonthRange([...monthRange]);
-    // console.log("monthRange", monthRange);
-
-    let random = Math.floor(Math.random() * 100000) + 1000;
-    // setTotal((total) => random);
   }
 
   useEffect(() => {
-    console.log("register updateTableData");
     setInterval(updateTableData, 10000);
   }, []);
 
