@@ -5,7 +5,6 @@ import {
   VerticalAlignBottomOutlined,
   ClearOutlined,
 } from "@ant-design/icons";
-import { motion } from "framer-motion";
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
 
@@ -212,33 +211,11 @@ function Example({
                                     // The motion divs are optional and just an example of how to animate the conditional rendered rows
                                     // it shows how dynamic the table can be
                                     // Optional animation starts
-                                    <motion.div
-                                      initial="collapsed"
-                                      animate="open"
-                                      exit="collapsed"
-                                      variants={{
-                                        open: {
-                                          height: "auto",
-                                          transition: {
-                                            when: "beforeChildren",
-                                            duration: 0.3,
-                                          },
-                                        },
-                                        collapsed: {
-                                          height: 0,
-                                          transition: { when: "afterChildren" },
-                                        },
-                                      }}
+                                    <div
+                                      
                                     >
-                                      <motion.div
-                                        variants={{
-                                          open: {
-                                            opacity: 1,
-                                          },
-                                          collapsed: {
-                                            opacity: 0,
-                                          },
-                                        }}
+                                      <div
+                                        
                                       >
                                         {/* Optional animation ends */}
 
@@ -295,8 +272,8 @@ function Example({
                                           <Col>34567</Col>
                                         </Row>
                                         {/* Optional animation starts */}
-                                      </motion.div>
-                                    </motion.div>
+                                      </div>
+                                    </div>
                                   )
                                   // Optional animation ends
                                 }
