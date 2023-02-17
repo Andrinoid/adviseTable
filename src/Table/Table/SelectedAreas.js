@@ -23,7 +23,6 @@ const SelectedAreas = ({
       `#${tableId} .brick`, //it would be nice to find a selector that applies this to all cells but not .tableCol
       "mousedown",
       () => {
-        console.log('mouseDown on brick')
         clearSelectedAreas();
       },
       false

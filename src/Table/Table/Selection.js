@@ -34,8 +34,6 @@ const Selection = ({
   const [dimensions, setDimensions] = useState([]);
 
   const calculateDimensions = (selection = {}) => {
-    console.log('selection', selection);
-    console.log(tableMatrix);
     const firstElement = tableMatrix[selection.fromY][selection.fromX].current;
     const lastElement = tableMatrix[selection.toY][selection.toX].current;
 

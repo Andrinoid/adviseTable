@@ -82,7 +82,6 @@ const Col = ({
       let { colspan } = currentColRef.current.dataset;
       if (colspan === 'fullwidth') {
         colspan = totalCols;
-        console.log('fullwidths')
       }
       let nextValue = prev;
       let index = x;
