@@ -111,14 +111,10 @@ const Table = (
   // ======= refs =======
   const viewportRef = useRef(null);
 
-  // const headerScrollRef = useRef(null);
-  // const viewportScrollRef = useRef(null);
-  // const tableLayerScrollRef = useRef(null);
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableContainerRef = useRef(null);
-
   // ======= states =======
   const [theTheme, setTheTheme] = useState(themes[theme]);
   const [numberOfDataCols, setNumberOfDataCols] = useState(0);
@@ -153,16 +149,7 @@ const Table = (
   const [instanceCount, setInstanceCount] = useState(0);
   const [initialLoaded, setInitialLoaded] = useState(false);
 
-  useEffect(() => {
-    console.log("isViewPortOverflow", isViewPortOverflow);
-  }, [isViewPortOverflow]);
-
-  useEffect(() => {
-    console.log("scrollstatus", scrollStatus);
-  }, [scrollStatus]);
-
   useCopier(tableMatrix, selectedAreas);
-
   /**
    * expose method to parent component
    * For this to work, the parent component must pass a ref to this component
@@ -566,7 +553,6 @@ const Table = (
           >
             {childrenRows}
             <LeftBrickSpace
-              scrollStatus={scrollStatus}
               className="leftBrickSpace"
               width={leftBrickWidth}
             />
