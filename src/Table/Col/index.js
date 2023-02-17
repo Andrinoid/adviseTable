@@ -44,6 +44,7 @@ const Col = ({
   setBiggestTotalCellWidth,
   selectable,
   cleartSelectionTable,
+  totalCols,
   // outer props
   dataValue,
   spanSelection = true,
@@ -78,7 +79,11 @@ const Col = ({
   useLayoutEffect(() => {
     cleartSelectionTable();
     setTableMatrix((prev) => {
-      const { colspan } = currentColRef.current.dataset;
+      let { colspan } = currentColRef.current.dataset;
+      if (colspan === 'fullwidth') {
+        colspan = totalCols;
+        console.log('fullwidths')
+      }
       let nextValue = prev;
       let index = x;
       if (prev[y]) {
@@ -128,7 +133,7 @@ const Col = ({
         return nextValue;
       });
     };
-  }, [y, x]);
+  }, [y, x, totalCols]);
 
   return (
     <Column

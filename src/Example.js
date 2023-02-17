@@ -143,18 +143,20 @@ function Example({
           return (
             <>
               <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
-                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+                <Col horizontalAlign="left">100</Col>
+
               </Row>
               <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
                 <Col horizontalAlign="left" spanSelection={false} colspan={'fullwidth'}>Name</Col>

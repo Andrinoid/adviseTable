@@ -224,6 +224,7 @@ const Row = memo(
           setBiggestTotalCellWidth,
           selectable,
           cleartSelectionTable,
+          totalCols,
           // biggestDataCellWidth,
           // biggestLabelCellWidth,
           // biggestTotalCellWidth,
