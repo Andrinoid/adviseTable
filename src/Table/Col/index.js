@@ -3,7 +3,6 @@ import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
 import HoverIndicator from "./HoverIndicator";
-import { clone, cloneDeep } from "lodash";
 
 const Column = styled.div`
   display: inline-flex;
