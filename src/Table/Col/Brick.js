@@ -34,7 +34,7 @@ const BrickElm = styled.div`
       return theme.grid;
     }
   }}
-    ${({ location, theme }) => {
+  ${({ location, theme }) => {
     if (location === "top") {
       return { ...theme.col, ...theme.header };
     }

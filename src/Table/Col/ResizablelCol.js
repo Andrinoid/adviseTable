@@ -12,7 +12,7 @@ const Resizer = styled.div`
     border-${({ direction }) => direction}: solid 1px #ccc;
     ${({ direction, position = 0 }) => {
     return direction === "right" ? `right: ${0 - position}px;` : `left: ${position}px;`;
-    }}
+}}
     &:hover {
         background: #64b2fe;
     }
@@ -29,105 +29,110 @@ const Fill = styled.div`
   position: relative;
 `;
 
-const ResizablelCol = 
+const ResizablelCol = ({
+  theTheme,
+  showGrid,
+  children,
+  onResize,
+  direction = "right",
+  style,
+  type,
+  horizontalAlign = "right",
+  location,
+  autoAdjustFirstColWidth,
+  autoAdjustLastColWidth,
+}) => {
+  const [w, setW] = useState(0);
+  const [x, setX] = useState(0);
+  const newWidthRef = useRef(null);
+  const [position, setPosition] = useState(0);
+  const [isResizing, setIsResizing] = useState(false);
+  const resizeRef = useRef(null);
+  const colRef = useRef(null);
 
-  ({
-    children,
-    onResize,
-    direction = "right",
-    style,
-    type,
-    horizontalAlign = "right",
-    location,
-    autoAdjustFirstColWidth,
-    autoAdjustLastColWidth,
-  }) => {
-    const [w, setW] = useState(0);
-    const [x, setX] = useState(0);
-    const newWidthRef = useRef(null);
-    const [position, setPosition] = useState(0);
-    const [isResizing, setIsResizing] = useState(false);
-    const resizeRef = useRef(null);
-    const colRef = useRef(null);
-
-    // This is a hack to only run the effect once
-    const isFirstRun = useRef(true);
-    useEffect(() => {
-      if (isFirstRun.current) {
-        isFirstRun.current = false;
-        return;
-      }
-      // Attach the listeners to `document`
-      document.addEventListener("mousemove", mouseMoveHandler);
-      document.addEventListener("mouseup", mouseUpHandler);
-      return () => {
-        // Remove the listeners from `document`
-        document.removeEventListener("mousemove", mouseMoveHandler);
-        document.removeEventListener("mouseup", mouseUpHandler);
-      };
-    }, [x]);
-
-    const mouseDownHandler = (e) => {
-      // Get the current mouse position
-      setX(e.clientX);
-      // Get current width of the column
-      setW(colRef.current.offsetWidth);
-    };
-
-    const mouseMoveHandler = (e) => {
-      // How far the mouse has been moved
-      setIsResizing(true);
-      let newWidth;
-      let dx;
-      // revert logic based on direction
-      if (direction === "right") {
-        dx = e.clientX - x;
-        newWidth = w + dx;
-      } else {
-        dx = x - e.clientX;
-        newWidth = w + dx;
-      }
-      newWidthRef.current = newWidth;
-      setPosition(dx);
-    };
-
-    const mouseUpHandler = () => {
-      // Remove the handlers of `mousemove` and `mouseup`
+  // This is a hack to only run the effect once
+  const isFirstRun = useRef(true);
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    // Attach the listeners to `document`
+    document.addEventListener("mousemove", mouseMoveHandler);
+    document.addEventListener("mouseup", mouseUpHandler);
+    return () => {
+      // Remove the listeners from `document`
       document.removeEventListener("mousemove", mouseMoveHandler);
       document.removeEventListener("mouseup", mouseUpHandler);
-      setIsResizing(false);
-      onResize(newWidthRef.current);
-      setPosition(0);
     };
+  }, [x]);
 
-    const doubleClickHandler = () => {
-      if (type === "first") {
-        autoAdjustFirstColWidth();
-      }
-      if (type === "last") {
-        autoAdjustLastColWidth();
-      }
-    };
+  const mouseDownHandler = (e) => {
+    // Get the current mouse position
+    setX(e.clientX);
+    // Get current width of the column
+    setW(colRef.current.offsetWidth);
+  };
 
-    return (
-      <Brick location={location} style={{ ...style, zIndex: 4 }}>
-        {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}
-        <Fill className="fill" ref={colRef} horizontalAlign={horizontalAlign}>
-          {children}
-          <Resizer
-            onMouseDown={mouseDownHandler}
-            onDoubleClick={doubleClickHandler}
-            direction={direction}
-            position={position}
-            isResizing={isResizing}
-            ref={resizeRef}
-          >
+  const mouseMoveHandler = (e) => {
+    // How far the mouse has been moved
+    setIsResizing(true);
+    let newWidth;
+    let dx;
+    // revert logic based on direction
+    if (direction === "right") {
+      dx = e.clientX - x;
+      newWidth = w + dx;
+    } else {
+      dx = x - e.clientX;
+      newWidth = w + dx;
+    }
+    newWidthRef.current = newWidth;
+    setPosition(dx);
+  };
 
-          </Resizer>
-        </Fill>
-      </Brick>
-    );
-  }
+  const mouseUpHandler = () => {
+    // Remove the handlers of `mousemove` and `mouseup`
+    document.removeEventListener("mousemove", mouseMoveHandler);
+    document.removeEventListener("mouseup", mouseUpHandler);
+    setIsResizing(false);
+    onResize(newWidthRef.current);
+    setPosition(0);
+  };
+
+  const doubleClickHandler = () => {
+    if (type === "first") {
+      autoAdjustFirstColWidth();
+    }
+    if (type === "last") {
+      autoAdjustLastColWidth();
+    }
+  };
+
+  return (
+    <Brick
+      location={location}
+      style={{ ...style, zIndex: 4 }}
+      theTheme={theTheme}
+      showGrid={showGrid}
+    >
+      {/* Fill element is used to get ref and messure the col with. ForwardRef on Col did not work in this case */}
+      <Fill className="fill" ref={colRef} horizontalAlign={horizontalAlign}>
+        {children}
+        <Resizer
+          onMouseDown={mouseDownHandler}
+          onDoubleClick={doubleClickHandler}
+          direction={direction}
+          position={position}
+          isResizing={isResizing}
+          ref={resizeRef}
+        >
+
+        </Resizer>
+      </Fill>
+    </Brick>
+  );
+}
 
 
 export default ResizablelCol;

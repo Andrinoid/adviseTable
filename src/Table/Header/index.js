@@ -74,6 +74,8 @@ const Header = React.forwardRef(
                 {index === 0 && (
                   <ResizablelCol
                     location={"top"}
+                    theTheme={theTheme}
+                    showGrid={showGrid}
                     onResize={onFirstColResize}
                     type="first"
                     horizontalAlign="left"
@@ -85,7 +87,7 @@ const Header = React.forwardRef(
                       height: colHeight,
                     }}
                   >
-                    <Label>{item.title}</Label>
+                    {item.title && <Label>{item.title}</Label>}
                   </ResizablelCol>
                 )}
                 {index > 0 && (index < data.length - 1 || !hasTotalColumn) && (

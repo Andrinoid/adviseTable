@@ -67,18 +67,6 @@ function Example({
   let [monthRange, setMonthRange] = useState(
     months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1])
   );
-  const [total, setTotal] = useState(1000);
-
-  function updateTableData() {
-    monthRange.pop();
-    monthRange.pop();
-    monthRange.pop();
-    setMonthRange([...monthRange]);
-  }
-
-  useEffect(() => {
-    setInterval(updateTableData, 10000);
-  }, []);
 
   const header = [
     { title: "" },
