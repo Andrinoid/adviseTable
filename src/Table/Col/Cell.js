@@ -7,9 +7,18 @@ const cellPaddingLeftRight = 5;
 const SpaceAround = styled.div`
   padding: 0 ${cellPaddingLeftRight}px;
   font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  ${({ parentType }) => {
+    if (parentType === "first") {
+      return `
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      `;
+    }
+  }}
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // white-space: nowrap;
 `;
 
 const Cell = ({
@@ -86,7 +95,11 @@ const Cell = ({
   }, [parentWidth, totalWidth]);
 
   return (
-    <SpaceAround ref={ref} isOverflowing={isOverflowing}>
+    <SpaceAround
+      ref={ref}
+      isOverflowing={isOverflowing}
+      parentType={parentType}
+    >
       {children}
     </SpaceAround>
   );
