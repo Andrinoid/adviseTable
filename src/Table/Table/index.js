@@ -512,8 +512,6 @@ const Table = (
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
-        {/* {"AAAAAAAAAAAAA" + JSON.stringify(totalCols)}
-        {"AAAAAAAAAAAAA" + JSON.stringify(numberOfDataCols)} */}
         {headerData ? (
           <Header
             ref={headerScrollRef}
