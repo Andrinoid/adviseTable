@@ -149,6 +149,32 @@ const Table = (
   const [instanceCount, setInstanceCount] = useState(0);
   const [initialLoaded, setInitialLoaded] = useState(false);
 
+  const selectAll = useCallback(() => {
+    if (
+      selectedAreas[0] &&
+      tableMatrix &&
+      selectedAreas[0].toY == tableMatrix.length - 1 &&
+      selectedAreas[0].toX == tableMatrix[0].length - 1
+    ) {
+      setSelectedAreas([]);
+    } else {
+      if (tableMatrix) {
+        setSelectedAreas([
+          {
+            toY: tableMatrix.length - 1,
+            toX: tableMatrix[0].length - 1,
+            fromY: 0,
+            fromX: 0,
+            oldMouseMoveTo: {
+              toX: tableMatrix[0].length - 1,
+              toY: tableMatrix.length - 1,
+            },
+          },
+        ]);
+      }
+    }
+  }, [tableMatrix, selectedAreas]);
+
   useCopier(tableMatrix, selectedAreas);
   /**
    * expose method to parent component
@@ -501,6 +527,7 @@ const Table = (
       >
         {headerData ? (
           <Header
+            selectAll={selectAll}
             ref={headerScrollRef}
             className="scrollable"
             width={viewportWidth}
@@ -537,10 +564,7 @@ const Table = (
             className={`${tableId}container`}
           >
             {childrenRows}
-            <LeftBrickSpace
-              className="leftBrickSpace"
-              width={leftBrickWidth}
-            />
+            <LeftBrickSpace className="leftBrickSpace" width={leftBrickWidth} />
           </div>
 
           <SelectedArea

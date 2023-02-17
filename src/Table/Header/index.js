@@ -18,6 +18,18 @@ const Label = styled.div`
   font-weight: bold;
 `;
 
+const PressableBrick = styled.button`
+  background: none;
+  border: none;
+  box-shadow: inset 0px 0px 0 0.5px #ebebeb;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+
+  &:hover {
+    background-color: #e6e3e3;
+  }
+`;
+
 const Header = React.forwardRef(
   (
     {
@@ -37,6 +49,7 @@ const Header = React.forwardRef(
       autoAdjustFirstColWidth,
       autoAdjustLastColWidth,
       lasColumnRisizeable,
+      selectAll,
     },
     ref
   ) => {
@@ -51,10 +64,8 @@ const Header = React.forwardRef(
             display: "flex",
           }}
         >
-          <Brick
-            showGrid={showGrid}
-            theTheme={theTheme}
-            location={"top"}
+          <PressableBrick
+            onClick={selectAll}
             style={{
               width: leftBrickWidth,
               height: colHeight,
@@ -64,7 +75,7 @@ const Header = React.forwardRef(
               top: 0,
               left: 0,
             }}
-          ></Brick>
+          />
 
           {data.map((item, index) => {
             // we need index to be zero after the first col wich has it's own width
