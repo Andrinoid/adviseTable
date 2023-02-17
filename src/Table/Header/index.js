@@ -59,7 +59,7 @@ const Header = React.forwardRef(
               width: leftBrickWidth,
               height: colHeight,
               theTheme,
-              zIndex: 4,
+              zIndex: 5,
               position: "sticky",
               top: 0,
               left: 0,

@@ -141,147 +141,174 @@ function Example({
       >
         {(tableProvided) => {
           return (
-            <DragDropContext onDragEnd={handleOnDragEnd}>
-              <Droppable droppableId="characters">
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {viewData.map((row, i) => {
-                      return (
-                        <Draggable
-                          isDragDisabled={!draggable}
-                          draggableId={"id-" + row.id}
-                          key={"id-" + row.id}
-                          index={i}
-                        >
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                            >
-                              <Row
-                                key={i}
-                                style={{ minHeight: 40 }}
-                                leftBrickContent={leftBrickContent(
-                                  provided.dragHandleProps,
-                                  row.id
-                                )}
-                                {...tableProvided.rowProps}
-                                menuContent={rowMenuContent(
-                                  provided.dragHandleProps
-                                )}
+            <>
+              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+                <Col horizontalAlign="left" colspan={'fullwidth'}>100</Col>
+              </Row>
+              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
+                <Col horizontalAlign="left" spanSelection={false} colspan={'fullwidth'}>Name</Col>
+              </Row>
+              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
+                <Col>bla</Col>
+                <Col>bla</Col>
+                <Col horizontalAlign="left" spanSelection={false} colspan={'fullwidth'}>Name</Col>
+              </Row>
+              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
+                <Col horizontalAlign="left" spanSelection={false} colspan={'fullwidth'}>Name</Col>
+              </Row>
+              <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="characters">
+                  {(provided) => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                      {viewData.map((row, i) => {
+                        return (
+                          <Draggable
+                            isDragDisabled={!draggable}
+                            draggableId={"id-" + row.id}
+                            key={"id-" + row.id}
+                            index={i}
+                          >
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
                               >
-                                <Col horizontalAlign="left">{row.name}</Col>
+                                <Row
+                                  key={i}
+                                  style={{ minHeight: 40 }}
+                                  leftBrickContent={leftBrickContent(
+                                    provided.dragHandleProps,
+                                    row.id
+                                  )}
+                                  {...tableProvided.rowProps}
+                                  menuContent={rowMenuContent(
+                                    provided.dragHandleProps
+                                  )}
+                                >
+                                  <Col horizontalAlign="left">{row.name}</Col>
 
-                                {monthRange.map((month, i) => (
-                                  <Col key={i}>{row[month]}</Col>
-                                ))}
+                                  {monthRange.map((month, i) => (
+                                    <Col key={i}>{row[month]}</Col>
+                                  ))}
 
-                                {/* <Col>{total}</Col> */}
-                              </Row>
+                                  {/* <Col>{total}</Col> */}
+                                </Row>
 
-                              {
-                                expandedIds.includes(row.id) && (
-                                  // The motion divs are optional and just an example of how to animate the conditional rendered rows
-                                  // it shows how dynamic the table can be
-                                  // Optional animation starts
-                                  <motion.div
-                                    initial="collapsed"
-                                    animate="open"
-                                    exit="collapsed"
-                                    variants={{
-                                      open: {
-                                        height: "auto",
-                                        transition: {
-                                          when: "beforeChildren",
-                                          duration: 0.3,
-                                        },
-                                      },
-                                      collapsed: {
-                                        height: 0,
-                                        transition: { when: "afterChildren" },
-                                      },
-                                    }}
-                                  >
+                                {
+                                  expandedIds.includes(row.id) && (
+                                    // The motion divs are optional and just an example of how to animate the conditional rendered rows
+                                    // it shows how dynamic the table can be
+                                    // Optional animation starts
                                     <motion.div
+                                      initial="collapsed"
+                                      animate="open"
+                                      exit="collapsed"
                                       variants={{
                                         open: {
-                                          opacity: 1,
+                                          height: "auto",
+                                          transition: {
+                                            when: "beforeChildren",
+                                            duration: 0.3,
+                                          },
                                         },
                                         collapsed: {
-                                          opacity: 0,
+                                          height: 0,
+                                          transition: { when: "afterChildren" },
                                         },
                                       }}
                                     >
-                                      {/* Optional animation ends */}
+                                      <motion.div
+                                        variants={{
+                                          open: {
+                                            opacity: 1,
+                                          },
+                                          collapsed: {
+                                            opacity: 0,
+                                          },
+                                        }}
+                                      >
+                                        {/* Optional animation ends */}
 
-                                      <Row
-                                        selectable={false}
-                                        {...tableProvided.rowProps}
-                                        type={"secondary"}
-                                        style={{
-                                          minHeight: 40,
-                                          background: "#f7f7f7",
-                                        }}
-                                      >
-                                        <Col horizontalAlign="left">
-                                          lykill 1004
-                                        </Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                      </Row>
-                                      <Row
-                                        selectable={false}
-                                        {...tableProvided.rowProps}
-                                        type={"secondary"}
-                                        style={{
-                                          minHeight: 40,
-                                          background: "#f7f7f7",
-                                        }}
-                                      >
-                                        <Col horizontalAlign="left">
-                                          lykill 1006
-                                        </Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                        <Col>34567</Col>
-                                      </Row>
-                                      {/* Optional animation starts */}
+                                        <Row
+                                          selectable={false}
+                                          {...tableProvided.rowProps}
+                                          type={"secondary"}
+                                          style={{
+                                            minHeight: 40,
+                                            background: "#f7f7f7",
+                                          }}
+                                        >
+                                          <Col horizontalAlign="left">
+                                            lykill 1004
+                                          </Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                        </Row>
+                                        <Row
+                                          selectable={false}
+                                          {...tableProvided.rowProps}
+                                          type={"secondary"}
+                                          style={{
+                                            minHeight: 40,
+                                            background: "#f7f7f7",
+                                          }}
+                                        >
+                                          <Col horizontalAlign="left">
+                                            lykill 1006
+                                          </Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                          <Col>34567</Col>
+                                        </Row>
+                                        {/* Optional animation starts */}
+                                      </motion.div>
                                     </motion.div>
-                                  </motion.div>
-                                )
-                                // Optional animation ends
-                              }
-                            </div>
-                          )}
-                        </Draggable>
-                      );
-                    })}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+                                  )
+                                  // Optional animation ends
+                                }
+                              </div>
+                            )}
+                          </Draggable>
+                        );
+                      })}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </>
           );
         }}
       </Table>
