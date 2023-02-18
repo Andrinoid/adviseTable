@@ -3,20 +3,44 @@ import { getContainedArea } from "../SelectedAreas";
 
 let _table;
 let _selections;
+let _header;
 
 export class Copier {
-  constructor(table, selections) {
+  constructor(table, selections, header = null) {
     _table = table;
     _selections = selections;
+    _header = header;
   }
 
   copy() {
-    const result = this.stringifyTable();
+    const table = this.stringifyTable();
 
-    if (result != "") navigator.clipboard.writeText(result);
+    if (table !== "") navigator.clipboard.writeText(table);
   }
 
   stringifyTable() {
+    const header = this.stringifyHeader();
+    const body = this.stringifyBody();
+    return header + "\n" + body;
+  }
+
+  stringifyHeader() {
+    let result = "";
+
+    if (_header == null) return result;
+
+    for (let i = 0; i < _header.length; i++) {
+      result += _header[i].title;
+
+      if (i < _header.length - 1) {
+        result += "\t";
+      }
+    }
+
+    return result;
+  }
+
+  stringifyBody() {
     let result = "",
       minY,
       minX,

@@ -8,6 +8,69 @@ import { Copier } from ".";
 
 describe("Copier", () => {
   describe("One Selection", () => {
+    const headerData = [
+      {
+        title: "",
+      },
+      {
+        title: "jan",
+      },
+      {
+        title: "feb",
+      },
+      {
+        title: "mar",
+      },
+      {
+        title: "apr",
+      },
+      {
+        title: "may",
+      },
+      {
+        title: "jun",
+      },
+      {
+        title: "jul",
+      },
+      {
+        title: "aug",
+      },
+      {
+        title: "sep",
+      },
+      {
+        title: "okt",
+      },
+      {
+        title: "nov",
+      },
+      {
+        title: "dec",
+      },
+    ];
+    it("should return selection string with header data", () => {
+      // -- x x x
+      // oo o o x
+      // oo o o x
+      // oo o o x
+      // oo o o x
+      const selection = [
+        {
+          fromX: 0,
+          fromY: 5,
+          toX: 2,
+          toY: 8,
+          oldMouseMoveTo: { toX: 2, toY: 8 },
+        },
+      ];
+
+      const copier = new Copier(table, selection, headerData);
+
+      expect(copier.stringifyTable()).toBe(
+        `\tjan\tfeb\tmar\tapr\tmay\tjun\tjul\taug\tsep\tokt\tnov\tdec\nSkattar\t-1079711\t-1022849\nAfskriftir\t-4715000\t-4715000\nSérverk\t39284029\t35977158\nAðrar tekjur\t3300025\t2734444\n`
+      );
+    });
     it("should return selection string", () => {
       // -- x x x
       // oo o o x
@@ -26,7 +89,7 @@ describe("Copier", () => {
 
       const copier = new Copier(table, selection);
 
-      expect(copier.stringifyTable()).toBe(
+      expect(copier.stringifyBody()).toBe(
         `Skattar\t-1079711\t-1022849\nAfskriftir\t-4715000\t-4715000\nSérverk\t39284029\t35977158\nAðrar tekjur\t3300025\t2734444\n`
       );
     });
@@ -48,7 +111,7 @@ describe("Copier", () => {
 
       const copier = new Copier(table, selection);
 
-      expect(copier.stringifyTable()).toBe(
+      expect(copier.stringifyBody()).toBe(
         "Gamalt ekki notað\t\t\t\t\t\t-146580\t-146580\t-155772\t-146580\t-146580\t\t\t34567\n"
       );
     });
@@ -70,8 +133,8 @@ describe("Copier", () => {
 
       const copier = new Copier(table, selection);
 
-      expect(copier.stringifyTable()).toBe(
-        "\t\t\t\t\t\t\t\t\t\t\t\t\tmyLabel1\n"
+      expect(copier.stringifyBody()).toBe(
+        "myLabel1\t\t\t\t\t\t\t\t\t\t\t\t\t\n"
       );
     });
 
@@ -93,8 +156,8 @@ describe("Copier", () => {
 
       const copier = new Copier(table, selection);
 
-      expect(copier.stringifyTable()).toBe(
-        "\t\t\tmyLabel2\t\t\t\tmyLabel3\t\t\t\t\t\tmyLabel4\n"
+      expect(copier.stringifyBody()).toBe(
+        "myLabel2\t\t\tmyLabel3\t\t\t\tmyLabel4\t\t\t\t\t\t\n"
       );
     });
 
@@ -115,8 +178,8 @@ describe("Copier", () => {
 
       const copier = new Copier(table, selection);
 
-      expect(copier.stringifyTable()).toBe(
-        "myLabel1\t\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\n"
+      expect(copier.stringifyBody()).toBe(
+        "myLabel1\tmyLabel2\t\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\tmyLabel2\n"
       );
     });
   });
@@ -149,7 +212,7 @@ describe("Copier", () => {
 
       const copier = new Copier(table, selection);
 
-      expect(copier.stringifyTable()).toBe(
+      expect(copier.stringifyBody()).toBe(
         `-1079711\t-1022849\t \t-2991679\t144949\n-4715000\t-4715000\t \t-4715000\t-4715000\n39284029\t35977158\t \t30156737\t38093535\n`
       );
     });
