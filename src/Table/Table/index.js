@@ -181,9 +181,7 @@ const Table = (
     }
   }, [tableMatrix, selectedAreas, isTableSelected]);
 
-  console.log(headerData)
-
-  useCopier(tableMatrix, selectedAreas);
+  useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
   /**
    * expose method to parent component
    * For this to work, the parent component must pass a ref to this component
