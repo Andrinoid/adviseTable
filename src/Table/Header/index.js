@@ -3,6 +3,9 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import ResizablelCol from "../Col/ResizablelCol";
 import Brick from "../Col/Brick";
+import themes from "../Table/themes";
+
+const BACKGROUND_TRANSITION = "background-color 0.03s";
 
 const RowElm = styled.div`
   position: sticky;
@@ -19,15 +22,23 @@ const Label = styled.div`
 `;
 
 const PressableBrick = styled.button`
-  background: none;
+  background: ${(props) =>
+    props.selected ? themes["dark"].secondary.background : "none"};
   border: none;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;
   cursor: pointer;
-  transition: background-color 0.1s ease-in-out;
 
-  &:hover {
-    background-color: #e6e3e3;
-  }
+  ${(props) => {
+    if (!props.selected) {
+      return `
+        transition: ${BACKGROUND_TRANSITION};
+
+        &:hover {
+          background-color: #eef1f1;
+        }
+      `;
+    }
+  }}
 `;
 
 const Header = React.forwardRef(
@@ -50,9 +61,18 @@ const Header = React.forwardRef(
       autoAdjustLastColWidth,
       lasColumnRisizeable,
       selectAll,
+      isTableSelected,
     },
     ref
   ) => {
+    const selectedBackground = {
+      background: isTableSelected
+        ? themes["dark"].secondary.background
+        : "inherit",
+    };
+    const selectedColor = {
+      color: isTableSelected ? themes["dark"].secondary.color : "inherit",
+    };
     return (
       <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
         <div
@@ -66,6 +86,7 @@ const Header = React.forwardRef(
         >
           <PressableBrick
             onClick={selectAll}
+            selected={isTableSelected}
             style={{
               width: leftBrickWidth,
               height: colHeight,
@@ -96,9 +117,14 @@ const Header = React.forwardRef(
                     style={{
                       width: firstColWidth,
                       height: colHeight,
+                      transition: BACKGROUND_TRANSITION,
+                      ...selectedBackground,
+
                     }}
                   >
-                    {item.title && <Label>{item.title}</Label>}
+                    {item.title && (
+                      <Label style={selectedColor}>{item.title}</Label>
+                    )}
                   </ResizablelCol>
                 )}
                 {index > 0 && (index < data.length - 1 || !hasTotalColumn) && (
@@ -111,9 +137,11 @@ const Header = React.forwardRef(
                     style={{
                       width: colWidth ? colWidth : "auto",
                       height: colHeight,
+                      transition: BACKGROUND_TRANSITION,
+                      ...selectedBackground,
                     }}
                   >
-                    <Label>{item.title}</Label>
+                    <Label style={selectedColor}>{item.title}</Label>
                   </Brick>
                 )}
                 {index === data.length - 1 && hasTotalColumn && (

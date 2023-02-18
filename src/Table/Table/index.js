@@ -149,13 +149,19 @@ const Table = (
   const [instanceCount, setInstanceCount] = useState(0);
   const [initialLoaded, setInitialLoaded] = useState(false);
 
-  const selectAll = useCallback(() => {
-    if (
+  const [isTableSelected, setIsTableSelected] = useState(false);
+
+  useEffect(() => {
+    setIsTableSelected(
       selectedAreas[0] &&
-      tableMatrix &&
-      selectedAreas[0].toY == tableMatrix.length - 1 &&
-      selectedAreas[0].toX == tableMatrix[0].length - 1
-    ) {
+        tableMatrix &&
+        selectedAreas[0].toY === tableMatrix.length - 1 &&
+        selectedAreas[0].toX === tableMatrix[0].length - 1
+    );
+  }, [selectedAreas, tableMatrix]);
+
+  const selectAll = useCallback(() => {
+    if (isTableSelected) {
       setSelectedAreas([]);
     } else {
       if (tableMatrix) {
@@ -173,7 +179,7 @@ const Table = (
         ]);
       }
     }
-  }, [tableMatrix, selectedAreas]);
+  }, [tableMatrix, selectedAreas, isTableSelected]);
 
   useCopier(tableMatrix, selectedAreas);
   /**
@@ -548,6 +554,7 @@ const Table = (
             autoAdjustFirstColWidth={autoAdjustFirstColWidth}
             autoAdjustLastColWidth={autoAdjustLastColWidth}
             lasColumnRisizeable={lasColumnRisizeable}
+            isTableSelected={isTableSelected}
           />
         ) : null}
 
