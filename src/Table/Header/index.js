@@ -23,7 +23,11 @@ const Label = styled.div`
 
 const PressableBrick = styled.button`
   background: ${(props) =>
-    props.selected ? themes["dark"].secondary.background : "none"};
+    props.selected
+      ? props.themeKey == "light"
+        ? themes["dark"].secondary.background
+        : themes["light"].secondary.background
+      : "none"};
   border: none;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;
   cursor: pointer;
@@ -34,7 +38,7 @@ const PressableBrick = styled.button`
         transition: ${BACKGROUND_TRANSITION};
 
         &:hover {
-          background-color: #eef1f1;
+          background-color: ${props.themeKey == "light" ? "#eef1f1" : "rgba(255,255,255, 0.2)"};
         }
       `;
     }
@@ -55,6 +59,7 @@ const Header = React.forwardRef(
       onLastColResize,
       stickyTopOffset = 0,
       theTheme,
+      themeKey,
       showGrid,
       data,
       autoAdjustFirstColWidth,
@@ -67,11 +72,17 @@ const Header = React.forwardRef(
   ) => {
     const selectedBackground = {
       background: isTableSelected
-        ? themes["dark"].secondary.background
+        ? themeKey == "light"
+          ? themes["dark"].secondary.background
+          : themes["light"].secondary.background
         : "inherit",
     };
     const selectedColor = {
-      color: isTableSelected ? themes["dark"].secondary.color : "inherit",
+      color: isTableSelected
+        ? themeKey == "light"
+          ? themes["dark"].secondary.color
+          : themes["light"].secondary.color
+        : "inherit",
     };
     return (
       <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
@@ -85,6 +96,7 @@ const Header = React.forwardRef(
           }}
         >
           <PressableBrick
+            themeKey={themeKey}
             onClick={selectAll}
             selected={isTableSelected}
             style={{
@@ -119,7 +131,6 @@ const Header = React.forwardRef(
                       height: colHeight,
                       transition: BACKGROUND_TRANSITION,
                       ...selectedBackground,
-
                     }}
                   >
                     {item.title && (

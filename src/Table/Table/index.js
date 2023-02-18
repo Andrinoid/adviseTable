@@ -547,6 +547,7 @@ const Table = (
             onLastColResize={onLastColResize}
             totalCols={totalCols}
             theTheme={theTheme}
+            themeKey={theme}
             data={headerData}
             hasTotalColumn={hasTotalColumn}
             stickyTopOffset={headerStickyTopOffset}
