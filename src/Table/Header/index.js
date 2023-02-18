@@ -5,6 +5,19 @@ import ResizablelCol from "../Col/ResizablelCol";
 import Brick from "../Col/Brick";
 import themes from "../Table/themes";
 
+const headerTheme = {
+  light: {
+    background: "rgb(74, 76, 80)",
+    color: "#fafafa",
+    hightlight: "#eef1f1",
+  },
+  dark: {
+    background: "#fafafa",
+    color: "rgb(74, 76, 80)",
+    hightlight: "rgba(255,255,255, 0.2)",
+  },
+};
+
 const BACKGROUND_TRANSITION = "background-color 0.03s";
 
 const RowElm = styled.div`
@@ -22,23 +35,19 @@ const Label = styled.div`
 `;
 
 const PressableBrick = styled.button`
-  background: ${(props) =>
-    props.selected
-      ? props.themeKey == "light"
-        ? themes["dark"].secondary.background
-        : themes["light"].secondary.background
-      : "none"};
+  background: ${({ selected, themeKey}) =>
+    selected ? headerTheme[themeKey].background : "none"};
   border: none;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;
   cursor: pointer;
 
-  ${(props) => {
-    if (!props.selected) {
+  ${({ selected, themeKey }) => {
+    if (!selected) {
       return `
         transition: ${BACKGROUND_TRANSITION};
 
         &:hover {
-          background-color: ${props.themeKey == "light" ? "#eef1f1" : "rgba(255,255,255, 0.2)"};
+          background-color: ${headerTheme[themeKey].hightlight};
         }
       `;
     }
@@ -72,17 +81,11 @@ const Header = React.forwardRef(
   ) => {
     const selectedBackground = {
       background: isTableSelected
-        ? themeKey == "light"
-          ? themes["dark"].secondary.background
-          : themes["light"].secondary.background
+        ? headerTheme[themeKey].background
         : "inherit",
     };
     const selectedColor = {
-      color: isTableSelected
-        ? themeKey == "light"
-          ? themes["dark"].secondary.color
-          : themes["light"].secondary.color
-        : "inherit",
+      color: isTableSelected ? headerTheme[themeKey].color : "inherit",
     };
     return (
       <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
