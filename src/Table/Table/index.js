@@ -156,6 +156,8 @@ const Table = (
     setIsTableSelected(
       selectedAreas[0] &&
         tableMatrix &&
+        selectedAreas[0].fromY === 0 &&
+        selectedAreas[0].fromX === 0 &&
         selectedAreas[0].toY === tableMatrix.length - 1 &&
         selectedAreas[0].toX === tableMatrix[0].length - 1
     );
