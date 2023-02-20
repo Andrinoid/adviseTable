@@ -18,6 +18,7 @@ import Selection from "./Selection";
 import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import { getValidChildren } from "../Row";
+import useKeyboardSelection from "./KeyboardSelection";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -183,87 +184,7 @@ const Table = (
 
   useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
 
-  let isNegative = useRef(false);
-
-  useEffect(() => {
-    function isInsideTable(selectedAreas, tableMatrix) {
-      const lastSelectedArea = selectedAreas[selectedAreas.length - 1];
-
-      const lastRow = tableMatrix.length - 1;
-      const lastCol = tableMatrix[0].length - 1;
-
-      return (
-        lastSelectedArea.fromY >= 0 &&
-        lastSelectedArea.fromY <= lastRow &&
-        lastSelectedArea.fromX >= 0 &&
-        lastSelectedArea.fromX <= lastCol &&
-        lastSelectedArea.toY >= 0 &&
-        lastSelectedArea.toY <= lastRow &&
-        lastSelectedArea.toX >= 0 &&
-        lastSelectedArea.toX <= lastCol
-      );
-    }
-
-    function handleSelectionKey(event) {
-      const area = selectedAreas[0];
-
-      if (event.shiftKey) {
-        if (event.key === "ArrowDown") {
-          if (area.toY === area.fromY) {
-            isNegative.current = false;
-          }
-          if (!isNegative.current) area.toY += 1;
-          else {
-            area.fromY += 1;
-          }
-        }
-
-        if (event.key === "ArrowUp") {
-          if (area.toY === area.fromY) {
-            isNegative.current = true;
-          }
-          if (!isNegative.current) area.toY -= 1;
-          else {
-            area.fromY -= 1;
-          }
-        }
-
-        if (event.key === "ArrowLeft") {
-          if (area.toX === area.fromX) {
-            isNegative.current = true;
-          }
-          if (isNegative.current) area.fromX -= 1;
-          else {
-            area.toX -= 1;
-          }
-        }
-
-        if (event.key === "ArrowRight") {
-          if (area.toX === area.fromX) {
-            isNegative.current = false;
-          }
-          if (isNegative.current) area.fromX += 1;
-          else {
-            area.toX += 1;
-          }
-        }
-
-        update();
-      }
-    }
-
-    function update() {
-      if (isInsideTable(selectedAreas, tableMatrix)) {
-        setSelectedAreas([{ ...selectedAreas[0] }]);
-      }
-    }
-
-    window.addEventListener("keydown", handleSelectionKey);
-
-    return () => {
-      window.removeEventListener("keydown", handleSelectionKey);
-    };
-  }, [selectedAreas, tableMatrix, isNegative]);
+  useKeyboardSelection(selectedAreas, tableMatrix, setSelectedAreas);
 
   /**
    * expose method to parent component
