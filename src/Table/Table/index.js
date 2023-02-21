@@ -19,6 +19,10 @@ import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
 import Menu from "../Menu";
+import { Typography } from "antd";
+import { Copier } from "./Copier";
+
+const { Text } = Typography;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -153,25 +157,38 @@ const Table = (
   const [initialLoaded, setInitialLoaded] = useState(false);
 
   const [isTableSelected, setIsTableSelected] = useState(false);
+  const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
+  
+
   useEffect(() => {
     function handleRightClick(e) {
       e.preventDefault();
-      setMenuIsOpen(false);
-
+  
       setTimeout(() => {
         setPosition({ x: e.clientX, y: e.clientY });
-        
+  
         setTimeout(() => {
           setMenuIsOpen(true);
         }, 100);
       }, 100);
     }
 
-    tableContainerRef.current.addEventListener("contextmenu", handleRightClick);
+    tableContainerRef.current.addEventListener("contextmenu", handleRightClick, false);
+
+    function handleClick(e) {
+      e.preventDefault();
+      setMenuIsOpen(false);
+    }
+    window.addEventListener("click", handleClick, false);
+
+    return () => {
+      tableContainerRef.current.removeEventListener("contextmenu", handleRightClick, false);
+      window.removeEventListener("click", handleClick, false);
+    }
   }, []);
 
   useEffect(() => {
@@ -181,30 +198,35 @@ const Table = (
         selectedAreas[0].fromY === 0 &&
         selectedAreas[0].fromX === 0 &&
         selectedAreas[0].toY === tableMatrix.length - 1 &&
-        selectedAreas[0].toX === tableMatrix[0].length - 1
+        selectedAreas[0].toX === tableMatrix[0].length - 1 &&
+        isHeaderIncluded
     );
   }, [selectedAreas, tableMatrix]);
 
-  const selectAll = useCallback(() => {
-    if (isTableSelected) {
-      setSelectedAreas([]);
-    } else {
-      if (tableMatrix) {
-        setSelectedAreas([
-          {
-            toY: tableMatrix.length - 1,
-            toX: tableMatrix[0].length - 1,
-            fromY: 0,
-            fromX: 0,
-            oldMouseMoveTo: {
-              toX: tableMatrix[0].length - 1,
+  const selectAll = useCallback(
+    (isHeaderIncluded = false) => {
+      if (isTableSelected) {
+        setSelectedAreas([]);
+      } else {
+        if (tableMatrix) {
+          setIsHeaderIncluded(isHeaderIncluded);
+          setSelectedAreas([
+            {
               toY: tableMatrix.length - 1,
+              toX: tableMatrix[0].length - 1,
+              fromY: 0,
+              fromX: 0,
+              oldMouseMoveTo: {
+                toX: tableMatrix[0].length - 1,
+                toY: tableMatrix.length - 1,
+              },
             },
-          },
-        ]);
+          ]);
+        }
       }
-    }
-  }, [tableMatrix, selectedAreas, isTableSelected]);
+    },
+    [tableMatrix, selectedAreas, isTableSelected]
+  );
 
   useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
 
@@ -552,14 +574,46 @@ const Table = (
   ]);
 
   return (
-    <div ref={tableContainerRef} style={{ position: "relative" }}>
+    <div
+      ref={tableContainerRef}
+      style={{ position: "relative" }}
+    >
       <Wrapper
         id={tableId}
         version="1.07"
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
-        <Menu position={position} open={menuIsOpen} />
+        <Menu position={position} open={menuIsOpen}>
+          <Text
+            onClick={() => {
+              selectAll(true);
+              setMenuIsOpen(false);
+            }}
+          >
+            Select all
+          </Text>
+          <Text
+            onClick={() => {
+              selectAll();
+              setMenuIsOpen(false);
+            }}
+          >
+            Select all without headers
+          </Text>
+          <Text
+            onClick={() => {
+              new Copier(
+                tableMatrix,
+                selectedAreas,
+                isTableSelected ? headerData : null
+              ).copy();
+              setMenuIsOpen(false);
+            }}
+          >
+            Copy
+          </Text>
+        </Menu>
 
         {headerData ? (
           <Header

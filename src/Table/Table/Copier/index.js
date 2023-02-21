@@ -121,12 +121,12 @@ export class Copier {
   }
 }
 
-export default function useCopier(tableMatrix, selectedAreas) {
+export default function useCopier(tableMatrix, selectedAreas, header) {
   useEffect(() => {
     function handleCopy(event) {
       // event.preventDefault();
       if ((event.ctrlKey || event.metaKey) && event.key === "c") {
-        new Copier(tableMatrix, selectedAreas).copy();
+        new Copier(tableMatrix, selectedAreas, header).copy();
       }
     }
 
