@@ -4,9 +4,12 @@ import styled from "styled-components";
 
 const cellPaddingLeftRight = 5;
 
-const SpaceAround = styled.div`
+const StaticCell = styled.div`
   // padding: 0 ${cellPaddingLeftRight}px;
   font-size: 14px;
+  height: 100%;
+  display: flex;
+  align-items: center;
   ${({ parentType }) => {
     if (parentType === "first") {
       return `
@@ -18,6 +21,38 @@ const SpaceAround = styled.div`
 }}
 `;
 
+const EditableCell = styled.input`
+    border: 1px #1f97f3 solid;
+    box-shadow: 0 2px 6px 2px rgb(60 64 67 / 15%);
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    margin: 0; 
+    max-height: 9900px;
+    max-width: 9900px;
+    outline: none;
+    overflow: auto;
+    padding: 0 2px;
+    resize: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    z-index: 15;
+    font-family: Arial;
+    color: rgb(0,0,0);
+    background-color: rgb(255,255,255);
+    padding: 1px 2px;
+    max-width: 487px;
+    max-height: 464px;
+    min-width: 84px;
+    min-height: 40px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    text-align: right;
+`;
+
 const Cell = ({
   children,
   parentWidth,
@@ -26,12 +61,16 @@ const Cell = ({
   setBiggestDataCellWidth,
   setBiggestLabelCellWidth,
   setBiggestTotalCellWidth,
+  editable = false,
+  setIsEditable,
 }) => {
   const ref = useRef(null);
+  const inputRef = useRef(null);
   const [refOffsetWidth, setRefOffsetWidth] = useState(
     ref && ref.current ? ref.current.offsetWidth : null
   );
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [inputValue, setInputValue] = useState(children);
 
   /**
    * This function gets the total width of an element, we use it to check if the cell is overflowing
@@ -80,6 +119,13 @@ const Cell = ({
     }
   }, [refOffsetWidth]);
 
+  useEffect(() => {
+    if (editable) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [editable]);
+
   /**
    * Check if the cell is overflowing and set the state
    */
@@ -91,14 +137,35 @@ const Cell = ({
     }
   }, [parentWidth, totalWidth]);
 
+  const handleOnInput = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleOnBlur = () => {
+    setIsEditable(false);
+  };
+
   return (
-    <SpaceAround
-      ref={ref}
-      isOverflowing={isOverflowing}
-      parentType={parentType}
-    >
-      {children}
-    </SpaceAround>
+    <>
+      <StaticCell
+        ref={ref}
+        isOverflowing={isOverflowing}
+        parentType={parentType}
+        style={{ display: editable ? "none" : "flex" }}
+      >
+        {children}
+      </StaticCell>
+
+      <EditableCell
+        style={{ display: editable ? "block" : "none" }}
+        onChange={handleOnInput}
+        onBlur={handleOnBlur}
+        ref={inputRef}
+        value={inputValue}
+
+      />
+
+    </>
   );
 };
 

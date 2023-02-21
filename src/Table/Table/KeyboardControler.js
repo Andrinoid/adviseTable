@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-export default function useKeyboardSelection(
+export default function useKeyboardControler(
   selectedAreas,
   tableMatrix,
   setSelectedAreas
@@ -9,8 +9,9 @@ export default function useKeyboardSelection(
 
   useEffect(() => {
     function handleSelectionKey(event) {
-      const area = selectedAreas[0];
-      const lastCol = tableMatrix[0].length - 1;
+      event.preventDefault();
+      const area = selectedAreas[selectedAreas.length - 1];
+      const lastCol = tableMatrix[selectedAreas.length - 1].length - 1;
       const lastRow = tableMatrix.length - 1;
 
       if (event.shiftKey) {
@@ -67,8 +68,30 @@ export default function useKeyboardSelection(
             }
           }
         }
-
-        setSelectedAreas([{ ...selectedAreas[0] }]);
+        setSelectedAreas([...selectedAreas]);
+      } else {
+        console.log('not shift key')
+        if (event.key === "ArrowRight") {
+          area.toX++;
+          area.fromX = area.toX;
+          area.fromY = area.toY;
+        }
+        if (event.key === "ArrowLeft") {
+          area.toX--;
+          area.fromX = area.toX;
+          area.fromY = area.toY;
+        }
+        if (event.key === "ArrowUp") {
+          area.toY--;
+          area.fromX = area.toX;
+          area.fromY = area.toY;
+        }
+        if (event.key === "ArrowDown") {
+          area.toY++;
+          area.fromX = area.toX;
+          area.fromY = area.toY;
+        }
+        setSelectedAreas([{ ...area }]);
       }
     }
 

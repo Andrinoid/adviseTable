@@ -53,6 +53,7 @@ const Col = ({
   onClick,
 }) => {
   const currentColRef = useRef(null);
+  const [isEditable, setIsEditable] = useState(false);
 
   const cleanMatrix = (tableMatrix) => {
     let lastColumn = null;
@@ -133,6 +134,10 @@ const Col = ({
     };
   }, [y, x, totalCols]);
 
+  const handleDoubleClick = (e) => {
+    setIsEditable(true);
+  };
+
   return (
     <Column
       horizontalAlign={horizontalAlign}
@@ -153,8 +158,12 @@ const Col = ({
       className={`tableCol`}
       data-value={dataValue ? dataValue : children}
       onClick={onClick}
+
+      // editInput={'some text'}
+      onDoubleClick={handleDoubleClick}
     >
       <HoverIndicator className="hoverIndicator" />
+
       {!empty && (
         <Cell
           parentWidth={internalStyle.width}
@@ -163,6 +172,8 @@ const Col = ({
           setBiggestDataCellWidth={setBiggestDataCellWidth}
           setBiggestLabelCellWidth={setBiggestLabelCellWidth}
           setBiggestTotalCellWidth={setBiggestTotalCellWidth}
+          editable={isEditable}
+          setIsEditable={setIsEditable}
         >
           {children}
         </Cell>

@@ -17,8 +17,7 @@ import themes from "./themes";
 import Selection from "./Selection";
 import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
-import { getValidChildren } from "../Row";
-import useKeyboardSelection from "./KeyboardSelection";
+import useKeyboardControler from "./KeyboardControler";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -86,6 +85,7 @@ const Edge = styled.div`
 const Table = (
   {
     onSelection = () => {},
+    editOnType = true,
     headerStickyTopOffset = 0,
     selectionMode = "cell",
     leftBrickWidth = 30,
@@ -144,6 +144,7 @@ const Table = (
   const [selectedMin, setSelectedMin] = useState(0);
   const [selectedMax, setSelectedMax] = useState(0);
   const [selectedAvg, setSelectedAvg] = useState(0);
+
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([]);
   // Counter to keep track of how many rows are rendered in the table
@@ -186,7 +187,7 @@ const Table = (
 
   useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
 
-  useKeyboardSelection(selectedAreas, tableMatrix, setSelectedAreas);
+  useKeyboardControler(selectedAreas, tableMatrix, setSelectedAreas);
 
   /**
    * expose method to parent component
