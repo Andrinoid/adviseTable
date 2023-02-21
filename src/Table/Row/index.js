@@ -53,7 +53,7 @@ const Row = memo(
     showGrid,
     totalCols,
     className = "",
-    onClick = () => {},
+    onClick,
     selectable = true,
   }) => {
     const currentRowRef = useRef(null);
