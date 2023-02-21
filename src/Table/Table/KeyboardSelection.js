@@ -51,16 +51,17 @@ export default function useKeyboardSelection(
           }
           if (area.fromX > 0 && isNegative.current) area.fromX -= 1;
           else {
-            area.toX -= 1;
+            if (area.toX > 0) area.toX -= 1;
           }
         }
 
         if (event.key === "ArrowRight") {
-          // TODO: check error when pressing right arrow on label
           if (area.toX === area.fromX) {
             isNegative.current = false;
           }
-          if (isNegative.current) area.fromX += 1;
+          if (isNegative.current) { 
+            area.fromX += 1; 
+          }
           else {
             if (area.toX < lastCol) {
               area.toX += 1;
