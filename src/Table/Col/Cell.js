@@ -5,7 +5,7 @@ import styled from "styled-components";
 const cellPaddingLeftRight = 5;
 
 const SpaceAround = styled.div`
-  padding: 0 ${cellPaddingLeftRight}px;
+  // padding: 0 ${cellPaddingLeftRight}px;
   font-size: 14px;
   ${({ parentType }) => {
     if (parentType === "first") {
