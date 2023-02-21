@@ -191,7 +191,7 @@ const Row = memo(
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           if (colspan) {
-            width = colspan * colWidth;
+            width = colspan * colWidth || 'auto';
           } else {
             width = colWidth;
           }
