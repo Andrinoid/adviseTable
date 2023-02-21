@@ -100,7 +100,7 @@ const Header = React.forwardRef(
         >
           <PressableBrick
             themeKey={themeKey}
-            onClick={selectAll}
+            onClick={() => selectAll(true)}
             selected={isTableSelected}
             style={{
               width: leftBrickWidth,

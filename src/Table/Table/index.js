@@ -20,6 +20,7 @@ import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
 import Menu from "../Menu";
 import { Typography } from "antd";
+import { Copier } from "./Copier";
 
 const { Text } = Typography;
 
@@ -156,6 +157,7 @@ const Table = (
   const [initialLoaded, setInitialLoaded] = useState(false);
 
   const [isTableSelected, setIsTableSelected] = useState(false);
+  const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -184,30 +186,35 @@ const Table = (
         selectedAreas[0].fromY === 0 &&
         selectedAreas[0].fromX === 0 &&
         selectedAreas[0].toY === tableMatrix.length - 1 &&
-        selectedAreas[0].toX === tableMatrix[0].length - 1
+        selectedAreas[0].toX === tableMatrix[0].length - 1 &&
+        isHeaderIncluded
     );
   }, [selectedAreas, tableMatrix]);
 
-  const selectAll = useCallback(() => {
-    if (isTableSelected) {
-      setSelectedAreas([]);
-    } else {
-      if (tableMatrix) {
-        setSelectedAreas([
-          {
-            toY: tableMatrix.length - 1,
-            toX: tableMatrix[0].length - 1,
-            fromY: 0,
-            fromX: 0,
-            oldMouseMoveTo: {
-              toX: tableMatrix[0].length - 1,
+  const selectAll = useCallback(
+    (isHeaderIncluded = false) => {
+      if (isTableSelected) {
+        setSelectedAreas([]);
+      } else {
+        if (tableMatrix) {
+          setIsHeaderIncluded(isHeaderIncluded);
+          setSelectedAreas([
+            {
               toY: tableMatrix.length - 1,
+              toX: tableMatrix[0].length - 1,
+              fromY: 0,
+              fromX: 0,
+              oldMouseMoveTo: {
+                toX: tableMatrix[0].length - 1,
+                toY: tableMatrix.length - 1,
+              },
             },
-          },
-        ]);
+          ]);
+        }
       }
-    }
-  }, [tableMatrix, selectedAreas, isTableSelected]);
+    },
+    [tableMatrix, selectedAreas, isTableSelected]
+  );
 
   useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
 
@@ -563,25 +570,33 @@ const Table = (
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
         <Menu position={position} open={menuIsOpen}>
-          <Text onClick={() => {
-            selectAll();
-            setMenuIsOpen(false);
-          }}>Select all</Text>
-          <Text>Select all without headers</Text>
-          <Text>Copy</Text>
           <Text
-            data={[
-              {
-                label: "Export to CSV",
-                action: () => {},
-              },
-              {
-                label: "Export to Excel",
-                action: () => {},
-              }
-            ]}
+            onClick={() => {
+              selectAll(true);
+              setMenuIsOpen(false);
+            }}
           >
-            Export
+            Select all
+          </Text>
+          <Text
+            onClick={() => {
+              selectAll();
+              setMenuIsOpen(false);
+            }}
+          >
+            Select all without headers
+          </Text>
+          <Text
+            onClick={() => {
+              new Copier(
+                tableMatrix,
+                selectedAreas,
+                isTableSelected ? headerData : null
+              ).copy();
+              setMenuIsOpen(false);
+            }}
+          >
+            Copy
           </Text>
         </Menu>
 

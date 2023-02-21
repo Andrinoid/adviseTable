@@ -18,7 +18,7 @@ export default function Menu(props) {
         openable={hasSubmenu}
       >
         {child}
-        {hasSubmenu && <RightOutlined style={{}} />}
+        {hasSubmenu && <RightOutlined />}
       </Option>
     );
   });
