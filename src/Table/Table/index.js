@@ -167,6 +167,7 @@ const Table = (
   useEffect(() => {
     function handleRightClick(e) {
       e.preventDefault();
+      setMenuIsOpen(false);
   
       setTimeout(() => {
         setPosition({ x: e.clientX, y: e.clientY });
