@@ -88,10 +88,10 @@ describe("Copier", () => {
       ];
 
       const copier = new Copier(table, selection);
+      const expectedResult = `Skattar\t-1079711\t-1022849\nAfskriftir\t-4715000\t-4715000\nSérverk\t39284029\t35977158\nAðrar tekjur\t3300025\t2734444\n`;
 
-      expect(copier.stringifyBody()).toBe(
-        `Skattar\t-1079711\t-1022849\nAfskriftir\t-4715000\t-4715000\nSérverk\t39284029\t35977158\nAðrar tekjur\t3300025\t2734444\n`
-      );
+      expect(copier.stringifyBody()).toBe(expectedResult);
+      expect(copier.stringifyTable()).toBe(expectedResult);
     });
 
     it("should return selection string from row", () => {
