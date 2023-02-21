@@ -21,7 +21,7 @@ export class Copier {
   stringifyTable() {
     const header = this.stringifyHeader();
     const body = this.stringifyBody();
-    return header + "\n" + body;
+    return header + body;
   }
 
   stringifyHeader() {
@@ -36,6 +36,8 @@ export class Copier {
         result += "\t";
       }
     }
+
+    if (result !== "") result += "\n";
 
     return result;
   }

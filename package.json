@@ -6,6 +6,7 @@
   "dependencies": {
     "antd": "^5.0.7",
     "delegate": "^3.2.0",
+    "framer-motion": "^9.0.7",
     "lodash": "^4.17.21",
     "number-currency-format": "^1.0.10",
     "react-beautiful-dnd": "^13.0.0",
