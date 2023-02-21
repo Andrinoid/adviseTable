@@ -56,6 +56,7 @@ export default function useKeyboardSelection(
         }
 
         if (event.key === "ArrowRight") {
+          // TODO: check error when pressing right arrow on label
           if (area.toX === area.fromX) {
             isNegative.current = false;
           }
