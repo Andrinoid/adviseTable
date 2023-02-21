@@ -19,6 +19,7 @@ import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import { getValidChildren } from "../Row";
 import useKeyboardSelection from "./KeyboardSelection";
+import Menu from "../Menu";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -151,6 +152,26 @@ const Table = (
   const [initialLoaded, setInitialLoaded] = useState(false);
 
   const [isTableSelected, setIsTableSelected] = useState(false);
+
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+
+  useEffect(() => {
+    function handleRightClick(e) {
+      e.preventDefault();
+      setMenuIsOpen(false);
+
+      setTimeout(() => {
+        setPosition({ x: e.clientX, y: e.clientY });
+        
+        setTimeout(() => {
+          setMenuIsOpen(true);
+        }, 100);
+      }, 100);
+    }
+
+    tableContainerRef.current.addEventListener("contextmenu", handleRightClick);
+  }, []);
 
   useEffect(() => {
     setIsTableSelected(
@@ -537,6 +558,8 @@ const Table = (
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
+        <Menu position={position} open={menuIsOpen} />
+
         {headerData ? (
           <Header
             selectAll={selectAll}
