@@ -9,7 +9,7 @@ const headerTheme = {
   light: {
     background: "rgb(74, 76, 80)",
     color: "#fafafa",
-    hightlight: "#eef1f1",
+    hightlight: "#E6e8e8",
   },
   dark: {
     background: "#fafafa",
@@ -36,7 +36,7 @@ const Label = styled.div`
 
 const PressableBrick = styled.button`
   background: ${({ selected, themeKey}) =>
-    selected ? headerTheme[themeKey].background : "none"};
+    selected ? headerTheme[themeKey].background : "#Eff1f1"};
   border: none;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;
   cursor: pointer;
