@@ -20,6 +20,9 @@ import { useLayoutEffect } from "react";
 import { getValidChildren } from "../Row";
 import useKeyboardSelection from "./KeyboardSelection";
 import Menu from "../Menu";
+import { Typography } from "antd";
+
+const { Text } = Typography;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -163,7 +166,7 @@ const Table = (
 
       setTimeout(() => {
         setPosition({ x: e.clientX, y: e.clientY });
-        
+
         setTimeout(() => {
           setMenuIsOpen(true);
         }, 100);
@@ -558,7 +561,28 @@ const Table = (
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
-        <Menu position={position} open={menuIsOpen} />
+        <Menu position={position} open={menuIsOpen}>
+          <Text onClick={() => {
+            selectAll();
+            setMenuIsOpen(false);
+          }}>Select all</Text>
+          <Text>Select all without headers</Text>
+          <Text>Copy</Text>
+          <Text
+            data={[
+              {
+                label: "Export to CSV",
+                action: () => {},
+              },
+              {
+                label: "Export to Excel",
+                action: () => {},
+              }
+            ]}
+          >
+            Export
+          </Text>
+        </Menu>
 
         {headerData ? (
           <Header

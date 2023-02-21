@@ -3,12 +3,25 @@ import styled from "styled-components";
 import { RightOutlined } from "@ant-design/icons";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { Space, Typography } from "antd";
-
-const { Text } = Typography;
+import { Space } from "antd";
 
 export default function Menu(props) {
-  const { position, open } = props;
+  const { position, open, children } = props;
+
+  const mappedChildren = React.Children.map(children, (child) => {
+    const hasSubmenu = child.props?.data && child.props?.data.length > 0;
+    return (
+      <Option
+        onClick={() => {
+          if (child.props?.onClick) child.props.onClick();
+        }}
+        openable={hasSubmenu}
+      >
+        {child}
+        {hasSubmenu && <RightOutlined style={{}} />}
+      </Option>
+    );
+  });
 
   return (
     <AnimatePresence>
@@ -24,21 +37,7 @@ export default function Menu(props) {
           exit={{ scale: 0 }}
           position={position}
         >
-          <Space direction="vertical">
-            <Option>
-              <Text>Select all</Text>
-            </Option>
-            <Option>
-              <Text>Select all without headers</Text>
-            </Option>
-            <Option>
-              <Text>Copy</Text>
-            </Option>
-            <Option openable>
-              <Text>Export</Text>
-              <RightOutlined style={{ color: "#222", fontSize: 10 }} />
-            </Option>
-          </Space>
+          <Space direction="vertical">{mappedChildren}</Space>
         </Container>
       )}
     </AnimatePresence>
@@ -62,10 +61,15 @@ const Container = styled(motion.ul)`
   backdrop-filter: blur(5px);
 `;
 
-const Option = styled.li`
+const Option = styled.button`
+  background: none;
+  border: none;
+  width: 100%;
+  outline: none;
   list-style: none;
   padding: 5px 25px;
   cursor: pointer;
+  text-align: left;
 
   span {
     letter-spacing: 0.6px;
