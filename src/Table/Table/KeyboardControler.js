@@ -1,5 +1,6 @@
+import { cloneDeep } from "lodash";
 import React, { useEffect, useRef } from "react";
-import { useHotkeys } from 'react-hotkeys-hook'
+import { useHotkeys } from "react-hotkeys-hook";
 
 export default function useKeyboardControler(
   selectedAreas,
@@ -8,21 +9,131 @@ export default function useKeyboardControler(
 ) {
   let isNegative = useRef(false);
 
-  useHotkeys('up', () => arrowMoveSelection('up'));
-  useHotkeys('down', () => arrowMoveSelection('down'));
-  useHotkeys('left', () => arrowMoveSelection('left'));
-  useHotkeys('right', () => arrowMoveSelection('right'));
-  useHotkeys('shift+up', () => arrowShiftSelection('up'));
-  useHotkeys('shift+down', () => arrowShiftSelection('down'));
-  useHotkeys('shift+left', () => arrowShiftSelection('left'));
-  useHotkeys('shift+right', () => arrowShiftSelection('right'));
+  const getDefaultOptions = () => {
+    return {
+      enabled: selectedAreas.length > 0,
+      preventDefault: true,
+    };
+  };
+
+  useHotkeys("up", () => arrowMoveSelection("up"), getDefaultOptions());
+  useHotkeys("down", () => arrowMoveSelection("down"), getDefaultOptions());
+  useHotkeys("left", () => arrowMoveSelection("left"), getDefaultOptions());
+  useHotkeys("right", () => arrowMoveSelection("right"), getDefaultOptions());
+  useHotkeys("shift+up", () => arrowShiftSelection("up"), getDefaultOptions());
+  useHotkeys(
+    "shift+down",
+    () => arrowShiftSelection("down"),
+    getDefaultOptions()
+  );
+  useHotkeys(
+    "shift+left",
+    () => arrowShiftSelection("left"),
+    getDefaultOptions()
+  );
+  useHotkeys(
+    "shift+right",
+    () => arrowShiftSelection("right"),
+    getDefaultOptions()
+  );
+  useHotkeys("tab", () => setNextFocus(), {
+    ...getDefaultOptions(),
+    enableOnFormTags: true,
+  });
+  useHotkeys("enter", () => editCurrentCell("toggle"), {
+    ...getDefaultOptions(),
+    enableOnFormTags: true,
+  });
+  useHotkeys("esc", () => editCurrentCell(false), {
+    ...getDefaultOptions(),
+    enableOnFormTags: true,
+  });
+
+  const updateSelection = (selectedAreas, keepEdition = false) => {
+    if (
+      selectedAreas.length === 1 &&
+      selectedAreas[0].fromX === selectedAreas[0].toX &&
+      selectedAreas[0].fromY === selectedAreas[0].toY
+    ) {
+      try {
+        const previousCell =
+          tableMatrix[selectedAreas[0].oldMouseMoveTo.toY][
+            selectedAreas[0].oldMouseMoveTo.toX
+          ].current;
+        const nextCell =
+          tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
+
+        previousCell.blur();
+        if (keepEdition && previousCell.isEditable()) {
+          nextCell.focus();
+        }
+      } catch (error) {}
+    }
+    setSelectedAreas(selectedAreas);
+  };
+
+  /**
+   * this put the current cell in edition mode or not
+   */
+  const editCurrentCell = (editState) => {
+    if (
+      selectedAreas.length === 1 &&
+      selectedAreas[0].fromX === selectedAreas[0].toX &&
+      selectedAreas[0].fromY === selectedAreas[0].toY
+    ) {
+      const cell =
+        tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
+      if (editState === "toggle") {
+        if (cell.isEditable()) {
+          cell.blur();
+        } else {
+          cell.focus();
+        }
+      } else if (editState == true) {
+        cell.focus();
+      } else {
+        cell.blur(true);
+      }
+    }
+  };
+
+  /**
+   * This function moves the selected cell in the direction of the next tab element
+   */
+  const setNextFocus = () => {
+    const area = selectedAreas[selectedAreas.length - 1];
+
+    const nextArea = cloneDeep(area);
+    if (nextArea.toX + 1 <= tableMatrix[nextArea.toY].length - 1) {
+      nextArea.toX = nextArea.toX + 1;
+    } else {
+      nextArea.toX = 0;
+      nextArea.toY = nextArea.toY + 1;
+    }
+    nextArea.fromX = nextArea.toX;
+    nextArea.fromY = nextArea.toY;
+
+    nextArea.oldMouseMoveTo = {
+      toX: area.toX,
+      toY: area.toY,
+    };
+    let nextCell;
+
+    try {
+      nextCell = tableMatrix[nextArea.toY][nextArea.toX].current;
+    } catch (error) {}
+
+    if (nextCell) {
+      updateSelection([{ ...nextArea }], true);
+    }
+  };
 
   /**
    * This function moves the selected cell in the direction of the arrow key
    * If an area is it will be cleared
-   */ 
+   */
   const arrowMoveSelection = (keyName) => {
-    const area = selectedAreas[selectedAreas.length - 1];
+    const area = cloneDeep(selectedAreas[selectedAreas.length - 1]);
 
     if (keyName === "right") {
       // move selected up to the next row but not past the last row
@@ -36,7 +147,6 @@ export default function useKeyboardControler(
       area.fromY = area.toY;
     }
     if (keyName === "up") {
-
       area.toY = Math.max(0, area.toY - 1);
       area.fromX = area.toX;
       area.fromY = area.toY;
@@ -47,12 +157,17 @@ export default function useKeyboardControler(
       area.fromX = area.toX;
       area.fromY = area.toY;
     }
-    setSelectedAreas([{ ...area }]);
+
+    area.oldMouseMoveTo = {
+      toX: selectedAreas[selectedAreas.length - 1].toX,
+      toY: selectedAreas[selectedAreas.length - 1].toY,
+    };
+    updateSelection([{ ...area }]);
   };
 
   /**
    * This function changes the selection area based on the shift arrow key pressed
-   */ 
+   */
   const arrowShiftSelection = (keyName) => {
     const area = selectedAreas[selectedAreas.length - 1];
     const lastCol = tableMatrix[selectedAreas.length - 1].length - 1;
@@ -105,15 +220,14 @@ export default function useKeyboardControler(
       }
       if (isNegative.current) {
         area.fromX += 1;
-      }
-      else {
+      } else {
         if (area.toX < lastCol) {
           area.toX += 1;
         }
       }
     }
-    setSelectedAreas([...selectedAreas]);
-  }
+    updateSelection([...selectedAreas]);
+  };
 }
 
 function updateLabelArea(area, row, col, tableMatrix) {

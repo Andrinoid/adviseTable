@@ -155,18 +155,35 @@ function Example({
                 <Col horizontalAlign="left">100</Col>
                 <Col horizontalAlign="left">100</Col>
                 <Col horizontalAlign="left">100</Col>
-
               </Row>
               <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
-                <Col horizontalAlign="left" spanSelection={false} colspan={'fullwidth'}>Name</Col>
+                <Col
+                  horizontalAlign="left"
+                  spanSelection={false}
+                  colspan={"fullwidth"}
+                >
+                  Name
+                </Col>
               </Row>
               <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
                 <Col>bla</Col>
                 <Col>bla</Col>
-                <Col horizontalAlign="left" spanSelection={false} colspan={'fullwidth'}>Name</Col>
+                <Col
+                  horizontalAlign="left"
+                  spanSelection={false}
+                  colspan={"fullwidth"}
+                >
+                  Name
+                </Col>
               </Row>
               <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
-                <Col horizontalAlign="left" spanSelection={false} colspan={'fullwidth'}>Name</Col>
+                <Col
+                  horizontalAlign="left"
+                  spanSelection={false}
+                  colspan={"fullwidth"}
+                >
+                  Name
+                </Col>
               </Row>
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="characters">
@@ -200,7 +217,14 @@ function Example({
                                   <Col horizontalAlign="left">{row.name}</Col>
 
                                   {monthRange.map((month, i) => (
-                                    <Col key={i}>{row[month]}</Col>
+                                    <Col
+                                      key={i}
+                                      allowEdition={true}
+                                      // onSubmitCallback={alert}
+                                      inputType={"number"}
+                                    >
+                                      {row[month]}
+                                    </Col>
                                   ))}
 
                                   {/* <Col>{total}</Col> */}
@@ -211,12 +235,8 @@ function Example({
                                     // The motion divs are optional and just an example of how to animate the conditional rendered rows
                                     // it shows how dynamic the table can be
                                     // Optional animation starts
-                                    <div
-                                      
-                                    >
-                                      <div
-                                        
-                                      >
+                                    <div>
+                                      <div>
                                         {/* Optional animation ends */}
 
                                         <Row
