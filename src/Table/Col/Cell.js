@@ -54,6 +54,7 @@ const EditableCell = styled.input`
 `;
 
 const Cell = ({
+  children,
   parentWidth,
   parentType,
   totalWidth,
@@ -158,7 +159,7 @@ const Cell = ({
         parentType={parentType}
         style={{ display: editable ? "none" : "flex" }}
       >
-        {inputValue}
+        {children}
       </StaticCell>
       <EditableCell
         type={inputType}

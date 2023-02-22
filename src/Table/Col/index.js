@@ -231,7 +231,9 @@ const Col = ({
           setInputValue={setInputValue}
           inputType={inputType}
           onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
-        />
+        >
+          {children}
+        </Cell>
       )}
       {/* empty Col's are used by ResizableCols for a child ref as I could not manage to have two ref on the cell,
        * one for the matrix and another for the resize. The solution is to use empty col in resizeCol and fill the space
