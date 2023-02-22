@@ -32,6 +32,7 @@ const EditableCell = styled.input`
     margin: 0; 
     max-height: 9900px;
     max-width: 9900px;
+    width: 100%;
     outline: none;
     overflow: auto;
     padding: 0 2px;
@@ -43,14 +44,13 @@ const EditableCell = styled.input`
     color: rgb(0,0,0);
     background-color: rgb(255,255,255);
     padding: 1px 2px;
-    max-width: 487px;
     max-height: 464px;
-    min-width: 84px;
+    // min-width: 84px;
     min-height: 40px;
     display: flex;
     justify-content: right;
     align-items: center;
-    text-align: right;
+    text-align: inherit;
 `;
 
 const Cell = ({
@@ -142,7 +142,12 @@ const Cell = ({
   };
 
   const handleOnBlur = () => {
+    console.log("blur");
     setIsEditable(false);
+  };
+
+  const handleOnFocus = () => {
+    setIsEditable(true);
   };
 
   return (
@@ -157,13 +162,22 @@ const Cell = ({
       </StaticCell>
 
       <EditableCell
-        style={{ display: editable ? "block" : "none" }}
+        style={{ opacity: editable ? "1" : "0" }}
         onChange={handleOnInput}
         onBlur={handleOnBlur}
+        onFocus={handleOnFocus}
         ref={inputRef}
         value={inputValue}
 
       />
+
+      {/* <InputBox
+        style={{ display: editable ? "inline-grid" : "none" }}
+        onChange={handleOnInput}
+        onBlur={handleOnBlur}
+        ref={inputRef}
+      /> */}
+
 
     </>
   );

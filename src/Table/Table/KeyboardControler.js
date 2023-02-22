@@ -7,11 +7,11 @@ export default function useKeyboardControler(
   setSelectedAreas
 ) {
   let isNegative = useRef(false);
+
   useHotkeys('up', () => arrowMoveSelection('up'));
   useHotkeys('down', () => arrowMoveSelection('down'));
   useHotkeys('left', () => arrowMoveSelection('left'));
   useHotkeys('right', () => arrowMoveSelection('right'));
-
   useHotkeys('shift+up', () => arrowShiftSelection('up'));
   useHotkeys('shift+down', () => arrowShiftSelection('down'));
   useHotkeys('shift+left', () => arrowShiftSelection('left'));
@@ -32,7 +32,6 @@ export default function useKeyboardControler(
     }
     if (keyName === "left") {
       area.toX = Math.max(0, area.toX - 1);
-      console.log(area.toX);
       area.fromX = area.toX;
       area.fromY = area.toY;
     }

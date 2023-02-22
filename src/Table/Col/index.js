@@ -1,5 +1,5 @@
 //react component
-import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useImperativeHandle } from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
 import HoverIndicator from "./HoverIndicator";
@@ -10,6 +10,7 @@ const Column = styled.div`
   position: relative;
   align-items: center;
   justify-content: ${(props) => props.horizontalAlign};
+  text-align: ${(props) => props.horizontalAlign};
   overflow: ${(props) => (props.type === "first" ? "hidden" : "visible")};
   user-select: none;
   box-sizing: border-box;
@@ -136,6 +137,7 @@ const Col = ({
 
   const handleDoubleClick = (e) => {
     setIsEditable(true);
+    console.log(tableMatrix);
   };
 
   return (
