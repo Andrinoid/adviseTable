@@ -7,16 +7,20 @@ export default function useKeyboardControler(
   setSelectedAreas
 ) {
   let isNegative = useRef(false);
-  useHotkeys('up', () => arrowMoveSelection('up', false));
-  useHotkeys('down', () => arrowMoveSelection('down', false));
-  useHotkeys('left', () => arrowMoveSelection('left', false));
-  useHotkeys('right', () => arrowMoveSelection('right', false));
+  useHotkeys('up', () => arrowMoveSelection('up'));
+  useHotkeys('down', () => arrowMoveSelection('down'));
+  useHotkeys('left', () => arrowMoveSelection('left'));
+  useHotkeys('right', () => arrowMoveSelection('right'));
 
   useHotkeys('shift+up', () => arrowShiftSelection('up'));
   useHotkeys('shift+down', () => arrowShiftSelection('down'));
   useHotkeys('shift+left', () => arrowShiftSelection('left'));
   useHotkeys('shift+right', () => arrowShiftSelection('right'));
 
+  /**
+   * This function moves the selected cell in the direction of the arrow key
+   * If an area is it will be cleared
+   */ 
   const arrowMoveSelection = (keyName) => {
     const area = selectedAreas[selectedAreas.length - 1];
 
@@ -47,6 +51,9 @@ export default function useKeyboardControler(
     setSelectedAreas([{ ...area }]);
   };
 
+  /**
+   * This function changes the selection area based on the shift arrow key pressed
+   */ 
   const arrowShiftSelection = (keyName) => {
     const area = selectedAreas[selectedAreas.length - 1];
     const lastCol = tableMatrix[selectedAreas.length - 1].length - 1;
@@ -108,7 +115,6 @@ export default function useKeyboardControler(
     }
     setSelectedAreas([...selectedAreas]);
   }
-
 }
 
 function updateLabelArea(area, row, col, tableMatrix) {
