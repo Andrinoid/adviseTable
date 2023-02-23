@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { RightOutlined } from "@ant-design/icons";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Space } from "antd";
@@ -9,18 +8,15 @@ export default function Menu(props) {
   const { position, open, children } = props;
 
   const mappedChildren = React.Children.map(children, (child) => {
-    const hasSubmenu = child.props?.data && child.props?.data.length > 0;
-    console.log('child props', child.props)
-
+    const { onClick } = child.props;
+ 
     return (
       <Option
         onClick={() => {
-          if (child.props?.onClick) child.props.onClick();
+          if (onClick && typeof onClick === "function") onClick();
         }}
-        openable={hasSubmenu}
       >
         {child}
-        {hasSubmenu && <RightOutlined />}
       </Option>
     );
   });
@@ -29,7 +25,7 @@ export default function Menu(props) {
 
   return (
     <AnimatePresence>
-      {open && (
+      {open && mappedChildren && (
         <Container
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -60,8 +56,6 @@ const Container = styled(motion.ul)`
   position: absolute;
   top: ${({ position }) => position.y - 145}px;
   left: ${({ position }) => position.x - 175 - 50 - 22}px;
-  /* top: 156px;
-  left: 429; */
   backdrop-filter: blur(5px);
 `;
 
@@ -80,14 +74,4 @@ const Option = styled.button`
     line-height: 20px;
     font-weight: bold;
   }
-
-  ${({ openable }) => {
-    if (!openable) return "";
-
-    return `
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    `;
-  }}
 `;
