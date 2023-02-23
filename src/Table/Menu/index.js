@@ -21,12 +21,13 @@ export default function Menu(props) {
     );
   });
 
+  // TODO: Solve AnimatePresence bug
   return (
-    <AnimatePresence>
+    <>
       {open && (
         <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
+          initial={{ display: 'none', scale: 0 }}
+          animate={{ display: 'block', scale: 1 }}
           transition={{
             type: "spring",
             stiffness: 260,
@@ -51,7 +52,7 @@ export default function Menu(props) {
           <Space direction="vertical">{mappedChildren}</Space>
         </motion.div>
       )}
-    </AnimatePresence>
+    </>
   );
 }
 
