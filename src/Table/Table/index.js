@@ -556,6 +556,7 @@ const Table = (
       ref={tableContainerRef}
       style={{ position: "relative" }}
       onContextMenu={(e) => {
+        e.persist();
         e.preventDefault();
         setMenuIsOpen(false);
 
