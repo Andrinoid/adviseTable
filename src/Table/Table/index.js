@@ -163,6 +163,7 @@ const Table = (
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   useEffect(() => {
+    console.log('application started')
     function handleRightClick(e) {
       e.preventDefault();
       setMenuIsOpen(false);
