@@ -9,7 +9,7 @@ export default function Menu(props) {
 
   const mappedChildren = React.Children.map(children, (child) => {
     const { onClick } = child.props;
- 
+
     return (
       <Option
         onClick={() => {
@@ -21,12 +21,10 @@ export default function Menu(props) {
     );
   });
 
-  console.log('mappedChildren', mappedChildren)
-
   return (
     <AnimatePresence>
-      {open && mappedChildren && (
-        <Container
+      {open && (
+        <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{
@@ -35,29 +33,27 @@ export default function Menu(props) {
             damping: 20,
           }}
           exit={{ scale: 0 }}
-          position={position}
+          style={{
+            position: "absolute",
+            top: position.y - 145,
+            left: position.x - 175 - 50 - 22,
+            zIndex: 1000,
+            padding: "25px 0",
+            backgroundColor: "rgba(221, 221, 221, 0.49)",
+            width: "175px",
+            height: "250px",
+            boxSizing: "border-box",
+            borderRadius: "12px",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.35)",
+            backdropFilter: "blur(5px)",
+          }}
         >
-          <Space direction="vertical">{mappedChildren}</Space>
-        </Container>
+            <Space direction="vertical">{mappedChildren}</Space>
+        </motion.div>
       )}
     </AnimatePresence>
   );
 }
-
-const Container = styled(motion.ul)`
-  z-index: 1000;
-  padding: 25px 0;
-  background-color: rgba(221, 221, 221, 0.49);
-  width: 175px;
-  height: 250px;
-  box-sizing: border-box;
-  border-radius: 12px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
-  position: absolute;
-  top: ${({ position }) => position.y - 145}px;
-  left: ${({ position }) => position.x - 175 - 50 - 22}px;
-  backdrop-filter: blur(5px);
-`;
 
 const Option = styled.button`
   background: none;
