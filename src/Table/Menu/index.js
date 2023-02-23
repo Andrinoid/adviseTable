@@ -2,57 +2,42 @@ import React from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { Space } from "antd";
+import { Space, Typography } from "antd";
+
+const { Text } = Typography;
 
 export default function Menu(props) {
-  const { position, open, children } = props;
+  const { position, open, data } = props;
 
-  const mappedChildren = React.Children.map(children, (child) => {
-    const { onClick } = child.props;
-
-    return (
-      <Option
-        onClick={() => {
-          if (onClick && typeof onClick === "function") onClick();
-        }}
-      >
-        {child}
-      </Option>
-    );
-  });
-
-  // TODO: Solve AnimatePresence bug
   return (
-    <>
+    <AnimatePresence>
       {open && (
-        <motion.div
-          initial={{ display: 'none', scale: 0 }}
-          animate={{ display: 'block', scale: 1 }}
+        <Container
+          position={position}
+          initial={{ display: "none", scale: 0 }}
+          animate={{ display: "block", scale: 1 }}
           transition={{
             type: "spring",
             stiffness: 260,
             damping: 20,
           }}
           exit={{ scale: 0 }}
-          style={{
-            position: "absolute",
-            top: position.y - 145,
-            left: position.x - 175 - 50 - 22,
-            zIndex: 1000,
-            padding: "25px 0",
-            backgroundColor: "rgba(221, 221, 221, 0.49)",
-            width: "175px",
-            height: "250px",
-            boxSizing: "border-box",
-            borderRadius: "12px",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.35)",
-            backdropFilter: "blur(5px)",
-          }}
         >
-          <Space direction="vertical">{mappedChildren}</Space>
-        </motion.div>
+          <Space direction="vertical">
+            {data.map((item, index) => (
+              <Option
+                key={index}
+                onClick={() => {
+                  if (item.onClick) item.onClick();
+                }}
+              >
+                <Text>{item.label}</Text>
+              </Option>
+            ))}
+          </Space>
+        </Container>
       )}
-    </>
+    </AnimatePresence>
   );
 }
 
@@ -71,4 +56,19 @@ const Option = styled.button`
     line-height: 20px;
     font-weight: bold;
   }
+`;
+
+const Container = styled(motion.div)`
+  position: absolute;
+  top: ${({ position }) => position.y - 145}px;
+  left: ${({ position }) => position.x - 175 - 50 - 22}px;
+  z-index: 1000;
+  padding: 25px 0;
+  background-color: rgba(221, 221, 221, 0.49);
+  width: 175px;
+  height: 250px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(5px);
 `;

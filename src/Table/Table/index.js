@@ -298,7 +298,7 @@ const Table = (
       e.preventDefault();
       setMenuIsOpen(false);
     }
-    
+
     window.addEventListener("click", handleClick, false);
     window.addEventListener("resize", handleResize);
 
@@ -574,36 +574,37 @@ const Table = (
         scrollStatus={scrollStatus}
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
-        <Menu position={position} open={menuIsOpen}>
-          <Text
-            onClick={() => {
-              selectAll(true);
-              setMenuIsOpen(false);
-            }}
-          >
-            Select all
-          </Text>
-          <Text
-            onClick={() => {
-              selectAll();
-              setMenuIsOpen(false);
-            }}
-          >
-            Select all without headers
-          </Text>
-          <Text
-            onClick={() => {
-              new Copier(
-                tableMatrix,
-                selectedAreas,
-                isTableSelected ? headerData : null
-              ).copy();
-              setMenuIsOpen(false);
-            }}
-          >
-            Copy
-          </Text>
-        </Menu>
+        <Menu
+          data={[
+            {
+              label: "Select all",
+              onClick: () => {
+                selectAll(true);
+                setMenuIsOpen(false);
+              },
+            },
+            {
+              label: "Select all without headers",
+              onClick: () => {
+                selectAll();
+                setMenuIsOpen(false);
+              },
+            },
+            {
+              label: "Copy",
+              onClick: () => {
+                new Copier(
+                  tableMatrix,
+                  selectedAreas,
+                  isTableSelected ? headerData : null
+                ).copy();
+                setMenuIsOpen(false);
+              },
+            },
+          ]}
+          position={position}
+          open={menuIsOpen}
+        />
 
         {headerData ? (
           <Header
