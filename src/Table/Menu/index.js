@@ -21,6 +21,8 @@ export default function Menu(props) {
     );
   });
 
+  console.log('mappedChildren', mappedChildren)
+
   return (
     <AnimatePresence>
       {open && mappedChildren && (
