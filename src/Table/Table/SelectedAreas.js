@@ -61,7 +61,7 @@ const SelectedAreas = ({
    */
   const onMouseDown = (e) => {
     let { x, y, selectable, colspan } = e.delegateTarget.dataset;
-    if (selectable == "false") {
+    if (selectable == "false" || e.button == 2) {
       return;
     }
 
@@ -95,7 +95,23 @@ const SelectedAreas = ({
   };
   /** Represents the initial state where nothing is selected */
   const clearSelectedAreas = () => {
-    setSelectedAreas([]);
+    setSelectedAreas((selectedAreas) => {
+      try {
+        if (
+          selectedAreas.length === 1 &&
+          selectedAreas[0].fromY === selectedAreas[0].toY &&
+          selectedAreas[0].fromX === selectedAreas[0].toX
+        ) {
+          let cell =
+            tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX].current;
+          if (cell.isEditable()) {
+            cell.blur();
+          }
+        }
+      } catch (error) {}
+
+      return [];
+    });
   };
 
   /* function to check if there is span columns selected to force the selection to be in the same column */

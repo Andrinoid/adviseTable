@@ -1,5 +1,11 @@
 //react component
-import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useLayoutEffect,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
 import HoverIndicator from "./HoverIndicator";
@@ -10,6 +16,7 @@ const Column = styled.div`
   position: relative;
   align-items: center;
   justify-content: ${(props) => props.horizontalAlign};
+  text-align: ${(props) => props.horizontalAlign};
   overflow: ${(props) => (props.type === "first" ? "hidden" : "visible")};
   user-select: none;
   box-sizing: border-box;
@@ -51,9 +58,27 @@ const Col = ({
   horizontalAlign = "right",
   style,
   onClick,
+  allowEdition = false,
+  inputType = "text",
+  onSubmitCallback,
 }) => {
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
+  const [inputValue, setInputValue] = useState(
+    dataValue ? dataValue : children
+  );
+  const [initialValue, setInitialValue] = useState(
+    dataValue ? dataValue : children
+  );
+
+  const setEditionState = (editable) => {
+    if (editable && !allowEdition) return;
+
+    if (editable) {
+      setInitialValue(dataValue ? dataValue : children);
+    }
+    setIsEditable(editable);
+  };
 
   const cleanMatrix = (tableMatrix) => {
     let lastColumn = null;
@@ -80,7 +105,7 @@ const Col = ({
     cleartSelectionTable();
     setTableMatrix((prev) => {
       let { colspan } = currentColRef.current.dataset;
-      if (colspan === 'fullwidth') {
+      if (colspan === "fullwidth") {
         colspan = totalCols;
       }
       let nextValue = prev;
@@ -135,8 +160,35 @@ const Col = ({
   }, [y, x, totalCols]);
 
   const handleDoubleClick = (e) => {
-    setIsEditable(true);
+    setEditionState(true);
+    // console.log(tableMatrix);
   };
+
+  useEffect(() => {
+    currentColRef.current.focus = () => {
+      setEditionState(true);
+    };
+    currentColRef.current.blur = (resetValue = false) => {
+      setInitialValue((initialValue) => {
+        setInputValue((inputValue) => {
+          if (resetValue) {
+            inputValue = initialValue;
+          } else {
+            initialValue = inputValue;
+            if (onSubmitCallback) {
+              onSubmitCallback(inputValue);
+            }
+          }
+          return inputValue;
+        });
+        return initialValue;
+      });
+      setEditionState(false);
+    };
+    currentColRef.current.isEditable = () => {
+      return isEditable;
+    };
+  }, [isEditable]);
 
   return (
     <Column
@@ -156,11 +208,11 @@ const Col = ({
       id={id}
       data-selectable={selectable}
       className={`tableCol`}
-      data-value={dataValue ? dataValue : children}
+      data-value={inputValue}
       onClick={onClick}
-
       // editInput={'some text'}
       onDoubleClick={handleDoubleClick}
+      onFocus={handleDoubleClick}
     >
       <HoverIndicator className="hoverIndicator" />
 
@@ -174,6 +226,11 @@ const Col = ({
           setBiggestTotalCellWidth={setBiggestTotalCellWidth}
           editable={isEditable}
           setIsEditable={setIsEditable}
+          tabindex="100"
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          inputType={inputType}
+          onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
         >
           {children}
         </Cell>

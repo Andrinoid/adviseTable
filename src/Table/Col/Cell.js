@@ -18,39 +18,39 @@ const StaticCell = styled.div`
       white-space: nowrap;
       `;
     }
-}}
+  }}
 `;
 
 const EditableCell = styled.input`
-    border: 1px #1f97f3 solid;
-    box-shadow: 0 2px 6px 2px rgb(60 64 67 / 15%);
-    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    margin: 0; 
-    max-height: 9900px;
-    max-width: 9900px;
-    outline: none;
-    overflow: auto;
-    padding: 0 2px;
-    resize: none;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    z-index: 15;
-    font-family: Arial;
-    color: rgb(0,0,0);
-    background-color: rgb(255,255,255);
-    padding: 1px 2px;
-    max-width: 487px;
-    max-height: 464px;
-    min-width: 84px;
-    min-height: 40px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    text-align: right;
+  border: 1px #1f97f3 solid;
+  box-shadow: 0 2px 6px 2px rgb(60 64 67 / 15%);
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  margin: 0;
+  max-height: 9900px;
+  max-width: 9900px;
+  width: 100%;
+  outline: none;
+  overflow: auto;
+  padding: 0 2px;
+  resize: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  z-index: 15;
+  font-family: Arial;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  padding: 1px 2px;
+  max-height: 464px;
+  // min-width: 84px;
+  min-height: 40px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  text-align: inherit;
 `;
 
 const Cell = ({
@@ -63,6 +63,9 @@ const Cell = ({
   setBiggestTotalCellWidth,
   editable = false,
   setIsEditable,
+  inputValue,
+  setInputValue,
+  inputType,
 }) => {
   const ref = useRef(null);
   const inputRef = useRef(null);
@@ -70,7 +73,6 @@ const Cell = ({
     ref && ref.current ? ref.current.offsetWidth : null
   );
   const [isOverflowing, setIsOverflowing] = useState(false);
-  const [inputValue, setInputValue] = useState(children);
 
   /**
    * This function gets the total width of an element, we use it to check if the cell is overflowing
@@ -145,6 +147,10 @@ const Cell = ({
     setIsEditable(false);
   };
 
+  // const handleOnFocus = () => {
+  //   setIsEditable(true);
+  // };
+
   return (
     <>
       <StaticCell
@@ -155,16 +161,22 @@ const Cell = ({
       >
         {children}
       </StaticCell>
-
       <EditableCell
+        type={inputType}
         style={{ display: editable ? "block" : "none" }}
         onChange={handleOnInput}
         onBlur={handleOnBlur}
+        // onFocus={handleOnFocus}
         ref={inputRef}
         value={inputValue}
-
       />
 
+      {/* <InputBox
+        style={{ display: editable ? "inline-grid" : "none" }}
+        onChange={handleOnInput}
+        onBlur={handleOnBlur}
+        ref={inputRef}
+      /> */}
     </>
   );
 };
