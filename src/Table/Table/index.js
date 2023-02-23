@@ -174,14 +174,20 @@ const Table = (
           setMenuIsOpen(true);
         }, 100);
       }, 100);
+
+      console.log("right click finished");
     }
 
     if (tableContainerRef.current) {
+      console.log('adding event listener')
       tableContainerRef.current.addEventListener(
         "contextmenu",
         handleRightClick,
         false
       );
+
+      console.log('added event listener')
+
     }
 
     function handleClick(e) {

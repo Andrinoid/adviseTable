@@ -10,6 +10,8 @@ export default function Menu(props) {
 
   const mappedChildren = React.Children.map(children, (child) => {
     const hasSubmenu = child.props?.data && child.props?.data.length > 0;
+    console.log('child props', child.props)
+
     return (
       <Option
         onClick={() => {
@@ -22,6 +24,8 @@ export default function Menu(props) {
       </Option>
     );
   });
+
+  console.log('mappedChildren', mappedChildren)
 
   return (
     <AnimatePresence>
