@@ -162,23 +162,27 @@ const Table = (
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
-  
-
   useEffect(() => {
     function handleRightClick(e) {
       e.preventDefault();
       setMenuIsOpen(false);
-  
+
       setTimeout(() => {
         setPosition({ x: e.clientX, y: e.clientY });
-  
+
         setTimeout(() => {
           setMenuIsOpen(true);
         }, 100);
       }, 100);
     }
 
-    tableContainerRef.current.addEventListener("contextmenu", handleRightClick, false);
+    if (tableContainerRef.current) {
+      tableContainerRef.current.addEventListener(
+        "contextmenu",
+        handleRightClick,
+        false
+      );
+    }
 
     function handleClick(e) {
       e.preventDefault();
@@ -187,10 +191,16 @@ const Table = (
     window.addEventListener("click", handleClick, false);
 
     return () => {
-      tableContainerRef.current.removeEventListener("contextmenu", handleRightClick, false);
+      if (tableContainerRef.current) {
+        tableContainerRef.current.removeEventListener(
+          "contextmenu",
+          handleRightClick,
+          false
+        );
+      }
       window.removeEventListener("click", handleClick, false);
-    }
-  }, []);
+    };
+  }, [tableContainerRef]);
 
   useEffect(() => {
     setIsTableSelected(
@@ -575,10 +585,7 @@ const Table = (
   ]);
 
   return (
-    <div
-      ref={tableContainerRef}
-      style={{ position: "relative" }}
-    >
+    <div ref={tableContainerRef} style={{ position: "relative" }}>
       <Wrapper
         id={tableId}
         version="1.07"
