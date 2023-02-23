@@ -163,53 +163,6 @@ const Table = (
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   useEffect(() => {
-    console.log('application started')
-    function handleRightClick(e) {
-      e.preventDefault();
-      setMenuIsOpen(false);
-
-      setTimeout(() => {
-        setPosition({ x: e.clientX, y: e.clientY });
-
-        setTimeout(() => {
-          setMenuIsOpen(true);
-        }, 100);
-      }, 100);
-
-      console.log("right click finished");
-    }
-
-    if (tableContainerRef.current) {
-      console.log('adding event listener')
-      tableContainerRef.current.addEventListener(
-        "contextmenu",
-        handleRightClick,
-        false
-      );
-
-      console.log('added event listener')
-
-    }
-
-    function handleClick(e) {
-      e.preventDefault();
-      setMenuIsOpen(false);
-    }
-    window.addEventListener("click", handleClick, false);
-
-    return () => {
-      if (tableContainerRef.current) {
-        tableContainerRef.current.removeEventListener(
-          "contextmenu",
-          handleRightClick,
-          false
-        );
-      }
-      window.removeEventListener("click", handleClick, false);
-    };
-  }, [tableContainerRef]);
-
-  useEffect(() => {
     setIsTableSelected(
       selectedAreas[0] &&
         tableMatrix &&
@@ -338,13 +291,20 @@ const Table = (
   ]);
 
   useEffect(() => {
-    const callback = () => {
+    const handleResize = () => {
       setTotalWidth(getAdjustedSize());
     };
-    window.addEventListener("resize", callback);
+    function handleClick(e) {
+      e.preventDefault();
+      setMenuIsOpen(false);
+    }
+    
+    window.addEventListener("click", handleClick, false);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", callback);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("click", handleClick, false);
     };
   }, []);
 
@@ -592,7 +552,22 @@ const Table = (
   ]);
 
   return (
-    <div ref={tableContainerRef} style={{ position: "relative" }}>
+    <div
+      ref={tableContainerRef}
+      style={{ position: "relative" }}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setMenuIsOpen(false);
+
+        setTimeout(() => {
+          setPosition({ x: e.clientX, y: e.clientY });
+
+          setTimeout(() => {
+            setMenuIsOpen(true);
+          }, 100);
+        }, 100);
+      }}
+    >
       <Wrapper
         id={tableId}
         version="1.07"

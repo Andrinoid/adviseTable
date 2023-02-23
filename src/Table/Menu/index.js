@@ -6,8 +6,7 @@ import { Space } from "antd";
 
 export default function Menu(props) {
   const { position, open, children } = props;
-  console.log("Meu component started");
-  console.log("children", children);
+
   const mappedChildren = React.Children.map(children, (child) => {
     const { onClick } = child.props;
 
@@ -21,9 +20,6 @@ export default function Menu(props) {
       </Option>
     );
   });
-
-  console.log("mappedchildren", children);
-  console.log("open", open);
 
   return (
     <AnimatePresence>
