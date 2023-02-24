@@ -447,7 +447,8 @@ export function breakSelection(tableMatrix, selectedAreas) {
     const area = selectedAreas[i];
     for (let j = area.fromY; j <= area.toY; j++) {
       for (let k = area.fromX; k <= area.toX; k++) {
-        const selection = tableMatrix[j][k].current.getAttribute("data-spanselection");
+        const selection =
+          tableMatrix[j][k].current.getAttribute("data-spanselection");
 
         if (selection == "false") {
           const newArea = { ...area };
@@ -483,8 +484,10 @@ export function removeDuplications(array) {
     const isDuplicated = result.find((item) => {
       return (
         (item.fromY <= element.fromY &&
-          item.toY >= element.toY) &&
-        (item.fromX <= element.fromX && item.toX >= element.toX)
+          item.toY >= element.toY &&
+          item.fromX <= element.fromX &&
+          item.toX >= element.toX) ||
+        (item.fromY <= element.fromY && item.toY >= element.toY)
       );
     });
 
