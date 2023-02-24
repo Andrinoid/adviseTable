@@ -97,9 +97,9 @@ describe("duplicated seletion", () => {
   test("remove duplicated selection", () => {
     const selection = [
       { fromX: 4, fromY: 0, toX: 6, toY: 0 },
+      { fromX: 5, fromY: 1, toX: 6, toY: 1 },
       { fromX: 2, fromY: 4, toX: 6, toY: 12 },
-      { fromX: 2, fromY: 4, toX: 6, toY: 12 },
-      { fromX: 2, fromY: 4, toX: 6, toY: 12 },
+      { fromX: 2, fromY: 5, toX: 6, toY: 12 },
     ];
 
     const result = removeDuplications(selection);
@@ -109,5 +109,3 @@ describe("duplicated seletion", () => {
     expect(result[1]).toEqual({ fromX: 2, fromY: 4, toX: 6, toY: 12 });
   });
 });
-
-

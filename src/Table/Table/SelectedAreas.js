@@ -482,10 +482,9 @@ export function removeDuplications(array) {
     const element = array[i];
     const isDuplicated = result.find((item) => {
       return (
-        item.fromX == element.fromX &&
-        item.fromY == element.fromY &&
-        item.toX == element.toX &&
-        item.toY == element.toY
+        (item.fromY <= element.fromY &&
+          item.toY >= element.toY) ||
+        (item.fromX <= element.fromX && item.toX >= element.toX)
       );
     });
 
