@@ -1,10 +1,10 @@
-import { breakSelection } from "./SelectedAreas";
+import { breakSelection, removeDuplications } from "./SelectedAreas";
 
 class Object {
   current;
 
   constructor(spanSelection) {
-    this.setCurrent(spanSelection)
+    this.setCurrent(spanSelection);
   }
 
   setCurrent(spanSelection) {
@@ -38,8 +38,6 @@ function getTableMatrix(rows, cols, notSeletable = []) {
 
 // console.log(getTableMatrix(10, 10, [[1, 2], [3, 2]]))
 
-
-
 describe("selection", () => {
   test("return selection if valid", () => {
     const tableMatrix = getTableMatrix(10, 10);
@@ -63,7 +61,10 @@ describe("selection", () => {
   });
 
   test("break into 3 selections", () => {
-    const tableMatrix = getTableMatrix(10, 10, [[1, 2], [3, 2]]);
+    const tableMatrix = getTableMatrix(10, 10, [
+      [1, 2],
+      [3, 2],
+    ]);
     const selectedAreas = [{ fromX: 2, toX: 2, fromY: 0, toY: 9 }];
 
     const result = breakSelection(tableMatrix, selectedAreas);
@@ -75,7 +76,11 @@ describe("selection", () => {
   });
 
   test("break into 4 selections", () => {
-    const tableMatrix = getTableMatrix(10, 10, [[1, 2], [3, 2], [5, 2]]);
+    const tableMatrix = getTableMatrix(10, 10, [
+      [1, 2],
+      [3, 2],
+      [5, 2],
+    ]);
     const selectedAreas = [{ fromX: 2, toX: 2, fromY: 0, toY: 9 }];
 
     const result = breakSelection(tableMatrix, selectedAreas);
@@ -87,3 +92,22 @@ describe("selection", () => {
     expect(result[3]).toEqual({ fromX: 2, toX: 2, fromY: 6, toY: 9 });
   });
 });
+
+describe("duplicated seletion", () => {
+  test("remove duplicated selection", () => {
+    const selection = [
+      { fromX: 4, fromY: 0, toX: 6, toY: 0 },
+      { fromX: 2, fromY: 4, toX: 6, toY: 12 },
+      { fromX: 2, fromY: 4, toX: 6, toY: 12 },
+      { fromX: 2, fromY: 4, toX: 6, toY: 12 },
+    ];
+
+    const result = removeDuplications(selection);
+
+    expect(result).toHaveLength(2);
+    expect(result[0]).toEqual({ fromX: 4, fromY: 0, toX: 6, toY: 0 });
+    expect(result[1]).toEqual({ fromX: 2, fromY: 4, toX: 6, toY: 12 });
+  });
+});
+
+

@@ -272,7 +272,8 @@ const SelectedAreas = ({
         }
       }
 
-      return breakSelection(tableMatrix, [...selectedAreas.slice(0, -1), currentSelectedArea]);
+      const selections = [...selectedAreas.slice(0, -1), currentSelectedArea];
+      return removeDuplications(breakSelection(tableMatrix, selections));
     });
   };
 
@@ -473,6 +474,27 @@ export function breakSelection(tableMatrix, selectedAreas) {
     }
   }
   return selectedAreas;
+}
+
+export function removeDuplications(array) {
+  const result = [];
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    const isDuplicated = result.find((item) => {
+      return (
+        item.fromX == element.fromX &&
+        item.fromY == element.fromY &&
+        item.toX == element.toX &&
+        item.toY == element.toY
+      );
+    });
+
+    if (!isDuplicated) {
+      result.push(element);
+    }
+  }
+
+  return result;
 }
 
 export default SelectedAreas;
