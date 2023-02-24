@@ -483,7 +483,7 @@ export function removeDuplications(array) {
     const isDuplicated = result.find((item) => {
       return (
         (item.fromY <= element.fromY &&
-          item.toY >= element.toY) ||
+          item.toY >= element.toY) &&
         (item.fromX <= element.fromX && item.toX >= element.toX)
       );
     });
