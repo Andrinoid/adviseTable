@@ -272,6 +272,10 @@ const SelectedAreas = ({
         }
       }
 
+      if (!currentSelectedArea.fromX && !currentSelectedArea.fromY) {
+        return [...selectedAreas.slice(0, -1)]
+      }
+
       const selections = [...selectedAreas.slice(0, -1), currentSelectedArea];
       return removeDuplications(breakSelection(tableMatrix, selections));
     });
