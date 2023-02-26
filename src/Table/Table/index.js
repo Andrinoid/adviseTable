@@ -560,13 +560,13 @@ const Table = (
         e.preventDefault();
         setMenuIsOpen(false);
 
-        setTimeout(() => {
+        setTimeout( async () => {
           setPosition({ x: e.clientX, y: e.clientY });
 
           setTimeout(() => {
             setMenuIsOpen(true);
           }, 100);
-        }, 100);
+        }, 150);
       }}
     >
       <Wrapper

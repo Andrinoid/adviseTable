@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
 import { Space, Typography } from "antd";
 
@@ -9,19 +8,32 @@ const { Text } = Typography;
 export default function Menu(props) {
   const { position, open, data } = props;
 
+  const menu = useRef(null);
+
+  useEffect(() => {
+    const menuScaling = [{ display: 'none', transform: "scale(0)" }, { display: 'block', transform: "scale(1)" }];
+
+    const menuTiming = {
+      duration: 150,
+      iterations: 1,
+    };
+
+    if (menu.current) {
+      if (open) {
+        menu.current.animate(menuScaling, menuTiming);
+      } else {
+        menu.current.animate(menuScaling.reverse(), menuTiming);
+      }
+    }
+  }, [open]);
+
   return (
     <>
-      {open && (
+      
         <Container
+          ref={menu}
           position={position}
-          initial={{ display: "none", scale: 0 }}
-          animate={{ display: "block", scale: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 20,
-          }}
-          exit={{ scale: 0 }}
+          style={{ display: open ? "block" : "none" }}
         >
           <Space direction="vertical">
             {data.map((item, index) => (
@@ -36,7 +48,6 @@ export default function Menu(props) {
             ))}
           </Space>
         </Container>
-      )}
     </>
   );
 }
@@ -58,7 +69,7 @@ const Option = styled.button`
   }
 `;
 
-const Container = styled(motion.div)`
+const Container = styled.div`
   position: absolute;
   top: ${({ position }) => position.y - 145}px;
   left: ${({ position }) => position.x - 175 - 50 - 22}px;
