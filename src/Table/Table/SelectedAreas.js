@@ -272,13 +272,7 @@ const SelectedAreas = ({
         }
       }
 
-      // if (!currentSelectedArea.fromX && !currentSelectedArea.fromY) {
-      //   currentSelectedArea.fromX = currentSelectedArea.toX;
-      //   currentSelectedArea.fromY = currentSelectedArea.toY;
-      // }
-
       return [...selectedAreas.slice(0, -1), currentSelectedArea];
-      // return removeDuplications(breakSelection(tableMatrix, selections));
     });
   };
 
@@ -445,63 +439,5 @@ export const getContainedArea = (selectedAreas, { x, y }) => {
 
   return null;
 };
-
-/** break selection into many */
-export function breakSelection(tableMatrix, selectedAreas) {
-  for (let i = 0; i < selectedAreas.length; i++) {
-    const area = selectedAreas[i];
-    for (let j = area.fromY; j <= area.toY; j++) {
-      for (let k = area.fromX; k <= area.toX; k++) {
-        const selection =
-          tableMatrix[j][k].current.getAttribute("data-spanselection");
-
-        if (selection == "false") {
-          const newArea = { ...area };
-          if (k > area.fromX) {
-            newArea.toX = k - 1;
-            selectedAreas.push(newArea);
-          }
-          if (k < area.toX) {
-            area.fromX = k + 1;
-            selectedAreas.push(area);
-          }
-          if (j > area.fromY) {
-            newArea.toY = j - 1;
-            selectedAreas.push(newArea);
-          }
-          if (j < area.toY) {
-            area.fromY = j + 1;
-            selectedAreas.push(area);
-          }
-          selectedAreas.splice(i, 1);
-          return breakSelection(tableMatrix, selectedAreas);
-        }
-      }
-    }
-  }
-  return selectedAreas;
-}
-
-export function removeDuplications(array) {
-  const result = [];
-  for (let i = 0; i < array.length; i++) {
-    const element = array[i];
-    const isDuplicated = result.find((item) => {
-      return (
-        (item.fromY <= element.fromY &&
-          item.toY >= element.toY &&
-          item.fromX <= element.fromX &&
-          item.toX >= element.toX) ||
-        (item.fromY <= element.fromY && item.toY >= element.toY)
-      );
-    });
-
-    if (!isDuplicated) {
-      result.push(element);
-    }
-  }
-
-  return result;
-}
 
 export default SelectedAreas;
