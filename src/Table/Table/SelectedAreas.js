@@ -176,7 +176,7 @@ const SelectedAreas = ({
       if (!currentSelectedArea) {
         currentSelectedArea = {};
       }
-
+      
       if (fromX != null) currentSelectedArea.fromX = fromX;
       if (fromY != null) currentSelectedArea.fromY = fromY;
       if (toX != null) {
@@ -272,12 +272,13 @@ const SelectedAreas = ({
         }
       }
 
-      if (!currentSelectedArea.fromX && !currentSelectedArea.fromY) {
-        return [...selectedAreas.slice(0, -1)]
-      }
+      // if (!currentSelectedArea.fromX && !currentSelectedArea.fromY) {
+      //   currentSelectedArea.fromX = currentSelectedArea.toX;
+      //   currentSelectedArea.fromY = currentSelectedArea.toY;
+      // }
 
-      const selections = [...selectedAreas.slice(0, -1), currentSelectedArea];
-      return removeDuplications(breakSelection(tableMatrix, selections));
+      return [...selectedAreas.slice(0, -1), currentSelectedArea];
+      // return removeDuplications(breakSelection(tableMatrix, selections));
     });
   };
 
