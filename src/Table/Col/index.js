@@ -174,10 +174,10 @@ const Col = ({
           if (resetValue) {
             inputValue = initialValue;
           } else {
-            initialValue = inputValue;
-            if (onSubmitCallback) {
+            if (onSubmitCallback && initialValue != inputValue) {
               onSubmitCallback(inputValue);
             }
+            initialValue = inputValue;
           }
           return inputValue;
         });
