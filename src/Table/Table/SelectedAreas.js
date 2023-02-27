@@ -61,6 +61,7 @@ const SelectedAreas = ({
    */
   const onMouseDown = (e) => {
     let { x, y, selectable, colspan } = e.delegateTarget.dataset;
+    
     if (selectable == "false" || e.button == 2) {
       return;
     }
@@ -166,7 +167,7 @@ const SelectedAreas = ({
 
   /** Edit the last selected area */
   let updateCurrentSelectedArea = ({ fromX, fromY, toX, toY } = {}) => {
-    if (toX) toX = selectionMode === "cell" ? parseInt(toX) : numberOfCols - 1;
+    if (toX) toX = selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length-1;
     if (toY) toY = parseInt(toY);
     if (fromX) fromX = selectionMode === "cell" ? parseInt(fromX) : 0;
     if (fromY) fromY = parseInt(fromY);
