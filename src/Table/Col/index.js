@@ -243,6 +243,7 @@ const Col = ({
           setInputValue={setInputValue}
           inputType={inputType}
           onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
+          allowEdition={allowEdition}
         >
           {children}
         </Cell>
