@@ -66,6 +66,7 @@ const Cell = ({
   inputValue,
   setInputValue,
   inputType,
+  allowEdition,
 }) => {
   const ref = useRef(null);
   const inputRef = useRef(null);
@@ -126,7 +127,7 @@ const Cell = ({
       inputRef.current.focus();
       inputRef.current.select();
     }
-  }, [editable]);
+  }, [editable, allowEdition]);
 
   /**
    * Check if the cell is overflowing and set the state
