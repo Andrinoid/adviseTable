@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Example from './Example';
-import { Layout, theme, Radio, Typography, Switch, Button, Slider } from 'antd';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Example from "./Example";
+import { Layout, theme, Radio, Typography, Switch, Button, Slider } from "antd";
 const { Header, Sider, Content } = Layout;
 const { Text, Title } = Typography;
 
@@ -16,20 +16,21 @@ const Flex = styled.div`
 `;
 
 const Hr = styled.hr`
-border: 0;
-height: 1px;
-background: #333;
-background-image: linear-gradient(to right, #ccc, #333, #ccc);
-opacity: 0.4;
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  opacity: 0.4;
 `;
 
 const App = () => {
-  const [tableTheme, setTableTheme] = useState('light');
+  const [tableTheme, setTableTheme] = useState("light");
   const [draggable, setDraggable] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
-  const [selectionMode, setSelectionMode] = useState('cell');
+  const [selectionMode, setSelectionMode] = useState("cell");
   const [footerVissible, setFooterVissible] = useState(true);
   const [headerOffset, setHeaderOffset] = useState(0);
+  const [allowEdition, setAllowEdition] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -38,51 +39,85 @@ const App = () => {
     setTableTheme(value);
   };
 
-
   const onSelectionModeChange = ({ target: { value } }) => {
     setSelectionMode(value);
   };
 
   return (
     <Layout hasSider>
-      <Sider trigger={null} theme="light" style={{
-        overflow: 'auto',
-        height: '100vh',
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        bottom: 0,
-      }}>
+      <Sider
+        trigger={null}
+        theme="light"
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
+      >
         <div style={{ padding: 20 }}>
-          <img src="https://bm.advise.is/static/media/logo.7afe098a.svg" width={'100%'} />
+          <img
+            src="https://bm.advise.is/static/media/logo.7afe098a.svg"
+            width={"100%"}
+          />
         </div>
         <Hr />
         <Panel>
           <div style={{ marginBottom: 5 }}>
             <Text type="secondary">Theme</Text>
           </div>
-          <Radio.Group block options={['light', 'dark']} onChange={onThemeChange} value={tableTheme} optionType="button" />
+          <Radio.Group
+            block
+            options={["light", "dark"]}
+            onChange={onThemeChange}
+            value={tableTheme}
+            optionType="button"
+          />
+        </Panel>
+        <Hr />
+        <Panel>
+          <div style={{ marginBottom: 5 }}>
+            <Text type="secondary">Allow Edition</Text>
+          </div>
+          <Switch
+            checked={allowEdition}
+            onChange={(checked) => setAllowEdition(checked)}
+          />
         </Panel>
         <Hr />
         <Panel>
           <div style={{ marginBottom: 5 }}>
             <Text type="secondary">Draggable</Text>
           </div>
-          <Switch checked={draggable} onChange={(checked) => setDraggable(checked)} />
+          <Switch
+            checked={draggable}
+            onChange={(checked) => setDraggable(checked)}
+          />
         </Panel>
         <Hr />
         <Panel>
           <div style={{ marginBottom: 5 }}>
             <Text type="secondary">Show grid</Text>
           </div>
-          <Switch checked={showGrid} onChange={(checked) => setShowGrid(checked)} />
+          <Switch
+            checked={showGrid}
+            onChange={(checked) => setShowGrid(checked)}
+          />
         </Panel>
         <Hr />
         <Panel>
           <div style={{ marginBottom: 5 }}>
             <Text type="secondary">Selection Mode</Text>
           </div>
-          <Radio.Group block options={['row', 'cell']} onChange={onSelectionModeChange} value={selectionMode} optionType="button" />
+          <Radio.Group
+            block
+            options={["row", "cell"]}
+            onChange={onSelectionModeChange}
+            value={selectionMode}
+            optionType="button"
+          />
         </Panel>
         <Hr />
         <Panel>
@@ -91,7 +126,10 @@ const App = () => {
           </div>
           <Flex>
             <Text type="secondary">Has footer</Text>
-            <Switch checked={footerVissible} onChange={(checked) => setFooterVissible(checked)} />
+            <Switch
+              checked={footerVissible}
+              onChange={(checked) => setFooterVissible(checked)}
+            />
           </Flex>
         </Panel>
         <Hr />
@@ -100,18 +138,21 @@ const App = () => {
             <Text type="secondary">Header top offset</Text>
           </div>
 
-            <Slider
-              defaultValue={0}
-              onChange={(value) => {setHeaderOffset(value)}}
-            />
-            <Text type="secondary">Use e.g if the page has fixed header</Text>
-
+          <Slider
+            defaultValue={0}
+            onChange={(value) => {
+              setHeaderOffset(value);
+            }}
+          />
+          <Text type="secondary">Use e.g if the page has fixed header</Text>
         </Panel>
-
       </Sider>
-      <Layout className="site-layout" style={{
-        marginLeft: 200,
-      }}>
+      <Layout
+        className="site-layout"
+        style={{
+          marginLeft: 200,
+        }}
+      >
         <Header
           style={{
             padding: 0,
@@ -119,12 +160,11 @@ const App = () => {
             background: colorBgContainer,
           }}
         >
-
           <Title level={3}>Giga table</Title>
         </Header>
         <Content
           style={{
-            margin: '24px 16px',
+            margin: "24px 16px",
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
@@ -137,6 +177,7 @@ const App = () => {
             selectionMode={selectionMode}
             footerVissible={footerVissible}
             headerOffset={headerOffset}
+            allowEdition={allowEdition}
           />
         </Content>
       </Layout>
