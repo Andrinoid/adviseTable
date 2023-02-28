@@ -117,7 +117,6 @@ const Table = (
 
   // ======= refs =======
   const viewportRef = useRef(null);
-
   const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
   const tableLayerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
