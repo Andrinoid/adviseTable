@@ -85,7 +85,8 @@ const Edge = styled.div`
   }}
 `;
 
-const duration = 90;
+const DURATION = 90;
+const MENU_WIDTH = 300;
 
 const Table = (
   {
@@ -558,15 +559,21 @@ const Table = (
     return navigator.userAgent.search("MacIntel") != -1;
   }
 
+  const toY = tableMatrix ? tableMatrix.length - 1 : 0;
+  const toX = tableMatrix && tableMatrix[0] ? tableMatrix[0].length - 1 : 0;
   const tableSelection = [
     {
-      toY: 17,
-      toX: 12,
+      toY: toY,
+      toX: toX,
       fromY: 0,
       fromX: 0,
-      oldMouseMoveTo: { toX: 12, toY: 17 },
+      oldMouseMoveTo: {
+        toX: toX,
+        toY: toY,
+      },
     },
   ];
+
   return (
     <div
       ref={tableContainerRef}
@@ -577,12 +584,32 @@ const Table = (
         setMenuIsOpen(false);
 
         setTimeout(async () => {
-          setPosition({ x: e.clientX, y: e.clientY });
+          const viewport = document.querySelector(`.viewPort${tableId}`);
+          const menu = document.querySelector(`#menu`);
 
-          setTimeout(() => {
-            setMenuIsOpen(true);
-          }, duration);
-        }, duration);
+          if (viewport && menu) {
+            const viewportRect = viewport.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
+
+            const rightBoundary = window.innerWidth - menuRect.width;
+            const bottomBoundary = viewportRect.height + viewportRect.y - 150;
+
+            setPosition({
+              x:
+                (e.clientX > rightBoundary
+                  ? e.clientX - (e.clientX - rightBoundary)
+                  : e.clientX) - viewportRect.x,
+              y:
+                (e.clientY > bottomBoundary
+                  ? e.clientY - menuRect.height + 40
+                  : e.clientY) - viewportRect.y,
+            });
+
+            setTimeout(() => {
+              setMenuIsOpen(true);
+            }, DURATION);
+          }
+        }, DURATION);
       }}
     >
       <Wrapper
@@ -592,7 +619,9 @@ const Table = (
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
         <Menu
-          duration={duration}
+          id={"menu"}
+          width={MENU_WIDTH}
+          duration={DURATION}
           data={[
             selectedAreas.length > 0 && {
               label: "Copy",

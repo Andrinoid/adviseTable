@@ -5,33 +5,28 @@ import { Space, Typography } from "antd";
 
 const { Text } = Typography;
 
-export default function Menu(props) {
-  const { position, open, data, duration } = props;
+export default React.forwardRef(function Menu(props, ref) {
+  const { position, open, data, duration, width, ...rest } = props;
   const [className, setClassName] = useState(null);
   const [options, setOptions] = useState(null);
 
-  const menu = useRef(null);
-
   useEffect(() => {
-    if (menu.current) {
-      if (open) {
-        setTimeout(() => {
-          setClassName("open");
-        }, 1);
-      } else {
-        setTimeout(() => {
-          setClassName("close");
-        }, 1);
-      }
+    if (open) {
+      setTimeout(() => {
+        setClassName("open");
+      }, 1);
+    } else {
+      setTimeout(() => {
+        setClassName("close");
+      }, 1);
     }
   }, [open]);
 
   useEffect(() => {
-    
     if (options && options.length !== data.length) {
       setTimeout(() => {
         setOptions(data);
-      }, duration+100);
+      }, duration + 100);
     } else {
       setOptions(data);
     }
@@ -40,37 +35,40 @@ export default function Menu(props) {
   return (
     <Container>
       <MenuContainer
+        {...rest}
+        width={width}
         duration={duration}
-        ref={menu}
+        ref={ref}
         position={position}
-        style={{ display: open ? "block" : "none" }}
+        style={{ transform: open? 'translate(0px, 0px)' : 'translate(-9999px, -9999px)'}}
         className={className}
       >
         <Space direction="vertical">
-          {options && options.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <Option
-                key={index}
-                onClick={() => {
-                  if (item.onClick) item.onClick();
-                }}
-              >
-                <div>
-                  {Icon && <Icon className="icon" />}
-                  <Text>{item.label}</Text>
-                </div>
-                <Text>{item.command || ""}</Text>
-              </Option>
-            );
-          })}
+          {options &&
+            options.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <Option
+                  width={width}
+                  key={index}
+                  onClick={() => {
+                    if (item.onClick) item.onClick();
+                  }}
+                >
+                  <div>
+                    {Icon && <Icon className="icon" />}
+                    <Text>{item.label}</Text>
+                  </div>
+                  <Text>{item.command || ""}</Text>
+                </Option>
+              );
+            })}
         </Space>
       </MenuContainer>
     </Container>
   );
-}
+});
 
-const width = 300;
 const padding = 15;
 const color = "#000000E0";
 
@@ -82,6 +80,7 @@ const Container = styled.div`
   .close {
     opacity: 0;
   }
+  width: ${({ width }) => width}px;
 `;
 
 const Option = styled.button`
@@ -97,7 +96,7 @@ const Option = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: ${width}px;
+  width: ${({ width }) => width}px;
   margin: 0;
 
   div {
@@ -112,7 +111,7 @@ const Option = styled.button`
   }
 
   div > span:nth-child(2) {
-    width: ${width - 120}px;
+    width: ${({ width }) => width - 120}px;
     padding-left: 10px;
   }
 
@@ -146,11 +145,11 @@ const Option = styled.button`
 const MenuContainer = styled.div`
   cursor: default;
   position: absolute;
-  top: ${({ position }) => position.y - 145}px;
-  left: ${({ position }) => position.x - 175 - 50 - 22}px;
+  top: ${({ position }) => position.y}px;
+  left: ${({ position }) => position.x}px;
   z-index: 1000;
   background-color: rgb(249, 250, 251);
-  width: ${width}px;
+  width: ${({ width }) => width}px;
   box-sizing: border-box;
   border-radius: 5px;
   box-shadow: 0 3px 6px -4px rgb(0 0 0 / 14%), 0 6px 16px 0 rgb(0 0 0 / 10%),
@@ -158,5 +157,5 @@ const MenuContainer = styled.div`
   backdrop-filter: blur(5px);
   border: none;
   padding: ${padding}px 0 ${padding}px 0px;
-  transition: all ${({ duration }) => duration / 1000}s ease-in-out;
+  transition: opacity ${({ duration }) => duration / 1000}s ease-in-out;
 `;
