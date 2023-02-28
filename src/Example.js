@@ -44,6 +44,7 @@ function Example({
   footerVissible,
   headerOffset,
   showGrid,
+  allowEdition,
 }) {
   const [viewData, setViewData] = useState(view);
   const [expandedIds, setExpandedIds] = useState([]);
@@ -219,7 +220,7 @@ function Example({
                                   {monthRange.map((month, i) => (
                                     <Col
                                       key={i}
-                                      allowEdition={true}
+                                      allowEdition={allowEdition}
                                       onSubmitCallback={alert}
                                       inputType={"number"}
                                     >

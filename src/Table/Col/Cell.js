@@ -47,7 +47,7 @@ const EditableCell = styled.input`
   max-height: 464px;
   // min-width: 84px;
   min-height: 40px;
-  display: flex;
+  display: block;
   justify-content: right;
   align-items: center;
   text-align: inherit;
@@ -66,6 +66,7 @@ const Cell = ({
   inputValue,
   setInputValue,
   inputType,
+  allowEdition,
 }) => {
   const ref = useRef(null);
   const inputRef = useRef(null);
@@ -126,7 +127,7 @@ const Cell = ({
       inputRef.current.focus();
       inputRef.current.select();
     }
-  }, [editable]);
+  }, [editable, allowEdition]);
 
   /**
    * Check if the cell is overflowing and set the state

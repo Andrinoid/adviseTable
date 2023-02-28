@@ -164,31 +164,43 @@ const Col = ({
     // console.log(tableMatrix);
   };
 
+  const onValueUpdate = (resetValue = false) => {
+    setInitialValue((initialValue) => {
+      setInputValue((inputValue) => {
+        if (resetValue) {
+          inputValue = initialValue;
+        } else {
+          if (onSubmitCallback && initialValue != inputValue) {
+            onSubmitCallback(inputValue);
+          }
+          initialValue = inputValue;
+        }
+        return inputValue;
+      });
+      return initialValue;
+    });
+    setEditionState(false);
+  };
+
   useEffect(() => {
+    currentColRef.current.performUpdateValue = (value, force = false) => {
+      // console.log("performUpdateValue", value);
+      if (!allowEdition) throw new Error("This column is not editable");
+
+      if (initialValue != inputValue || force) {
+        setEditionState(true);
+        setInputValue(value);
+        onValueUpdate();
+      }
+    };
     currentColRef.current.focus = () => {
       setEditionState(true);
     };
-    currentColRef.current.blur = (resetValue = false) => {
-      setInitialValue((initialValue) => {
-        setInputValue((inputValue) => {
-          if (resetValue) {
-            inputValue = initialValue;
-          } else {
-            if (onSubmitCallback && initialValue != inputValue) {
-              onSubmitCallback(inputValue);
-            }
-            initialValue = inputValue;
-          }
-          return inputValue;
-        });
-        return initialValue;
-      });
-      setEditionState(false);
-    };
+    currentColRef.current.blur = onValueUpdate;
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
-  }, [isEditable]);
+  }, [isEditable, allowEdition]);
 
   return (
     <Column
@@ -231,6 +243,7 @@ const Col = ({
           setInputValue={setInputValue}
           inputType={inputType}
           onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
+          allowEdition={allowEdition}
         >
           {children}
         </Cell>

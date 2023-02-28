@@ -9,6 +9,57 @@ export default function useKeyboardControler(
 ) {
   let isNegative = useRef(false);
 
+  const pasteData = (e) => {
+    if (selectedAreas.length === 1) {
+      let pasteData = e.clipboardData.getData("text");
+
+      // let hasTabs = pasteData.includes("\t");
+      // let hasNewLines = pasteData.includes("\n");
+
+      let pasteDataRows = pasteData.split("\n");
+
+      let pasteDataRowsSplitted = pasteDataRows.map((row) => {
+        return row.split("\t");
+      });
+
+      let startRowIndex = selectedAreas[0].fromY;
+      pasteDataRowsSplitted.forEach((pastedRow) => {
+        let startColumnIndex = selectedAreas[0].fromX;
+        pastedRow.forEach((pastedCell) => {
+          try {
+            console.log(
+              `update with value [${startRowIndex}, ${startColumnIndex}]`,
+              pastedCell
+            );
+            tableMatrix[startRowIndex][
+              startColumnIndex
+            ].current.performUpdateValue(pastedCell, true);
+          } catch (error) {
+            console.error(error);
+          }
+          startColumnIndex++;
+        });
+        startRowIndex++;
+      });
+
+      // console.log(pasteDataRowsSplitted);
+      // console.log("matrix", tableMatrix);
+      // console.log("selectedAreas", selectedAreas);
+      // console.log("-----");
+      // console.log(
+      //   "starting point",
+      //   tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX]
+      // );
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("paste", pasteData);
+    return () => {
+      document.removeEventListener("paste", pasteData);
+    };
+  }, [selectedAreas, tableMatrix]);
+
   const getDefaultOptions = () => {
     return {
       enabled: selectedAreas.length > 0,
@@ -63,10 +114,10 @@ export default function useKeyboardControler(
         const nextCell =
           tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
 
-        previousCell.blur();
         if (keepEdition && previousCell.isEditable()) {
           nextCell.focus();
         }
+        previousCell.blur();
       } catch (error) {}
     }
     setSelectedAreas(selectedAreas);
