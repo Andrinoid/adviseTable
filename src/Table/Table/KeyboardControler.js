@@ -27,10 +27,10 @@ export default function useKeyboardControler(
         pasteDataRowsSplitted.forEach((pastedRow) => {
           let startColumnIndex = selectedAreas[0].fromX;
           pastedRow.forEach((pastedCell) => {
-            // console.log(
-            //   `update with value [${startRowIndex}, ${startColumnIndex}]`,
-            //   pastedCell
-            // );
+            console.log(
+              `update with value [${startRowIndex}, ${startColumnIndex}]`,
+              pastedCell
+            );
             tableMatrix[startRowIndex][
               startColumnIndex
             ].current.performUpdateValue(pastedCell, true);
@@ -38,7 +38,9 @@ export default function useKeyboardControler(
           });
           startRowIndex++;
         });
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
 
       // console.log(pasteDataRowsSplitted);
       // console.log("matrix", tableMatrix);
