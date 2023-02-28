@@ -9,6 +9,40 @@ export default function useKeyboardControler(
 ) {
   let isNegative = useRef(false);
 
+
+
+  const pasteData = (e) => {
+    let pasteData = e.clipboardData.getData("text");
+
+    //check if pasteData has tabls or new lines
+    let hasTabs = pasteData.includes("\t");
+    let hasNewLines = pasteData.includes("\n");
+
+    if (!hasTabs) return;
+
+    let pasteDataRows = pasteData.split("\n");
+
+    // iterate over the pasteDataRows and split them by tabs
+    let pasteDataRowsSplitted = pasteDataRows.map((row) => {
+      return row.split("\t");
+    });
+
+    console.log(pasteDataRowsSplitted);
+    console.log('matrix', tableMatrix);
+    console.log('selectedAreas', selectedAreas);
+    console.log('-----')
+    console.log('starting point', tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX]);
+
+  };
+
+  useEffect(() => {
+    document.addEventListener("paste", pasteData);
+    return () => {
+      document.removeEventListener("paste", pasteData);
+    };
+  }, [selectedAreas, tableMatrix]);
+
+
   const getDefaultOptions = () => {
     return {
       enabled: selectedAreas.length > 0,
