@@ -70,7 +70,7 @@ export default function Menu(props) {
   );
 }
 
-const width = 240;
+const width = 300;
 const padding = 15;
 const color = "#000000E0";
 
@@ -86,7 +86,7 @@ const Container = styled.div`
 
 const Option = styled.button`
   background: none;
-  border: 1px solid transparent;
+  border: none;
   outline: none;
   list-style: none;
   padding: 7.5px ${padding + 7.5}px;
@@ -151,13 +151,12 @@ const MenuContainer = styled.div`
   z-index: 1000;
   background-color: rgb(249, 250, 251);
   width: ${width}px;
-  height: 45vh;
   box-sizing: border-box;
   border-radius: 5px;
   box-shadow: 0 3px 6px -4px rgb(0 0 0 / 14%), 0 6px 16px 0 rgb(0 0 0 / 10%),
     0 9px 28px 8px rgb(0 0 0 / 7%);
   backdrop-filter: blur(5px);
-  border: 1px solid transparent;
+  border: none;
   padding: ${padding}px 0 ${padding}px 0px;
   transition: all ${({ duration }) => duration / 1000}s ease-in-out;
 `;
