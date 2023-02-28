@@ -19,10 +19,8 @@ import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
 import Menu from "../Menu";
-import { Typography } from "antd";
 import { Copier } from "./Copier";
-
-const { Text } = Typography;
+import { SelectOutlined, CopyOutlined } from "@ant-design/icons";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -86,6 +84,8 @@ const Edge = styled.div`
     }
   }}
 `;
+
+const duration = 90;
 
 const Table = (
   {
@@ -554,6 +554,19 @@ const Table = (
     headerData,
   ]);
 
+  function isIOS() {
+    return navigator.userAgent.search("MacIntel") != -1;
+  }
+
+  const tableSelection = [
+    {
+      toY: 17,
+      toX: 12,
+      fromY: 0,
+      fromX: 0,
+      oldMouseMoveTo: { toX: 12, toY: 17 },
+    },
+  ];
   return (
     <div
       ref={tableContainerRef}
@@ -568,8 +581,8 @@ const Table = (
 
           setTimeout(() => {
             setMenuIsOpen(true);
-          }, 100);
-        }, 150);
+          }, duration);
+        }, duration);
       }}
     >
       <Wrapper
@@ -579,22 +592,9 @@ const Table = (
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
         <Menu
+          duration={duration}
           data={[
-            {
-              label: "Select all",
-              onClick: () => {
-                selectAll(true);
-                setMenuIsOpen(false);
-              },
-            },
-            {
-              label: "Select all without headers",
-              onClick: () => {
-                selectAll();
-                setMenuIsOpen(false);
-              },
-            },
-            {
+            selectedAreas.length > 0 && {
               label: "Copy",
               onClick: () => {
                 new Copier(
@@ -604,8 +604,42 @@ const Table = (
                 ).copy();
                 setMenuIsOpen(false);
               },
+              icon: CopyOutlined,
+              command: (!isIOS() ? "Ctrl+" : "⌘") + "C",
             },
-          ]}
+            {
+              label: "Copy all",
+              onClick: () => {
+                new Copier(tableMatrix, tableSelection, headerData).copy();
+                setMenuIsOpen(false);
+              },
+              icon: CopyOutlined,
+            },
+            {
+              label: "Copy all without headers",
+              onClick: () => {
+                new Copier(tableMatrix, tableSelection, null).copy();
+                setMenuIsOpen(false);
+              },
+              icon: CopyOutlined,
+            },
+            {
+              label: "Select all",
+              onClick: () => {
+                selectAll(true);
+                setMenuIsOpen(false);
+              },
+              icon: SelectOutlined,
+            },
+            {
+              label: "Select all without headers",
+              onClick: () => {
+                selectAll();
+                setMenuIsOpen(false);
+              },
+              icon: SelectOutlined,
+            },
+          ].filter((el) => !!el)}
           position={position}
           open={menuIsOpen}
         />
