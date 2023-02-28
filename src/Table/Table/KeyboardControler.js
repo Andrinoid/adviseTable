@@ -22,11 +22,11 @@ export default function useKeyboardControler(
         return row.split("\t");
       });
 
-      try {
-        let startRowIndex = selectedAreas[0].fromY;
-        pasteDataRowsSplitted.forEach((pastedRow) => {
-          let startColumnIndex = selectedAreas[0].fromX;
-          pastedRow.forEach((pastedCell) => {
+      let startRowIndex = selectedAreas[0].fromY;
+      pasteDataRowsSplitted.forEach((pastedRow) => {
+        let startColumnIndex = selectedAreas[0].fromX;
+        pastedRow.forEach((pastedCell) => {
+          try {
             console.log(
               `update with value [${startRowIndex}, ${startColumnIndex}]`,
               pastedCell
@@ -34,13 +34,13 @@ export default function useKeyboardControler(
             tableMatrix[startRowIndex][
               startColumnIndex
             ].current.performUpdateValue(pastedCell, true);
-            startColumnIndex++;
-          });
-          startRowIndex++;
+          } catch (error) {
+            console.error(error);
+          }
+          startColumnIndex++;
         });
-      } catch (error) {
-        console.error(error);
-      }
+        startRowIndex++;
+      });
 
       // console.log(pasteDataRowsSplitted);
       // console.log("matrix", tableMatrix);
