@@ -9,28 +9,46 @@ export default function useKeyboardControler(
 ) {
   let isNegative = useRef(false);
 
-
-
   const pasteData = (e) => {
-    let pasteData = e.clipboardData.getData("text");
+    if (selectedAreas.length === 1) {
+      let pasteData = e.clipboardData.getData("text");
 
-    let hasTabs = pasteData.includes("\t");
-    let hasNewLines = pasteData.includes("\n");
+      // let hasTabs = pasteData.includes("\t");
+      // let hasNewLines = pasteData.includes("\n");
 
-    if (!hasTabs) return;
+      let pasteDataRows = pasteData.split("\n");
 
-    let pasteDataRows = pasteData.split("\n");
+      let pasteDataRowsSplitted = pasteDataRows.map((row) => {
+        return row.split("\t");
+      });
 
-    let pasteDataRowsSplitted = pasteDataRows.map((row) => {
-      return row.split("\t");
-    });
+      try {
+        let startRowIndex = selectedAreas[0].fromY;
+        pasteDataRowsSplitted.forEach((pastedRow) => {
+          let startColumnIndex = selectedAreas[0].fromX;
+          pastedRow.forEach((pastedCell) => {
+            // console.log(
+            //   `update with value [${startRowIndex}, ${startColumnIndex}]`,
+            //   pastedCell
+            // );
+            tableMatrix[startRowIndex][
+              startColumnIndex
+            ].current.performUpdateValue(pastedCell, true);
+            startColumnIndex++;
+          });
+          startRowIndex++;
+        });
+      } catch (error) {}
 
-    console.log(pasteDataRowsSplitted);
-    console.log('matrix', tableMatrix);
-    console.log('selectedAreas', selectedAreas);
-    console.log('-----')
-    console.log('starting point', tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX]);
-
+      // console.log(pasteDataRowsSplitted);
+      // console.log("matrix", tableMatrix);
+      // console.log("selectedAreas", selectedAreas);
+      // console.log("-----");
+      // console.log(
+      //   "starting point",
+      //   tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX]
+      // );
+    }
   };
 
   useEffect(() => {
@@ -39,7 +57,6 @@ export default function useKeyboardControler(
       document.removeEventListener("paste", pasteData);
     };
   }, [selectedAreas, tableMatrix]);
-
 
   const getDefaultOptions = () => {
     return {
