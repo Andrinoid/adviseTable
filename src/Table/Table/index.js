@@ -176,23 +176,26 @@ const Table = (
 
   const selectAll = useCallback(
     (isHeaderIncluded = false) => {
+      const selection = {
+        toY: tableMatrix.length - 1,
+        toX: tableMatrix[0].length - 1,
+        fromY: 0,
+        fromX: 0,
+        oldMouseMoveTo: {
+          toX: tableMatrix[0].length - 1,
+          toY: tableMatrix.length - 1,
+        },
+      };
+
+      function updateSelection() {
+        setIsHeaderIncluded(isHeaderIncluded);
+        setSelectedAreas([selection]);
+      }
       if (isTableSelected) {
-        setSelectedAreas([]);
+        updateSelection();
       } else {
         if (tableMatrix) {
-          setIsHeaderIncluded(isHeaderIncluded);
-          setSelectedAreas([
-            {
-              toY: tableMatrix.length - 1,
-              toX: tableMatrix[0].length - 1,
-              fromY: 0,
-              fromX: 0,
-              oldMouseMoveTo: {
-                toX: tableMatrix[0].length - 1,
-                toY: tableMatrix.length - 1,
-              },
-            },
-          ]);
+          updateSelection();
         }
       }
     },
@@ -560,7 +563,7 @@ const Table = (
         e.preventDefault();
         setMenuIsOpen(false);
 
-        setTimeout( async () => {
+        setTimeout(async () => {
           setPosition({ x: e.clientX, y: e.clientY });
 
           setTimeout(() => {
