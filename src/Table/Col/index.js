@@ -185,12 +185,12 @@ const Col = ({
   useEffect(() => {
     currentColRef.current.performUpdateValue = (value, force = false) => {
       // console.log("performUpdateValue", value);
-      if (allowEdition && (initialValue != inputValue || force)) {
+      if (!allowEdition) throw new Error("This column is not editable");
+
+      if (initialValue != inputValue || force) {
         // setEditionState(true);
         setInputValue(value);
         onValueUpdate();
-      } else {
-        throw new Error("This column is not editable");
       }
     };
     currentColRef.current.focus = () => {
