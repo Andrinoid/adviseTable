@@ -296,6 +296,7 @@ const Table = (
   useEffect(() => {
     const handleResize = () => {
       setTotalWidth(getAdjustedSize());
+
     };
     function handleClick(e) {
       e.preventDefault();
@@ -323,6 +324,8 @@ const Table = (
       setViewportWidth(viewportRef.current.offsetWidth);
       if (viewportRef.current.offsetWidth < totalWidth) {
         setIsViewPortOverflow(true);
+      } else {
+        setIsViewPortOverflow(false);
       }
     }
 
