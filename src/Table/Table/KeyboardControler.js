@@ -14,7 +14,6 @@ export default function useKeyboardControler(
   const pasteData = (e) => {
     let pasteData = e.clipboardData.getData("text");
 
-    //check if pasteData has tabls or new lines
     let hasTabs = pasteData.includes("\t");
     let hasNewLines = pasteData.includes("\n");
 
@@ -22,7 +21,6 @@ export default function useKeyboardControler(
 
     let pasteDataRows = pasteData.split("\n");
 
-    // iterate over the pasteDataRows and split them by tabs
     let pasteDataRowsSplitted = pasteDataRows.map((row) => {
       return row.split("\t");
     });
