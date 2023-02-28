@@ -26,7 +26,7 @@ export default React.forwardRef(function Menu(props, ref) {
     if (options && options.length !== data.length) {
       setTimeout(() => {
         setOptions(data);
-      }, duration + 100);
+      }, duration*3);
     } else {
       setOptions(data);
     }

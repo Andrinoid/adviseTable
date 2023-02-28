@@ -85,7 +85,7 @@ const Edge = styled.div`
   }}
 `;
 
-const DURATION = 90;
+const DURATION = 10;
 const MENU_WIDTH = 300;
 
 const Table = (
@@ -555,7 +555,7 @@ const Table = (
   ]);
 
   function isIOS() {
-    return navigator.userAgent.search("MacIntel") != -1;
+    return navigator.userAgent.search("Mac") != -1;
   }
 
   const toY = tableMatrix ? tableMatrix.length - 1 : 0;
@@ -573,6 +573,8 @@ const Table = (
     },
   ];
 
+  let lastClientX = useRef(null);
+  let lastClientY = useRef(null);
   return (
     <div
       ref={tableContainerRef}
@@ -580,36 +582,41 @@ const Table = (
       onContextMenu={(e) => {
         e.persist();
         e.preventDefault();
-        setMenuIsOpen(false);
+        if (lastClientX.current != e.clientX || lastClientY.current != e.clientY) {
+          setMenuIsOpen(false);
+  
+          setTimeout(() => {
+            const viewport = document.querySelector(`.viewPort${tableId}`);
+            const menu = document.querySelector(`#menu`);
+  
+            if (viewport && menu) {
+              const viewportRect = viewport.getBoundingClientRect();
+              const menuRect = menu.getBoundingClientRect();
+  
+              const rightBoundary = window.innerWidth - menuRect.width;
+              const bottomBoundary = viewportRect.height + viewportRect.y - 150;
+  
+              setPosition({
+                x:
+                  (e.clientX > rightBoundary
+                    ? e.clientX - menuRect.width
+                    : e.clientX) - viewportRect.x,
+                y:
+                  (e.clientY > bottomBoundary
+                    ? e.clientY - menuRect.height+32
+                    : e.clientY+32) - viewportRect.y,
+              });
 
-        setTimeout(async () => {
-          const viewport = document.querySelector(`.viewPort${tableId}`);
-          const menu = document.querySelector(`#menu`);
+              lastClientX.current = e.clientX;
+              lastClientY.current = e.clientY;
 
-          if (viewport && menu) {
-            const viewportRect = viewport.getBoundingClientRect();
-            const menuRect = menu.getBoundingClientRect();
-
-            const rightBoundary = window.innerWidth - menuRect.width;
-            const bottomBoundary = viewportRect.height + viewportRect.y - 150;
-
-            setPosition({
-              x:
-                (e.clientX > rightBoundary
-                  ? e.clientX - (e.clientX - rightBoundary)
-                  : e.clientX) - viewportRect.x,
-              y:
-                (e.clientY > bottomBoundary
-                  ? e.clientY - menuRect.height + 40
-                  : e.clientY) - viewportRect.y,
-            });
-
-            setTimeout(() => {
-              setMenuIsOpen(true);
-            }, DURATION);
-          }
-        }, DURATION);
-      }}
+              setTimeout(() => {
+                setMenuIsOpen(true);
+              }, DURATION);
+            }
+          }, DURATION);
+        }}
+        }
     >
       <Wrapper
         id={tableId}
