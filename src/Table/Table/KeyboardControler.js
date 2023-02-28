@@ -114,10 +114,10 @@ export default function useKeyboardControler(
         const nextCell =
           tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
 
-        previousCell.blur();
         if (keepEdition && previousCell.isEditable()) {
           nextCell.focus();
         }
+        previousCell.blur();
       } catch (error) {}
     }
     setSelectedAreas(selectedAreas);

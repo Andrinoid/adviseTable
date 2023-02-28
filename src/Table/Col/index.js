@@ -188,7 +188,7 @@ const Col = ({
       if (!allowEdition) throw new Error("This column is not editable");
 
       if (initialValue != inputValue || force) {
-        // setEditionState(true);
+        setEditionState(true);
         setInputValue(value);
         onValueUpdate();
       }
