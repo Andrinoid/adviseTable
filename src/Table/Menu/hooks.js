@@ -29,7 +29,7 @@ export function useMenuController(gateway) {
             clientY: e.clientY,
         });
     }
-    container.addEventListener("contextmenu", handleContextMenu);
 
+    container.addEventListener("contextmenu", handleContextMenu);
   }, [execute]);
 }

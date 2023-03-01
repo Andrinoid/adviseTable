@@ -1,14 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { Space, Typography } from "antd";
-
-const { Text } = Typography;
-
-export default React.forwardRef(function Menu(props, ref) {
-  const { position, open, data, duration, width, ...rest } = props;
+const Component = React.forwardRef(function Menu(props, ref) {
+  const { position, open, duration, width, children, ...rest } = props;
   const [className, setClassName] = useState(null);
-  const [options, setOptions] = useState(null);
+  const [subComponents, setSubComponents] = useState(null);
+
+  function getSubComponents(options) {
+    const subComponentList = Object.keys(Component);
+
+    return subComponentList.map((key) => {
+      return React.Children.map(options, (child) => {
+        if (React.isValidElement(child)) {
+          return child.type.name === key ? child : null;
+        }
+        return null;
+      });
+    });
+  }
 
   useEffect(() => {
     if (open) {
@@ -23,14 +32,14 @@ export default React.forwardRef(function Menu(props, ref) {
   }, [open]);
 
   useEffect(() => {
-    if (options && options.length !== data.length) {
+    if (subComponents && children && subComponents.length !== children.length) {
       setTimeout(() => {
-        setOptions(data);
-      }, duration*3);
+        setSubComponents(getSubComponents(children));
+      }, duration * 3);
     } else {
-      setOptions(data);
+      setSubComponents(getSubComponents(children));
     }
-  }, [data, options]);
+  }, [subComponents, children, duration]);
 
   return (
     <Container>
@@ -40,34 +49,44 @@ export default React.forwardRef(function Menu(props, ref) {
         duration={duration}
         ref={ref}
         position={position}
-        style={{ transform: open? 'translate(0px, 0px)' : 'translate(-9999px, -9999px)'}}
+        style={{
+          transform: open
+            ? "translate(0px, 0px)"
+            : "translate(-9999px, -9999px)",
+        }}
         className={className}
       >
-        <Space direction="vertical">
-          {options &&
-            options.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <Option
-                  width={width}
-                  key={index}
-                  onClick={() => {
-                    if (item.onClick) item.onClick();
-                  }}
-                >
-                  <div>
-                    {Icon && <Icon className="icon" />}
-                    <Text>{item.label}</Text>
-                  </div>
-                  <Text>{item.command || ""}</Text>
-                </Option>
-              );
-            })}
-        </Space>
+        {subComponents}
       </MenuContainer>
     </Container>
   );
 });
+
+function Item(props) {
+  const { icon, onClick, children, command } = props;
+
+  const Icon = icon;
+
+  function isIOS() {
+    return navigator.userAgent.search("Mac") !== -1;
+  }
+
+  return (
+    <Option onClick={onClick}>
+      <div>
+        {Icon && <Icon className="icon" />}
+        <span>{children}</span>
+      </div>
+      {command && (
+        <span>{isIOS() ? command.replaceAll("Ctrl+", "⌘") : command}</span>
+      )}
+    </Option>
+  );
+}
+
+Component.Item = Item;
+
+export default Component;
 
 const padding = 15;
 const color = "#000000E0";
@@ -88,7 +107,7 @@ const Option = styled.button`
   border: none;
   outline: none;
   list-style: none;
-  padding: 7.5px ${padding + 7.5}px;
+  padding: 10px ${padding + 7.5}px;
   cursor: pointer;
   text-align: left;
   color: ${color} !important;
@@ -96,18 +115,17 @@ const Option = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: ${({ width }) => width}px;
+  width: 100%;
   margin: 0;
 
   div {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
   }
 
   span.icon {
-    font-size: 16px;
-    margin-top: 4px;
+    font-size: 15px;
   }
 
   div > span:nth-child(2) {
@@ -119,14 +137,19 @@ const Option = styled.button`
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 14px;
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgb(0 0 0 / 0%);
+    -webkit-letter-spacing: 0.2px;
+    -moz-letter-spacing: 0.2px;
+    -ms-letter-spacing: 0.2px;
     letter-spacing: 0.2px;
     visibility: visible;
     color: ${color} !important;
