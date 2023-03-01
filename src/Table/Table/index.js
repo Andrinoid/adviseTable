@@ -579,7 +579,7 @@ const Table = (
     },
   ];
 
-  const execute = useMenuController(
+  useMenuController(
     new MenuGateway({
       setOpen: setMenuIsOpen,
       setPosition,
@@ -589,20 +589,12 @@ const Table = (
     })
   );
 
-  console.log(position);
-
   return (
     <div
+      id="container"
       ref={tableContainerRef}
       style={{ position: "relative" }}
-      onContextMenu={(e) => {
-        e.persist();
-        e.preventDefault();
-        execute({
-          clientX: e.clientX,
-          clientY: e.clientY,
-        });
-      }}
+      
     >
       <Wrapper
         id={tableId}
