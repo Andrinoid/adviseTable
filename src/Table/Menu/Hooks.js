@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
 
-export function useMenuController(gateway) {
+export function useMenu(controller) {
   let lastClientX = useRef(null);
   let lastClientY = useRef(null);
 
@@ -10,13 +10,13 @@ export function useMenuController(gateway) {
         lastClientX.current !== lastClientX ||
         lastClientY.current !== lastClientY
       ) {
-        gateway.updatePosition(position.clientX, position.clientY);
+        controller.execute(position.clientX, position.clientY);
 
         lastClientX.current = position.clientX;
         lastClientY.current = position.clientY;
       }
     },
-    [lastClientX, lastClientY, gateway]
+    [lastClientX, lastClientY, controller.menu, controller.viewport]
   );
 
   useEffect(() => {

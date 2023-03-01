@@ -18,9 +18,7 @@ import Selection from "./Selection";
 import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
-import Menu from "../Menu";
-import MenuGateway from "../Menu/MenuGateway";
-import { useMenuController } from "../Menu/hooks";
+import { Menu, MenuController } from "../Menu";
 import { Copier } from "./Copier";
 import { SelectOutlined, CopyOutlined } from "@ant-design/icons";
 
@@ -161,9 +159,7 @@ const Table = (
   const [isTableSelected, setIsTableSelected] = useState(false);
   const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const menuRef = useRef(null);
 
   useEffect(() => {
     setIsTableSelected(
@@ -559,8 +555,6 @@ const Table = (
     headerData,
   ]);
 
-  
-
   const toY = tableMatrix ? tableMatrix.length - 1 : 0;
   const toX = tableMatrix && tableMatrix[0] ? tableMatrix[0].length - 1 : 0;
   const tableSelection = [
@@ -576,16 +570,6 @@ const Table = (
     },
   ];
 
-  useMenuController(
-    new MenuGateway({
-      setOpen: setMenuIsOpen,
-      setPosition,
-      menu: menuRef.current,
-      viewport: viewportRef.current,
-      duration: DURATION,
-    })
-  );
-
   return (
     <div
       id="container"
@@ -599,12 +583,19 @@ const Table = (
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
         <Menu
-          ref={menuRef}
-          id={"menu"}
+          id={'menu-container-1'}
+          controller={
+            new MenuController({
+              setOpen: setMenuIsOpen,
+              
+              targetSelector: "#viewport",
+              menuSelector: '#menu-container-1',
+              duration: DURATION,
+             
+              open: menuIsOpen,
+            })
+          }
           width={MENU_WIDTH}
-          duration={DURATION}
-          position={position}
-          open={menuIsOpen}
         >
           {selectedAreas.length > 0 && (
             <Menu.Item
@@ -694,6 +685,7 @@ const Table = (
         ) : null}
 
         <ViewPort
+          id="viewport"
           className={`viewPort${tableId} scrollable`}
           style={theTheme.secondary}
           ref={(el) => {
