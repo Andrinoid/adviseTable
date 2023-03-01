@@ -5,6 +5,7 @@ import {
   HandleMenuItems,
   HandleMenuOpening,
   HandlePositioning,
+  HandleDevtoolsOpening
 } from "./Hooks";
 
 export {
@@ -14,6 +15,7 @@ export {
   HandleMenuItems,
   HandleMenuOpening,
   HandlePositioning,
+  HandleDevtoolsOpening
 };
 
 export default Menu;

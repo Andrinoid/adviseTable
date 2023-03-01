@@ -10,9 +10,9 @@ export default class Controller {
 
   constructor(properties) {
     setOpen = properties["setOpen"];
-    
+
     this.duration = properties["duration"];
-    
+
     this.isOpen = properties["open"];
     this.menu = document.querySelector(properties["menuSelector"]);
     this.target = document.querySelector(properties["targetSelector"]);
@@ -25,7 +25,7 @@ export default class Controller {
     const setPosition = this.setPosition;
 
     if (menu && target && duration && setPosition) {
-      close();
+      this.close();
       setTimeout(() => {
         setPosition({
           x: this.getAdjustedX(clientX, menu, target),
@@ -33,18 +33,17 @@ export default class Controller {
         });
 
         setTimeout(() => {
-          open();
+          this.open();
         }, duration);
       }, duration);
     }
   }
-}
 
-function open() {
-  setOpen(true);
-}
+  open() {
+    setOpen(true);
+  }
 
-function close() {
-  setOpen(false);
+  close() {
+    setOpen(false);
+  }
 }
-

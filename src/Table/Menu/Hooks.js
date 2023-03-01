@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export function HandlePositioning(controller) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -6,6 +7,13 @@ export function HandlePositioning(controller) {
   controller.setPosition = setPosition;
 
   return [position, setPosition];
+}
+
+export function HandleDevtoolsOpening(controller) {
+  useHotkeys("f12", controller.close, {
+    enabled: true,
+    preventDefault: false,
+  });
 }
 
 export function HandleMenuItems(menuComponent, children, controller) {

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {
   HandleControllerExecution,
+  HandleDevtoolsOpening,
   HandleMenuItems,
   HandleMenuOpening,
   HandlePositioning,
@@ -12,6 +13,7 @@ function Menu(props) {
   const className = HandleMenuOpening(controller);
   const [position] = HandlePositioning(controller);
   const items = HandleMenuItems(Menu, children, controller);
+  HandleDevtoolsOpening(controller);
   HandleControllerExecution(controller);
 
   return (
