@@ -37,7 +37,10 @@ const Selection = ({
     const firstElement = tableMatrix[selection.fromY][selection.fromX].current;
     const lastElement = tableMatrix[selection.toY][selection.toX].current;
 
-    let top = firstElement.offsetTop;
+    const tableContainerDimensions = tableContainerRef.current.getBoundingClientRect();
+    const firstElmDimentions = firstElement.getBoundingClientRect();
+
+    let top = firstElmDimentions.top - tableContainerDimensions.top;
     let left = firstElement.offsetLeft;
     let width = lastElement.offsetLeft + lastElement.offsetWidth - left;
     let height = lastElement.offsetTop + lastElement.offsetHeight - top;
