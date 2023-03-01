@@ -30,6 +30,7 @@ const Selection = ({
   totalWidth,
   theTheme,
   tableMatrix,
+  tableContainerRef
 }) => {
   const [dimensions, setDimensions] = useState([]);
 

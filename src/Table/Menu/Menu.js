@@ -1,51 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useMenu } from ".";
+import {
+  HandleControllerExecution,
+  HandleMenuItems,
+  HandleMenuOpening,
+  HandlePositioning,
+} from ".";
 
 function Menu(props) {
   const { controller, width, children, ...rest } = props;
-  const [className, setClassName] = useState(null);
-  const [subComponents, setSubComponents] = useState(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  controller.setPosition = setPosition;
-
-  function getSubComponents(options) {
-    const subComponentList = Object.keys(Menu);
-
-    return subComponentList.map((key) => {
-      return React.Children.map(options, (child) => {
-        if (React.isValidElement(child)) {
-          return child.type.name === key ? child : null;
-        }
-        return null;
-      });
-    });
-  }
-
-  useEffect(() => {
-    if (controller.isOpen) {
-      setTimeout(() => {
-        setClassName("open");
-      }, 1);
-    } else {
-      setTimeout(() => {
-        setClassName("close");
-      }, 1);
-    }
-  }, [controller.isOpen]);
-
-  useEffect(() => {
-    if (subComponents && children && subComponents.length !== children.length) {
-      setTimeout(() => {
-        setSubComponents(getSubComponents(children));
-      }, controller.duration * 3);
-    } else {
-      setSubComponents(getSubComponents(children));
-    }
-  }, [subComponents, children]);
-
-  useMenu(controller);
+  const className = HandleMenuOpening(controller);
+  const [position] = HandlePositioning(controller);
+  const items = HandleMenuItems(Menu, children, controller);
+  HandleControllerExecution(controller);
 
   return (
     <Container>
@@ -61,20 +28,16 @@ function Menu(props) {
         }}
         className={className}
       >
-        {subComponents}
+        {items}
       </MenuContainer>
     </Container>
   );
 }
 
 function Item(props) {
-  const { icon, onClick, children, command } = props;
+  const { icon: Icon, onClick, children, command } = props;
 
-  const Icon = icon;
-
-  function isIOS() {
-    return navigator.userAgent.search("Mac") !== -1;
-  }
+  const isMACOS = navigator.userAgent.search("Mac") !== -1;
 
   return (
     <Option onClick={onClick}>
@@ -83,7 +46,7 @@ function Item(props) {
         <span>{children}</span>
       </div>
       {command && (
-        <span>{isIOS() ? command.replaceAll("Ctrl+", "⌘") : command}</span>
+        <span>{isMACOS ? command.replaceAll("Ctrl+", "⌘") : command}</span>
       )}
     </Option>
   );

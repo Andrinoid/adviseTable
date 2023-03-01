@@ -1,7 +1,19 @@
 import Menu from "./Menu";
 import MenuController from "./MenuController";
-import { useMenu } from "./Hooks";
+import {
+  HandleControllerExecution,
+  HandleMenuItems,
+  HandleMenuOpening,
+  HandlePositioning,
+} from "./Hooks";
 
-export { Menu, MenuController, useMenu };
+export {
+  Menu,
+  MenuController,
+  HandleControllerExecution,
+  HandleMenuItems,
+  HandleMenuOpening,
+  HandlePositioning,
+};
 
 export default Menu;

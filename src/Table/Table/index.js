@@ -764,6 +764,7 @@ const Table = (
               headerHeight={headerHeight}
               tableMatrix={tableMatrix}
               tableTopOffset={tableTopOffset}
+              tableContainerRef={tableContainerRef}
             />
           </div>
         </div>
