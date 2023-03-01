@@ -128,66 +128,73 @@ function Example({
   };
 
   const loadMoreItems = (startIndex, stopIndex) => {
-    for (let i = startIndex; i < stopIndex; i++) {
-      subRows.push(subRows[0]);
-    }
-    setSubRows(subRows);
+    return new Promise((resolve) => {
+      for (let i = startIndex; i <= stopIndex; i++) {
+        subRows.push(subRows[0]);
+      }
+      setSubRows(subRows);
+      // setTimeout(() => {
+      resolve();
+      // }, 200);
+    });
   };
 
-  const subRowList = (tableProvided) => {
-    console.log(tableProvided)
+  const SubRowList = (props) => {
+    console.log(props.tableProvided);
     return (
       <div style={{ height: 250 }}>
         <InfiniteLoader
-          isItemLoaded={(index) => { return index < subRowList.length }}
+          isItemLoaded={(index) => {
+            return index < subRows.length;
+          }}
           itemCount={100}
           loadMoreItems={loadMoreItems}
         >
           {({ onItemsRendered, ref }) => (
-            <AutoSizer>
-              {({ height, width }) => (
-                <List
-                  className="List"
-                  height={height}
-                  itemCount={100}
-                  itemSize={40}
-                  onItemsRendered={onItemsRendered}
-                  ref={ref}
-                  width={width}
-                >
-                  {({ index, style }) => {
-                    return (
-                      <Row
-                        {...tableProvided.rowProps}
-                        type={"secondary"}
-                        style={{
-                          minHeight: 40,
-                          background: "#f7f7f7",
-                          ...style,
-                        }}
-                      >
-                        <Col horizontalAlign="left">
-                          lykill 1004
-                        </Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                        <Col>34567</Col>
-                      </Row>
-                    );
-                  }}
-
-                </List>
-              )}
-            </AutoSizer>
+            // <AutoSizer>
+            //   {({ height, width }) => (
+            <List
+              className="List"
+              height={250}
+              itemCount={100}
+              itemSize={40}
+              onItemsRendered={onItemsRendered}
+              ref={ref}
+              width={props.tableProvided.rowProps.totalWidth}
+            >
+              {({ index, style }) => {
+                return (
+                  // <div style={{ background: "red", ...style }}>
+                  //   Hello World...
+                  // </div>
+                  <Row
+                    {...props.tableProvided.rowProps}
+                    type={"secondary"}
+                    style={{
+                      // minHeight: 40,
+                      // background: "#f7f7f7",
+                      ...style,
+                    }}
+                  >
+                    <Col horizontalAlign="left">lykill 1004</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                    <Col>34567</Col>
+                  </Row>
+                );
+              }}
+            </List>
+            //   )}
+            // </AutoSizer>
           )}
         </InfiniteLoader>
       </div>
@@ -213,50 +220,6 @@ function Example({
         {(tableProvided) => {
           return (
             <>
-              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-                <Col horizontalAlign="left">100</Col>
-              </Row>
-              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
-                <Col
-                  horizontalAlign="left"
-                  spanSelection={false}
-                  colspan={"fullwidth"}
-                >
-                  Name
-                </Col>
-              </Row>
-              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
-                <Col>bla</Col>
-                <Col>bla</Col>
-                <Col
-                  horizontalAlign="left"
-                  spanSelection={false}
-                  colspan={"fullwidth"}
-                >
-                  Name
-                </Col>
-              </Row>
-              <Row {...tableProvided.rowProps} style={{ minHeight: 40 }}>
-                <Col
-                  horizontalAlign="left"
-                  spanSelection={false}
-                  colspan={"fullwidth"}
-                >
-                  Name
-                </Col>
-              </Row>
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="characters">
                   {(provided) => (
@@ -303,7 +266,9 @@ function Example({
                                 </Row>
 
                                 {
-                                  expandedIds.includes(row.id) && subRowList(tableProvided)
+                                  expandedIds.includes(row.id) && (
+                                    <SubRowList tableProvided={tableProvided} />
+                                  )
                                   // expandedIds.includes(row.id) && (
                                   //   // The motion divs are optional and just an example of how to animate the conditional rendered rows
                                   //   // it shows how dynamic the table can be

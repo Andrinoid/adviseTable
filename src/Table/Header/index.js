@@ -35,7 +35,7 @@ const Label = styled.div`
 `;
 
 const PressableBrick = styled.button`
-  background: ${({ selected, themeKey}) =>
+  background: ${({ selected, themeKey }) =>
     selected ? headerTheme[themeKey].background : "#Eff1f1"};
   border: none;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;

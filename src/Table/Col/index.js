@@ -124,10 +124,11 @@ const Col = ({
       }
 
       setTotalCols((prev) => {
-        setNumberOfDataCols(() => {
-          return hasTotalColumn ? index - 2 : index - 1;
+        setNumberOfDataCols((prev) => {
+          let newValue = hasTotalColumn ? index - 2 : index - 1;
+          return newValue > prev ? newValue : prev;
         });
-        return index;
+        return index > prev ? index : prev;
       });
       return nextValue;
     });
