@@ -19,6 +19,8 @@ import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
 import Menu from "../Menu";
+import MenuGateway from "../Menu/MenuGateway";
+import { useMenuController } from "../Menu/hooks";
 import { Copier } from "./Copier";
 import { SelectOutlined, CopyOutlined } from "@ant-design/icons";
 
@@ -162,6 +164,7 @@ const Table = (
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     setIsTableSelected(
@@ -574,8 +577,18 @@ const Table = (
     },
   ];
 
-  let lastClientX = useRef(null);
-  let lastClientY = useRef(null);
+  const execute = useMenuController(
+    new MenuGateway({
+      setOpen: setMenuIsOpen,
+      setPosition,
+      menu: menuRef.current,
+      viewport: viewportRef.current,
+      duration: DURATION,
+    })
+  );
+
+  console.log(position);
+
   return (
     <div
       ref={tableContainerRef}
@@ -583,41 +596,11 @@ const Table = (
       onContextMenu={(e) => {
         e.persist();
         e.preventDefault();
-        if (lastClientX.current != e.clientX || lastClientY.current != e.clientY) {
-          setMenuIsOpen(false);
-  
-          setTimeout(() => {
-            const viewport = document.querySelector(`.viewPort${tableId}`);
-            const menu = document.querySelector(`#menu`);
-  
-            if (viewport && menu) {
-              const viewportRect = viewport.getBoundingClientRect();
-              const menuRect = menu.getBoundingClientRect();
-  
-              const rightBoundary = window.innerWidth - menuRect.width;
-              const bottomBoundary = viewportRect.height + viewportRect.y - 150;
-  
-              setPosition({
-                x:
-                  (e.clientX > rightBoundary
-                    ? e.clientX - menuRect.width
-                    : e.clientX) - viewportRect.x,
-                y:
-                  (e.clientY > bottomBoundary
-                    ? e.clientY - menuRect.height+32
-                    : e.clientY+32) - viewportRect.y,
-              });
-
-              lastClientX.current = e.clientX;
-              lastClientY.current = e.clientY;
-
-              setTimeout(() => {
-                setMenuIsOpen(true);
-              }, DURATION);
-            }
-          }, DURATION);
-        }}
-        }
+        execute({
+          clientX: e.clientX,
+          clientY: e.clientY,
+        });
+      }}
     >
       <Wrapper
         id={tableId}
@@ -626,6 +609,7 @@ const Table = (
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
         <Menu
+          ref={menuRef}
           id={"menu"}
           width={MENU_WIDTH}
           duration={DURATION}
