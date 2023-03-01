@@ -39,6 +39,9 @@
     "jest": "^27.5.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-scripts": "^5.0.1",
+    "react-virtualized-auto-sizer": "^1.0.7",
+    "react-window": "^1.8.8",
+    "react-window-infinite-loader": "^1.0.8",
     "rollup": "^3.9.1",
     "rollup-plugin-peer-deps-external": "^2.2.4"
   },

@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { FixedSizeList as List } from "react-window";
+import InfiniteLoader from "react-window-infinite-loader";
+import AutoSizer from "react-virtualized-auto-sizer";
 import {
   EditOutlined,
   VerticalAlignBottomOutlined,
@@ -47,6 +50,7 @@ function Example({
   allowEdition,
 }) {
   const [viewData, setViewData] = useState(view);
+  const [subRows, setSubRows] = useState([]);
   const [expandedIds, setExpandedIds] = useState([]);
   // const [containerWidth, setContainerWidth] = useState(0);
   // const [selectionMode, setSelectionMode] = useState('row');
@@ -120,6 +124,73 @@ function Example({
           <VerticalAlignBottomOutlined />
         </MenuItem>
       </>
+    );
+  };
+
+  const loadMoreItems = (startIndex, stopIndex) => {
+    for (let i = startIndex; i < stopIndex; i++) {
+      subRows.push(subRows[0]);
+    }
+    setSubRows(subRows);
+  };
+
+  const subRowList = (tableProvided) => {
+    console.log(tableProvided)
+    return (
+      <div style={{ height: 250 }}>
+        <InfiniteLoader
+          isItemLoaded={(index) => { return index < subRowList.length }}
+          itemCount={100}
+          loadMoreItems={loadMoreItems}
+        >
+          {({ onItemsRendered, ref }) => (
+            <AutoSizer>
+              {({ height, width }) => (
+                <List
+                  className="List"
+                  height={height}
+                  itemCount={100}
+                  itemSize={40}
+                  onItemsRendered={onItemsRendered}
+                  ref={ref}
+                  width={width}
+                >
+                  {({ index, style }) => {
+                    return (
+                      <Row
+                        {...tableProvided.rowProps}
+                        type={"secondary"}
+                        style={{
+                          minHeight: 40,
+                          background: "#f7f7f7",
+                          ...style,
+                        }}
+                      >
+                        <Col horizontalAlign="left">
+                          lykill 1004
+                        </Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                        <Col>34567</Col>
+                      </Row>
+                    );
+                  }}
+
+                </List>
+              )}
+            </AutoSizer>
+          )}
+        </InfiniteLoader>
+      </div>
     );
   };
 
@@ -232,70 +303,71 @@ function Example({
                                 </Row>
 
                                 {
-                                  expandedIds.includes(row.id) && (
-                                    // The motion divs are optional and just an example of how to animate the conditional rendered rows
-                                    // it shows how dynamic the table can be
-                                    // Optional animation starts
-                                    <div>
-                                      <div>
-                                        {/* Optional animation ends */}
+                                  expandedIds.includes(row.id) && subRowList(tableProvided)
+                                  // expandedIds.includes(row.id) && (
+                                  //   // The motion divs are optional and just an example of how to animate the conditional rendered rows
+                                  //   // it shows how dynamic the table can be
+                                  //   // Optional animation starts
+                                  //   <div>
+                                  //     <div>
+                                  //       {/* Optional animation ends */}
 
-                                        <Row
-                                          selectable={false}
-                                          {...tableProvided.rowProps}
-                                          type={"secondary"}
-                                          style={{
-                                            minHeight: 40,
-                                            background: "#f7f7f7",
-                                          }}
-                                        >
-                                          <Col horizontalAlign="left">
-                                            lykill 1004
-                                          </Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                        </Row>
-                                        <Row
-                                          selectable={false}
-                                          {...tableProvided.rowProps}
-                                          type={"secondary"}
-                                          style={{
-                                            minHeight: 40,
-                                            background: "#f7f7f7",
-                                          }}
-                                        >
-                                          <Col horizontalAlign="left">
-                                            lykill 1006
-                                          </Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                          <Col>34567</Col>
-                                        </Row>
-                                        {/* Optional animation starts */}
-                                      </div>
-                                    </div>
-                                  )
+                                  //       <Row
+                                  //         selectable={false}
+                                  //         {...tableProvided.rowProps}
+                                  //         type={"secondary"}
+                                  //         style={{
+                                  //           minHeight: 40,
+                                  //           background: "#f7f7f7",
+                                  //         }}
+                                  //       >
+                                  //         <Col horizontalAlign="left">
+                                  //           lykill 1004
+                                  //         </Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //       </Row>
+                                  //       <Row
+                                  //         selectable={false}
+                                  //         {...tableProvided.rowProps}
+                                  //         type={"secondary"}
+                                  //         style={{
+                                  //           minHeight: 40,
+                                  //           background: "#f7f7f7",
+                                  //         }}
+                                  //       >
+                                  //         <Col horizontalAlign="left">
+                                  //           lykill 1006
+                                  //         </Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //       </Row>
+                                  //       {/* Optional animation starts */}
+                                  //     </div>
+                                  //   </div>
+                                  // )
                                   // Optional animation ends
                                 }
                               </div>
