@@ -35,6 +35,7 @@ const Col = ({
   x,
   left,
   type,
+  rowType,
   internalStyle = {}, // style from the parent row is only for width, height, and left position. other styles are from the theme
   setTableMatrix,
   tableMatrix,
@@ -215,6 +216,7 @@ const Col = ({
       // ↓ In SelectionAreas component we use the dom to get the selected area. Data attr are simpler to get
       data-x={x}
       data-y={y}
+      data-rowtype={rowType}
       data-colspan={colspan}
       data-spanselection={spanSelection}
       type={type}

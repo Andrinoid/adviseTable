@@ -175,6 +175,7 @@ const Table = (
         selectedAreas[0].toX === tableMatrix[0].length - 1 &&
         isHeaderIncluded
     );
+    console.log('selectedAreas', selectedAreas);
   }, [selectedAreas, tableMatrix]);
 
   const selectAll = useCallback(

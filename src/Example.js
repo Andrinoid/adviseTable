@@ -177,18 +177,18 @@ function Example({
                     }}
                   >
                     <Col horizontalAlign="left">lykill 1004</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
-                    <Col>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
+                    <Col allowEdition={allowEdition}>34567</Col>
                   </Row>
                 );
               }}
@@ -220,6 +220,91 @@ function Example({
         {(tableProvided) => {
           return (
             <>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
+                <Col colspan={'fullwidth'}>Some text</Col>
+              </Row>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps} type="secondary">
+                <Col colspan={'fullwidth'}>Some text</Col>
+              </Row>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps} type="secondary">
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+              </Row>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps} type="secondary">
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+
+              </Row>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps} type="secondary">
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+
+              </Row>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps} type="secondary">
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+
+              </Row>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps} type="secondary">
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+
+              </Row>
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="characters">
                   {(provided) => (

@@ -208,6 +208,7 @@ const Row = memo(
           y: rowNumber,
           x: i,
           left,
+          rowType: type,
           type: colType,
           internalStyle: { width: width },
           setTableMatrix,

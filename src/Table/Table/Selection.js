@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-const getBoxStyle = (exclude, theTheme, motionDelay) => {
+const getBoxStyle = (theTheme, motionDelay) => {
   return {
     position: "absolute",
     top: "-10px",
     left: "-10px",
-    backgroundColor: `${
-      exclude
-        ? theTheme?.exludeArea.background
-        : theTheme?.selection?.background
-    }`,
-    border: `${exclude ? "none" : theTheme?.selection?.border}`,
-    opacity: `${exclude ? "0.7" : "1"}`,
+    backgroundColor: `${theTheme?.selection?.background}`,
+    border: `${theTheme?.selection?.border}`,
+    opacity: `${"1"}`,
     pointerEvents: "none",
     zIndex: 3,
     transition: `${motionDelay ? "all 0.2s ease-in-out" : "none"}`,
@@ -35,8 +31,17 @@ const Selection = ({
   const [dimensions, setDimensions] = useState([]);
 
   const calculateDimensions = (selection = {}) => {
+    console.log('tableMatrix', tableMatrix);
+    if (!tableMatrix[selection.fromY] || !tableMatrix[selection.fromY][selection.fromX]) {
+      return;
+    }
+    if (!tableMatrix[selection.toY] || !tableMatrix[selection.toY][selection.toX]) {
+      return;
+    }
     const firstElement = tableMatrix[selection.fromY][selection.fromX].current;
     const lastElement = tableMatrix[selection.toY][selection.toX].current;
+    const rowType = lastElement.dataset.rowtype;
+
 
     const tableContainerDimensions = tableContainerRef.current.getBoundingClientRect();
     const firstElmDimentions = firstElement.getBoundingClientRect();
@@ -44,7 +49,15 @@ const Selection = ({
     let top = firstElmDimentions.top - tableContainerDimensions.top;
     let left = firstElement.offsetLeft;
     let width = lastElement.offsetLeft + lastElement.offsetWidth - left;
-    let height = lastElement.offsetTop + lastElement.offsetHeight - top;
+    let height = lastElement.offsetTop + lastElement.offsetHeight - top;  
+    if (rowType === 'secondary') {
+      // check if the row is absolute positioned
+      const lastElmDimensions = lastElement.getBoundingClientRect();
+      height = lastElmDimensions.top + lastElmDimensions.height - firstElmDimentions.top;
+    }
+
+
+    console.log('height', height);
 
     return { top, left, width, height, selection };
   };
@@ -87,7 +100,6 @@ const Selection = ({
             key={index}
             style={{
               ...getBoxStyle(
-                dimension.selection.isExclusion,
                 theTheme,
                 dimension.motionDelay
               ),
