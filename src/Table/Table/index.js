@@ -18,9 +18,7 @@ import Selection from "./Selection";
 import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
-import Menu from "../Menu";
-import MenuGateway from "../Menu/MenuGateway";
-import { useMenuController } from "../Menu/hooks";
+import { Menu, MenuController } from "../Menu";
 import { Copier } from "./Copier";
 import { SelectOutlined, CopyOutlined } from "@ant-design/icons";
 
@@ -161,9 +159,7 @@ const Table = (
   const [isTableSelected, setIsTableSelected] = useState(false);
   const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const menuRef = useRef(null);
 
   useEffect(() => {
     setIsTableSelected(
@@ -300,7 +296,6 @@ const Table = (
   useEffect(() => {
     const handleResize = () => {
       setTotalWidth(getAdjustedSize());
-
     };
     function handleClick(e) {
       e.preventDefault();
@@ -561,10 +556,6 @@ const Table = (
     headerData,
   ]);
 
-  function isIOS() {
-    return navigator.userAgent.search("Mac") != -1;
-  }
-
   const toY = tableMatrix ? tableMatrix.length - 1 : 0;
   const toX = tableMatrix && tableMatrix[0] ? tableMatrix[0].length - 1 : 0;
   const tableSelection = [
@@ -580,22 +571,11 @@ const Table = (
     },
   ];
 
-  useMenuController(
-    new MenuGateway({
-      setOpen: setMenuIsOpen,
-      setPosition,
-      menu: menuRef.current,
-      viewport: viewportRef.current,
-      duration: DURATION,
-    })
-  );
-
   return (
     <div
       id="container"
       ref={tableContainerRef}
       style={{ position: "relative" }}
-      
     >
       <Wrapper
         id={tableId}
@@ -604,60 +584,78 @@ const Table = (
         style={{ opacity: !initialLoaded ? 0 : 1 }}
       >
         <Menu
-          ref={menuRef}
-          id={"menu"}
+          id={'menu-container-1'}
+          controller={
+            new MenuController({
+              setOpen: setMenuIsOpen,
+              
+              targetSelector: "#viewport",
+              menuSelector: '#menu-container-1',
+              duration: DURATION,
+             
+              open: menuIsOpen,
+            })
+          }
           width={MENU_WIDTH}
-          duration={DURATION}
-          data={[
-            selectedAreas.length > 0 && {
-              label: "Copy",
-              onClick: () => {
+        >
+          {selectedAreas.length > 0 && (
+            <Menu.Item
+              width={MENU_WIDTH}
+              onClick={() => {
                 new Copier(
                   tableMatrix,
                   selectedAreas,
                   isTableSelected ? headerData : null
                 ).copy();
                 setMenuIsOpen(false);
-              },
-              icon: CopyOutlined,
-              command: (!isIOS() ? "Ctrl+" : "⌘") + "C",
-            },
-            {
-              label: "Copy all",
-              onClick: () => {
-                new Copier(tableMatrix, tableSelection, headerData).copy();
-                setMenuIsOpen(false);
-              },
-              icon: CopyOutlined,
-            },
-            {
-              label: "Copy all without headers",
-              onClick: () => {
-                new Copier(tableMatrix, tableSelection, null).copy();
-                setMenuIsOpen(false);
-              },
-              icon: CopyOutlined,
-            },
-            {
-              label: "Select all",
-              onClick: () => {
-                selectAll(true);
-                setMenuIsOpen(false);
-              },
-              icon: SelectOutlined,
-            },
-            {
-              label: "Select all without headers",
-              onClick: () => {
-                selectAll();
-                setMenuIsOpen(false);
-              },
-              icon: SelectOutlined,
-            },
-          ].filter((el) => !!el)}
-          position={position}
-          open={menuIsOpen}
-        />
+              }}
+              command={"Ctrl+C"}
+              icon={CopyOutlined}
+            >
+              Copy
+            </Menu.Item>
+          )}
+
+          <Menu.Item
+            onClick={() => {
+              new Copier(tableMatrix, tableSelection, headerData).copy();
+              setMenuIsOpen(false);
+            }}
+            icon={CopyOutlined}
+          >
+            Copy all
+          </Menu.Item>
+
+          <Menu.Item
+            onClick={() => {
+              new Copier(tableMatrix, tableSelection, null).copy();
+              setMenuIsOpen(false);
+            }}
+            icon={CopyOutlined}
+          >
+            Copy all without headers
+          </Menu.Item>
+
+          <Menu.Item
+            onClick={() => {
+              selectAll(true);
+              setMenuIsOpen(false);
+            }}
+            icon={SelectOutlined}
+          >
+            Select all
+          </Menu.Item>
+
+          <Menu.Item
+            onClick={() => {
+              selectAll();
+              setMenuIsOpen(false);
+            }}
+            icon={SelectOutlined}
+          >
+            Select all without headers
+          </Menu.Item>
+        </Menu>
 
         {headerData ? (
           <Header
@@ -688,6 +686,7 @@ const Table = (
         ) : null}
 
         <ViewPort
+          id="viewport"
           className={`viewPort${tableId} scrollable`}
           style={theTheme.secondary}
           ref={(el) => {
