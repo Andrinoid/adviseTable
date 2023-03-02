@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { utils, writeFile } from "xlsx-js-style";
 
-export function HandleControllerExecution(controller) {
+export function HandleControllerExecution(controller, tableId) {
   let lastClientX = useRef(null);
   let lastClientY = useRef(null);
 
@@ -18,11 +18,11 @@ export function HandleControllerExecution(controller) {
         lastClientY.current = position.clientY;
       }
     },
-    [lastClientX, lastClientY, controller.menu, controller.viewport]
+    [lastClientX, lastClientY, controller.menu, controller.viewport, tableId]
   );
 
   useEffect(() => {
-    const container = document.querySelector("#container");
+    const container = document.querySelector(`#${tableId}-container`);
 
     function handleContextMenu(e) {
       e.preventDefault();
@@ -33,7 +33,7 @@ export function HandleControllerExecution(controller) {
     }
 
     container.addEventListener("contextmenu", handleContextMenu);
-  }, [execute]);
+  }, [execute, tableId]);
 }
 
 export function HandleExporting() {

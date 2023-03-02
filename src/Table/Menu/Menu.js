@@ -9,17 +9,18 @@ import {
 } from ".";
 
 function Menu(props) {
-  const { controller, width, children, ...rest } = props;
+  const { controller, id, width, children, ...rest } = props;
   const className = HandleMenuOpening(controller);
   const [position] = HandlePositioning(controller);
   const items = HandleMenuItems(Menu, children, controller);
   HandleDevtoolsOpening(controller);
-  HandleControllerExecution(controller);
+  HandleControllerExecution(controller, id.split("-")[0]);
 
   return (
     <Container>
       <MenuContainer
         {...rest}
+        id={id}
         width={width}
         duration={controller.duration}
         position={position}

@@ -4,9 +4,11 @@ export default class Controller {
   duration;
   position;
   isOpen;
+  menuSelector;
+  targetSelector;
+  setPosition;
   menu;
   target;
-  setPosition;
 
   constructor(properties) {
     setOpen = properties["setOpen"];
@@ -14,17 +16,22 @@ export default class Controller {
     this.duration = properties["duration"];
 
     this.isOpen = properties["open"];
-    this.menu = document.querySelector(properties["menuSelector"]);
-    this.target = document.querySelector(properties["targetSelector"]);
+    this.menuSelector = properties["menuSelector"]
+    this.targetSelector = properties["targetSelector"];
+    this.menu = document.querySelector(this.menuSelector);
+    this.target = document.querySelector(this.targetSelector);
+
   }
 
   execute(clientX, clientY) {
-    const menu = this.menu;
-    const target = this.target;
-    const duration = this.duration;
-    const setPosition = this.setPosition;
+    this.menu = document.querySelector(this.menuSelector);
+    this.target = document.querySelector(this.targetSelector);
 
-    if (menu && target && duration && setPosition) {
+    if (this.menu && this.target && this.duration && this.setPosition) {
+      const menu = this.menu;
+      const target = this.target;
+      const duration = this.duration;
+      const setPosition = this.setPosition;
       this.close();
       setTimeout(() => {
         setPosition({
@@ -44,6 +51,7 @@ export default class Controller {
   }
 
   close() {
+    console.log('close foi chamado')
     setOpen(false);
   }
 }

@@ -577,7 +577,7 @@ const Table = (
   return (
     <>
       <div
-        id="container"
+        id={`${tableId}-container`}
         ref={tableContainerRef}
         style={{ position: "relative" }}
       >
@@ -588,13 +588,13 @@ const Table = (
           style={{ opacity: !initialLoaded ? 0 : 1 }}
         >
           <Menu
-            id={"menu-container-1"}
+            id={tableId+"-menu"}
             controller={
               new MenuController({
                 setOpen: setMenuIsOpen,
 
-                targetSelector: "#viewport",
-                menuSelector: "#menu-container-1",
+                targetSelector: "#"+tableId+"-viewport",
+                menuSelector: "#"+tableId+"-menu",
                 duration: DURATION,
 
                 open: menuIsOpen,
@@ -699,7 +699,7 @@ const Table = (
           ) : null}
 
           <ViewPort
-            id="viewport"
+            id={tableId+"-viewport"}
             className={`viewPort${tableId} scrollable`}
             style={theTheme.secondary}
             ref={(el) => {
