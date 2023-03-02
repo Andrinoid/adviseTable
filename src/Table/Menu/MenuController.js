@@ -3,9 +3,9 @@ import Controller from "./Controller";
 export default class MenuController extends Controller {
   getAdjustedX(pageX, menu, viewport) {
     const menuRect = menu.getBoundingClientRect();
-    const rightBoundary = window.innerWidth - menuRect.width;
+    const limit = viewport.offsetLeft + (viewport.clientWidth / 5)*4;
 
-    if (pageX >= rightBoundary) {
+    if (pageX >= limit) {
       return pageX - menuRect.width;
     }
 
