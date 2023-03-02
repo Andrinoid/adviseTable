@@ -2,6 +2,40 @@ import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { utils, writeFile } from "xlsx-js-style";
 
+export function HandleControllerExecution(controller) {
+  let lastClientX = useRef(null);
+  let lastClientY = useRef(null);
+
+  const execute = useCallback(
+    (position) => {
+      if (
+        lastClientX.current !== lastClientX ||
+        lastClientY.current !== lastClientY
+      ) {
+        controller.execute(position.clientX, position.clientY);
+
+        lastClientX.current = position.clientX;
+        lastClientY.current = position.clientY;
+      }
+    },
+    [lastClientX, lastClientY, controller.menu, controller.viewport]
+  );
+
+  useEffect(() => {
+    const container = document.querySelector("#container");
+
+    function handleContextMenu(e) {
+      e.preventDefault();
+      execute({
+        clientX: e.pageX,
+        clientY: e.pageY,
+      });
+    }
+
+    container.addEventListener("contextmenu", handleContextMenu);
+  }, [execute]);
+}
+
 export function HandleExporting() {
   const downloadExcelFile = useCallback((tableMatrix, headerData) => {
     const textHeader = headerData.map((col) => {
@@ -106,36 +140,4 @@ export function HandleMenuOpening(controller) {
   return className;
 }
 
-export function HandleControllerExecution(controller) {
-  let lastClientX = useRef(null);
-  let lastClientY = useRef(null);
 
-  const execute = useCallback(
-    (position) => {
-      if (
-        lastClientX.current !== lastClientX ||
-        lastClientY.current !== lastClientY
-      ) {
-        controller.execute(position.clientX, position.clientY);
-
-        lastClientX.current = position.clientX;
-        lastClientY.current = position.clientY;
-      }
-    },
-    [lastClientX, lastClientY, controller.menu, controller.viewport]
-  );
-
-  useEffect(() => {
-    const container = document.querySelector("#container");
-
-    function handleContextMenu(e) {
-      e.preventDefault();
-      execute({
-        clientX: e.clientX,
-        clientY: e.clientY,
-      });
-    }
-
-    container.addEventListener("contextmenu", handleContextMenu);
-  }, [execute]);
-}

@@ -18,8 +18,8 @@ export default class MenuController extends Controller {
     const limit =
       window.innerHeight -
       window.innerHeight * (menuRect.height / window.innerHeight);
-    
-      if (clientY >= limit) {
+
+    if (clientY >= limit) {
       return clientY - menuRect.height - 120;
     }
 
