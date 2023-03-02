@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from "react";
+import 'file-saver';
 import styled from "styled-components";
 import { debounce } from "lodash";
 import { useSyncScroller } from "../utils/useSyncScroller";
@@ -575,7 +576,7 @@ const Table = (
 
   return (
     <>
-      <SheetFileDownload />
+      <SheetFileDownload tableMatrix={tableMatrix} headerData={headerData} />
     <div
       id="container"
       ref={tableContainerRef}
