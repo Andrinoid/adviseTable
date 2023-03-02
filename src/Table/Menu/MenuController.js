@@ -1,28 +1,34 @@
 import Controller from "./Controller";
 
 export default class MenuController extends Controller {
-  getAdjustedX(clientX, menu, viewport) {
+  getAdjustedX(pageX, menu, viewport) {
     const menuRect = menu.getBoundingClientRect();
-    const viewportRect = viewport.getBoundingClientRect();
     const rightBoundary = window.innerWidth - menuRect.width;
 
-    return clientX > rightBoundary
-      ? clientX - menuRect.width - 245
-      : clientX - viewportRect.x;
-  }
-
-  getAdjustedY(clientY, menu, viewport) {
-    const menuRect = menu.getBoundingClientRect();
-    const viewportRect = viewport.getBoundingClientRect();
-
-    const limit =
-      window.innerHeight -
-      window.innerHeight * (menuRect.height / window.innerHeight);
-
-    if (clientY >= limit) {
-      return clientY - menuRect.height - 120;
+    if (pageX >= rightBoundary) {
+      return pageX - menuRect.width;
     }
 
-    return clientY + 32 - viewportRect.y;
+    return pageX;
+  }
+
+  getAdjustedY(pageY, menu, viewport) {
+    const menuRect = menu.getBoundingClientRect();
+
+    let distance = 0;
+
+    do {
+      distance += viewport.offsetTop;
+      viewport = viewport.offsetParent;
+    } while (viewport);
+
+    distance = distance < 0 ? 0 : distance;
+    const limit = distance + viewport.clientHeight / 2;
+
+    if (pageY > limit) {
+      return pageY - menuRect.height;
+    }
+
+    return pageY;
   }
 }

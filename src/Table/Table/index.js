@@ -21,7 +21,11 @@ import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
 import { Menu, MenuController, HandleExporting } from "../Menu";
 import { Copier } from "./Copier";
-import { SelectOutlined, CopyOutlined, ExportOutlined } from "@ant-design/icons";
+import {
+  SelectOutlined,
+  CopyOutlined,
+  ExportOutlined,
+} from "@ant-design/icons";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -221,6 +225,9 @@ const Table = (
     },
     autoAdjust() {
       autoAdjustTable();
+    },
+    closeMenu() {
+      setMenuIsOpen(false);
     },
   }));
 
@@ -574,8 +581,96 @@ const Table = (
     },
   ];
 
+  useEffect(() => {
+    // const html = document.querySelector('html');
+    // html.style.position = 'relative';
+  }, []);
+
   return (
     <>
+      <Menu
+        setOpen={setMenuIsOpen}
+        id={tableId + "-menu"}
+        controller={
+          new MenuController({
+            setOpen: setMenuIsOpen,
+
+            targetSelector: "#" + tableId + "-viewport",
+            menuSelector: "#" + tableId + "-menu",
+            duration: DURATION,
+
+            open: menuIsOpen,
+          })
+        }
+        width={MENU_WIDTH}
+      >
+        {selectedAreas.length > 0 && (
+          <Menu.Item
+            width={MENU_WIDTH}
+            onClick={() => {
+              new Copier(
+                tableMatrix,
+                selectedAreas,
+                isTableSelected ? headerData : null
+              ).copy();
+              setMenuIsOpen(false);
+            }}
+            command={"Ctrl+C"}
+            icon={CopyOutlined}
+          >
+            Copy
+          </Menu.Item>
+        )}
+
+        <Menu.Item
+          onClick={() => {
+            new Copier(tableMatrix, tableSelection, headerData).copy();
+            setMenuIsOpen(false);
+          }}
+          icon={CopyOutlined}
+        >
+          Copy all
+        </Menu.Item>
+
+        <Menu.Item
+          onClick={() => {
+            new Copier(tableMatrix, tableSelection, null).copy();
+            setMenuIsOpen(false);
+          }}
+          icon={CopyOutlined}
+        >
+          Copy all without headers
+        </Menu.Item>
+
+        <Menu.Item
+          onClick={() => {
+            selectAll(true);
+            setMenuIsOpen(false);
+          }}
+          icon={SelectOutlined}
+        >
+          Select all
+        </Menu.Item>
+
+        <Menu.Item
+          onClick={() => {
+            selectAll();
+            setMenuIsOpen(false);
+          }}
+          icon={SelectOutlined}
+        >
+          Select all without headers
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            handleExporting(tableMatrix, headerData);
+            setMenuIsOpen(false);
+          }}
+          icon={ExportOutlined}
+        >
+          Export
+        </Menu.Item>
+      </Menu>
       <div
         id={`${tableId}-container`}
         ref={tableContainerRef}
@@ -587,89 +682,6 @@ const Table = (
           scrollStatus={scrollStatus}
           style={{ opacity: !initialLoaded ? 0 : 1 }}
         >
-          <Menu
-            id={tableId+"-menu"}
-            controller={
-              new MenuController({
-                setOpen: setMenuIsOpen,
-
-                targetSelector: "#"+tableId+"-viewport",
-                menuSelector: "#"+tableId+"-menu",
-                duration: DURATION,
-
-                open: menuIsOpen,
-              })
-            }
-            width={MENU_WIDTH}
-          >
-            {selectedAreas.length > 0 && (
-              <Menu.Item
-                width={MENU_WIDTH}
-                onClick={() => {
-                  new Copier(
-                    tableMatrix,
-                    selectedAreas,
-                    isTableSelected ? headerData : null
-                  ).copy();
-                  setMenuIsOpen(false);
-                }}
-                command={"Ctrl+C"}
-                icon={CopyOutlined}
-              >
-                Copy
-              </Menu.Item>
-            )}
-
-            <Menu.Item
-              onClick={() => {
-                new Copier(tableMatrix, tableSelection, headerData).copy();
-                setMenuIsOpen(false);
-              }}
-              icon={CopyOutlined}
-            >
-              Copy all
-            </Menu.Item>
-
-            <Menu.Item
-              onClick={() => {
-                new Copier(tableMatrix, tableSelection, null).copy();
-                setMenuIsOpen(false);
-              }}
-              icon={CopyOutlined}
-            >
-              Copy all without headers
-            </Menu.Item>
-
-            <Menu.Item
-              onClick={() => {
-                selectAll(true);
-                setMenuIsOpen(false);
-              }}
-              icon={SelectOutlined}
-            >
-              Select all
-            </Menu.Item>
-
-            <Menu.Item
-              onClick={() => {
-                selectAll();
-                setMenuIsOpen(false);
-              }}
-              icon={SelectOutlined}
-            >
-              Select all without headers
-            </Menu.Item>
-            <Menu.Item
-              onClick={() => {
-                handleExporting(tableMatrix, headerData);
-                setMenuIsOpen(false);
-              }}
-              icon={ExportOutlined}
-            >
-              Export
-            </Menu.Item>
-          </Menu>
-
           {headerData ? (
             <Header
               selectAll={selectAll}
@@ -699,7 +711,7 @@ const Table = (
           ) : null}
 
           <ViewPort
-            id={tableId+"-viewport"}
+            id={tableId + "-viewport"}
             className={`viewPort${tableId} scrollable`}
             style={theTheme.secondary}
             ref={(el) => {

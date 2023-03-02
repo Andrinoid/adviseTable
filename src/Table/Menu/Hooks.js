@@ -3,33 +3,33 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { utils, writeFile } from "xlsx-js-style";
 
 export function HandleControllerExecution(controller, tableId) {
-  let lastClientX = useRef(null);
-  let lastClientY = useRef(null);
+  let lastPageX = useRef(null);
+  let lastPageY = useRef(null);
 
   const execute = useCallback(
     (position) => {
-      if (
-        lastClientX.current !== lastClientX ||
-        lastClientY.current !== lastClientY
-      ) {
-        controller.execute(position.clientX, position.clientY);
+      if (lastPageX.current !== lastPageX || lastPageY.current !== lastPageY) {
+        controller.execute(position.pageX, position.pageY);
 
-        lastClientX.current = position.clientX;
-        lastClientY.current = position.clientY;
+        lastPageX.current = position.pageX;
+        lastPageY.current = position.pageY;
       }
     },
-    [lastClientX, lastClientY, controller.menu, controller.viewport, tableId]
+    [lastPageX, lastPageY, controller.menu, controller.viewport, tableId]
   );
 
   useEffect(() => {
     const container = document.querySelector(`#${tableId}-container`);
 
     function handleContextMenu(e) {
-      e.preventDefault();
-      execute({
-        clientX: e.pageX,
-        clientY: e.pageY,
-      });
+      setTimeout(() => {
+        e.preventDefault();
+
+        execute({
+          pageX: e.pageX,
+          pageY: e.pageY,
+        });
+      }, 80);
     }
 
     container.addEventListener("contextmenu", handleContextMenu);
@@ -139,5 +139,3 @@ export function HandleMenuOpening(controller) {
 
   return className;
 }
-
-

@@ -23,7 +23,7 @@ export default class Controller {
 
   }
 
-  execute(clientX, clientY) {
+  execute(pageX, pageY) {
     this.menu = document.querySelector(this.menuSelector);
     this.target = document.querySelector(this.targetSelector);
 
@@ -32,11 +32,11 @@ export default class Controller {
       const target = this.target;
       const duration = this.duration;
       const setPosition = this.setPosition;
-      this.close();
+
       setTimeout(() => {
         setPosition({
-          x: this.getAdjustedX(clientX, menu, target),
-          y: this.getAdjustedY(clientY, menu, target),
+          x: this.getAdjustedX(pageX, menu, target),
+          y: this.getAdjustedY(pageY, menu, target),
         });
 
         setTimeout(() => {
@@ -51,7 +51,6 @@ export default class Controller {
   }
 
   close() {
-    console.log('close foi chamado')
     setOpen(false);
   }
 }

@@ -9,15 +9,15 @@ import {
 } from ".";
 
 function Menu(props) {
-  const { controller, id, width, children, ...rest } = props;
+  const { controller, setOpen, id, width, children, ...rest } = props;
   const className = HandleMenuOpening(controller);
   const [position] = HandlePositioning(controller);
   const items = HandleMenuItems(Menu, children, controller);
   HandleDevtoolsOpening(controller);
-  HandleControllerExecution(controller, id.split("-")[0]);
+  HandleControllerExecution(controller, id.split("-")[0], setOpen);
 
   return (
-    <Container>
+    <Container className="menu-container"> 
       <MenuContainer
         {...rest}
         id={id}
@@ -26,7 +26,7 @@ function Menu(props) {
         position={position}
         style={{
           transform: controller.isOpen
-            ? "translate(0px, 0px)"
+            ? "translate(0, 0)"
             : "translate(-9999px, -9999px)",
         }}
         className={className}
