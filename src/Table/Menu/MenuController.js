@@ -14,13 +14,17 @@ export default class MenuController extends Controller {
 
   getAdjustedY(pageY, menu, viewport) {
     const menuRect = menu.getBoundingClientRect();
+    const viewportRect = viewport.getBoundingClientRect();
 
     let distance = 0;
 
+    let elem = viewport;
+
     do {
-      distance += viewport.offsetTop;
-      viewport = viewport.offsetParent;
-    } while (viewport);
+      distance += elem.offsetTop;
+
+      elem = elem.offsetParent;
+    } while (elem);
 
     distance = distance < 0 ? 0 : distance;
     const limit = distance + viewport.clientHeight / 2;
