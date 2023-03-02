@@ -47,6 +47,7 @@ const EditableCell = styled.input`
   max-height: 464px;
   // min-width: 84px;
   min-height: 35px;
+  height: 100%;
   display: block;
   justify-content: right;
   align-items: center;
@@ -148,10 +149,6 @@ const Cell = ({
     setIsEditable(false);
   };
 
-  // const handleOnFocus = () => {
-  //   setIsEditable(true);
-  // };
-
   return (
     <>
       <StaticCell
@@ -167,17 +164,9 @@ const Cell = ({
         style={{ display: editable ? "block" : "none" }}
         onChange={handleOnInput}
         onBlur={handleOnBlur}
-        // onFocus={handleOnFocus}
         ref={inputRef}
         value={inputValue}
       />
-
-      {/* <InputBox
-        style={{ display: editable ? "inline-grid" : "none" }}
-        onChange={handleOnInput}
-        onBlur={handleOnBlur}
-        ref={inputRef}
-      /> */}
     </>
   );
 };
