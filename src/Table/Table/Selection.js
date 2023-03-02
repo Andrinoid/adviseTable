@@ -31,7 +31,6 @@ const Selection = ({
   const [dimensions, setDimensions] = useState([]);
 
   const calculateDimensions = (selection = {}) => {
-    console.log("tableMatrix", tableMatrix);
     if (
       !tableMatrix[selection.fromY] ||
       !tableMatrix[selection.fromY][selection.fromX]
@@ -64,8 +63,6 @@ const Selection = ({
         lastElmDimensions.height -
         firstElmDimentions.top;
     }
-
-    console.log("height", height);
 
     return { top, left, width, height, selection };
   };
