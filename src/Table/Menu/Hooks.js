@@ -22,9 +22,9 @@ export function HandleControllerExecution(controller, tableId) {
     const container = document.querySelector(`#${tableId}-container`);
 
     function handleContextMenu(e) {
-      setTimeout(() => {
-        e.preventDefault();
+      e.preventDefault();
 
+      setTimeout(() => {
         execute({
           pageX: e.pageX,
           pageY: e.pageY,
