@@ -14,7 +14,6 @@ export default class MenuController extends Controller {
 
   getAdjustedY(pageY, menu, viewport) {
     const menuRect = menu.getBoundingClientRect();
-    const viewportRect = viewport.getBoundingClientRect();
 
     let distance = 0;
 
