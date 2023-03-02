@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from "react";
-import 'file-saver';
+import "file-saver";
 import styled from "styled-components";
 import { debounce } from "lodash";
 import { useSyncScroller } from "../utils/useSyncScroller";
@@ -19,11 +19,9 @@ import Selection from "./Selection";
 import useCopier from "./Copier";
 import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
-import { Menu, MenuController } from "../Menu";
+import { Menu, MenuController, HandleExporting } from "../Menu";
 import { Copier } from "./Copier";
-import { SelectOutlined, CopyOutlined } from "@ant-design/icons";
-
-import SheetFileDownload from "../SheetFile";
+import { SelectOutlined, CopyOutlined, ExportOutlined } from "@ant-design/icons";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -164,6 +162,8 @@ const Table = (
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
+  const handleExporting = HandleExporting();
+
   useEffect(() => {
     setIsTableSelected(
       selectedAreas[0] &&
@@ -174,7 +174,7 @@ const Table = (
         selectedAreas[0].toX === tableMatrix[0].length - 1 &&
         isHeaderIncluded
     );
-    console.log('selectedAreas', selectedAreas);
+    console.log("selectedAreas", selectedAreas);
   }, [selectedAreas, tableMatrix]);
 
   const selectAll = useCallback(
@@ -576,207 +576,218 @@ const Table = (
 
   return (
     <>
-      <SheetFileDownload tableMatrix={tableMatrix} headerData={headerData} />
-    <div
-      id="container"
-      ref={tableContainerRef}
-      style={{ position: "relative" }}
-    >
-      <Wrapper
-        id={tableId}
-        version="1.07"
-        scrollStatus={scrollStatus}
-        style={{ opacity: !initialLoaded ? 0 : 1 }}
+      <div
+        id="container"
+        ref={tableContainerRef}
+        style={{ position: "relative" }}
       >
-        <Menu
-          id={'menu-container-1'}
-          controller={
-            new MenuController({
-              setOpen: setMenuIsOpen,
-              
-              targetSelector: "#viewport",
-              menuSelector: '#menu-container-1',
-              duration: DURATION,
-             
-              open: menuIsOpen,
-            })
-          }
-          width={MENU_WIDTH}
+        <Wrapper
+          id={tableId}
+          version="1.07"
+          scrollStatus={scrollStatus}
+          style={{ opacity: !initialLoaded ? 0 : 1 }}
         >
-          {selectedAreas.length > 0 && (
+          <Menu
+            id={"menu-container-1"}
+            controller={
+              new MenuController({
+                setOpen: setMenuIsOpen,
+
+                targetSelector: "#viewport",
+                menuSelector: "#menu-container-1",
+                duration: DURATION,
+
+                open: menuIsOpen,
+              })
+            }
+            width={MENU_WIDTH}
+          >
+            {selectedAreas.length > 0 && (
+              <Menu.Item
+                width={MENU_WIDTH}
+                onClick={() => {
+                  new Copier(
+                    tableMatrix,
+                    selectedAreas,
+                    isTableSelected ? headerData : null
+                  ).copy();
+                  setMenuIsOpen(false);
+                }}
+                command={"Ctrl+C"}
+                icon={CopyOutlined}
+              >
+                Copy
+              </Menu.Item>
+            )}
+
             <Menu.Item
-              width={MENU_WIDTH}
               onClick={() => {
-                new Copier(
-                  tableMatrix,
-                  selectedAreas,
-                  isTableSelected ? headerData : null
-                ).copy();
+                new Copier(tableMatrix, tableSelection, headerData).copy();
                 setMenuIsOpen(false);
               }}
-              command={"Ctrl+C"}
               icon={CopyOutlined}
             >
-              Copy
+              Copy all
             </Menu.Item>
-          )}
 
-          <Menu.Item
-            onClick={() => {
-              new Copier(tableMatrix, tableSelection, headerData).copy();
-              setMenuIsOpen(false);
-            }}
-            icon={CopyOutlined}
-          >
-            Copy all
-          </Menu.Item>
+            <Menu.Item
+              onClick={() => {
+                new Copier(tableMatrix, tableSelection, null).copy();
+                setMenuIsOpen(false);
+              }}
+              icon={CopyOutlined}
+            >
+              Copy all without headers
+            </Menu.Item>
 
-          <Menu.Item
-            onClick={() => {
-              new Copier(tableMatrix, tableSelection, null).copy();
-              setMenuIsOpen(false);
-            }}
-            icon={CopyOutlined}
-          >
-            Copy all without headers
-          </Menu.Item>
+            <Menu.Item
+              onClick={() => {
+                selectAll(true);
+                setMenuIsOpen(false);
+              }}
+              icon={SelectOutlined}
+            >
+              Select all
+            </Menu.Item>
 
-          <Menu.Item
-            onClick={() => {
-              selectAll(true);
-              setMenuIsOpen(false);
-            }}
-            icon={SelectOutlined}
-          >
-            Select all
-          </Menu.Item>
+            <Menu.Item
+              onClick={() => {
+                selectAll();
+                setMenuIsOpen(false);
+              }}
+              icon={SelectOutlined}
+            >
+              Select all without headers
+            </Menu.Item>
+            <Menu.Item
+              onClick={() => {
+                handleExporting(tableMatrix, headerData);
+                setMenuIsOpen(false);
+              }}
+              icon={ExportOutlined}
+            >
+              Export
+            </Menu.Item>
+          </Menu>
 
-          <Menu.Item
-            onClick={() => {
-              selectAll();
-              setMenuIsOpen(false);
-            }}
-            icon={SelectOutlined}
-          >
-            Select all without headers
-          </Menu.Item>
-        </Menu>
-
-        {headerData ? (
-          <Header
-            selectAll={selectAll}
-            ref={headerScrollRef}
-            className="scrollable"
-            width={viewportWidth}
-            colHeight={headerHeight}
-            colWidth={colWidth}
-            firstColWidth={firstColWidth}
-            leftBrickWidth={leftBrickWidth}
-            lastColWidth={lastColWidth}
-            totalWidth={totalWidth}
-            onFirstColResize={onFirstColResize}
-            onLastColResize={onLastColResize}
-            totalCols={totalCols}
-            theTheme={theTheme}
-            themeKey={theme}
-            data={headerData}
-            hasTotalColumn={hasTotalColumn}
-            stickyTopOffset={headerStickyTopOffset}
-            showGrid={showGrid}
-            autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-            autoAdjustLastColWidth={autoAdjustLastColWidth}
-            lasColumnRisizeable={lasColumnRisizeable}
-            isTableSelected={isTableSelected}
-          />
-        ) : null}
-
-        <ViewPort
-          id="viewport"
-          className={`viewPort${tableId} scrollable`}
-          style={theTheme.secondary}
-          ref={(el) => {
-            viewportRef.current = el;
-            viewportScrollRef.current = el;
-          }}
-        >
-          <div
-            style={{ width: totalWidth, zIndex: 1 }}
-            className={`${tableId}container`}
-          >
-            {childrenRows}
-            <LeftBrickSpace className="leftBrickSpace" width={leftBrickWidth} />
-          </div>
-
-          <SelectedArea
-            numberOfCols={totalCols}
-            selectionMode={selectionMode}
-            tableId={tableId}
-            setSelectColDraging={setSelectColDraging}
-            setSelectedCount={setSelectedCount}
-            setSelectedAreas={setSelectedAreas}
-            tableMatrix={tableMatrix}
-          />
-
-          <Scroller active={selectColDraging} tableId={tableId} />
-          <LeftEdge scrollStatus={scrollStatus} offsetLeft={leftBrickWidth} />
-          <Edge
-            isViewPortOverflow={isViewPortOverflow}
-            scrollStatus={scrollStatus}
-          />
-        </ViewPort>
-        <div className="table-end"></div>
-        <Footer
-          numberFormat={numberFormat}
-          maxWidth={totalWidth}
-          count={selectedCount}
-          sum={selectedSum}
-          min={selectedMin}
-          max={selectedMax}
-          avg={selectedAvg}
-          vissible={footer}
-        />
-
-        {/* Refactor to make it pretty */}
-        <div
-          ref={tableLayerScrollRef}
-          className="scrollable"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: viewportWidth,
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              width: totalWidth,
-              height: "100%",
-            }}
-          >
-            <Selection
-              // selectionString={JSON.stringify(selectedAreas)}
-              selectedAreas={selectedAreas}
+          {headerData ? (
+            <Header
+              selectAll={selectAll}
+              ref={headerScrollRef}
+              className="scrollable"
+              width={viewportWidth}
+              colHeight={headerHeight}
               colWidth={colWidth}
-              colHeight={colHeight}
-              leftOffset={leftBrickWidth}
               firstColWidth={firstColWidth}
+              leftBrickWidth={leftBrickWidth}
               lastColWidth={lastColWidth}
+              totalWidth={totalWidth}
+              onFirstColResize={onFirstColResize}
+              onLastColResize={onLastColResize}
+              totalCols={totalCols}
+              theTheme={theTheme}
+              themeKey={theme}
+              data={headerData}
+              hasTotalColumn={hasTotalColumn}
+              stickyTopOffset={headerStickyTopOffset}
+              showGrid={showGrid}
+              autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+              autoAdjustLastColWidth={autoAdjustLastColWidth}
+              lasColumnRisizeable={lasColumnRisizeable}
+              isTableSelected={isTableSelected}
+            />
+          ) : null}
+
+          <ViewPort
+            id="viewport"
+            className={`viewPort${tableId} scrollable`}
+            style={theTheme.secondary}
+            ref={(el) => {
+              viewportRef.current = el;
+              viewportScrollRef.current = el;
+            }}
+          >
+            <div
+              style={{ width: totalWidth, zIndex: 1 }}
+              className={`${tableId}container`}
+            >
+              {childrenRows}
+              <LeftBrickSpace
+                className="leftBrickSpace"
+                width={leftBrickWidth}
+              />
+            </div>
+
+            <SelectedArea
               numberOfCols={totalCols}
               selectionMode={selectionMode}
-              totalWidth={totalWidth}
-              lasColumnRisizeable={lasColumnRisizeable}
-              theTheme={theTheme}
-              headerHeight={headerHeight}
+              tableId={tableId}
+              setSelectColDraging={setSelectColDraging}
+              setSelectedCount={setSelectedCount}
+              setSelectedAreas={setSelectedAreas}
               tableMatrix={tableMatrix}
-              tableTopOffset={tableTopOffset}
-              tableContainerRef={tableContainerRef}
             />
+
+            <Scroller active={selectColDraging} tableId={tableId} />
+            <LeftEdge scrollStatus={scrollStatus} offsetLeft={leftBrickWidth} />
+            <Edge
+              isViewPortOverflow={isViewPortOverflow}
+              scrollStatus={scrollStatus}
+            />
+          </ViewPort>
+          <div className="table-end"></div>
+          <Footer
+            numberFormat={numberFormat}
+            maxWidth={totalWidth}
+            count={selectedCount}
+            sum={selectedSum}
+            min={selectedMin}
+            max={selectedMax}
+            avg={selectedAvg}
+            vissible={footer}
+          />
+
+          {/* Refactor to make it pretty */}
+          <div
+            ref={tableLayerScrollRef}
+            className="scrollable"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: viewportWidth,
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                width: totalWidth,
+                height: "100%",
+              }}
+            >
+              <Selection
+                // selectionString={JSON.stringify(selectedAreas)}
+                selectedAreas={selectedAreas}
+                colWidth={colWidth}
+                colHeight={colHeight}
+                leftOffset={leftBrickWidth}
+                firstColWidth={firstColWidth}
+                lastColWidth={lastColWidth}
+                numberOfCols={totalCols}
+                selectionMode={selectionMode}
+                totalWidth={totalWidth}
+                lasColumnRisizeable={lasColumnRisizeable}
+                theTheme={theTheme}
+                headerHeight={headerHeight}
+                tableMatrix={tableMatrix}
+                tableTopOffset={tableTopOffset}
+                tableContainerRef={tableContainerRef}
+              />
+            </div>
           </div>
-        </div>
-      </Wrapper>
-      {/* {JSON.stringify(selectedAreas)} */}
-    </div>
+        </Wrapper>
+        {/* {JSON.stringify(selectedAreas)} */}
+      </div>
     </>
   );
 };
