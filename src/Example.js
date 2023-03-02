@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { FixedSizeList as List } from "react-window";
+import { FixedSizeList as List, VariableSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {
@@ -108,6 +108,7 @@ function Example({
     );
   };
 
+
   const rowMenuContent = (dragHandleProps) => {
     return (
       <>
@@ -127,7 +128,7 @@ function Example({
     );
   };
 
-  const loadMoreItems = (startIndex, stopIndex) => {
+  const loadMoreItems = useCallback((startIndex, stopIndex) => {
     return new Promise((resolve) => {
       for (let i = startIndex; i <= stopIndex; i++) {
         subRows.push(subRows[0]);
@@ -137,10 +138,10 @@ function Example({
       resolve();
       // }, 200);
     });
-  };
+  }, []);
 
-  const SubRowList = (props) => {
-    console.log(props.tableProvided);
+  const SubRowList = useCallback((props) => {
+
     return (
       <div style={{ height: 250 }}>
         <InfiniteLoader
@@ -174,6 +175,7 @@ function Example({
                       // minHeight: 40,
                       // background: "#f7f7f7",
                       ...style,
+                      transform: 'translateZ(0)',
                     }}
                   >
                     <Col horizontalAlign="left">lykill 1004</Col>
@@ -199,7 +201,8 @@ function Example({
         </InfiniteLoader>
       </div>
     );
-  };
+  }, [subRows]);
+
 
   return (
     <div className="App">
@@ -340,7 +343,7 @@ function Example({
                                     <Col
                                       key={i}
                                       allowEdition={allowEdition}
-                                      onSubmitCallback={alert}
+                                      // onSubmitCallback={alert}
                                       inputType={"number"}
                                     >
                                       {row[month]}

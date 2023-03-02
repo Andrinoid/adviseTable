@@ -22,6 +22,8 @@ import { Menu, MenuController } from "../Menu";
 import { Copier } from "./Copier";
 import { SelectOutlined, CopyOutlined } from "@ant-design/icons";
 
+import SheetFileDownload from "../SheetFile";
+
 const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
@@ -572,6 +574,8 @@ const Table = (
   ];
 
   return (
+    <>
+      <SheetFileDownload />
     <div
       id="container"
       ref={tableContainerRef}
@@ -772,6 +776,7 @@ const Table = (
       </Wrapper>
       {/* {JSON.stringify(selectedAreas)} */}
     </div>
+    </>
   );
 };
 
