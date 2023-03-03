@@ -84,7 +84,7 @@ function Example({
     ...monthRange.map((m) => {
       return { title: m };
     }),
-    // { title: "Total" },
+    { title: "Total" },
   ];
 
   const handleOnDragEnd = (result) => {
@@ -197,6 +197,7 @@ function Example({
                       <Col allowEdition={allowEdition}>34567</Col>
                       <Col allowEdition={allowEdition}>34567</Col>
                       <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
                     </Row>
                   );
                 }}
@@ -232,6 +233,28 @@ function Example({
 
   return (
     <div className="App">
+      <button
+        onClick={() => {
+          const result = {
+            source: {
+              index: 0,
+            },
+            destination: {
+              index: Math.floor(Math.random() * 10),
+            },
+          };
+          setMonthRange(
+            months.slice(ui_prefs.months[0] - 1, result.destination.index)
+          );
+
+          const cloneViewData = [...viewData];
+          const [reorderedItem] = cloneViewData.splice(result.source.index, 1);
+          cloneViewData.splice(result.destination.index, 0, reorderedItem);
+          setViewData(cloneViewData);
+        }}
+      >
+        Update table columns amount
+      </button>
       <Table
         ref={table1Ref}
         headerData={header}
@@ -265,19 +288,36 @@ function Example({
                 {...tableProvided.rowProps}
                 type="secondary"
               >
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
+                {monthRange.map((month, index) => {
+                  return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
+                })}
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                {monthRange.map((month, index) => {
+                  return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
+                })}
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                {monthRange.map((month, index) => {
+                  return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
+                })}
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                {monthRange.map((month, index) => {
+                  return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
+                })}
               </Row>
               <Row
                 style={{ minHeight: 40 }}
@@ -285,75 +325,10 @@ function Example({
                 type="secondary"
               >
                 <Col allowEdition={allowEdition}>Some text</Col>
+                {monthRange.map((month, index) => {
+                  return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
+                })}
                 <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-              </Row>
-              <Row
-                style={{ minHeight: 40 }}
-                {...tableProvided.rowProps}
-                type="secondary"
-              >
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-              </Row>
-              <Row
-                style={{ minHeight: 40 }}
-                {...tableProvided.rowProps}
-                type="secondary"
-              >
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-              </Row>
-              <Row
-                style={{ minHeight: 40 }}
-                {...tableProvided.rowProps}
-                type="secondary"
-              >
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
               </Row>
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="characters">
