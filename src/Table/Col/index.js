@@ -82,12 +82,14 @@ const Col = ({
   };
 
   const cleanMatrix = (tableMatrix) => {
+    console.log('ENTROU AQUI')
+
     let lastColumn = null;
     for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
       const row = tableMatrix[rowIndex];
       for (let colIndex = 0; colIndex < row.length; colIndex++) {
         const col = row[colIndex];
-        if (col) {
+        if (col && col.current && col.current.dataset.x === colIndex) {
           lastColumn = lastColumn > colIndex ? lastColumn : colIndex;
         }
       }
@@ -96,6 +98,8 @@ const Col = ({
     for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
       tableMatrix[rowIndex] = tableMatrix[rowIndex].slice(0, lastColumn + 1);
     }
+
+    console.log(tableMatrix)
     return tableMatrix;
   };
   /*
@@ -141,7 +145,8 @@ const Col = ({
         }
         for (let index = 0; index < nextValue.length; index++) {
           const row = nextValue[index];
-          if (row && row[x] != null) {
+
+          if (row && row[x] != null && row[x].current && parseInt(row[x].current.dataset.x) === x) {
             return nextValue;
           }
         }
@@ -153,6 +158,7 @@ const Col = ({
                 ? nextValue[0].length - 2
                 : nextValue[0].length - 1;
             });
+            console.log('nextValue[0].length', nextValue[0].length)
             return nextValue[0].length;
           });
         }

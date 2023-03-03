@@ -56,6 +56,7 @@ const Row = memo(
     onClick,
     selectable = true,
   }) => {
+    console.log('numberOfDataCols-row', numberOfDataCols)
     const currentRowRef = useRef(null);
     const [rowNumber, setRowNumber] = useState(null);
 
