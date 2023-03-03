@@ -25,7 +25,6 @@ export function HandleControllerExecution(controller, tableId) {
       e.preventDefault();
 
       setTimeout(() => {
-        
         execute({
           pageX: e.pageX,
           pageY: e.pageY,
@@ -85,7 +84,7 @@ export function HandlePositioning(controller) {
   controller.setPosition = null;
   controller.setPosition = setPosition;
 
-  return [{...position}, setPosition];
+  return [{ ...position }, setPosition];
 }
 
 export function HandleDevtoolsOpening(controller) {
@@ -112,14 +111,8 @@ export function HandleMenuItems(menuComponent, children, controller) {
   }
 
   useEffect(() => {
-    if (items && children && items.length !== children.length) {
-      setTimeout(() => {
-        setItems(getItemsFrom(children));
-      }, controller.duration * 3);
-    } else {
-      setItems(getItemsFrom(children));
-    }
-  }, [items, children]);
+    setItems(getItemsFrom(children));
+  }, [children]);
 
   return items;
 }
