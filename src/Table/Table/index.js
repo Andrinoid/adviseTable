@@ -506,8 +506,6 @@ const Table = (
     });
   };
 
-  console.log('numberOfDataCols-table', numberOfDataCols)
-
 
   useEffect(() => {
     setChildrenRows(

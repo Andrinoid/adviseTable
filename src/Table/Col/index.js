@@ -82,8 +82,6 @@ const Col = ({
   };
 
   const cleanMatrix = (tableMatrix) => {
-    console.log('ENTROU AQUI')
-
     let lastColumn = null;
     for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
       const row = tableMatrix[rowIndex];
@@ -158,7 +156,6 @@ const Col = ({
                 ? nextValue[0].length - 2
                 : nextValue[0].length - 1;
             });
-            console.log('nextValue[0].length', nextValue[0].length)
             return nextValue[0].length;
           });
         }
@@ -169,7 +166,6 @@ const Col = ({
 
   const handleDoubleClick = (e) => {
     setEditionState(true);
-    // console.log(tableMatrix);
   };
 
   const onValueUpdate = (resetValue = false) => {
@@ -192,7 +188,6 @@ const Col = ({
 
   useEffect(() => {
     currentColRef.current.performUpdateValue = (value, force = false) => {
-      // console.log("performUpdateValue", value);
       if (!allowEdition) throw new Error("This column is not editable");
 
       if (initialValue != inputValue || force) {
