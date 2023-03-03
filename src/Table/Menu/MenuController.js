@@ -28,7 +28,7 @@ export default class MenuController extends Controller {
     distance = distance < 0 ? 0 : distance;
     const limit = distance + viewport.clientHeight / 2;
 
-    if (pageY > limit) {
+    if (pageY > limit && viewport.clientHeight > menuRect.height) {
       return pageY - menuRect.height;
     }
 
