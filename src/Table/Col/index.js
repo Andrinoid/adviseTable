@@ -97,7 +97,6 @@ const Col = ({
       tableMatrix[rowIndex] = tableMatrix[rowIndex].slice(0, lastColumn + 1);
     }
 
-    console.log(tableMatrix)
     return tableMatrix;
   };
   /*
