@@ -73,10 +73,10 @@ function Example({
   //   tableRef.current.autoAdjust();
   // }, [autoAdjustTrigger]);
 
-  let months = mo.map((m) => m.system).splice();
+  let months = mo.map((m) => m.system);
   // select range of months based on selectedMonths
   let [monthRange, setMonthRange] = useState(
-    months.slice(ui_prefs.months[0] - 1, 2)
+    months.slice(ui_prefs.months[0] - 1, ui_prefs.months[1])
   );
 
   const header = [
@@ -187,6 +187,16 @@ function Example({
                       <Col horizontalAlign="left">lykill 1004</Col>
                       <Col allowEdition={allowEdition}>34567</Col>
                       <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
+                      <Col allowEdition={allowEdition}>34567</Col>
                     </Row>
                   );
                 }}
@@ -228,7 +238,7 @@ function Example({
         theme={theme}
         showGrid={true}
         selectionMode={selectionMode}
-        tableId={"bigTable1"}
+        tableId={"bigTable"}
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={true}
@@ -258,6 +268,16 @@ function Example({
                 <Col allowEdition={allowEdition}>Some text</Col>
                 <Col allowEdition={allowEdition}>Some text</Col>
                 <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
               </Row>
               <Row
                 style={{ minHeight: 40 }}
@@ -267,6 +287,54 @@ function Example({
                 <Col allowEdition={allowEdition}>Some text</Col>
                 <Col allowEdition={allowEdition}>Some text</Col>
                 <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
               </Row>
               <Row
                 style={{ minHeight: 40 }}
@@ -276,67 +344,142 @@ function Example({
                 <Col allowEdition={true}>Some text</Col>
                 <Col allowEdition={true}>Some text</Col>
                 <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
               </Row>
-            </>
-          );
-        }}
-      </Table>
+              <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="characters">
+                  {(provided) => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                      {viewData.map((row, i) => {
+                        return (
+                          <Draggable
+                            isDragDisabled={!draggable}
+                            draggableId={"id-" + row.id}
+                            key={"id-" + row.id}
+                            index={i}
+                          >
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                              >
+                                <Row
+                                  key={i}
+                                  style={{ minHeight: 40 }}
+                                  leftBrickContent={leftBrickContent(
+                                    provided.dragHandleProps,
+                                    row.id
+                                  )}
+                                  {...tableProvided.rowProps}
+                                  menuContent={rowMenuContent(
+                                    provided.dragHandleProps
+                                  )}
+                                >
+                                  <Col horizontalAlign="left">{row.name}</Col>
 
-      <Table
-        ref={table2Ref}
-        headerData={header}
-        theme={theme}
-        showGrid={true}
-        selectionMode={selectionMode}
-        tableId={"bigTable2"}
-        footer={footerVissible}
-        headerStickyTopOffset={headerOffset}
-        lasColumnRisizeable={true}
-        hasTotalColumn={false}
-        onSelection={(selectedReport) => {
-          // console.log("selectedReport", selectedReport);
-        }}
-      >
-        {(tableProvided) => {
-          return (
-            <>
-              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                <Col colspan={"fullwidth"}>Some text</Col>
-              </Row>
-              <Row
-                style={{ minHeight: 40 }}
-                {...tableProvided.rowProps}
-                type="secondary"
-              >
-                <Col colspan={"fullwidth"}>Some text</Col>
-              </Row>
-              <Row
-                style={{ minHeight: 40 }}
-                {...tableProvided.rowProps}
-                type="secondary"
-              >
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-              </Row>
-              <Row
-                style={{ minHeight: 40 }}
-                {...tableProvided.rowProps}
-                type="secondary"
-              >
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-                <Col allowEdition={allowEdition}>Some text</Col>
-              </Row>
-              <Row
-                style={{ minHeight: 40 }}
-                {...tableProvided.rowProps}
-                type="secondary"
-              >
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-                <Col allowEdition={true}>Some text</Col>
-              </Row>
+                                  {monthRange.map((month, i) => (
+                                    <Col
+                                      key={i}
+                                      allowEdition={allowEdition}
+                                      // onSubmitCallback={alert}
+                                      inputType={"number"}
+                                    >
+                                      {row[month]}
+                                    </Col>
+                                  ))}
+
+                                  {/* <Col>{total}</Col> */}
+                                </Row>
+
+                                {
+                                  expandedIds.includes(row.id) && (
+                                    <SubRowList tableProvided={tableProvided} />
+                                  )
+                                  // expandedIds.includes(row.id) && (
+                                  //   // The motion divs are optional and just an example of how to animate the conditional rendered rows
+                                  //   // it shows how dynamic the table can be
+                                  //   // Optional animation starts
+                                  //   <div>
+                                  //     <div>
+                                  //       {/* Optional animation ends */}
+
+                                  //       <Row
+                                  //         selectable={false}
+                                  //         {...tableProvided.rowProps}
+                                  //         type={"secondary"}
+                                  //         style={{
+                                  //           minHeight: 40,
+                                  //           background: "#f7f7f7",
+                                  //         }}
+                                  //       >
+                                  //         <Col horizontalAlign="left">
+                                  //           lykill 1004
+                                  //         </Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //       </Row>
+                                  //       <Row
+                                  //         selectable={false}
+                                  //         {...tableProvided.rowProps}
+                                  //         type={"secondary"}
+                                  //         style={{
+                                  //           minHeight: 40,
+                                  //           background: "#f7f7f7",
+                                  //         }}
+                                  //       >
+                                  //         <Col horizontalAlign="left">
+                                  //           lykill 1006
+                                  //         </Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //         <Col>34567</Col>
+                                  //       </Row>
+                                  //       {/* Optional animation starts */}
+                                  //     </div>
+                                  //   </div>
+                                  // )
+                                  // Optional animation ends
+                                }
+                              </div>
+                            )}
+                          </Draggable>
+                        );
+                      })}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
             </>
           );
         }}
