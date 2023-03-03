@@ -207,7 +207,7 @@ function Example({
   useEffect(() => {
     function handleContextMenu(e) {
       e.preventDefault();
-      
+
       if (table1Ref.current && table2Ref.current) {
         table1Ref.current.closeMenu();
         table2Ref.current.closeMenu();
@@ -221,130 +221,126 @@ function Example({
   }, [table1Ref, table2Ref]);
 
   return (
-    <div className="App" style={{ display: "flex", flexDirection: "row" }}>
-      <div style={{ width: "40%" }}>
-        <Table
-          ref={table1Ref}
-          headerData={header}
-          theme={theme}
-          showGrid={true}
-          selectionMode={selectionMode}
-          tableId={"bigTable1"}
-          footer={footerVissible}
-          headerStickyTopOffset={headerOffset}
-          lasColumnRisizeable={true}
-          hasTotalColumn={false}
-          onSelection={(selectedReport) => {
-            // console.log("selectedReport", selectedReport);
-          }}
-        >
-          {(tableProvided) => {
-            return (
-              <>
-                <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col colspan={"fullwidth"}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col colspan={"fullwidth"}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col allowEdition={true}>Some text</Col>
-                  <Col allowEdition={true}>Some text</Col>
-                  <Col allowEdition={true}>Some text</Col>
-                </Row>
-              </>
-            );
-          }}
-        </Table>
-      </div>
+    <div className="App">
+      <Table
+        ref={table1Ref}
+        headerData={header}
+        theme={theme}
+        showGrid={true}
+        selectionMode={selectionMode}
+        tableId={"bigTable1"}
+        footer={footerVissible}
+        headerStickyTopOffset={headerOffset}
+        lasColumnRisizeable={true}
+        hasTotalColumn={false}
+        onSelection={(selectedReport) => {
+          // console.log("selectedReport", selectedReport);
+        }}
+      >
+        {(tableProvided) => {
+          return (
+            <>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
+                <Col colspan={"fullwidth"}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col colspan={"fullwidth"}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+              </Row>
+            </>
+          );
+        }}
+      </Table>
 
-      <div style={{ width: "40%", marginLeft: 100 }}>
-        <Table
-          ref={table2Ref}
-          headerData={header}
-          theme={theme}
-          showGrid={true}
-          selectionMode={selectionMode}
-          tableId={"bigTable2"}
-          footer={footerVissible}
-          headerStickyTopOffset={headerOffset}
-          lasColumnRisizeable={true}
-          hasTotalColumn={false}
-          onSelection={(selectedReport) => {
-            // console.log("selectedReport", selectedReport);
-          }}
-        >
-          {(tableProvided) => {
-            return (
-              <>
-                <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col colspan={"fullwidth"}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col colspan={"fullwidth"}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                  <Col allowEdition={allowEdition}>Some text</Col>
-                </Row>
-                <Row
-                  style={{ minHeight: 40 }}
-                  {...tableProvided.rowProps}
-                  type="secondary"
-                >
-                  <Col allowEdition={true}>Some text</Col>
-                  <Col allowEdition={true}>Some text</Col>
-                  <Col allowEdition={true}>Some text</Col>
-                </Row>
-              </>
-            );
-          }}
-        </Table>
-      </div>
+      <Table
+        ref={table2Ref}
+        headerData={header}
+        theme={theme}
+        showGrid={true}
+        selectionMode={selectionMode}
+        tableId={"bigTable2"}
+        footer={footerVissible}
+        headerStickyTopOffset={headerOffset}
+        lasColumnRisizeable={true}
+        hasTotalColumn={false}
+        onSelection={(selectedReport) => {
+          // console.log("selectedReport", selectedReport);
+        }}
+      >
+        {(tableProvided) => {
+          return (
+            <>
+              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
+                <Col colspan={"fullwidth"}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col colspan={"fullwidth"}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>Some text</Col>
+              </Row>
+              <Row
+                style={{ minHeight: 40 }}
+                {...tableProvided.rowProps}
+                type="secondary"
+              >
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+                <Col allowEdition={true}>Some text</Col>
+              </Row>
+            </>
+          );
+        }}
+      </Table>
     </div>
   );
 }
