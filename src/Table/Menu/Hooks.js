@@ -25,6 +25,7 @@ export function HandleControllerExecution(controller, tableId) {
       e.preventDefault();
 
       setTimeout(() => {
+        
         execute({
           pageX: e.pageX,
           pageY: e.pageY,
@@ -81,9 +82,10 @@ export function HandleExporting() {
 export function HandlePositioning(controller) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  controller.setPosition = null;
   controller.setPosition = setPosition;
 
-  return [position, setPosition];
+  return [{...position}, setPosition];
 }
 
 export function HandleDevtoolsOpening(controller) {

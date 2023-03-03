@@ -581,10 +581,6 @@ const Table = (
     },
   ];
 
-  useEffect(() => {
-    // const html = document.querySelector('html');
-    // html.style.position = 'relative';
-  }, []);
 
   return (
     <>
