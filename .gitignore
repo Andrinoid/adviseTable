@@ -31,3 +31,5 @@ yarn-error.log*
 *.pyc
 
 *.log
+
+*.code-workspace

@@ -288,47 +288,63 @@ function Example({
                 {...tableProvided.rowProps}
                 type="secondary"
               >
+                <Col allowEdition={allowEdition}></Col>
                 {monthRange.map((month, index) => {
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
+                <Col allowEdition={allowEdition}>123</Col>
+
               </Row>
               <Row
                 style={{ minHeight: 40 }}
                 {...tableProvided.rowProps}
                 type="secondary"
               >
+                <Col allowEdition={allowEdition}></Col>
+                
                 {monthRange.map((month, index) => {
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
+                <Col allowEdition={allowEdition}>123</Col>
+
               </Row>
               <Row
                 style={{ minHeight: 40 }}
                 {...tableProvided.rowProps}
                 type="secondary"
               >
+                <Col allowEdition={allowEdition}></Col>
+
                 {monthRange.map((month, index) => {
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
+
+                <Col allowEdition={allowEdition}>123</Col>
+
               </Row>
               <Row
                 style={{ minHeight: 40 }}
                 {...tableProvided.rowProps}
                 type="secondary"
               >
+                <Col allowEdition={allowEdition}></Col>
+                
                 {monthRange.map((month, index) => {
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
+                <Col allowEdition={allowEdition}>123</Col>
+
               </Row>
               <Row
                 style={{ minHeight: 40 }}
                 {...tableProvided.rowProps}
                 type="secondary"
               >
-                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}></Col>
                 {monthRange.map((month, index) => {
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
-                <Col allowEdition={allowEdition}>Some text</Col>
+                <Col allowEdition={allowEdition}>123</Col>
               </Row>
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="characters">
@@ -372,7 +388,7 @@ function Example({
                                     </Col>
                                   ))}
 
-                                  {/* <Col>{total}</Col> */}
+                                  <Col allowEdition={allowEdition}>123</Col>
                                 </Row>
 
                                 {
