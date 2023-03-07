@@ -31,6 +31,10 @@ const Selection = ({
   const [dimensions, setDimensions] = useState([]);
 
   const calculateDimensions = (selection = {}) => {
+    console.log("selection", selection)
+    console.log("from elm", tableMatrix[selection.fromY][selection.fromX])
+    console.log("to elm", tableMatrix[selection.toY][selection.toX])
+    console.log("tableMatrix", tableMatrix)
     if (
       !tableMatrix[selection.fromY] ||
       !tableMatrix[selection.fromY][selection.fromX]

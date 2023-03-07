@@ -5,11 +5,13 @@ import React, {
   useLayoutEffect,
   useCallback,
   useMemo,
+  memo
 } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FixedSizeList as List, VariableSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { Virtuoso } from 'react-virtuoso';
 import {
   EditOutlined,
   VerticalAlignBottomOutlined,
@@ -73,6 +75,11 @@ function Example({
   //   tableRef.current.autoAdjust();
   // }, [autoAdjustTrigger]);
 
+  useEffect(() => {
+    console.log('expanded ids', expandedIds);
+  }, [expandedIds]);
+
+
   let months = mo.map((m) => m.system);
   // select range of months based on selectedMonths
   let [monthRange, setMonthRange] = useState(
@@ -102,6 +109,7 @@ function Example({
           cursor={"pointer"}
           style={{ marginLeft: 4 }}
           onClick={() => {
+            console.log('if includes expandedIds')
             if (expandedIds.includes(rowId)) {
               setExpandedIds(expandedIds.filter((id) => id !== rowId));
             } else {
@@ -134,83 +142,47 @@ function Example({
     );
   };
 
-  const loadMoreItems = useCallback((startIndex, stopIndex) => {
-    return new Promise((resolve) => {
-      for (let i = startIndex; i <= stopIndex; i++) {
-        subRows.push(subRows[0]);
-      }
-      setSubRows(subRows);
-      // setTimeout(() => {
-      resolve();
-      // }, 200);
-    });
+  const items = Array.from(Array(1000).keys());
+
+  const Item = memo(({ index, style, tableProvided }) => (
+    <Row
+      key={index}
+      {...tableProvided.rowProps}
+      type={"secondary"}
+      style={{
+        minHeight: 40,
+        background: "#f7f7f7",
+        ...style,
+        transform: "translateZ(0)",
+      }}
+    >
+      <Col horizontalAlign="left">lykill {index}</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+      <Col allowEdition={allowEdition}>34567</Col>
+    </Row>
+
+  ));
+
+  const SubRowList = useCallback(({ tableProvided }) => {
+    return (
+      <Virtuoso
+        data={items}
+        itemContent={(index) => <Item index={index} tableProvided={tableProvided} />}
+        style={{ height: '400px', background: "#f7f7f7", }}
+      />)
   }, []);
 
-  const SubRowList = useCallback(
-    (props) => {
-      return (
-        <div style={{ height: 250 }}>
-          <InfiniteLoader
-            isItemLoaded={(index) => {
-              return index < subRows.length;
-            }}
-            itemCount={100}
-            loadMoreItems={loadMoreItems}
-          >
-            {({ onItemsRendered, ref }) => (
-              // <AutoSizer>
-              //   {({ height, width }) => (
-              <List
-                className="List"
-                height={250}
-                itemCount={100}
-                itemSize={40}
-                onItemsRendered={onItemsRendered}
-                ref={ref}
-                width={props.tableProvided.rowProps.totalWidth}
-              >
-                {({ index, style }) => {
-                  return (
-                    // <div style={{ background: "red", ...style }}>
-                    //   Hello World...
-                    // </div>
-                    <Row
-                      {...props.tableProvided.rowProps}
-                      type={"secondary"}
-                      style={{
-                        // minHeight: 40,
-                        // background: "#f7f7f7",
-                        ...style,
-                        transform: "translateZ(0)",
-                      }}
-                    >
-                      <Col horizontalAlign="left">lykill 1004</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                      <Col allowEdition={allowEdition}>34567</Col>
-                    </Row>
-                  );
-                }}
-              </List>
-              //   )}
-              // </AutoSizer>
-            )}
-          </InfiniteLoader>
-        </div>
-      );
-    },
-    [subRows]
-  );
 
   const table1Ref = useRef(null);
   const table2Ref = useRef(null);
@@ -273,7 +245,7 @@ function Example({
         {(tableProvided) => {
           return (
             <>
-              <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
+              {/* <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
                 <Col colspan={"fullwidth"}>Some text</Col>
               </Row>
               <Row
@@ -301,7 +273,7 @@ function Example({
                 type="secondary"
               >
                 <Col allowEdition={allowEdition}></Col>
-                
+
                 {monthRange.map((month, index) => {
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
@@ -328,7 +300,7 @@ function Example({
                 type="secondary"
               >
                 <Col allowEdition={allowEdition}></Col>
-                
+
                 {monthRange.map((month, index) => {
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
@@ -345,7 +317,7 @@ function Example({
                   return <Col key={index} allowEdition={allowEdition}>Some text</Col>;
                 })}
                 <Col allowEdition={allowEdition}>123</Col>
-              </Row>
+              </Row> */}
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="characters">
                   {(provided) => (

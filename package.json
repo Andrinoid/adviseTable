@@ -9,6 +9,7 @@
     "lodash": "^4.17.21",
     "number-currency-format": "^1.0.10",
     "react-hotkeys-hook": "^4.3.7",
+    "react-virtuoso": "^4.1.0",
     "styled-components": "^5.3.6",
     "xlsx-js-style": "^1.2.0"
   },

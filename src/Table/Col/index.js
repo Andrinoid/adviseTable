@@ -125,6 +125,7 @@ const Col = ({
         nextValue = prev;
       }
 
+
       setTotalCols((prev) => {
         setNumberOfDataCols((prev) => {
           let newValue = hasTotalColumn ? index - 2 : index - 1;
@@ -162,6 +163,8 @@ const Col = ({
       });
     };
   }, [y, x, totalCols]);
+
+
 
   const handleDoubleClick = (e) => {
     setEditionState(true);
