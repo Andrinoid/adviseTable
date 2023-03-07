@@ -584,7 +584,7 @@ const Table = (
 
   return (
     <>
-      {/* <Menu
+      <Menu
         setOpen={setMenuIsOpen}
         id={tableId + "-menu"}
         controller={
@@ -666,7 +666,7 @@ const Table = (
         >
           Export
         </Menu.Item>
-      </Menu> */}
+      </Menu>
       <div
         id={`${tableId}-container`}
         ref={tableContainerRef}
