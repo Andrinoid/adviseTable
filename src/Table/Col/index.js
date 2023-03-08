@@ -127,7 +127,6 @@ const Col = ({
           nextValue = prev;
         }
         console.log('table', nextValue)
-
         setTotalCols((prev) => {
           setNumberOfDataCols((prev) => {
             let newValue = hasTotalColumn ? index - 2 : index - 1;
@@ -145,9 +144,7 @@ const Col = ({
 
 
   useEffect(() => {
-    console.log('column init')
     return () => {
-      console.log('column unmount')
       setTableMatrix((prev) => {
 
         let nextValue = prev;
@@ -174,7 +171,10 @@ const Col = ({
             return nextValue[0].length;
           });
         }
-        return nextValue;
+        
+        return nextValue.filter(row => {
+          return row[0] != null;
+        });;
       });
     }
 
