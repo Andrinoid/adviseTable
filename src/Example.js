@@ -181,6 +181,12 @@ function Example({
         itemContent={(index) => <Item index={index} tableProvided={tableProvided} />}
         style={{ height: '400px', background: "#f7f7f7", }}
       />)
+      // <>
+      //   {[1, 2, 3, 4].map((item, index) => (
+      //     <Item index={index} key={index} tableProvided={tableProvided} />
+      //   ))}
+      // </>
+    // );
   }, []);
 
 

@@ -102,8 +102,10 @@ const Col = ({
   /*
    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
-   */
+   */ 
   useLayoutEffect(() => {
+
+    console.log(currentColRef)
     cleartSelectionTable();
     setTableMatrix((prev) => {
       let { colspan } = currentColRef.current.dataset;
@@ -125,7 +127,6 @@ const Col = ({
         nextValue = prev;
       }
 
-
       setTotalCols((prev) => {
         setNumberOfDataCols((prev) => {
           let newValue = hasTotalColumn ? index - 2 : index - 1;
@@ -135,10 +136,19 @@ const Col = ({
       });
       return nextValue;
     });
+
+  }, [y, x, totalCols]);
+
+
+  useEffect(() => {
+    console.log('column init')
     return () => {
+      console.log('column unmount')
       setTableMatrix((prev) => {
+
         let nextValue = prev;
         if (nextValue[y]) {
+          // delete nextValue[y][x];
           nextValue[y][x] = null;
         }
         for (let index = 0; index < nextValue.length; index++) {
@@ -149,6 +159,7 @@ const Col = ({
           }
         }
         if (nextValue.length > 0) {
+
           nextValue = cleanMatrix(nextValue);
           setTotalCols((prev) => {
             setNumberOfDataCols((prevDataCols) => {
@@ -161,9 +172,9 @@ const Col = ({
         }
         return nextValue;
       });
-    };
-  }, [y, x, totalCols]);
+    }
 
+  }, []);
 
 
   const handleDoubleClick = (e) => {
