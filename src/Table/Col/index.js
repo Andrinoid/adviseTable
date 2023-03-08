@@ -102,40 +102,44 @@ const Col = ({
   /*
    *  Construct the matrix. if the row is not created, create it. If the row is created, push the column to the row
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
-   */ 
+   */
   useLayoutEffect(() => {
 
-    console.log(currentColRef)
-    cleartSelectionTable();
-    setTableMatrix((prev) => {
-      let { colspan } = currentColRef.current.dataset;
-      if (colspan === "fullwidth") {
-        colspan = totalCols;
-      }
-      let nextValue = prev;
-      let index = x;
-      if (prev[y]) {
-        for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
-          prev[y][index] = currentColRef;
+    if (currentColRef.current) {
+      cleartSelectionTable();
+      setTableMatrix((prev) => {
+        let { colspan } = currentColRef.current?.dataset ? currentColRef.current?.dataset : { colspan: null };
+        if (colspan === "fullwidth") {
+          colspan = totalCols;
         }
-        nextValue = prev;
-      } else if (y != null) {
-        prev[y] = [];
-        for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
-          prev[y][index] = currentColRef;
+        let nextValue = prev;
+        let index = x;
+        if (prev[y]) {
+          for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
+            prev[y][index] = currentColRef;
+          }
+          nextValue = prev;
+        } else if (y != null) {
+          prev[y] = [];
+          for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
+            prev[y][index] = currentColRef;
+          }
+          nextValue = prev;
         }
-        nextValue = prev;
-      }
+        console.log('table', nextValue)
 
-      setTotalCols((prev) => {
-        setNumberOfDataCols((prev) => {
-          let newValue = hasTotalColumn ? index - 2 : index - 1;
-          return newValue > prev ? newValue : prev;
+        setTotalCols((prev) => {
+          setNumberOfDataCols((prev) => {
+            let newValue = hasTotalColumn ? index - 2 : index - 1;
+            return newValue > prev ? newValue : prev;
+          });
+          return index > prev ? index : prev;
         });
-        return index > prev ? index : prev;
+        return nextValue.filter(row => {
+          return row[0] != null;
+        });
       });
-      return nextValue;
-    });
+    }
 
   }, [y, x, totalCols]);
 
@@ -259,7 +263,7 @@ const Col = ({
           inputValue={inputValue}
           setInputValue={setInputValue}
           inputType={inputType}
-          onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
+          onBlur={currentColRef.current ? currentColRef.current.blur : () => { }}
           allowEdition={allowEdition}
         >
           {children}
