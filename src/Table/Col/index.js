@@ -134,9 +134,7 @@ const Col = ({
           });
           return index > prev ? index : prev;
         });
-        return nextValue.filter(row => {
-          return row[0] != null;
-        });
+        return nextValue;
       });
     }
 
@@ -172,9 +170,7 @@ const Col = ({
           });
         }
         
-        return nextValue.filter(row => {
-          return row[0] != null;
-        });;
+        return nextValue;
       });
     }
 
