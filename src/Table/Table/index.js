@@ -168,8 +168,6 @@ const Table = (
 
   const handleExporting = HandleExporting();
 
-  console.log(children);
-
   useEffect(() => {
     setIsTableSelected(
       selectedAreas[0] &&
@@ -583,6 +581,7 @@ const Table = (
     },
   ];
 
+  console.log(childrenRows)
 
   return (
     <>
