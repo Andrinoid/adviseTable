@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, memo } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState, memo } from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
@@ -64,7 +64,7 @@ const Row = memo(
     /**
      * Count the instances of this component and set the row number
      */
-    useEffect(() => {
+    useLayoutEffect(() => {
       let rows = document.querySelectorAll(`.${tableId}-tableRow`);
       //find the current rowRef in the rows array
       let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
