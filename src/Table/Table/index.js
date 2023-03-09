@@ -168,6 +168,8 @@ const Table = (
 
   const handleExporting = HandleExporting();
 
+  console.log(children);
+
   useEffect(() => {
     setIsTableSelected(
       selectedAreas[0] &&
