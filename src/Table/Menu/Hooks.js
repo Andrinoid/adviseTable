@@ -59,7 +59,7 @@ export function HandleExporting() {
       };
     });
 
-    const textMatrix = tableMatrix.map((row) => {
+    const textMatrix = tableMatrix.filter(row => row[0].current != null).map((row) => {
       return row.map((cell) => {
         return cell.current.innerText;
       });
