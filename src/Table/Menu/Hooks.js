@@ -59,7 +59,12 @@ export function HandleExporting() {
       };
     });
 
-    const textMatrix = tableMatrix.filter(row => row[0].current != null).map((row) => {
+    let uniqueElements = getUniqueElementsTable(tableMatrix);
+
+
+    const adjustedLabels = getAdjustedLabelRowsTable(uniqueElements, headerData);
+    
+    const textMatrix = adjustedLabels.filter(row => row[0].current != null).map((row) => {
       return row.map((cell) => {
         return cell.current.innerText;
       });
@@ -76,6 +81,52 @@ export function HandleExporting() {
   return function (tableMatrix, headerData) {
     downloadExcelFile(tableMatrix, headerData);
   };
+}
+
+function getAdjustedLabelRowsTable(uniqueElements, headerData) {
+  const adjustedLabels = [];
+  const validAttributes = ['data-rowtype', 'data-spanselection', 'type', 'data-selectable', 'class', 'style'];
+
+  uniqueElements.forEach((row, uniqueIndex) => {
+    if (row.length == headerData.length) {
+      adjustedLabels[uniqueIndex] = row;
+    } else {
+      adjustedLabels[uniqueIndex] = [];
+
+      for (let i = 0; i < headerData.length && row.length > 0; i++) {
+        const cell = row.find((cell) => cell.current.dataset.x == i);
+        if (cell) {
+          adjustedLabels[uniqueIndex][i] = cell;
+        } else {
+          const previous = adjustedLabels[uniqueIndex][i - 1].current;
+          const newElement = document.createElement(previous.tagName);
+          newElement.setAttribute('x', i);
+          newElement.setAttribute('data-x', i);
+          newElement.setAttribute('id', 'x' + i + 'y' + previous.getAttribute('y'));
+          newElement.setAttribute('y', previous.getAttribute('y'));
+          newElement.setAttribute('data-y', previous.getAttribute('data-y'));
+          newElement.setAttribute('innerText', '');
+
+          validAttributes.filter(attribute => attribute).forEach((attribute) => {
+            newElement.setAttribute(attribute, previous.getAttribute(attribute));
+          });
+
+          adjustedLabels[uniqueIndex][i] = { current: newElement };
+        }
+      }
+    }
+  });
+  return adjustedLabels
+}
+
+function getUniqueElementsTable(tableMatrix) {
+  let uniqueElements = [];
+  tableMatrix.forEach((row, index) => {
+    uniqueElements[index] = row.filter((element, index) => {
+      return row.indexOf(element) === index;
+    });
+  });
+  return uniqueElements;
 }
 
 export function HandlePositioning(controller) {

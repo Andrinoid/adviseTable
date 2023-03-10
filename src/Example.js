@@ -181,11 +181,11 @@ function Example({
         itemContent={(index) => <Item index={index} tableProvided={tableProvided} />}
         style={{ height: '400px', background: "#f7f7f7", }}
       />)
-      // <>
-      //   {[1, 2, 3, 4].map((item, index) => (
-      //     <Item index={index} key={index} tableProvided={tableProvided} />
-      //   ))}
-      // </>
+    // <>
+    //   {[1, 2, 3, 4].map((item, index) => (
+    //     <Item index={index} key={index} tableProvided={tableProvided} />
+    //   ))}
+    // </>
     // );
   }, []);
 
@@ -328,6 +328,24 @@ function Example({
                 <Droppable droppableId="characters">
                   {(provided) => (
                     <div {...provided.droppableProps} ref={provided.innerRef}>
+                      <Row
+                        style={{ minHeight: 40 }}
+                        {...tableProvided.rowProps}
+                        menuContent={rowMenuContent(
+                          provided.dragHandleProps
+                        )}
+                      >
+                        <Col
+                          colspan={"fullwidth"}
+                          spanSelection={false}
+                          horizontalAlign={
+                            "left"
+                          }
+                          style={{ minHeight: 40 }}
+                        >
+                          <span style={{ fontSize: "inherit" }}>Label</span>
+                        </Col>
+                      </Row>
                       {viewData.map((row, i) => {
                         return (
                           <Draggable

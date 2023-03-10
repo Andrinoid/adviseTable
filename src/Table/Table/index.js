@@ -581,8 +581,6 @@ const Table = (
     },
   ];
 
-  console.log(childrenRows)
-
   return (
     <>
       <Menu
