@@ -672,7 +672,7 @@ const Table = (
       >
         <Wrapper
           id={tableId}
-          version="1.07"
+          version="1.08"
           scrollStatus={scrollStatus}
           style={{ opacity: !initialLoaded ? 0 : 1 }}
         >
