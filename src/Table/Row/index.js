@@ -68,20 +68,16 @@ const Row = memo(
 
 
       setRowNumber((prev) => {
-          let rows = document.querySelectorAll(`.${tableId}-tableRow`);
+          // let rows = document.querySelectorAll(`.${tableId}-tableRow`);
           //find the current rowRef in the rows array
-          let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
+          // let index = Array.prototype.indexOf.call(document.querySelectorAll(`.${tableId}-tableRow`), currentRowRef.current);
 
           if (rowNumber == null) {
             setInstanceCount((count) => {
               return count ? ++count : 1;
             });
           }
-          if (index !== prev) {
-            return index;
-          } else {
-            return prev;
-          }
+        return Array.prototype.indexOf.call(document.querySelectorAll(`.${tableId}-tableRow`), currentRowRef.current);
         });
 
     }, [instanceCount, rowNumber, setInstanceCount, tableId]);
