@@ -37,7 +37,7 @@ const Row = memo(
     type = "primary",
     leftBrickContent,
     menuContent,
-    setInstanceCount,
+    setRowRenderVersion,
     setBiggestDataCellWidth,
     setBiggestLabelCellWidth,
     setBiggestTotalCellWidth,
@@ -48,7 +48,7 @@ const Row = memo(
     colWidth,
     leftBrickWidth,
     numberOfDataCols,
-    instanceCount,
+    rowRenderVersion,
     tableMatrix,
     totalWidth,
     firstColWidth,
@@ -76,18 +76,18 @@ const Row = memo(
       let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
 
       if (rowNumber == null) {
-        setInstanceCount((count) => {
+        setRowRenderVersion((count) => {
           return count ? ++count : 1;
         });
       }
       if (index !== rowNumber) {
         setRowNumber((_) => index);
       }
-    }, [instanceCount, rowNumber, setInstanceCount, tableId]);
+    }, [rowRenderVersion, rowNumber, setRowRenderVersion, tableId]);
 
     // useEffect(() => {
     //   return () => {
-    //     setInstanceCount((count) => {
+    //     setRowRenderVersion((count) => {
     //       return count ? --count : 0;
     //     });
     //   };
