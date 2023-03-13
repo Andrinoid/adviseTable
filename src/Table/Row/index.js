@@ -60,26 +60,30 @@ const Row = memo(
     const [rowNumber, setRowNumber] = useState(null);
 
     const leftOffset = leftBrickWidth;
-    const num = useRef(0);
 
     /**
      * Count the instances of this component and set the row number
      */
     useLayoutEffect(() => {
-      let rows = document.querySelectorAll(`.${tableId}-tableRow`);
-      //find the current rowRef in the rows array
-      let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
 
-      if (rowNumber == null) {
-        setInstanceCount((count) => {
-          return count ? ++count : 1;
+
+      setRowNumber((prev) => {
+          let rows = document.querySelectorAll(`.${tableId}-tableRow`);
+          //find the current rowRef in the rows array
+          let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
+
+          if (rowNumber == null) {
+            setInstanceCount((count) => {
+              return count ? ++count : 1;
+            });
+          }
+          if (index !== prev) {
+            return index;
+          } else {
+            return prev;
+          }
         });
-      }
-      if (index !== rowNumber) {
-        setRowNumber((prev) => {
-          return index;
-        });
-      }
+
     }, [instanceCount, rowNumber, setInstanceCount, tableId]);
 
     useEffect(() => {
