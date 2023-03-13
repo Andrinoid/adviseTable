@@ -505,7 +505,6 @@ const Table = (
     });
   };
 
-
   useEffect(() => {
     setChildrenRows(
       children({
@@ -672,7 +671,7 @@ const Table = (
       >
         <Wrapper
           id={tableId}
-          version="1.07"
+          version="1.10"
           scrollStatus={scrollStatus}
           style={{ opacity: !initialLoaded ? 0 : 1 }}
         >

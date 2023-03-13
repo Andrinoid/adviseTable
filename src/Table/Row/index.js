@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState, memo } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  memo,
+} from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
@@ -79,13 +85,13 @@ const Row = memo(
       }
     }, [instanceCount, rowNumber, setInstanceCount, tableId]);
 
-    useEffect(() => {
-      return () => {
-        setInstanceCount((count) => {
-          return count ? --count : 0;
-        });
-      };
-    }, []);
+    // useEffect(() => {
+    //   return () => {
+    //     setInstanceCount((count) => {
+    //       return count ? --count : 0;
+    //     });
+    //   };
+    // }, []);
 
     /**
      * @returns the amount of cols that aren't being used
@@ -191,7 +197,7 @@ const Row = memo(
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           if (colspan) {
-            width = colspan * colWidth || 'auto';
+            width = colspan * colWidth || "auto";
           } else {
             width = colWidth;
           }
