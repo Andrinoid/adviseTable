@@ -60,11 +60,13 @@ const Row = memo(
     const [rowNumber, setRowNumber] = useState(null);
 
     const leftOffset = leftBrickWidth;
+    const num = useRef(0);
 
     /**
      * Count the instances of this component and set the row number
      */
     useLayoutEffect(() => {
+      if (!currentRowRef.current) return;
       let rows = document.querySelectorAll(`.${tableId}-tableRow`);
       //find the current rowRef in the rows array
       let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
@@ -75,7 +77,9 @@ const Row = memo(
         });
       }
       if (index !== rowNumber) {
-        setRowNumber((_) => index);
+        setRowNumber((prev) => {
+          return index;
+        });
       }
     }, [instanceCount, rowNumber, setInstanceCount, tableId]);
 
