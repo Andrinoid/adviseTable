@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { utils, writeFile } from "xlsx-js-style";
+import { TableMatrixHandler } from './Utils.js'
 
 export function HandleControllerExecution(controller, tableId) {
   let lastPageX = useRef(null);
@@ -59,11 +60,9 @@ export function HandleExporting() {
       };
     });
 
-    const textMatrix = tableMatrix.map((row) => {
-      return row.map((cell) => {
-        return cell.current.innerText;
-      });
-    });
+    const handler = new TableMatrixHandler(tableMatrix);
+
+    const textMatrix = handler.getAdjustedRows(headerData.length);
 
     textMatrix.unshift(textHeader);
 

@@ -307,7 +307,6 @@ const Table = (
       setTotalWidth(getAdjustedSize());
     };
     function handleClick(e) {
-      e.preventDefault();
       setMenuIsOpen(false);
     }
 
@@ -580,7 +579,6 @@ const Table = (
       },
     },
   ];
-
 
   return (
     <>

@@ -126,7 +126,7 @@ const Col = ({
           }
           nextValue = prev;
         }
-        // console.log('table', nextValue)
+
         setTotalCols((prev) => {
           setNumberOfDataCols((prev) => {
             let newValue = hasTotalColumn ? index - 2 : index - 1;
@@ -136,8 +136,6 @@ const Col = ({
         });
         return nextValue;
       });
-    } else {
-      console.log("currentColRef.current is null");
     }
 
   }, [y, x, totalCols, currentColRef]);
