@@ -61,6 +61,7 @@ function Example({
   const [viewData, setViewData] = useState(view);
   const [subRows, setSubRows] = useState([]);
   const [expandedIds, setExpandedIds] = useState([]);
+  const [items, setItems] = useState(Array.from(Array(20).keys()));
   // const [containerWidth, setContainerWidth] = useState(0);
   // const [selectionMode, setSelectionMode] = useState('row');
   // const tableRef = useRef(null);
@@ -142,8 +143,6 @@ function Example({
     );
   };
 
-  const items = Array.from(Array(1000).keys());
-
   const Item = memo(({ index, style, tableProvided }) => (
     <Row
       key={index}
@@ -178,6 +177,11 @@ function Example({
     return (
       <Virtuoso
         data={items}
+        overscan={50}
+        endReached={() => {
+          console.log('end reached')
+          setItems(Array.from(Array(items.length + 20).keys()))
+        }}
         itemContent={(index) => <Item index={index} tableProvided={tableProvided} />}
         style={{ height: '400px', background: "#f7f7f7", }}
       />)
