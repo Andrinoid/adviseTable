@@ -66,7 +66,6 @@ const Row = memo(
      * Count the instances of this component and set the row number
      */
     useLayoutEffect(() => {
-      if (!currentRowRef.current) return;
       let rows = document.querySelectorAll(`.${tableId}-tableRow`);
       //find the current rowRef in the rows array
       let index = Array.prototype.indexOf.call(rows, currentRowRef.current);
