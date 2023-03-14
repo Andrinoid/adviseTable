@@ -98,6 +98,8 @@ const Cell = ({
    * Find the widest cell and update the state so we can use it to auto adjust the width of the columns
    */
   useLayoutEffect(() => {
+    console.log('parentType', parentType)
+
     if (parentType === "middle") {
       setBiggestDataCellWidth((value) => {
         return refOffsetWidth > value ? refOffsetWidth : value;
@@ -114,6 +116,7 @@ const Cell = ({
     }
     if (parentType === "last") {
       setBiggestTotalCellWidth((value) => {
+        console.log('value', value)
         if (refOffsetWidth > value) {
           return refOffsetWidth;
         } else {
