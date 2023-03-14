@@ -190,6 +190,11 @@ const Row = memo(
           }
         } else if (hasTotalColumn && i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
+          console.log('calculating colType last, hasTotalColumn && i === numberOfDataCols + 1', hasTotalColumn && i === numberOfDataCols + 1)
+          console.log('hasTotalColumn, ', hasTotalColumn)
+          console.log('i', i)
+          console.log('numberOfDataCols', numberOfDataCols)
+          console.log('i === numberOfDataCols + 1', i === numberOfDataCols + 1)
           colType = "last";
           left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
           width = lastColWidth;
