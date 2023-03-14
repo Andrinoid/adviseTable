@@ -62,6 +62,7 @@ const Col = ({
   allowEdition = false,
   inputType = "text",
   onSubmitCallback,
+  lastColPaddingLeft
 }) => {
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
@@ -169,7 +170,7 @@ const Col = ({
             return nextValue[0].length;
           });
         }
-        
+
         return nextValue;
       });
     }
@@ -247,6 +248,7 @@ const Col = ({
 
       {!empty && (
         <Cell
+          lastColPaddingLeft={lastColPaddingLeft}
           parentWidth={internalStyle.width}
           parentType={type}
           totalWidth={totalWidth}

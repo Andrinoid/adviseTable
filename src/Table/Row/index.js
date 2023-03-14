@@ -178,6 +178,8 @@ const Row = memo(
         fullWidthColsCount++;
       }
 
+      const lastColPaddingLeft = 10;
+
       if (React.isValidElement(child)) {
         const i = numCols;
         if (i === 0) {
@@ -186,23 +188,18 @@ const Row = memo(
           width = firstColWidth;
 
           if (colspan > 1) {
-            width = firstColWidth + (colspan - 1) * colWidth;
+            width = firstColWidth + (colspan - 1) * colWidth + lastColPaddingLeft;
           }
         } else if (hasTotalColumn && i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
-          console.log('calculating colType last, hasTotalColumn && i === numberOfDataCols + 1', hasTotalColumn && i === numberOfDataCols + 1)
-          console.log('hasTotalColumn, ', hasTotalColumn)
-          console.log('i', i)
-          console.log('numberOfDataCols', numberOfDataCols)
-          console.log('i === numberOfDataCols + 1', i === numberOfDataCols + 1)
           colType = "last";
-          left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
+          left = leftOffset + numberOfDataCols * colWidth + firstColWidth + lastColPaddingLeft;
           width = lastColWidth;
         } else {
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           if (colspan) {
-            width = colspan * colWidth || "auto";
+            width = colspan * (colWidth) + lastColPaddingLeft || "auto";
           } else {
             width = colWidth;
           }
@@ -237,6 +234,7 @@ const Row = memo(
           selectable,
           cleartSelectionTable,
           totalCols,
+          lastColPaddingLeft
           // biggestDataCellWidth,
           // biggestLabelCellWidth,
           // biggestTotalCellWidth,
