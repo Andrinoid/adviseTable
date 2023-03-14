@@ -115,6 +115,8 @@ const Cell = ({
       });
     }
     if (parentType === "last") {
+      // on the adviseTable total never enters here, just on the clarity project, because
+      // of that the clarity total is fixed to 80px and not resizing;
       setBiggestTotalCellWidth((value) => {
         console.log('value', value)
         if (refOffsetWidth > value) {
