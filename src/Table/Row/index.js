@@ -188,7 +188,11 @@ const Row = memo(
           width = firstColWidth;
 
           if (colspan > 1) {
-            width = firstColWidth + (colspan - 2) * colWidth + lastColWidth;
+            width = firstColWidth + (colspan - 1) * colWidth;
+
+            if (hasTotalColumn) {
+              width = firstColWidth + (colspan - 2) * colWidth + lastColWidth;
+            }
           }
         } else if (hasTotalColumn && i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
