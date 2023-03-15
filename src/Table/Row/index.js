@@ -72,6 +72,7 @@ const Row = memo(
      */
     useLayoutEffect(() => {
 
+      let index = Array.prototype.indexOf.call(document.querySelectorAll(`.${tableId}-tableRow`), currentRowRef.current);
       if (rowNumber == null) {
         setRowRenderVersion((count) => {
           return count ? ++count : 1;
