@@ -117,10 +117,10 @@ const SelectedAreas = ({
           let cell =
             tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX].current;
           if (cell.isEditable()) {
-            cell.blur();
+            // cell.blur();
           }
         }
-      } catch (error) { }
+      } catch (error) {}
 
       return [];
     });
@@ -153,7 +153,7 @@ const SelectedAreas = ({
                 : forceMinX;
             forceMaxX =
               forceMaxX == null ||
-                parseInt(x) + (colspan ? colspan - 1 : 0) > forceMaxX
+              parseInt(x) + (colspan ? colspan - 1 : 0) > forceMaxX
                 ? parseInt(x) + (colspan ? colspan - 1 : 0)
                 : forceMaxX;
 
@@ -178,7 +178,9 @@ const SelectedAreas = ({
 
   /** Edit the last selected area */
   let updateCurrentSelectedArea = ({ fromX, fromY, toX, toY } = {}) => {
-    if (toX) toX = selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length - 1;
+    if (toX)
+      toX =
+        selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length - 1;
     if (toY) toY = parseInt(toY);
     if (fromX) fromX = selectionMode === "cell" ? parseInt(fromX) : 0;
     if (fromY) fromY = parseInt(fromY);
@@ -206,7 +208,7 @@ const SelectedAreas = ({
           }
         } else if (
           currentSelectedArea.oldMouseMoveTo &&
-          currentSelectedArea.oldMouseMoveTo.toX != null  &&
+          currentSelectedArea.oldMouseMoveTo.toX != null &&
           currentSelectedArea.oldMouseMoveTo.toX - toX < 0
         ) {
           // console.log("moving to right");
