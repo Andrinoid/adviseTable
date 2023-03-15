@@ -62,7 +62,7 @@ const Col = ({
   allowEdition = false,
   inputType = "text",
   onSubmitCallback,
-  lastColPaddingLeft
+  lastColPaddingLeft,
 }) => {
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
@@ -105,11 +105,12 @@ const Col = ({
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
    */
   useLayoutEffect(() => {
-
     if (currentColRef.current) {
       cleartSelectionTable();
       setTableMatrix((prev) => {
-        let { colspan } = currentColRef.current?.dataset ? currentColRef.current?.dataset : { colspan: null };
+        let { colspan } = currentColRef.current?.dataset
+          ? currentColRef.current?.dataset
+          : { colspan: null };
         if (colspan === "fullwidth") {
           colspan = totalCols;
         }
@@ -138,14 +139,11 @@ const Col = ({
         return nextValue;
       });
     }
-
   }, [y, x, totalCols, currentColRef]);
-
 
   useEffect(() => {
     return () => {
       setTableMatrix((prev) => {
-
         let nextValue = prev;
         if (nextValue[y]) {
           // delete nextValue[y][x];
@@ -154,12 +152,16 @@ const Col = ({
         for (let index = 0; index < nextValue.length; index++) {
           const row = nextValue[index];
 
-          if (row && row[x] != null && row[x].current && parseInt(row[x].current.dataset.x) === x) {
+          if (
+            row &&
+            row[x] != null &&
+            row[x].current &&
+            parseInt(row[x].current.dataset.x) === x
+          ) {
             return nextValue;
           }
         }
         if (nextValue.length > 0) {
-
           nextValue = cleanMatrix(nextValue);
           setTotalCols((prev) => {
             setNumberOfDataCols((prevDataCols) => {
@@ -173,10 +175,8 @@ const Col = ({
 
         return nextValue;
       });
-    }
-
+    };
   }, []);
-
 
   const handleDoubleClick = (e) => {
     setEditionState(true);
@@ -189,6 +189,7 @@ const Col = ({
           inputValue = initialValue;
         } else {
           if (onSubmitCallback && initialValue != inputValue) {
+            console.log("onSubmitCallback", inputValue);
             onSubmitCallback(inputValue);
           }
           initialValue = inputValue;
@@ -213,7 +214,7 @@ const Col = ({
     currentColRef.current.focus = () => {
       setEditionState(true);
     };
-    currentColRef.current.blur = isEditable ? onValueUpdate : () => { };
+    currentColRef.current.blur = isEditable ? onValueUpdate : () => {};
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
@@ -261,7 +262,7 @@ const Col = ({
           inputValue={inputValue}
           setInputValue={setInputValue}
           inputType={inputType}
-          onBlur={currentColRef.current ? currentColRef.current.blur : () => { }}
+          onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
           allowEdition={allowEdition}
         >
           {children}
