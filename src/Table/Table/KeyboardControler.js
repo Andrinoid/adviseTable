@@ -117,6 +117,7 @@ export default function useKeyboardControler(
         if (keepEdition && previousCell.isEditable()) {
           nextCell.focus();
         }
+        console.log("blur number 1");
         previousCell.blur();
       } catch (error) {}
     }
@@ -136,6 +137,7 @@ export default function useKeyboardControler(
         tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
       if (editState === "toggle") {
         if (cell.isEditable()) {
+          console.log("blur number 2");
           cell.blur();
         } else {
           cell.focus();
@@ -143,6 +145,7 @@ export default function useKeyboardControler(
       } else if (editState == true) {
         cell.focus();
       } else {
+        console.log("blur number 3");
         cell.blur(true);
       }
     }

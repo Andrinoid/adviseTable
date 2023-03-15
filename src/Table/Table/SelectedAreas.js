@@ -117,7 +117,7 @@ const SelectedAreas = ({
           let cell =
             tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX].current;
           if (cell.isEditable()) {
-            // cell.blur();
+            cell.blur();
           }
         }
       } catch (error) {}
