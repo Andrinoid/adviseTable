@@ -208,6 +208,7 @@ const Col = ({
       if (initialValue != inputValue || force) {
         setEditionState(true);
         setInputValue(value);
+        console.log("performUpdateValue", value);
         onValueUpdate();
       }
     };
