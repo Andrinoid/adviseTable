@@ -194,11 +194,11 @@ const SelectedAreas = ({
       if (toX != null) {
         if (
           currentSelectedArea.oldMouseMoveTo &&
-          currentSelectedArea.oldMouseMoveTo.toX &&
+          currentSelectedArea.oldMouseMoveTo.toX != null &&
           currentSelectedArea.oldMouseMoveTo.toX - toX > 0
         ) {
           // console.log("moving to left");
-          // console.log(toX, currentSelectedArea.toX);
+          // console.log(toX, currentSelectedArea.fromX);
           if (toX < currentSelectedArea.fromX) {
             currentSelectedArea.fromX = toX;
           } else if (toX === currentSelectedArea.toX - 1) {
@@ -206,7 +206,7 @@ const SelectedAreas = ({
           }
         } else if (
           currentSelectedArea.oldMouseMoveTo &&
-          currentSelectedArea.oldMouseMoveTo.toX &&
+          currentSelectedArea.oldMouseMoveTo.toX != null  &&
           currentSelectedArea.oldMouseMoveTo.toX - toX < 0
         ) {
           // console.log("moving to right");
@@ -218,7 +218,7 @@ const SelectedAreas = ({
           }
         } else if (
           !currentSelectedArea.oldMouseMoveTo ||
-          !currentSelectedArea.oldMouseMoveTo.toX
+          currentSelectedArea.oldMouseMoveTo.toX == null
         ) {
           currentSelectedArea.toX = toX;
         }
@@ -226,7 +226,7 @@ const SelectedAreas = ({
       if (toY != null) {
         if (
           currentSelectedArea.oldMouseMoveTo &&
-          currentSelectedArea.oldMouseMoveTo.toY &&
+          currentSelectedArea.oldMouseMoveTo.toY != null &&
           currentSelectedArea.oldMouseMoveTo.toY - toY > 0
         ) {
           // console.log("moving up");
@@ -237,7 +237,7 @@ const SelectedAreas = ({
           }
         } else if (
           currentSelectedArea.oldMouseMoveTo &&
-          currentSelectedArea.oldMouseMoveTo.toY &&
+          currentSelectedArea.oldMouseMoveTo.toY != null &&
           currentSelectedArea.oldMouseMoveTo.toY - toY < 0
         ) {
           // console.log("moving down");
@@ -248,7 +248,7 @@ const SelectedAreas = ({
           }
         } else if (
           !currentSelectedArea.oldMouseMoveTo ||
-          !currentSelectedArea.oldMouseMoveTo.toY
+          currentSelectedArea.oldMouseMoveTo.toY == null
         ) {
           currentSelectedArea.toY = toY;
         }
