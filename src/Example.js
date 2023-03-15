@@ -391,7 +391,7 @@ function Example({
                                     <Col
                                       key={i}
                                       allowEdition={allowEdition}
-                                      // onSubmitCallback={alert}
+                                      onSubmitCallback={() => {}}
                                       inputType={"number"}
                                     >
                                       {row[month]}

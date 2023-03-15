@@ -29,7 +29,7 @@ const Column = styled.div`
 
 const Col = ({
   // internal props from Row
-  children,
+  children = "",
   id,
   y,
   x,
@@ -67,10 +67,10 @@ const Col = ({
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
   const [inputValue, setInputValue] = useState(
-    dataValue ? dataValue : typeof children == "number" ? children : ""
+    dataValue ? dataValue : children
   );
   const [initialValue, setInitialValue] = useState(
-    dataValue ? dataValue : children ? children : ""
+    dataValue ? dataValue : children
   );
 
   const setEditionState = (editable) => {
@@ -213,7 +213,7 @@ const Col = ({
     currentColRef.current.focus = () => {
       setEditionState(true);
     };
-    currentColRef.current.blur = onValueUpdate;
+    currentColRef.current.blur = isEditable ? onValueUpdate : () => { };
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
