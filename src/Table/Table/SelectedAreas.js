@@ -397,25 +397,7 @@ const SelectedAreas = ({
   };
 
   const onMouseLeave = (e) => {
-    if (trackMouseMove) {
-      setSelectedAreas((selectedAreas) => {
-        if (selectedAreas.length == 0) return selectedAreas
-
-        const area = { ...selectedAreas[0] };
-        // Solving it vertically
-        if (area.fromY == area.oldMouseMoveTo.toY && area.oldMouseMoveTo.toY < area.toY) {
-          area.oldMouseMoveTo.toY = area.toY;
-          area.oldMouseMoveTo.toX = area.toX;
-          area.fromY = 0;
-        } else {
-          area.oldMouseMoveTo.toY = area.toY;
-          area.oldMouseMoveTo.toX = area.toX;
-          area.toY = tableMatrix.length - 1;
-        }
-
-        return [area];
-      });
-    }
+    if (trackMouseMove) trackMouseMove = false;
   };
 
   /**
