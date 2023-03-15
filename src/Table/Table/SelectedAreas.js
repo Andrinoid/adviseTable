@@ -48,6 +48,7 @@ const SelectedAreas = ({
       onMouseUp,
       false
     );
+
     return () => {
       mouseDownClear.destroy();
       mouseDown.destroy();
@@ -56,12 +57,22 @@ const SelectedAreas = ({
     };
   }, [selectionMode, tableMatrix]);
 
+  React.useLayoutEffect(() => {
+    const viewport = document.getElementById(`${tableId}-viewport`);
+
+    viewport?.addEventListener("mouseleave", onMouseLeave);
+
+    return () => {
+      viewport?.removeEventListener("mouseleave", onMouseLeave);
+    };
+  }, [tableId, tableMatrix]);
+
   /**
    * When the mouse is down, reset the selection and set the new coordinates
    */
   const onMouseDown = (e) => {
     let { x, y, selectable, colspan } = e.delegateTarget.dataset;
-    
+
     if (selectable == "false" || e.button == 2) {
       return;
     }
@@ -109,7 +120,7 @@ const SelectedAreas = ({
             cell.blur();
           }
         }
-      } catch (error) {}
+      } catch (error) { }
 
       return [];
     });
@@ -142,7 +153,7 @@ const SelectedAreas = ({
                 : forceMinX;
             forceMaxX =
               forceMaxX == null ||
-              parseInt(x) + (colspan ? colspan - 1 : 0) > forceMaxX
+                parseInt(x) + (colspan ? colspan - 1 : 0) > forceMaxX
                 ? parseInt(x) + (colspan ? colspan - 1 : 0)
                 : forceMaxX;
 
@@ -167,7 +178,7 @@ const SelectedAreas = ({
 
   /** Edit the last selected area */
   let updateCurrentSelectedArea = ({ fromX, fromY, toX, toY } = {}) => {
-    if (toX) toX = selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length-1;
+    if (toX) toX = selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length - 1;
     if (toY) toY = parseInt(toY);
     if (fromX) fromX = selectionMode === "cell" ? parseInt(fromX) : 0;
     if (fromY) fromY = parseInt(fromY);
@@ -177,7 +188,7 @@ const SelectedAreas = ({
       if (!currentSelectedArea) {
         currentSelectedArea = {};
       }
-      
+
       if (fromX != null) currentSelectedArea.fromX = fromX;
       if (fromY != null) currentSelectedArea.fromY = fromY;
       if (toX != null) {
@@ -358,6 +369,7 @@ const SelectedAreas = ({
   let oldY = null;
   const onMouseMove = (e) => {
     let { x, y, selectable, colspan, spanselection } = e.delegateTarget.dataset;
+
     if (selectable == "false") {
       trackMouseMove = false;
       return;
@@ -381,6 +393,28 @@ const SelectedAreas = ({
       }
       oldX = x;
       oldY = y;
+    }
+  };
+
+  const onMouseLeave = (e) => {
+    if (trackMouseMove) {
+      setSelectedAreas((selectedAreas) => {
+        if (selectedAreas.length == 0) return selectedAreas
+
+        const area = { ...selectedAreas[0] };
+        // Solving it vertically
+        if (area.fromY == area.oldMouseMoveTo.toY && area.oldMouseMoveTo.toY < area.toY) {
+          area.oldMouseMoveTo.toY = area.toY;
+          area.oldMouseMoveTo.toX = area.toX;
+          area.fromY = 0;
+        } else {
+          area.oldMouseMoveTo.toY = area.toY;
+          area.oldMouseMoveTo.toX = area.toX;
+          area.toY = tableMatrix.length - 1;
+        }
+
+        return [area];
+      });
     }
   };
 
