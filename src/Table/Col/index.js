@@ -188,7 +188,7 @@ const Col = ({
         if (resetValue) {
           inputValue = initialValue;
         } else {
-          if (onSubmitCallback && initialValue != inputValue) {
+          if (onSubmitCallback && initialValue !== inputValue && inputValue !== "") {
             onSubmitCallback(inputValue);
           }
           initialValue = inputValue;
