@@ -70,7 +70,7 @@ const Col = ({
     dataValue ? dataValue : typeof children == "number" ? children : ""
   );
   const [initialValue, setInitialValue] = useState(
-    dataValue ? dataValue : children
+    dataValue ? dataValue : children ? children : ""
   );
 
   const setEditionState = (editable) => {
@@ -188,7 +188,7 @@ const Col = ({
         if (resetValue) {
           inputValue = initialValue;
         } else {
-          if (onSubmitCallback && initialValue !== inputValue && inputValue !== "") {
+          if (onSubmitCallback && initialValue != inputValue) {
             onSubmitCallback(inputValue);
           }
           initialValue = inputValue;
