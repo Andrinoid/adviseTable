@@ -183,6 +183,7 @@ const Col = ({
   };
 
   const onValueUpdate = (resetValue = false) => {
+    console.log("onValueUpdate");
     setInitialValue((initialValue) => {
       setInputValue((inputValue) => {
         if (resetValue) {
@@ -208,7 +209,6 @@ const Col = ({
       if (initialValue != inputValue || force) {
         setEditionState(true);
         setInputValue(value);
-        console.log("performUpdateValue", value);
         onValueUpdate();
       }
     };
