@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState, memo } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  memo,
+} from "react";
 import styled from "styled-components";
 import Col from "../Col";
 import Brick from "../Col/Brick";
@@ -31,7 +37,7 @@ const Row = memo(
     type = "primary",
     leftBrickContent,
     menuContent,
-    setInstanceCount,
+    setRowRenderVersion,
     setBiggestDataCellWidth,
     setBiggestLabelCellWidth,
     setBiggestTotalCellWidth,
@@ -42,7 +48,7 @@ const Row = memo(
     colWidth,
     leftBrickWidth,
     numberOfDataCols,
-    instanceCount,
+    rowRenderVersion,
     tableMatrix,
     totalWidth,
     firstColWidth,
@@ -66,29 +72,15 @@ const Row = memo(
      */
     useLayoutEffect(() => {
 
-
-      setRowNumber((prev) => {
-          // let rows = document.querySelectorAll(`.${tableId}-tableRow`);
-          //find the current rowRef in the rows array
-          // let index = Array.prototype.indexOf.call(document.querySelectorAll(`.${tableId}-tableRow`), currentRowRef.current);
-
-          if (rowNumber == null) {
-            setInstanceCount((count) => {
-              return count ? ++count : 1;
-            });
-          }
-        return Array.prototype.indexOf.call(document.querySelectorAll(`.${tableId}-tableRow`), currentRowRef.current);
+      if (rowNumber == null) {
+        setRowRenderVersion((count) => {
+          return count ? ++count : 1;
         });
-
-    }, [instanceCount, rowNumber, setInstanceCount, tableId]);
-
-    useEffect(() => {
-      return () => {
-        setInstanceCount((count) => {
-          return count ? --count : 0;
-        });
-      };
-    }, []);
+      }
+      if (index !== rowNumber) {
+        setRowNumber((_) => index);
+      }
+    }, [rowRenderVersion, rowNumber, setRowRenderVersion, tableId]);
 
     /**
      * @returns the amount of cols that aren't being used
@@ -175,6 +167,8 @@ const Row = memo(
         fullWidthColsCount++;
       }
 
+      const lastColPaddingLeft = 10;
+
       if (React.isValidElement(child)) {
         const i = numCols;
         if (i === 0) {
@@ -184,17 +178,21 @@ const Row = memo(
 
           if (colspan > 1) {
             width = firstColWidth + (colspan - 1) * colWidth;
+
+            if (hasTotalColumn) {
+              width = firstColWidth + (colspan - 2) * colWidth + lastColWidth;
+            }
           }
         } else if (hasTotalColumn && i === numberOfDataCols + 1) {
           // plus one becuse the last col is not a dataCol e.g. total
           colType = "last";
-          left = leftOffset + numberOfDataCols * colWidth + firstColWidth;
+          left = leftOffset + numberOfDataCols * colWidth + firstColWidth + lastColPaddingLeft;
           width = lastColWidth;
         } else {
           colType = "middle";
           left = leftOffset + firstColWidth + (numCols - 1) * colWidth;
           if (colspan) {
-            width = colspan * colWidth || 'auto';
+            width = colspan * (colWidth) + lastColPaddingLeft || "auto";
           } else {
             width = colWidth;
           }
@@ -229,6 +227,7 @@ const Row = memo(
           selectable,
           cleartSelectionTable,
           totalCols,
+          lastColPaddingLeft
           // biggestDataCellWidth,
           // biggestLabelCellWidth,
           // biggestTotalCellWidth,

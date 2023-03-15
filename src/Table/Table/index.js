@@ -158,7 +158,7 @@ const Table = (
   // The table matrix is supposed to be set in the col component, where each component inject it self into the matrix, This is not working. We need a better way to do this
   const [tableMatrix, setTableMatrix] = useState([]);
   // Counter to keep track of how many rows are rendered in the table
-  const [instanceCount, setInstanceCount] = useState(0);
+  const [rowRenderVersion, setRowRenderVersion] = useState(0);
   const [initialLoaded, setInitialLoaded] = useState(false);
 
   const [isTableSelected, setIsTableSelected] = useState(false);
@@ -505,12 +505,11 @@ const Table = (
     });
   };
 
-
   useEffect(() => {
     setChildrenRows(
       children({
         rowProps: {
-          setInstanceCount,
+          setRowRenderVersion,
           setBiggestDataCellWidth,
           setBiggestLabelCellWidth,
           setBiggestTotalCellWidth,
@@ -525,7 +524,7 @@ const Table = (
           leftBrickWidth,
           topOffset: headerHeight,
           numberOfDataCols,
-          instanceCount,
+          rowRenderVersion,
           tableMatrix,
           totalWidth,
           firstColWidth,
@@ -556,7 +555,7 @@ const Table = (
     leftBrickWidth,
     headerHeight,
     numberOfDataCols,
-    instanceCount,
+    rowRenderVersion,
     tableMatrix,
     biggestLabelCellWidth,
     biggestTotalCellWidth,
@@ -672,7 +671,7 @@ const Table = (
       >
         <Wrapper
           id={tableId}
-          version="1.08"
+          version="1.10"
           scrollStatus={scrollStatus}
           style={{ opacity: !initialLoaded ? 0 : 1 }}
         >

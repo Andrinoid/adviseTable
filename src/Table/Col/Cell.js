@@ -68,12 +68,10 @@ const Cell = ({
   setInputValue,
   inputType,
   allowEdition,
+  lastColPaddingLeft
 }) => {
   const ref = useRef(null);
   const inputRef = useRef(null);
-  const [refOffsetWidth, setRefOffsetWidth] = useState(
-    ref && ref.current ? ref.current.offsetWidth : null
-  );
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   /**
@@ -90,23 +88,21 @@ const Cell = ({
     return width + margin + padding + border;
   }
 
-  useLayoutEffect(() => {
-    setRefOffsetWidth(getElementWidth(ref.current));
-  }, [ref?.current?.offsetWidth]);
-
   /**
    * Find the widest cell and update the state so we can use it to auto adjust the width of the columns
    */
   useLayoutEffect(() => {
+    const width = getElementWidth(ref.current);
+
     if (parentType === "middle") {
       setBiggestDataCellWidth((value) => {
-        return refOffsetWidth > value ? refOffsetWidth : value;
+        return width > value ? width : value;
       });
     }
     if (parentType === "first") {
       setBiggestLabelCellWidth((value) => {
-        if (refOffsetWidth > value) {
-          return refOffsetWidth;
+        if (width > value) {
+          return width;
         } else {
           return value;
         }
@@ -114,14 +110,14 @@ const Cell = ({
     }
     if (parentType === "last") {
       setBiggestTotalCellWidth((value) => {
-        if (refOffsetWidth > value) {
-          return refOffsetWidth;
+        if (width > value) {
+          return width + lastColPaddingLeft;
         } else {
           return value >= 80 ? value : 80;
         }
       });
     }
-  }, [refOffsetWidth]);
+  }, [ref?.current?.offsetWidth, parentType]);
 
   useEffect(() => {
     if (editable) {

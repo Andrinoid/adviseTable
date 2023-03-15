@@ -48,6 +48,16 @@ const MenuItem = styled.div`
   }}
 `;
 
+function getTotal(index) {
+  let result = '';
+
+  for (let i = 0; i <= index; i++) {
+    result += `${i}`;
+  }
+
+  return result
+}
+
 function Example({
   theme,
   draggable,
@@ -247,7 +257,7 @@ function Example({
         footer={footerVissible}
         headerStickyTopOffset={headerOffset}
         lasColumnRisizeable={true}
-        hasTotalColumn={false}
+        hasTotalColumn={true}
         onSelection={(selectedReport) => {
           // console.log("selectedReport", selectedReport);
         }}
@@ -388,7 +398,7 @@ function Example({
                                     </Col>
                                   ))}
 
-                                  <Col allowEdition={allowEdition}>123</Col>
+                                  <Col allowEdition={allowEdition}>{getTotal(i)}</Col>
                                 </Row>
 
                                 {
