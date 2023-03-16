@@ -206,7 +206,7 @@ const Col = ({
       setEditionState(false);
     }).then(({ shouldRunCallback, inputValue }) => {
       if (shouldRunCallback)
-        onSubmitCallback(inputValue != null ? JSON.stringify(inputValue) : "");
+        onSubmitCallback(inputValue != null ? inputValue : "");
     });
   };
 
