@@ -172,10 +172,11 @@ const Header = React.forwardRef(
                         style={{
                           width: lastColWidth ? lastColWidth : "auto",
                           height: colHeight,
+                          ...selectedBackground,
                         }}
                       >
                         <>
-                          <Label>{item.title}</Label>
+                          <Label style={selectedColor}>{item.title}</Label>
                         </>
                       </ResizablelCol>
                     )}
@@ -189,9 +190,11 @@ const Header = React.forwardRef(
                         style={{
                           width: lastColWidth ? lastColWidth : "auto",
                           height: colHeight,
+                          ...selectedBackground,
+
                         }}
                       >
-                        <Label>{item.title}</Label>
+                        <Label style={selectedColor}>{item.title}</Label>
                       </Brick>
                     )}
                   </>
