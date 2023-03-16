@@ -184,23 +184,29 @@ const Col = ({
   };
 
   const onValueUpdate = (resetValue = false) => {
-    setInitialValue((value) => {
-      let initialValue = clone(value);
-      setInputValue((value) => {
-        let inputValue = clone(value);
-        if (resetValue) {
-          inputValue = initialValue;
-        } else {
-          if (onSubmitCallback && initialValue != inputValue) {
-            onSubmitCallback(inputValue);
+    return new Promise((resolve, reject) => {
+      let shouldRunCallback = false;
+      setInitialValue((value) => {
+        let initialValue = clone(value);
+        setInputValue((value) => {
+          let inputValue = clone(value);
+          if (resetValue) {
+            inputValue = initialValue;
+          } else {
+            if (onSubmitCallback && initialValue != inputValue) {
+              shouldRunCallback = true;
+            }
+            initialValue = inputValue;
           }
-          initialValue = inputValue;
-        }
-        return inputValue;
+          resolve(shouldRunCallback);
+          return inputValue;
+        });
+        return initialValue;
       });
-      return initialValue;
+      setEditionState(false);
+    }).then((shouldRunCallback) => {
+      if (shouldRunCallback) onSubmitCallback(inputValue);
     });
-    setEditionState(false);
   };
 
   useEffect(() => {
