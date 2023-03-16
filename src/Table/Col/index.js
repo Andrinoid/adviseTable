@@ -186,19 +186,20 @@ const Col = ({
     console.log("onValueUpdate");
     setInitialValue((initialValue) => {
       console.log("YET ANOTHER LOG2");
-      setInputValue((inputValue) => {
-        if (resetValue) {
-          inputValue = initialValue;
-        } else {
-          if (onSubmitCallback && initialValue != inputValue) {
-            console.log("onSubmitCallback", inputValue);
-            onSubmitCallback(inputValue);
-          }
-          initialValue = inputValue;
-        }
-        return inputValue;
-      });
+
       return initialValue;
+    });
+    setInputValue((inputValue) => {
+      if (resetValue) {
+        inputValue = initialValue;
+      } else {
+        if (onSubmitCallback && initialValue != inputValue) {
+          console.log("onSubmitCallback", inputValue);
+          onSubmitCallback(inputValue);
+        }
+        initialValue = inputValue;
+      }
+      return inputValue;
     });
     setEditionState(false);
   };
