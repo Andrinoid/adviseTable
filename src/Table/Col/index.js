@@ -205,7 +205,8 @@ const Col = ({
       });
       setEditionState(false);
     }).then((shouldRunCallback) => {
-      if (shouldRunCallback) onSubmitCallback(inputValue);
+      if (shouldRunCallback)
+        onSubmitCallback(inputValue != null ? JSON.stringify(inputValue) : "");
     });
   };
 
