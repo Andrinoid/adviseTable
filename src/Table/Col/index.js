@@ -198,15 +198,15 @@ const Col = ({
             }
             initialValue = inputValue;
           }
-          resolve(shouldRunCallback);
+          resolve(shouldRunCallback, inputValue);
           return inputValue;
         });
         return initialValue;
       });
       setEditionState(false);
-    }).then((shouldRunCallback) => {
+    }).then((shouldRunCallback, value) => {
       if (shouldRunCallback)
-        onSubmitCallback(inputValue != null ? JSON.stringify(inputValue) : "");
+        onSubmitCallback(inputValue != null ? JSON.stringify(value) : "");
     });
   };
 
