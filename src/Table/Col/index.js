@@ -68,17 +68,16 @@ const Col = ({
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
   const [inputValue, setInputValue] = useState(
-    dataValue ? dataValue : children
+    // dataValue ? dataValue : children
+    dataValue
   );
-  const [initialValue, setInitialValue] = useState(
-    dataValue ? dataValue : children
-  );
+  const [initialValue, setInitialValue] = useState(dataValue);
 
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
 
     if (editable) {
-      setInitialValue(dataValue ? dataValue : children);
+      setInitialValue(dataValue);
     }
     setIsEditable(editable);
   };
