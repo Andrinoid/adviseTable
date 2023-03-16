@@ -68,7 +68,7 @@ const Col = ({
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
   const [inputValue, setInputValue] = useState(
-    dataValue ? dataValue : children
+    dataValue ? dataValue : typeof children == "number" ? children : ""
   );
   const [initialValue, setInitialValue] = useState(
     dataValue ? dataValue : children
