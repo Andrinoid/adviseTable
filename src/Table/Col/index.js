@@ -1,4 +1,5 @@
 //react component
+import { clone } from "lodash";
 import React, {
   useState,
   useRef,
@@ -183,8 +184,10 @@ const Col = ({
   };
 
   const onValueUpdate = (resetValue = false) => {
-    setInitialValue((initialValue) => {
-      setInputValue((inputValue) => {
+    setInitialValue((value) => {
+      let initialValue = clone(value);
+      setInputValue((value) => {
+        let inputValue = clone(value);
         if (resetValue) {
           inputValue = initialValue;
         } else {
