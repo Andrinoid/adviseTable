@@ -185,8 +185,8 @@ const Col = ({
   const onValueUpdate = (resetValue = false) => {
     console.log("onValueUpdate");
     setInitialValue((initialValue) => {
+      console.log("YET ANOTHER LOG2");
       setInputValue((inputValue) => {
-        console.log("YET ANOTHER LOG");
         if (resetValue) {
           inputValue = initialValue;
         } else {
