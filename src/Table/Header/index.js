@@ -14,7 +14,7 @@ const headerTheme = {
   dark: {
     background: "#fafafa",
     color: "rgb(74, 76, 80)",
-    hightlight: "rgba(255,255,255, 0.2)",
+    hightlight: "#1F1F1F",
   },
 };
 
@@ -36,7 +36,7 @@ const Label = styled.div`
 
 const PressableBrick = styled.button`
   background: ${({ selected, themeKey }) =>
-    selected ? headerTheme[themeKey].background : "#Eff1f1"};
+    selected ? headerTheme[themeKey].background : themeKey == 'light' ? "#Eff1f1" : "#0A0A0A"};
   border: none;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;
   cursor: pointer;
@@ -110,6 +110,7 @@ const Header = React.forwardRef(
               position: "sticky",
               top: 0,
               left: 0,
+              
             }}
           />
 
