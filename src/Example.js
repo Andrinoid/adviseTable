@@ -86,9 +86,9 @@ function Example({
   //   tableRef.current.autoAdjust();
   // }, [autoAdjustTrigger]);
 
-  useEffect(() => {
-    console.log('expanded ids', expandedIds);
-  }, [expandedIds]);
+  // useEffect(() => {
+  //   console.log('expanded ids', expandedIds);
+  // }, [expandedIds]);
 
 
   let months = mo.map((m) => m.system);
@@ -120,7 +120,6 @@ function Example({
           cursor={"pointer"}
           style={{ marginLeft: 4 }}
           onClick={() => {
-            console.log('if includes expandedIds')
             if (expandedIds.includes(rowId)) {
               setExpandedIds(expandedIds.filter((id) => id !== rowId));
             } else {
@@ -153,7 +152,7 @@ function Example({
     );
   };
 
-  const Item = memo(({ index, style, tableProvided }) => (
+  const Item = memo(({ monthRange, index, style, tableProvided }) => (
     <Row
       key={index}
       {...tableProvided.rowProps}
@@ -165,25 +164,15 @@ function Example({
         transform: "translateZ(0)",
       }}
     >
-      <Col horizontalAlign="left">lykill {index}</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
-      <Col allowEdition={allowEdition}>34567</Col>
+      {[...monthRange, {}, {}].map((m, i) => {
+        if (i == 0) return <Col key={i} horizontalAlign="left">lykill {i}</Col>
+        return <Col key={i} allowEdition={allowEdition}>34567</Col>
+      })}
     </Row>
 
   ));
 
-  const SubRowList = useCallback(({ tableProvided }) => {
+  const SubRowList = useCallback(({ monthRange, tableProvided }) => {
     return (
       <Virtuoso
         data={items}
@@ -192,7 +181,7 @@ function Example({
           console.log('end reached')
           setItems(Array.from(Array(items.length + 20).keys()))
         }}
-        itemContent={(index) => <Item index={index} tableProvided={tableProvided} />}
+        itemContent={(index) => <Item monthRange={monthRange} index={index} tableProvided={tableProvided} />}
         style={{ height: '400px', background: "#f7f7f7", }}
       />)
     // <>
@@ -222,6 +211,7 @@ function Example({
       window.removeEventListener("contextmenu", handleContextMenu);
     };
   }, [table1Ref, table2Ref]);
+
 
   return (
     <div className="App">
@@ -391,7 +381,7 @@ function Example({
                                     <Col
                                       key={i}
                                       allowEdition={allowEdition}
-                                      onSubmitCallback={() => {}}
+                                      onSubmitCallback={() => { }}
                                       inputType={"number"}
                                     >
                                       {row[month]}
@@ -403,73 +393,9 @@ function Example({
 
                                 {
                                   expandedIds.includes(row.id) && (
-                                    <SubRowList tableProvided={tableProvided} />
+                                    <SubRowList monthRange={monthRange} tableProvided={tableProvided} />
                                   )
-                                  // expandedIds.includes(row.id) && (
-                                  //   // The motion divs are optional and just an example of how to animate the conditional rendered rows
-                                  //   // it shows how dynamic the table can be
-                                  //   // Optional animation starts
-                                  //   <div>
-                                  //     <div>
-                                  //       {/* Optional animation ends */}
 
-                                  //       <Row
-                                  //         selectable={false}
-                                  //         {...tableProvided.rowProps}
-                                  //         type={"secondary"}
-                                  //         style={{
-                                  //           minHeight: 40,
-                                  //           background: "#f7f7f7",
-                                  //         }}
-                                  //       >
-                                  //         <Col horizontalAlign="left">
-                                  //           lykill 1004
-                                  //         </Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //       </Row>
-                                  //       <Row
-                                  //         selectable={false}
-                                  //         {...tableProvided.rowProps}
-                                  //         type={"secondary"}
-                                  //         style={{
-                                  //           minHeight: 40,
-                                  //           background: "#f7f7f7",
-                                  //         }}
-                                  //       >
-                                  //         <Col horizontalAlign="left">
-                                  //           lykill 1006
-                                  //         </Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //         <Col>34567</Col>
-                                  //       </Row>
-                                  //       {/* Optional animation starts */}
-                                  //     </div>
-                                  //   </div>
-                                  // )
-                                  // Optional animation ends
                                 }
                               </div>
                             )}
