@@ -1,5 +1,5 @@
 //react component
-import { clone } from "lodash";
+import { clone, cloneDeep } from "lodash";
 import React, {
   useState,
   useRef,
@@ -141,22 +141,10 @@ const Col = ({
   useEffect(() => {
     return () => {
       setTableMatrix((prev) => {
-        let nextValue = prev;
+        let nextValue = cloneDeep(prev);
         if (nextValue[y]) {
           // delete nextValue[y][x];
           nextValue[y][x] = null;
-        }
-        for (let index = 0; index < nextValue.length; index++) {
-          const row = nextValue[index];
-
-          if (
-            row &&
-            row[x] != null &&
-            row[x].current &&
-            parseInt(row[x].current.dataset.x) === x
-          ) {
-            return nextValue;
-          }
         }
         if (nextValue.length > 0) {
           nextValue = cleanMatrix(nextValue);
@@ -169,7 +157,7 @@ const Col = ({
             return nextValue[0].length;
           });
         }
-
+        console.log("DELETE", nextValue);
         return nextValue;
       });
     };
