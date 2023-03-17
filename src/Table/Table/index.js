@@ -761,6 +761,7 @@ const Table = (
               inset: 0,
               width: viewportWidth,
               overflow: "hidden",
+              pointerEvents: "none",
             }}
           >
             <div
