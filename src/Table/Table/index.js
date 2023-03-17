@@ -675,6 +675,7 @@ const Table = (
           scrollStatus={scrollStatus}
           style={{ opacity: !initialLoaded ? 0 : 1 }}
         >
+          {numberOfDataCols}
           {headerData ? (
             <Header
               selectAll={selectAll}
