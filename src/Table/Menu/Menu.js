@@ -4,13 +4,11 @@ import {
   HandleControllerExecution,
   HandleDevtoolsOpening,
   HandleMenuItems,
-  HandleMenuOpening,
   HandlePositioning,
 } from ".";
 
 function Menu(props) {
   const { controller, setOpen, id, width, children, ...rest } = props;
-  const className = HandleMenuOpening(controller);
   const [position] = HandlePositioning(controller);
   const items = HandleMenuItems(Menu, children, controller);
   HandleDevtoolsOpening(controller);
@@ -29,7 +27,7 @@ function Menu(props) {
             ? "translate(0, 0)"
             : "translate(-9999px, -9999px)",
         }}
-        className={className}
+        className={controller.isOpen ? "open" : "close"}
       >
         {items}
       </MenuContainer>

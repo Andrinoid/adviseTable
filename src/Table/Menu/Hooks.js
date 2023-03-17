@@ -24,13 +24,19 @@ export function HandleControllerExecution(controller, tableId) {
 
     function handleContextMenu(e) {
       e.preventDefault();
+      const openElements = document.querySelectorAll('.menu-container div.open');
+      const element = document.querySelector(`#${tableId}-menu`);
 
-      setTimeout(() => {
-        execute({
-          pageX: e.pageX,
-          pageY: e.pageY,
-        });
-      }, 80);
+      if (openElements.length == 0 ||
+        (openElements.length == 1 && element.classList.contains('open'))
+      ) {
+        setTimeout(() => {
+          execute({
+            pageX: e.pageX,
+            pageY: e.pageY,
+          });
+        }, 80);
+      }
     }
 
     container.addEventListener("contextmenu", handleContextMenu);
@@ -114,22 +120,4 @@ export function HandleMenuItems(menuComponent, children, controller) {
   }, [children]);
 
   return items;
-}
-
-export function HandleMenuOpening(controller) {
-  const [className, setClassName] = useState(null);
-
-  useEffect(() => {
-    if (controller.isOpen) {
-      setTimeout(() => {
-        setClassName("open");
-      }, 1);
-    } else {
-      setTimeout(() => {
-        setClassName("close");
-      }, 1);
-    }
-  }, [controller.isOpen]);
-
-  return className;
 }
