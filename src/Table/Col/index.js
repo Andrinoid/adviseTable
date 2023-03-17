@@ -74,7 +74,7 @@ const Col = ({
     if (editable && !allowEdition) return;
 
     if (editable) {
-      setInitialValue(dataValue);
+      setInitialValue(dataValue || "");
     }
     setIsEditable(editable);
   };
