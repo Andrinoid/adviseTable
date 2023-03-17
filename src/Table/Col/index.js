@@ -157,7 +157,6 @@ const Col = ({
             return nextValue[0].length;
           });
         }
-        console.log("DELETE", nextValue);
         return nextValue;
       });
     };
