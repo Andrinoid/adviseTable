@@ -454,10 +454,10 @@ const Table = (
    
     tableMatrix.forEach((row, rowIndex) => {
       let skip = -1;
-      let colspanIndex = -1;
+      let startIndex = -1;
       row.forEach((cell, colIndex) => {      
-        if (colspanIndex != -1 && colIndex <= colspanIndex+skip) return;
-        if (colIndex > colspanIndex+skip) skip = -1;
+        if (startIndex != -1 && colIndex <= startIndex+skip) return;
+        if (colIndex > startIndex+skip) skip = -1;
 
         let containedArea = getContainedArea(selectedAreas, {
           x: colIndex,
@@ -472,7 +472,7 @@ const Table = (
               );
 
             if (colspan) {
-              colspanIndex = colIndex;
+              startIndex = colIndex;
               skip = Number(colspan) - 1;
               return;
             }
