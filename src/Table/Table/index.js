@@ -440,7 +440,6 @@ const Table = (
   const onLastColResize = useCallback((width) => {
     setLastColWidth(width);
   }, []);
-
   /**
    * Basic calculations on the selected area values
    * It's sets the state variables selectedSum, selectedAvg, selectedMin, selectedMax, selectedCount
@@ -452,8 +451,14 @@ const Table = (
     let min = 0;
     let max = 0;
     let avg = 0;
+   
     tableMatrix.forEach((row, rowIndex) => {
-      row.forEach((cell, colIndex) => {
+      let skip = -1;
+      let colspanIndex = -1;
+      row.forEach((cell, colIndex) => {      
+        if (colspanIndex != -1 && colIndex <= colspanIndex+skip) return;
+        if (colIndex > colspanIndex+skip) skip = -1;
+
         let containedArea = getContainedArea(selectedAreas, {
           x: colIndex,
           y: rowIndex,
@@ -461,6 +466,17 @@ const Table = (
         if (containedArea && !containedArea.isExclusion) {
           count++;
           try {
+            let colspan =
+              tableMatrix[rowIndex][colIndex].current.getAttribute(
+                "data-colspan"
+              );
+
+            if (colspan) {
+              colspanIndex = colIndex;
+              skip = Number(colspan) - 1;
+              return;
+            }
+
             let value =
               tableMatrix[rowIndex][colIndex].current.getAttribute(
                 "data-value"
