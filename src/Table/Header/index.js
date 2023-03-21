@@ -54,6 +54,19 @@ const PressableBrick = styled.button`
   }}
 `;
 
+const Triangle = styled.div`
+    width: 0; 
+    height: 0; 
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid rgb(181, 177, 177);
+    transform: rotate(45deg);
+    position: absolute;
+    right: 3px;
+    bottom: -3px;
+    
+`
+
 const Header = React.forwardRef(
   (
     {
@@ -89,6 +102,8 @@ const Header = React.forwardRef(
     };
     return (
       <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
+
+
         <div
           style={{
             ...theTheme.header,
@@ -110,9 +125,11 @@ const Header = React.forwardRef(
               position: "sticky",
               top: 0,
               left: 0,
-              
+
             }}
-          />
+          >
+            <Triangle />
+          </PressableBrick>
 
           {data.map((item, index) => {
             // we need index to be zero after the first col wich has it's own width
