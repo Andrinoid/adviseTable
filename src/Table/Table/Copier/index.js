@@ -135,5 +135,5 @@ export default function useCopier(tableMatrix, selectedAreas, header) {
     return () => {
       window.removeEventListener("keydown", handleCopy);
     };
-  }, [tableMatrix, selectedAreas]);
+  }, [tableMatrix, selectedAreas, header]);
 }
