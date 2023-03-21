@@ -3,14 +3,12 @@ import styled from "styled-components";
 import {
   HandleControllerExecution,
   HandleDevtoolsOpening,
-  HandleMenuItems,
   HandlePositioning,
 } from ".";
 
 function Menu(props) {
   const { controller, setOpen, id, width, children, ...rest } = props;
   const [position] = HandlePositioning(controller);
-  const items = HandleMenuItems(Menu, children, controller);
   HandleDevtoolsOpening(controller);
   HandleControllerExecution(controller, id.split("-")[0], setOpen);
 
@@ -29,7 +27,7 @@ function Menu(props) {
         }}
         className={controller.isOpen ? "open" : "close"}
       >
-        {items}
+        {children}
       </MenuContainer>
     </Container>
   );
