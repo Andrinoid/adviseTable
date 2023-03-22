@@ -136,7 +136,7 @@ const Col = ({
         return nextValue;
       });
     }
-  }, [y, x, totalCols, currentColRef]);
+  }, [y, x, totalCols]);
 
   useEffect(() => {
     return () => {
