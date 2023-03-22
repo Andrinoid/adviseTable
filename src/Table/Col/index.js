@@ -210,7 +210,7 @@ const Col = ({
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
-  }, [isEditable, allowEdition]);
+  }, [isEditable, allowEdition, initialValue, inputValue, currentColRef]);
 
   return (
     <Column
