@@ -98,3 +98,26 @@ export function HandleDevtoolsOpening(controller) {
     preventDefault: false,
   });
 }
+
+export function HandleMenuItems(menuComponent, children, controller) {
+  const [items, setItems] = useState(null);
+
+  function getItemsFrom(children) {
+    const subComponentList = Object.keys(menuComponent);
+
+    return subComponentList.map((key) => {
+      return React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return child.type.name === key ? child : null;
+        }
+        return null;
+      });
+    });
+  }
+
+  useEffect(() => {
+    setItems(getItemsFrom(children));
+  }, [children]);
+
+  return items;
+}

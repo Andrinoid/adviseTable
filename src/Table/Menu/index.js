@@ -2,6 +2,7 @@ import Menu from "./Menu";
 import MenuController from "./MenuController";
 import {
   HandleControllerExecution,
+  HandleMenuItems,
   HandlePositioning,
   HandleDevtoolsOpening,
   HandleExporting
@@ -11,6 +12,7 @@ export {
   Menu,
   MenuController,
   HandleControllerExecution,
+  HandleMenuItems,
   HandlePositioning,
   HandleDevtoolsOpening,
   HandleExporting
