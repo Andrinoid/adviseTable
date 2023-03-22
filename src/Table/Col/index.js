@@ -140,6 +140,8 @@ const Col = ({
 
   useEffect(() => {
     return () => {
+    console.log("ran the useEffect umount")
+
       setTableMatrix((prev) => {
         let nextValue = cloneDeep(prev);
         if (nextValue[y]) {
