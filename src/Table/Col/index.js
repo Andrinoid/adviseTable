@@ -166,20 +166,32 @@ const Col = ({
     setEditionState(true);
   };
 
-  const onValueUpdate = React.useCallback((resetValue = false) => {
-    let aInputValue = inputValue;
-
-    if (resetValue) aInputValue = initialValue;
-    else {
-      if (onSubmitCallback && initialValue != inputValue) {
-        onSubmitCallback(inputValue);
-      }
-
-      setInitialValue(aInputValue)
-    }
-
-    setInputValue(aInputValue);
-  }, [inputValue, initialValue, onSubmitCallback])
+  const onValueUpdate = (resetValue = false) => {
+    return new Promise((resolve, reject) => {
+      let shouldRunCallback = false;
+      setInitialValue((value) => {
+        let initialValue = clone(value);
+        setInputValue((value) => {
+          let inputValue = clone(value);
+          if (resetValue) {
+            inputValue = initialValue;
+          } else {
+            if (onSubmitCallback && initialValue != inputValue) {
+              shouldRunCallback = true;
+            }
+            initialValue = inputValue;
+          }
+          resolve({ shouldRunCallback, inputValue });
+          return inputValue;
+        });
+        return initialValue;
+      });
+      setEditionState(false);
+    }).then(({ shouldRunCallback, inputValue }) => {
+      if (shouldRunCallback)
+        onSubmitCallback(inputValue != null ? inputValue : "");
+    });
+  };
 
   useEffect(() => {
     currentColRef.current.performUpdateValue = (value, force = false) => {
@@ -198,7 +210,7 @@ const Col = ({
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
-  }, [isEditable, allowEdition, onValueUpdate]);
+  }, [isEditable, allowEdition]);
 
   return (
     <Column
