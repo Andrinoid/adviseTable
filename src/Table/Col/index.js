@@ -102,6 +102,7 @@ const Col = ({
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
    */
   useLayoutEffect(() => {
+    console.log('running useLayoutEffect')
     if (currentColRef.current) {
       cleartSelectionTable();
       setTableMatrix((prev) => {
@@ -115,13 +116,13 @@ const Col = ({
         let index = x;
         if (prev[y]) {
           for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
-            prev[y][index] = currentColRef;
+            prev[y][index] = cloneDeep(currentColRef);
           }
           nextValue = prev;
         } else if (y != null) {
           prev[y] = [];
           for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
-            prev[y][index] = currentColRef;
+            prev[y][index] = cloneDeep(currentColRef);
           }
           nextValue = prev;
         }
@@ -140,8 +141,6 @@ const Col = ({
 
   useEffect(() => {
     return () => {
-    console.log("ran the useEffect umount")
-
       setTableMatrix((prev) => {
         let nextValue = cloneDeep(prev);
         if (nextValue[y]) {
@@ -149,6 +148,7 @@ const Col = ({
           nextValue[y][x] = null;
         }
         if (nextValue.length > 0) {
+          console.log('cleaning the matrix')
           nextValue = cleanMatrix(nextValue);
           setTotalCols((prev) => {
             setNumberOfDataCols((prevDataCols) => {
@@ -169,8 +169,6 @@ const Col = ({
   };
 
   const onValueUpdate = (resetValue = false) => {
-    console.log("onValueUpdate")
-
     return new Promise((resolve, reject) => {
       let shouldRunCallback = false;
       setInitialValue((value) => {
