@@ -167,16 +167,22 @@ const Col = ({
   };
 
   const onValueUpdate = (resetValue = false) => {
+    console.log('running onValueUpdate')
     return new Promise((resolve, reject) => {
       let shouldRunCallback = false;
       setInitialValue((value) => {
         let initialValue = clone(value);
+        console.log('setted the intial value to: ', initialValue)
+
         setInputValue((value) => {
           let inputValue = clone(value);
+          console.log('setted the input value to: ', inputValue)
           if (resetValue) {
+            console.log('is reseting the value')
             inputValue = initialValue;
           } else {
             if (onSubmitCallback && initialValue != inputValue) {
+              console.log('is allowing the the callback to be run')
               shouldRunCallback = true;
             }
             initialValue = inputValue;
@@ -188,6 +194,7 @@ const Col = ({
       });
       setEditionState(false);
     }).then(({ shouldRunCallback, inputValue }) => {
+      console.log('is running the callback? ', shouldRunCallback, ' with the value: ', inputValue, '')
       if (shouldRunCallback)
         onSubmitCallback(inputValue != null ? inputValue : "");
     });

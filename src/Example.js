@@ -377,11 +377,15 @@ function Example({
                                 >
                                   <Col horizontalAlign="left">{row.name}</Col>
 
-                                  {monthRange.map((month, i) => (
+                                  {monthRange.map((month, ind) => (
                                     <Col
-                                      key={i}
+                                      key={ind}
                                       allowEdition={allowEdition}
-                                      onSubmitCallback={() => { }}
+                                      onSubmitCallback={(value) => { 
+                                        const cloneViewData = [...viewData];
+                                        cloneViewData[i][ind] = value;
+                                        setViewData([...cloneViewData]);
+                                      }}
                                       inputType={"number"}
                                     >
                                       {row[month]}
