@@ -73,6 +73,12 @@ const Col = ({
   console.log('dataValue', dataValue)
   console.log('inputValue', inputValue)
   console.log('initialValue', initialValue)
+
+  useEffect(() => {
+    if (!dataValue && !initialValue && inputValue)  {
+      setInputValue('')
+    }
+  }, [dataValue, initialValue]);
   
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
