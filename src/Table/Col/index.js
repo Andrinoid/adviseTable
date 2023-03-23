@@ -73,7 +73,7 @@ const Col = ({
   useEffect(() => {
     console.log('inputValue', inputValue)
     console.log('initialValue', initialValue)
-  }, [inputValue, initialValue])
+  })
 
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
