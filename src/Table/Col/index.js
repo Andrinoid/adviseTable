@@ -1,5 +1,5 @@
 //react component
-import { clone, cloneDeep } from "lodash";
+import { clone, cloneDeep, initial } from "lodash";
 import React, {
   useState,
   useRef,
@@ -71,10 +71,9 @@ const Col = ({
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
   useEffect(() => {
-    if (inputValue == '') {
-      setInitialValue('')
-    }
-  }, [inputValue])
+    console.log('inputValue', inputValue)
+    console.log('initialValue', initialValue)
+  }, [inputValue, initialValue])
 
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
