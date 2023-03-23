@@ -70,16 +70,6 @@ const Col = ({
   const [inputValue, setInputValue] = useState(dataValue || "");
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
- 
-
-  useEffect(() => {
-    console.log(`X: ${x}; Y: ${y};`)
-    console.log(`dataValue`, dataValue)
-    console.log(`X: ${x}; Y: ${y};`)
-    console.log('inputValue', inputValue)
-    console.log('initialValue', initialValue, '\n\n')
-  });
-
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
 
@@ -146,7 +136,7 @@ const Col = ({
         return nextValue;
       });
     }
-  }, [y, x, totalCols, currentColRef]);
+  }, [y, x, totalCols]);
 
   useEffect(() => {
     return () => {
