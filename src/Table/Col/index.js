@@ -73,13 +73,12 @@ const Col = ({
  
 
   useEffect(() => {
-    console.log(`Initial Mounting`)
+    console.log(`X: ${x}; Y: ${y};`)
+    console.log(`dataValue`, dataValue)
     console.log(`X: ${x}; Y: ${y};`)
     console.log('inputValue', inputValue)
     console.log('initialValue', initialValue, '\n\n')
-    setInitialValue(dataValue || "");
-    setInputValue(dataValue || "");
-  }, []);
+  });
 
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
