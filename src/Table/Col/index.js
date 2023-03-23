@@ -222,9 +222,7 @@ const Col = ({
     };
 
     return () => {
-      console.log('unmounting')
-      setInitialValue('');
-      setInputValue('');
+      console.log('unmounting initialValue inputValue', initialValue, inputValue)
     }
   }, [isEditable, allowEdition, initialValue, inputValue, currentColRef]);
 
