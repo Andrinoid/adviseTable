@@ -70,6 +70,12 @@ const Col = ({
   const [inputValue, setInputValue] = useState(dataValue || "");
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
+  useEffect(() => {
+    if (inputValue == '') {
+      setInitialValue('')
+    }
+  }, [inputValue])
+
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
 
@@ -102,7 +108,6 @@ const Col = ({
    *  The table matrix is used for calculating the selected area and has other opportunities for future features
    */
   useLayoutEffect(() => {
-    console.log('running useLayoutEffect')
     if (currentColRef.current) {
       cleartSelectionTable();
       setTableMatrix((prev) => {
@@ -148,7 +153,6 @@ const Col = ({
           nextValue[y][x] = null;
         }
         if (nextValue.length > 0) {
-          console.log('cleaning the matrix')
           nextValue = cleanMatrix(nextValue);
           setTotalCols((prev) => {
             setNumberOfDataCols((prevDataCols) => {
@@ -193,8 +197,6 @@ const Col = ({
     }).then(({ shouldRunCallback, inputValue }) => {
       if (shouldRunCallback) {
         onSubmitCallback(inputValue != null ? inputValue : "");
-        setInitialValue("")
-        setInputValue("")
       }
     });
   };
@@ -204,8 +206,6 @@ const Col = ({
       if (!allowEdition) throw new Error("This column is not editable");
 
       if (initialValue != inputValue || force) {
-        console.log("performUpdateValue", value, force)
-
         setEditionState(true);
         setInputValue(value);
         onValueUpdate();
