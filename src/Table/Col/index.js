@@ -95,6 +95,7 @@ const Col = ({
       tableMatrix[rowIndex] = tableMatrix[rowIndex].slice(0, lastColumn + 1);
     }
 
+    console.log('cleanMatrixResult', tableMatrix);
     return tableMatrix;
   };
   /*
@@ -115,13 +116,13 @@ const Col = ({
         let index = x;
         if (prev[y]) {
           for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
-            prev[y][index] = cloneDeep(currentColRef);
+            prev[y][index] = currentColRef;
           }
           nextValue = prev;
         } else if (y != null) {
           prev[y] = [];
           for (index; index <= (colspan ? x + (colspan - 1) : x); index++) {
-            prev[y][index] = cloneDeep(currentColRef);
+            prev[y][index] = currentColRef;
           }
           nextValue = prev;
         }
@@ -136,7 +137,7 @@ const Col = ({
         return nextValue;
       });
     }
-  }, [y, x, totalCols]);
+  }, [y, x, totalCols, currentColRef]);
 
   useEffect(() => {
     return () => {
@@ -146,6 +147,8 @@ const Col = ({
           // delete nextValue[y][x];
           nextValue[y][x] = null;
         }
+
+        console.log('before cleaning the matrix')
         if (nextValue.length > 0) {
           console.log('cleaning the matrix')
           nextValue = cleanMatrix(nextValue);
@@ -204,11 +207,11 @@ const Col = ({
         console.log("performUpdateValue", value, force)
 
         setEditionState(true);
-        setInputValue(value);
+        setInputValue();
         onValueUpdate();
       }
     };
-    currentColRef.current.focus = () => {
+    currentColRef.current.focus = (value) => {
       setEditionState(true);
     };
     currentColRef.current.blur = isEditable ? onValueUpdate : () => { };
