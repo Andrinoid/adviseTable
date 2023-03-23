@@ -70,6 +70,7 @@ const Col = ({
   const [inputValue, setInputValue] = useState(dataValue || "");
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
+  console.log('dataValue', dataValue)
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
 
@@ -78,14 +79,6 @@ const Col = ({
     }
     setIsEditable(editable);
   };
-
-  useEffect(() => {
-    setTableMatrix(v => {
-      const result = cleanMatrix(v)
-      console.log(result)
-      return result
-    });
-  }, []);
 
   const cleanMatrix = (tableMatrix) => {
     let lastColumn = null;
@@ -155,9 +148,7 @@ const Col = ({
           nextValue[y][x] = null;
         }
 
-        console.log('before cleaning the matrix')
         if (nextValue.length > 0) {
-          console.log('cleaning the matrix')
           nextValue = cleanMatrix(nextValue);
           setTotalCols((prev) => {
             setNumberOfDataCols((prevDataCols) => {
@@ -211,8 +202,6 @@ const Col = ({
       if (!allowEdition) throw new Error("This column is not editable");
 
       if (initialValue != inputValue || force) {
-        console.log("performUpdateValue", value, force)
-
         setEditionState(true);
         setInputValue();
         onValueUpdate();
