@@ -304,7 +304,10 @@ const Table = (
 
   useEffect(() => {
     const handleResize = () => {
-      setTotalWidth(getAdjustedSize());
+      const size = getAdjustedSize();
+      if (size > 600) {
+        setTotalWidth(size);
+      }
     };
     function handleClick(e) {
       setMenuIsOpen(false);
