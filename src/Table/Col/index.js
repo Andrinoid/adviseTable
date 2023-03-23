@@ -70,6 +70,12 @@ const Col = ({
   const [inputValue, setInputValue] = useState(dataValue || "");
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
+  useEffect(() => {
+    if (!dataValue && !initialValue && inputValue)  {
+      setInputValue('')
+    }
+  }, [dataValue, initialValue]);
+
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
 
