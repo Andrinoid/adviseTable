@@ -246,7 +246,7 @@ const Table = (
       (firstColWidth ? firstColWidth : biggestLabelCellWidth) +
       leftBrickWidth +
       biggestTotalCellWidth +
-      biggestDataCellWidth * numberOfDataCols + 250;
+      biggestDataCellWidth * numberOfDataCols;
     const tableContainerSize = tableContainerRef?.current?.offsetWidth;
     return tableContainerSize > minSize ? tableContainerSize : minSize;
   }, [
