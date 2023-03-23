@@ -191,8 +191,11 @@ const Col = ({
       });
       setEditionState(false);
     }).then(({ shouldRunCallback, inputValue }) => {
-      if (shouldRunCallback)
+      if (shouldRunCallback) {
         onSubmitCallback(inputValue != null ? inputValue : "");
+        setInitialValue("")
+        setInputValue("")
+      }
     });
   };
 
