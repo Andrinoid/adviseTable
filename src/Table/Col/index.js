@@ -71,8 +71,11 @@ const Col = ({
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
   useEffect(() => {
-    console.log('inputValue', inputValue)
-    console.log('initialValue', initialValue)
+    if (initialValue || inputValue) {
+      console.log(`X: ${x}; Y: ${y};`)
+      console.log('inputValue', inputValue)
+      console.log('initialValue', initialValue)
+    }
   })
 
   const setEditionState = (editable) => {
@@ -213,7 +216,7 @@ const Col = ({
     currentColRef.current.focus = () => {
       setEditionState(true);
     };
-    currentColRef.current.blur = isEditable ? onValueUpdate : () => {};
+    currentColRef.current.blur = isEditable ? onValueUpdate : () => { };
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
@@ -261,7 +264,7 @@ const Col = ({
           inputValue={inputValue}
           setInputValue={setInputValue}
           inputType={inputType}
-          onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
+          onBlur={currentColRef.current ? currentColRef.current.blur : () => { }}
           allowEdition={allowEdition}
         >
           {children}
