@@ -79,6 +79,14 @@ const Col = ({
     setIsEditable(editable);
   };
 
+  useEffect(() => {
+    setTableMatrix(v => {
+      const result = cleanMatrix(v)
+      console.log(result)
+      return result
+    });
+  }, []);
+
   const cleanMatrix = (tableMatrix) => {
     let lastColumn = null;
     for (let rowIndex = 0; rowIndex < tableMatrix.length; rowIndex++) {
@@ -95,7 +103,6 @@ const Col = ({
       tableMatrix[rowIndex] = tableMatrix[rowIndex].slice(0, lastColumn + 1);
     }
 
-    console.log('cleanMatrixResult', tableMatrix);
     return tableMatrix;
   };
   /*
