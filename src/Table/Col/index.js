@@ -1,5 +1,5 @@
 //react component
-import { clone, cloneDeep, initial } from "lodash";
+import { clone, cloneDeep } from "lodash";
 import React, {
   useState,
   useRef,
@@ -70,13 +70,16 @@ const Col = ({
   const [inputValue, setInputValue] = useState(dataValue || "");
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
+ 
+
   useEffect(() => {
-    if (initialValue || inputValue) {
-      console.log(`X: ${x}; Y: ${y};`)
-      console.log('inputValue', inputValue)
-      console.log('initialValue', initialValue)
-    }
-  })
+    console.log(`Initial Mounting`)
+    console.log(`X: ${x}; Y: ${y};`)
+    console.log('inputValue', inputValue)
+    console.log('initialValue', initialValue, '\n\n')
+    setInitialValue(dataValue || "");
+    setInputValue(dataValue || "");
+  }, []);
 
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
@@ -155,6 +158,7 @@ const Col = ({
           nextValue[y][x] = null;
         }
         if (nextValue.length > 0) {
+          console.log('cleaning the matrix')
           nextValue = cleanMatrix(nextValue);
           setTotalCols((prev) => {
             setNumberOfDataCols((prevDataCols) => {
@@ -208,6 +212,8 @@ const Col = ({
       if (!allowEdition) throw new Error("This column is not editable");
 
       if (initialValue != inputValue || force) {
+        console.log("performUpdateValue", value, force)
+
         setEditionState(true);
         setInputValue(value);
         onValueUpdate();
@@ -220,10 +226,6 @@ const Col = ({
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
-
-    return () => {
-      console.log('unmounting initialValue inputValue', initialValue, inputValue)
-    }
   }, [isEditable, allowEdition, initialValue, inputValue, currentColRef]);
 
   return (
