@@ -220,6 +220,12 @@ const Col = ({
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
+
+    return () => {
+      console.log('unmounting')
+      setInitialValue('');
+      setInputValue('');
+    }
   }, [isEditable, allowEdition, initialValue, inputValue, currentColRef]);
 
   return (
