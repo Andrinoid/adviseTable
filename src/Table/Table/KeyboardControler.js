@@ -118,7 +118,7 @@ export default function useKeyboardControler(
           nextCell.focus();
         }
         previousCell.blur();
-      } catch (error) {}
+      } catch (error) { }
     }
     setSelectedAreas(selectedAreas);
   };
@@ -136,13 +136,18 @@ export default function useKeyboardControler(
         tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
       if (editState === "toggle") {
         if (cell.isEditable()) {
+          console.log('cell blur')
           cell.blur();
         } else {
+          console.log('cell focus')
+
           cell.focus();
         }
       } else if (editState == true) {
+        console.log('cell focus')
         cell.focus();
       } else {
+        console.log('cell blur')
         cell.blur(true);
       }
     }
@@ -172,7 +177,7 @@ export default function useKeyboardControler(
 
     try {
       nextCell = tableMatrix[nextArea.toY][nextArea.toX].current;
-    } catch (error) {}
+    } catch (error) { }
 
     if (nextCell) {
       updateSelection([{ ...nextArea }], true);
