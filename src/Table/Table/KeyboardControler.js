@@ -101,6 +101,7 @@ export default function useKeyboardControler(
   });
 
   const updateSelection = (selectedAreas, keepEdition = false) => {
+    console.log('update selection')
     if (
       selectedAreas.length === 1 &&
       selectedAreas[0].fromX === selectedAreas[0].toX &&
@@ -114,9 +115,14 @@ export default function useKeyboardControler(
         const nextCell =
           tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
 
+        console.log('previousCell', previousCell)
+        console.log('nextCell', nextCell)
         if (keepEdition && previousCell.isEditable()) {
+          console.log('focus')
           nextCell.focus();
         }
+        console.log('blur')
+
         previousCell.blur();
       } catch (error) { }
     }
@@ -157,6 +163,8 @@ export default function useKeyboardControler(
    * This function moves the selected cell in the direction of the next tab element
    */
   const setNextFocus = () => {
+    console.log('setting next focus')
+
     const area = selectedAreas[selectedAreas.length - 1];
 
     const nextArea = cloneDeep(area);

@@ -70,10 +70,6 @@ const Col = ({
   const [inputValue, setInputValue] = useState(dataValue || "");
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
-  console.log('dataValue', dataValue)
-  console.log('inputValue', inputValue)
-  console.log('initialValue', initialValue)
-
   useEffect(() => {
     if (!dataValue && !initialValue && inputValue)  {
       setInputValue('')
