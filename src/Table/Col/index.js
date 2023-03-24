@@ -211,7 +211,7 @@ const Col = ({
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
-  }, [isEditable, allowEdition, currentColRef, onValueUpdate]);
+  }, [isEditable, onValueUpdate]);
 
   useEffect(() => {
     currentColRef.current.performUpdateValue = (value, force = false) => {
@@ -223,7 +223,7 @@ const Col = ({
         onValueUpdate();
       }
     };
-  }, [allowEdition, initialValue, inputValue, currentColRef])
+  }, [allowEdition, initialValue, inputValue, currentColRef, onValueUpdate])
 
   return (
     <Column
