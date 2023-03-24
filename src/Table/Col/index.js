@@ -72,11 +72,11 @@ const Col = ({
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
   useEffect(() => {
-    if (!dataValue && !initialValue && inputValue)  {
+    if (!dataValue && !initialValue && inputValue) {
       setInputValue('')
     }
   }, [dataValue, initialValue]);
-  
+
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
 
@@ -175,6 +175,7 @@ const Col = ({
   };
 
   const onValueUpdate = useCallback((resetValue = false) => {
+    console.log('X: ', x, ' Y: ', y)
     return new Promise((resolve, reject) => {
       let shouldRunCallback = false;
       setInitialValue((value) => {
@@ -201,7 +202,7 @@ const Col = ({
         onSubmitCallback(inputValue != null ? inputValue : "");
       }
     });
-  }, [onSubmitCallback, setInitialValue, setInputValue, setEditionState]);
+  }, [x, y]);
 
   useEffect(() => {
     currentColRef.current.focus = (value) => {
