@@ -6,6 +6,7 @@ import React, {
   useLayoutEffect,
   useImperativeHandle,
   useEffect,
+  useCallback,
 } from "react";
 import styled from "styled-components";
 import Cell from "./Cell";
@@ -173,7 +174,7 @@ const Col = ({
     setEditionState(true);
   };
 
-  const onValueUpdate = (resetValue = false) => {
+  const onValueUpdate = useCallback((resetValue = false) => {
     return new Promise((resolve, reject) => {
       let shouldRunCallback = false;
       setInitialValue((value) => {
@@ -200,7 +201,7 @@ const Col = ({
         onSubmitCallback(inputValue != null ? inputValue : "");
       }
     });
-  };
+  }, [onSubmitCallback, setInitialValue, setInputValue, setEditionState]);
 
   useEffect(() => {
     currentColRef.current.performUpdateValue = (value, force = false) => {
@@ -219,7 +220,7 @@ const Col = ({
     currentColRef.current.isEditable = () => {
       return isEditable;
     };
-  }, [isEditable, allowEdition, initialValue, inputValue, currentColRef]);
+  }, [isEditable, allowEdition, initialValue, inputValue, currentColRef, onValueUpdate]);
 
   return (
     <Column
