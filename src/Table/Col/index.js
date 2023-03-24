@@ -204,6 +204,16 @@ const Col = ({
   }, [onSubmitCallback, setInitialValue, setInputValue, setEditionState]);
 
   useEffect(() => {
+    currentColRef.current.focus = (value) => {
+      setEditionState(true);
+    };
+    currentColRef.current.blur = isEditable ? onValueUpdate : () => { };
+    currentColRef.current.isEditable = () => {
+      return isEditable;
+    };
+  }, [isEditable, allowEdition, currentColRef, onValueUpdate]);
+
+  useEffect(() => {
     currentColRef.current.performUpdateValue = (value, force = false) => {
       if (!allowEdition) throw new Error("This column is not editable");
 
@@ -213,14 +223,7 @@ const Col = ({
         onValueUpdate();
       }
     };
-    currentColRef.current.focus = (value) => {
-      setEditionState(true);
-    };
-    currentColRef.current.blur = isEditable ? onValueUpdate : () => { };
-    currentColRef.current.isEditable = () => {
-      return isEditable;
-    };
-  }, [isEditable, allowEdition, initialValue, inputValue, currentColRef, onValueUpdate]);
+  }, [allowEdition, initialValue, inputValue, currentColRef])
 
   return (
     <Column
