@@ -143,6 +143,8 @@ export default function useKeyboardControler(
       if (editState === "toggle") {
         if (cell.isEditable()) {
           console.log('cell blur')
+          console.log('toY', selectedAreas[0].toY)
+          console.log('toX', selectedAreas[0].toX)
           cell.blur();
         } else {
           console.log('cell focus')
