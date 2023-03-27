@@ -95,7 +95,7 @@ const MENU_WIDTH = 300;
 
 const Table = (
   {
-    onSelection = () => {},
+    onSelection = () => { },
     editOnType = true,
     headerStickyTopOffset = 0,
     selectionMode = "cell",
@@ -171,12 +171,12 @@ const Table = (
   useEffect(() => {
     setIsTableSelected(
       selectedAreas[0] &&
-        tableMatrix &&
-        selectedAreas[0].fromY === 0 &&
-        selectedAreas[0].fromX === 0 &&
-        selectedAreas[0].toY === tableMatrix.length - 1 &&
-        selectedAreas[0].toX === tableMatrix[0].length - 1 &&
-        isHeaderIncluded
+      tableMatrix &&
+      selectedAreas[0].fromY === 0 &&
+      selectedAreas[0].fromX === 0 &&
+      selectedAreas[0].toY === tableMatrix.length - 1 &&
+      selectedAreas[0].toX === tableMatrix[0].length - 1 &&
+      isHeaderIncluded
     );
   }, [selectedAreas, tableMatrix]);
 
@@ -206,6 +206,14 @@ const Table = (
       }
     },
     [tableMatrix, selectedAreas, isTableSelected]
+  );
+
+  const deselectAll = useCallback(
+    () => {
+
+      setSelectedAreas([]);
+
+    }, []
   );
 
   useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
@@ -454,13 +462,13 @@ const Table = (
     let min = 0;
     let max = 0;
     let avg = 0;
-   
+
     tableMatrix.forEach((row, rowIndex) => {
       let skip = -1;
       let startIndex = -1;
-      row.forEach((cell, colIndex) => {      
-        if (startIndex != -1 && colIndex <= startIndex+skip) return;
-        if (colIndex > startIndex+skip) skip = -1;
+      row.forEach((cell, colIndex) => {
+        if (startIndex != -1 && colIndex <= startIndex + skip) return;
+        if (colIndex > startIndex + skip) skip = -1;
 
         let containedArea = getContainedArea(selectedAreas, {
           x: colIndex,
@@ -696,6 +704,7 @@ const Table = (
         >
           {headerData ? (
             <Header
+              deselectAll={deselectAll}
               selectAll={selectAll}
               ref={headerScrollRef}
               className="scrollable"

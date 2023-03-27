@@ -88,6 +88,7 @@ const Header = React.forwardRef(
       autoAdjustLastColWidth,
       lasColumnRisizeable,
       selectAll,
+      deselectAll,
       isTableSelected,
     },
     ref
@@ -115,7 +116,13 @@ const Header = React.forwardRef(
         >
           <PressableBrick
             themeKey={themeKey}
-            onClick={() => selectAll(true)}
+            onClick={() => {
+              if (isTableSelected) {
+                deselectAll();
+              } else {
+                selectAll(true);
+              }
+            }}
             selected={isTableSelected}
             style={{
               width: leftBrickWidth,
