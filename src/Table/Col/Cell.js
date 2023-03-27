@@ -6,6 +6,7 @@ const cellPaddingLeftRight = 5;
 
 const StaticCell = styled.div`
   // padding: 0 ${cellPaddingLeftRight}px;
+  padding: 3px;
   font-size: 14px;
   height: 100%;
   display: flex;
