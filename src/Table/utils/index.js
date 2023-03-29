@@ -85,3 +85,7 @@ export const withThousandSeperator = (n) => {
     showDecimals: "NEVER",
   });
 };
+
+export function replaceEmptyCellValue(value) {
+  return value.replace(/- -/g, '0')
+}

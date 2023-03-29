@@ -1,5 +1,6 @@
 import table from "./TableMock";
 import { Copier } from ".";
+import { replaceEmptyCellValue } from "../../utils";
 
 // o  = cell selected
 // oo = selected label
@@ -216,5 +217,108 @@ describe("Copier", () => {
         `-1079711\t-1022849\t \t-2991679\t144949\n-4715000\t-4715000\t \t-4715000\t-4715000\n39284029\t35977158\t \t30156737\t38093535\n`
       );
     });
+
+
   });
-});
+
+  it("should replace -- by 0", () => {
+    const data = `
+    jan	feb	mar	apr	may	jun	jul	aug	sep	okt	nov	dec	totals
+    Category	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Reikni stuff	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Category2	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Gestafjöldi og meðalverð													
+    Gestafjöldi	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Meðalverð	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Gjafavörusala pr. gest	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+                              
+    Tekjur													
+    Aðgangur að sýningu	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Gjafavara	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Viðburðir	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Aðrar tekjur	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Samtals tekjur	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+                              
+    KSV	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Laun og starfsm kostn	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Húsnæðiskostnaður	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Markaðskostnaður	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Annar kostnaður	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Rekstrarkostnaður samtals	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+                              
+    EBITDA	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    EBITDA %	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+                              
+    Afskriftir	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Vextir	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Skattar	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Rekstrarhlutföll													
+    Hagnaður	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+                              
+                              
+    Rekstrarhlutföll													
+    Aðgangur að sýningu	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Gjfavara	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Viðburðir	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Aðrar tekjur	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Samtals tekjur	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+                              
+    KSV / Gjafavara	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Laun og starfsm kostn	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Húnæðiskosntaður	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Markaðskostnaður	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    Annar kostnaður %	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -	- -
+    `.trim()
+
+    const expected = `
+    jan	feb	mar	apr	may	jun	jul	aug	sep	okt	nov	dec	totals
+    Category	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Reikni stuff	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Category2	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Gestafjöldi og meðalverð													
+    Gestafjöldi	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Meðalverð	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Gjafavörusala pr. gest	0	0	0	0	0	0	0	0	0	0	0	0	0
+                              
+    Tekjur													
+    Aðgangur að sýningu	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Gjafavara	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Viðburðir	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Aðrar tekjur	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Samtals tekjur	0	0	0	0	0	0	0	0	0	0	0	0	0
+                              
+    KSV	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Laun og starfsm kostn	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Húsnæðiskostnaður	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Markaðskostnaður	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Annar kostnaður	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Rekstrarkostnaður samtals	0	0	0	0	0	0	0	0	0	0	0	0	0
+                              
+    EBITDA	0	0	0	0	0	0	0	0	0	0	0	0	0
+    EBITDA %	0	0	0	0	0	0	0	0	0	0	0	0	0
+                              
+    Afskriftir	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Vextir	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Skattar	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Rekstrarhlutföll													
+    Hagnaður	0	0	0	0	0	0	0	0	0	0	0	0	0
+                              
+                              
+    Rekstrarhlutföll													
+    Aðgangur að sýningu	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Gjfavara	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Viðburðir	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Aðrar tekjur	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Samtals tekjur	0	0	0	0	0	0	0	0	0	0	0	0	0
+                              
+    KSV / Gjafavara	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Laun og starfsm kostn	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Húnæðiskosntaður	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Markaðskostnaður	0	0	0	0	0	0	0	0	0	0	0	0	0
+    Annar kostnaður %	0	0	0	0	0	0	0	0	0	0	0	0	0
+    `.trim()
+
+    expect(replaceEmptyCellValue(data)).toBe(expected)
+
+  })
+})

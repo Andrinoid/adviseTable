@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { getContainedArea } from "../SelectedAreas";
+import { replaceEmptyCellValue } from "../../utils";
 
 let _table;
 let _selections;
@@ -117,7 +118,7 @@ export class Copier {
       result += "\n";
     }
 
-    return result;
+    return replaceEmptyCellValue(result);
   }
 }
 
