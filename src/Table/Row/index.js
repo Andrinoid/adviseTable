@@ -158,7 +158,7 @@ const Row = memo(
       let left;
       let width;
       let { colspan } = child.props;
-
+      console.log('rowY', y, child)
       if (remainingCols > 0 && colspan == "fullwidth") {
         colspan = calculateFullWidthColspan(
           fullWidthColsCount,

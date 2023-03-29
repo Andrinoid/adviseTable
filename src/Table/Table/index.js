@@ -168,7 +168,6 @@ const Table = (
 
   const handleExporting = HandleExporting();
 
-  console.log('CHILDREN:  ', children)
 
 
   useEffect(() => {
@@ -534,6 +533,8 @@ const Table = (
       selectedCount: count,
     });
   };
+
+  console.log('CHILDREN:  ', children)
 
   useEffect(() => {
     setChildrenRows(
