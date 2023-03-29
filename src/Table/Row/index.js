@@ -254,7 +254,7 @@ const Row = memo(
           ref={currentRowRef}
           y={rowNumber}
           theTheme={theTheme}
-          onClick={onClick}
+          // onClick={onClick}
         >
           {menuContent && <RowMenu tableId={tableId}>{menuContent}</RowMenu>}
 
