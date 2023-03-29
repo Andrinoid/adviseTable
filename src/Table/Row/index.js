@@ -71,8 +71,9 @@ const Row = memo(
      * Count the instances of this component and set the row number
      */
     useLayoutEffect(() => {
-
-      let index = Array.prototype.indexOf.call(document.querySelectorAll(`.${tableId}-tableRow`), currentRowRef.current);
+      const tableRows = document.querySelectorAll(`.${tableId}-tableRow`);
+      console.log('tableRows', tableRows)
+      let index = Array.prototype.indexOf.call(tableRows, currentRowRef.current);
       if (rowNumber == null) {
         setRowRenderVersion((count) => {
           return count ? ++count : 1;
@@ -140,6 +141,11 @@ const Row = memo(
 
       return colspan;
     }
+
+    useEffect(() => {
+      console.log('getValidChildren', getValidChildren(children))
+      console.log('children', children)
+    }, [children])
 
     /**
      * Map over the children that should be Col components and add the props we need

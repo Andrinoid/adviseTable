@@ -534,8 +534,6 @@ const Table = (
     });
   };
 
-  console.log('CHILDREN:  ', children)
-
   useEffect(() => {
     setChildrenRows(
       children({
