@@ -72,7 +72,6 @@ const Row = memo(
      */
     useLayoutEffect(() => {
       const tableRows = document.querySelectorAll(`.${tableId}-tableRow`);
-      console.log('tableRows', tableRows)
       let index = Array.prototype.indexOf.call(tableRows, currentRowRef.current);
       if (rowNumber == null) {
         setRowRenderVersion((count) => {
@@ -142,11 +141,6 @@ const Row = memo(
       return colspan;
     }
 
-    useEffect(() => {
-      console.log('getValidChildren', getValidChildren(children))
-      console.log('children', children)
-    }, [children])
-
     /**
      * Map over the children that should be Col components and add the props we need
      * We want to keep the Col component simple for the user so we inject the props here
@@ -164,7 +158,7 @@ const Row = memo(
       let left;
       let width;
       let { colspan } = child.props;
-      console.log('rowY', rowNumber, child)
+
       if (remainingCols > 0 && colspan == "fullwidth") {
         colspan = calculateFullWidthColspan(
           fullWidthColsCount,
@@ -254,7 +248,7 @@ const Row = memo(
           ref={currentRowRef}
           y={rowNumber}
           theTheme={theTheme}
-          // onClick={onClick}
+          onClick={onClick}
         >
           {menuContent && <RowMenu tableId={tableId}>{menuContent}</RowMenu>}
 
