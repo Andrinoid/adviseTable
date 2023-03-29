@@ -14,7 +14,7 @@ export class Copier {
   }
 
   copy() {
-    const table = this.stringifyTable();
+    const table = replaceEmptyCellValue(this.stringifyTable());
 
     if (table !== "") navigator.clipboard.writeText(table);
   }
@@ -118,7 +118,7 @@ export class Copier {
       result += "\n";
     }
 
-    return replaceEmptyCellValue(result);
+    return result;
   }
 }
 
