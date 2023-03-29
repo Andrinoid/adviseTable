@@ -153,7 +153,6 @@ const Row = memo(
     const totalFullWidthCols = getFullWidthColsAmount();
     const validChildren = getValidChildren(children);
 
-    console.log('validChildren ', validChildren)
     const childrenWithProps = React.Children.map(validChildren, (child) => {
       let colType;
       let left;
