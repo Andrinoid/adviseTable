@@ -95,6 +95,8 @@ const MENU_WIDTH = 300;
 
 const Table = (
   {
+    onFirstColumnResize = () => { },
+
     onSelection = () => { },
     editOnType = true,
     headerStickyTopOffset = 0,
@@ -167,6 +169,10 @@ const Table = (
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const handleExporting = HandleExporting();
+
+  useEffect(() => {
+    onFirstColumnResize(firstColWidth);
+  }, [firstColWidth])
 
   useEffect(() => {
     setIsTableSelected(
