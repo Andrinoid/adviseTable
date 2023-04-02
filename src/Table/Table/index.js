@@ -360,10 +360,19 @@ const Table = (
       }
     }, 100);
 
+    const handleClick = (e) => {
+      if (e.target.closest(".table-container")) {
+        setMenuIsOpen(false);
+      }
+    }
+
+
     element.addEventListener("scroll", handleScroll);
+    window.addEventListener("click", handleClick, false);
 
     return () => {
       element.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("click", handleClick, false);
     };
   }, [viewportRef, totalWidth]);
 
