@@ -96,7 +96,7 @@ const MENU_WIDTH = 300;
 const Table = (
   {
     onFirstColumnResize = () => { },
-
+    firstColumnWidth,
     onSelection = () => { },
     editOnType = true,
     headerStickyTopOffset = 0,
@@ -139,7 +139,7 @@ const Table = (
   const [scrollStatus, setScrollStatus] = useState("");
   const [isViewPortOverflow, setIsViewPortOverflow] = useState(false);
   // mesurements states
-  const [firstColWidth, setfirstColWidth] = useState(150);
+  const [firstColWidth, setfirstColWidth] = useState(firstColWidth || 150);
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
