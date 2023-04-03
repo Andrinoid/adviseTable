@@ -508,7 +508,9 @@ const Table = (
                 "data-value"
               );
 
-            console.log(value)
+            console.log('column', tableMatrix[rowIndex][colIndex].current)
+
+            console.log('value', value)
 
             // try to convert value to number
             value = Number(value);
