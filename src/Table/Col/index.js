@@ -74,6 +74,10 @@ const Col = ({
     if (!dataValue && !initialValue && inputValue)  {
       setInputValue('')
     }
+
+    if (dataValue) {
+      setInputValue(dataValue);
+    }
   }, [dataValue, initialValue]);
 
   const setEditionState = (editable) => {
