@@ -385,7 +385,7 @@ const Table = (
   /**
    *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
    */
-  useLayoutEffect(() => {
+  useEffect(() => {
     computeAreaData(selectedAreas);
   }, [JSON.stringify(selectedAreas)]);
 
@@ -507,6 +507,8 @@ const Table = (
               tableMatrix[rowIndex][colIndex].current.getAttribute(
                 "data-value"
               );
+
+            console.log(value)
 
             // try to convert value to number
             value = Number(value);
