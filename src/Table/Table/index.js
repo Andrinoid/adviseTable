@@ -385,7 +385,7 @@ const Table = (
   /**
    *  Watch for changes mouseDownColCord and mouseMoveColCord to calculate the selected area
    */
-  useEffect(() => {
+  useLayoutEffect(() => {
     computeAreaData(selectedAreas);
   }, [JSON.stringify(selectedAreas)]);
 
