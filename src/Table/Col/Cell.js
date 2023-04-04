@@ -47,7 +47,7 @@ const EditableCell = styled.input`
   padding: 1px 2px;
   max-height: 464px;
   // min-width: 84px;
-  min-height: 35px;
+  /* min-height: 25px; */
   height: 100%;
   display: block;
   justify-content: right;
