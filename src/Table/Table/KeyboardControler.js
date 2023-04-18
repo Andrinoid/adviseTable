@@ -4,12 +4,13 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 export function nextValidRow(index, type, matrix) {
   for (let i = index; i < matrix.length; i++) {
-    if (matrix[i][0].current.getAttribute("data-rowtype") == type) {
-      return i;
+    if (matrix[i][0].current.getAttribute("data-rowtype") != type) {
+      return matrix.length;
     }
+    return i;
   }
 
-  return -1;
+  return matrix.length;
 }
 
 export default function useKeyboardControler(
