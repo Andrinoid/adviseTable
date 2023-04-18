@@ -2,6 +2,16 @@ import { cloneDeep } from "lodash";
 import React, { useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
+export function nextValidRow(index, type, matrix) {
+  for (let i = index; i < matrix.length; i++) {
+    if (matrix[i][0].current.getAttribute("data-rowtype") == type) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
 export default function useKeyboardControler(
   selectedAreas,
   tableMatrix,
@@ -23,33 +33,44 @@ export default function useKeyboardControler(
       });
 
       let startRowIndex = selectedAreas[0].fromY;
+
+      const type =
+        tableMatrix[selectedAreas[0].fromY][
+          selectedAreas[0].fromX
+        ].current.getAttribute("data-rowtype");
+
       pasteDataRowsSplitted.forEach((pastedRow) => {
         let startColumnIndex = selectedAreas[0].fromX;
-        pastedRow.forEach((pastedCell) => {
-          try {
-            console.log(
-              `update with value [${startRowIndex}, ${startColumnIndex}]`,
-              pastedCell
-            );
-            tableMatrix[startRowIndex][
-              startColumnIndex
-            ].current.performUpdateValue(pastedCell, true);
-          } catch (error) {
-            console.error(error);
-          }
-          startColumnIndex++;
-        });
-        startRowIndex++;
+
+        if (startRowIndex < tableMatrix.length) {
+          startRowIndex = nextValidRow(startRowIndex, type, tableMatrix);
+
+          pastedRow.forEach((pastedCell) => {
+            try {
+              console.log(
+                `update with value [${startRowIndex}, ${startColumnIndex}]`,
+                pastedCell
+              );
+              tableMatrix[startRowIndex][
+                startColumnIndex
+              ].current.performUpdateValue(pastedCell, true);
+            } catch (error) {
+              console.error(error);
+            }
+            startColumnIndex++;
+          });
+          startRowIndex++;
+        }
       });
 
-      // console.log(pasteDataRowsSplitted);
-      // console.log("matrix", tableMatrix);
-      // console.log("selectedAreas", selectedAreas);
-      // console.log("-----");
-      // console.log(
-      //   "starting point",
-      //   tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX]
-      // );
+      console.log(pasteDataRowsSplitted);
+      console.log("matrix", tableMatrix);
+      console.log("selectedAreas", selectedAreas);
+      console.log("-----");
+      console.log(
+        "starting point",
+        tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX]
+      );
     }
   };
 
