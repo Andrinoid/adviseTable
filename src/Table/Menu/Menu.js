@@ -4,7 +4,7 @@ import {
   HandleControllerExecution,
   HandleDevtoolsOpening,
   HandlePositioning,
-} from ".";
+} from "./Hooks";
 
 function Menu(props) {
   const { controller, setOpen, id, width, children, ...rest } = props;

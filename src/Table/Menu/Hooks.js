@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { utils, writeFileXLSX } from "xlsx-js-style";
+import { utils, writeFile } from 'xlsx';
 import { TableMatrixHandler } from './Utils.js'
 
 export function HandleControllerExecution(controller, tableId) {
@@ -74,13 +74,8 @@ export function HandleExporting() {
     const sheet = utils.aoa_to_sheet(textMatrix);
     utils.book_append_sheet(workbook, sheet, "Sheet1");
 
-    // writeFile(workbook, "advise.xlsx");
-    writeFileXLSX(workbook, "advise.xlsx");
-    // Generate XLSX file as Blob
-    // const wbout = write(workbook, { bookType: 'xlsx', type: 'array' });
-    // const file = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    // let url = window.URL.createObjectURL(file);
-    // let w = window.open(url);
+    // Save the file
+    writeFile(workbook, "advise.xlsx");
   }, []);
 
   return function (tableMatrix, headerData) {
