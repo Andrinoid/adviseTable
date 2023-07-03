@@ -42,9 +42,7 @@ export function HandleControllerExecution(controller, tableId) {
       }
     }
 
-    if (container) {
-      container.addEventListener("contextmenu", handleContextMenu);
-    }
+    container.addEventListener("contextmenu", handleContextMenu);
   }, [execute, tableId]);
 }
 
