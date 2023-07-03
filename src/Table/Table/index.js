@@ -622,7 +622,7 @@ const Table = (
       <Menu
         setOpen={setMenuIsOpen}
         id={tableId + "-menu"}
-        table={tableId}
+        tableId={tableId}
         controller={
           new MenuController({
             setOpen: setMenuIsOpen,
