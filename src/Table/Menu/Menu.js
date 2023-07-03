@@ -7,13 +7,13 @@ import {
 } from "./Hooks";
 
 function Menu(props) {
-  const { controller, setOpen, id, width, children, ...rest } = props;
+  const { controller, setOpen, id, tableId, width, children, ...rest } = props;
   const [position] = HandlePositioning(controller);
   HandleDevtoolsOpening(controller);
-  HandleControllerExecution(controller, id.split("-")[0], setOpen);
+  HandleControllerExecution(controller, tableId, setOpen);
 
   return (
-    <Container className="menu-container"> 
+    <Container className="menu-container">
       <MenuContainer
         {...rest}
         id={id}
