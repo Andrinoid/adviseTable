@@ -94,9 +94,9 @@ const MENU_WIDTH = 300;
 
 const Table = (
   {
-    onFirstColumnResize = () => { },
+    onFirstColumnResize = () => {},
     firstColumnWidth,
-    onSelection = () => { },
+    onSelection = () => {},
     editOnType = true,
     headerStickyTopOffset = 0,
     selectionMode = "cell",
@@ -169,19 +169,21 @@ const Table = (
 
   const handleExporting = HandleExporting();
 
+  console.log(tableId, "tableId");
+
   useEffect(() => {
     onFirstColumnResize(firstColWidth);
-  }, [firstColWidth])
+  }, [firstColWidth]);
 
   useEffect(() => {
     setIsTableSelected(
       selectedAreas[0] &&
-      tableMatrix &&
-      selectedAreas[0].fromY === 0 &&
-      selectedAreas[0].fromX === 0 &&
-      selectedAreas[0].toY === tableMatrix.length - 1 &&
-      selectedAreas[0].toX === tableMatrix[0].length - 1 &&
-      isHeaderIncluded
+        tableMatrix &&
+        selectedAreas[0].fromY === 0 &&
+        selectedAreas[0].fromX === 0 &&
+        selectedAreas[0].toY === tableMatrix.length - 1 &&
+        selectedAreas[0].toX === tableMatrix[0].length - 1 &&
+        isHeaderIncluded
     );
   }, [selectedAreas, tableMatrix]);
 
@@ -213,13 +215,9 @@ const Table = (
     [tableMatrix, selectedAreas, isTableSelected]
   );
 
-  const deselectAll = useCallback(
-    () => {
-
-      setSelectedAreas([]);
-
-    }, []
-  );
+  const deselectAll = useCallback(() => {
+    setSelectedAreas([]);
+  }, []);
 
   useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
 
@@ -369,8 +367,7 @@ const Table = (
       if (e.target.closest(".table-container")) {
         setMenuIsOpen(false);
       }
-    }
-
+    };
 
     element.addEventListener("scroll", handleScroll);
     window.addEventListener("click", handleClick, false);
@@ -625,6 +622,7 @@ const Table = (
       <Menu
         setOpen={setMenuIsOpen}
         id={tableId + "-menu"}
+        table={tableId}
         controller={
           new MenuController({
             setOpen: setMenuIsOpen,
