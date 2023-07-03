@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { utils, writeFile } from 'xlsx';
-import { TableMatrixHandler } from './Utils.js'
+import { utils, writeFile } from "xlsx";
+import { TableMatrixHandler } from "./Utils.js";
 
 export function HandleControllerExecution(controller, tableId) {
   let lastPageX = useRef(null);
@@ -24,11 +24,14 @@ export function HandleControllerExecution(controller, tableId) {
 
     function handleContextMenu(e) {
       e.preventDefault();
-      const openElements = document.querySelectorAll('.menu-container div.open');
+      const openElements = document.querySelectorAll(
+        ".menu-container div.open"
+      );
       const element = document.querySelector(`#${tableId}-menu`);
 
-      if (openElements.length == 0 ||
-        (openElements.length == 1 && element.classList.contains('open'))
+      if (
+        openElements.length == 0 ||
+        (openElements.length == 1 && element.classList.contains("open"))
       ) {
         setTimeout(() => {
           execute({
@@ -39,7 +42,9 @@ export function HandleControllerExecution(controller, tableId) {
       }
     }
 
-    container.addEventListener("contextmenu", handleContextMenu);
+    if (container) {
+      container.addEventListener("contextmenu", handleContextMenu);
+    }
   }, [execute, tableId]);
 }
 
