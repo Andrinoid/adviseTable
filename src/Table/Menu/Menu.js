@@ -17,6 +17,7 @@ function Menu(props) {
       <MenuContainer
         {...rest}
         id={id}
+        tableId={tableId}
         width={width}
         duration={controller.duration}
         position={position}
