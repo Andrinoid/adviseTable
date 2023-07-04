@@ -329,6 +329,8 @@ const Table = (
 
     const resizeObserver = new ResizeObserver((entries) => {
       for (let entry of entries) {
+        console.log("entry.contentRect.width", entry.contentRect.width);
+        console.log("entry.target.clientWidth", entry.target.clientWidth);
         if (entry.contentRect.width !== entry.target.clientWidth) {
           handleResize();
         }
