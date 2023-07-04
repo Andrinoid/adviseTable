@@ -313,6 +313,18 @@ const Table = (
     hasTotalColumn,
   ]);
 
+  useEffect(() => {
+    function handleClick(e) {
+      setMenuIsOpen(false);
+    }
+
+    window.addEventListener("click", handleClick, false);
+
+    return () => {
+      window.removeEventListener("click", handleClick, false);
+    };
+  }, []);
+
   const containerWidthRef = useRef(0);
   const resizing = useRef(false);
 
@@ -320,20 +332,6 @@ const Table = (
     const size = getAdjustedSize();
     setTotalWidth(size);
   };
-
-  useEffect(() => {
-    function handleClick(e) {
-      setMenuIsOpen(false);
-    }
-
-    window.addEventListener("click", handleClick, false);
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("click", handleClick, false);
-    };
-  }, []);
 
   useEffect(() => {
     const container = document.querySelector(`#${tableId}-container`);
