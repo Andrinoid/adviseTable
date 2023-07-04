@@ -340,6 +340,8 @@ const Table = (
 
     containerWidthRef.current = targetDiv.clientWidth;
 
+    let timeout;
+
     const resizeObserver = new ResizeObserver((entries) => {
       const computedStyle = window.getComputedStyle(targetDiv);
 
@@ -349,7 +351,9 @@ const Table = (
         if (!resizing.current) {
           resizing.current = true;
 
-          setTimeout(() => {
+          if (timeout) clearTimeout(timeout);
+
+          timeout = setTimeout(() => {
             handleResize();
             containerWidthRef.current = currentWidth;
             resizing.current = false;
