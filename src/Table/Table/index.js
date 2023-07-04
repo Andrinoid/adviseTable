@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import styled from "styled-components";
-import { debounce } from "lodash";
+import { debounce, set } from "lodash";
 import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -314,6 +314,7 @@ const Table = (
   ]);
 
   const containerWidthRef = useRef(0);
+  const resizing = useRef(false);
 
   const handleResize = () => {
     const size = getAdjustedSize();
@@ -335,14 +336,6 @@ const Table = (
   }, []);
 
   useEffect(() => {
-    function debounce(fn, delay) {
-      let timerId;
-      return function () {
-        clearTimeout(timerId);
-        timerId = setTimeout(fn, delay);
-      };
-    }
-
     const targetDiv = document.querySelector(`#${tableId}-container`);
 
     containerWidthRef.current = targetDiv.clientWidth;
@@ -353,9 +346,15 @@ const Table = (
       const currentWidth = parseFloat(computedStyle.width);
 
       if (currentWidth !== containerWidthRef.current) {
-        debounce(handleResize, 500);
+        if (!resizing.current) {
+          resizing.current = true;
 
-        containerWidthRef.current = currentWidth;
+          setTimeout(() => {
+            handleResize();
+            containerWidthRef.current = currentWidth;
+            resizing.current = false;
+          }, 400);
+        }
       }
     });
 
