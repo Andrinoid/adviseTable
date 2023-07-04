@@ -336,14 +336,14 @@ const Table = (
   }, []);
 
   useEffect(() => {
-    const targetDiv = document.querySelector(`#${tableId}-container`);
+    const container = document.querySelector(`#${tableId}-container`);
 
-    containerWidthRef.current = targetDiv.clientWidth;
+    containerWidthRef.current = container.clientWidth;
 
     let timeout;
 
     const resizeObserver = new ResizeObserver((entries) => {
-      const computedStyle = window.getComputedStyle(targetDiv);
+      const computedStyle = window.getComputedStyle(container);
 
       const currentWidth = parseFloat(computedStyle.width);
 
@@ -362,7 +362,7 @@ const Table = (
       }
     });
 
-    resizeObserver.observe(targetDiv);
+    resizeObserver.observe(container);
   }, []);
 
   /**
