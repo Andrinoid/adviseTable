@@ -313,32 +313,19 @@ const Table = (
     hasTotalColumn,
   ]);
 
+  const containerWidthRef = useRef(0);
+
+  const handleResize = () => {
+    const size = getAdjustedSize();
+    if (size > 600) {
+      setTotalWidth(size);
+    }
+  };
+
   useEffect(() => {
-    const handleResize = () => {
-      console.log("resize was called");
-      const size = getAdjustedSize();
-      if (size > 600) {
-        setTotalWidth(size);
-      }
-    };
     function handleClick(e) {
       setMenuIsOpen(false);
     }
-
-    const tableContainer = document.querySelector(`#${tableId}-container`);
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        console.log("entry.contentRect.width", entry.contentRect.width);
-        console.log("entry.target.clientWidth", entry.target.clientWidth);
-        if (entry.contentRect.width !== entry.target.clientWidth) {
-          handleResize();
-        }
-      }
-    });
-
-    // Start observing the target div
-    resizeObserver.observe(tableContainer);
 
     window.addEventListener("click", handleClick, false);
     window.addEventListener("resize", handleResize);
@@ -347,6 +334,26 @@ const Table = (
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("click", handleClick, false);
     };
+  }, []);
+
+  useEffect(() => {
+    const targetDiv = document.querySelector(`#${tableId}-container`);
+
+    containerWidthRef.current = targetDiv.clientWidth;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const computedStyle = window.getComputedStyle(targetDiv);
+
+      const currentWidth = parseFloat(computedStyle.width);
+
+      if (currentWidth !== containerWidthRef.current) {
+        handleResize();
+
+        containerWidthRef.current = currentWidth;
+      }
+    });
+
+    resizeObserver.observe(targetDiv);
   }, []);
 
   /**
