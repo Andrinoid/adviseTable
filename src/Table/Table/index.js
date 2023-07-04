@@ -325,9 +325,10 @@ const Table = (
       setMenuIsOpen(false);
     }
 
-    if (tableContainerRef?.current) {
+    const table = document.querySelector(`#${tableId}`);
+    if (table) {
       console.log("tableContainerRef resize added");
-      tableContainerRef.current.addEventListener("resize", handleResize);
+      table.addEventListener("resize", handleResize);
     }
 
     window.addEventListener("click", handleClick, false);
@@ -337,8 +338,8 @@ const Table = (
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("click", handleClick, false);
 
-      if (tableContainerRef?.current) {
-        tableContainerRef.current.removeEventListener("resize", handleResize);
+      if (table) {
+        table.removeEventListener("resize", handleResize);
       }
     };
   }, []);
