@@ -325,6 +325,7 @@ const Table = (
     }
 
     if (tableContainerRef?.current) {
+      console.log("tableContainerRef resize added");
       tableContainerRef.current.addEventListener("resize", handleResize);
     }
 
