@@ -324,12 +324,20 @@ const Table = (
       setMenuIsOpen(false);
     }
 
+    if (tableContainerRef?.current) {
+      tableContainerRef.current.addEventListener("resize", handleResize);
+    }
+
     window.addEventListener("click", handleClick, false);
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("click", handleClick, false);
+
+      if (tableContainerRef?.current) {
+        tableContainerRef.current.removeEventListener("resize", handleResize);
+      }
     };
   }, []);
 
