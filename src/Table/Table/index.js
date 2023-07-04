@@ -317,9 +317,7 @@ const Table = (
 
   const handleResize = () => {
     const size = getAdjustedSize();
-    if (size > 600) {
-      setTotalWidth(size);
-    }
+    setTotalWidth(size);
   };
 
   useEffect(() => {
