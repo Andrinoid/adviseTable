@@ -335,6 +335,14 @@ const Table = (
   }, []);
 
   useEffect(() => {
+    function debounce(fn, delay) {
+      let timerId;
+      return function () {
+        clearTimeout(timerId);
+        timerId = setTimeout(fn, delay);
+      };
+    }
+
     const targetDiv = document.querySelector(`#${tableId}-container`);
 
     containerWidthRef.current = targetDiv.clientWidth;
@@ -345,7 +353,7 @@ const Table = (
       const currentWidth = parseFloat(computedStyle.width);
 
       if (currentWidth !== containerWidthRef.current) {
-        handleResize();
+        debounce(handleResize, 500);
 
         containerWidthRef.current = currentWidth;
       }
