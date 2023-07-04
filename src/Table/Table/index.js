@@ -315,6 +315,7 @@ const Table = (
 
   useEffect(() => {
     const handleResize = () => {
+      console.log("resize was called");
       const size = getAdjustedSize();
       if (size > 600) {
         setTotalWidth(size);
