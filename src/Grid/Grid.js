@@ -1,41 +1,36 @@
 import React, {
   Children,
   cloneElement,
-  forwardRef,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from "react";
 import styled from "styled-components";
+
 import Item from "./Item";
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: grid;
-
-  grid-template-columns: repeat(${(props) => props.columns}, 1fr);
-  ${({ gap }) => {
-    if (!gap) return "";
-
-    return `gap: ${gap}px;`;
-  }}
-  box-sizing: border-box;
-`;
-
-const Grid = ({ layout, children, cols = 21, gap = 10 }, ref) => {
+const Grid = ({ layout, children, cols = 21, gap = 10 }) => {
   const [measures] = useState([...layout]);
   const [gridWidth, setGridWidth] = useState(0);
 
   const containerRef = useRef(null);
 
   useEffect(() => {
-    if (containerRef.current) {
+    const resize = () => {
       const e = containerRef.current;
       const r = e.getBoundingClientRect();
       setGridWidth(r.width);
+    };
+
+    if (containerRef.current) {
+      resize();
     }
+
+    window.addEventListener("resize", resize);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
   }, []);
 
   return (
@@ -53,12 +48,11 @@ const Grid = ({ layout, children, cols = 21, gap = 10 }, ref) => {
 
           return (
             <Item
-              resizable={!isLastColumn}
               key={i}
-              column={column}
               row={row}
-              containerWidth={gridWidth}
-              columns={cols}
+              column={column}
+              resizable={!isLastColumn}
+              columnWidthPixel={gridWidth / cols}
             >
               {cloneElement(child, { ...child.props })}
             </Item>
@@ -69,4 +63,17 @@ const Grid = ({ layout, children, cols = 21, gap = 10 }, ref) => {
   );
 };
 
-export default forwardRef(Grid);
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(${(props) => props.columns}, 1fr);
+  ${({ gap }) => {
+    if (!gap) return "";
+
+    return `gap: ${gap}px;`;
+  }}
+  box-sizing: border-box;
+`;
+
+export default Grid;
