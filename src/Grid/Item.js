@@ -13,53 +13,67 @@ const Item = forwardRef(({ children, ...rest }, ref) => {
 
 const ResizeableItem = ({ children, column, columnWidthPixel, ...rest }) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
   const ref = useRef(null);
   const initialDimensions = useRef(null);
+  const [isResizing, setIsResizing] = useState(null);
 
+  /**
+   * Because the grid is responsive, we need to update the dimensions since the
+   * resizable library only supports absolute units.
+   *
+   * We also need to keep track of the initial dimensions so we can check if the
+   * item is increasing or decreasing in size.
+   */
   useEffect(() => {
-    const resize = () => {
-      const e = ref.current;
-      const r = e.getBoundingClientRect();
-      setDimensions({ width: r.width, height: r.height });
+    const initializeDimensions = () => {
+      if (ref.current) {
+        const { width, height } = ref.current.getBoundingClientRect();
+        setDimensions({ width, height });
 
-      if (initialDimensions.current === null) {
-        initialDimensions.current = { width: r.width, height: r.height };
+        if (initialDimensions.current === null) {
+          initialDimensions.current = { width, height };
+        }
       }
     };
 
     if (ref.current) {
-      resize();
+      initializeDimensions();
     }
 
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", initializeDimensions);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", initializeDimensions);
     };
   }, []);
 
+  /**
+   * When the item is being resized, we need to check if the item is increasing
+   * or decreasing in size. If it's increasing, we need to update the dimensions
+   */
   const onResize = (_, { size: measures }) => {
-    if (
-      initialDimensions.current &&
-      initialDimensions.current.width < measures.width
-    ) {
-      setDimensions({ width: measures.width, height: dimensions.height });
-    }
+    setIsResizing(true);
+
+    setDimensions({ width: measures.width, height: dimensions.height });
   };
 
+  /**
+   * When the item is done being resized, we need to check if the item is
+   * increasing or decreasing in size. If it's increasing, we need to update the
+   * dimensions
+   *  */
   const onResizeStop = (_, { size }) => {
-    const isIncreasing = size.width > initialDimensions.current.width;
+    setIsResizing(false);
 
-    if (isIncreasing) {
-      const end = Math.round(size.width / columnWidthPixel);
-      const itemColumns = end - getItemStart();
-      const itemWidth = itemColumns * columnWidthPixel;
+    const end = Math.round(size.width / columnWidthPixel);
+    const itemColumns = end - getItemStart();
+    const itemWidth = itemColumns * columnWidthPixel;
 
-      setDimensions({
-        width: itemWidth,
-        height: dimensions.height,
-      });
-    }
+    setDimensions({
+      width: itemWidth,
+      height: dimensions.height,
+    });
   };
 
   function getItemStart() {
@@ -72,7 +86,11 @@ const ResizeableItem = ({ children, column, columnWidthPixel, ...rest }) => {
 
   return (
     <Item column={column} ref={ref} {...rest}>
-      <ResizeableContainer height={dimensions.height} width={dimensions.width}>
+      <ResizeableContainer
+        resizing={isResizing}
+        height={dimensions.height}
+        width={dimensions.width}
+      >
         <Resizable
           width={dimensions.width}
           height={dimensions.height}
@@ -99,7 +117,14 @@ const ResizeableContainer = styled.div`
     typeof props.height == "number" ? props.height + "px" : props.height};
   width: ${(props) =>
     typeof props.width == "number" ? props.width + "px" : props.width};
-  /* transition: width 0.01s ease-in; */
+
+  ${({ resizing }) => {
+    if (resizing === false) {
+      return `
+        transition: width 0.05s ease-in;
+      `;
+    }
+  }}
 `;
 
 export default ({ resizable, children, ...rest }) => {
