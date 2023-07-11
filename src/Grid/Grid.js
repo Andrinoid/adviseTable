@@ -25,7 +25,7 @@ const Grid = ({
 
   const updateItem = useCallback(
     (id, x, w) => {
-      const values = [...items];
+      let values = [...items];
       const index = values.findIndex((v) => v.i === id);
 
       if (index !== -1) {
@@ -34,11 +34,36 @@ const Grid = ({
         value.w = w;
         values[index] = value;
 
+        values = fixCollisions(values, value);
+
         setItems(values);
       }
     },
     [items]
   );
+
+  function fixCollisions(values, value) {
+    const collision = values.find(
+      (v) =>
+        v.i !== value.i &&
+        v.x < value.x + value.w &&
+        v.x + v.w > value.x &&
+        v.y < value.y + value.h &&
+        v.y + v.h > value.y
+    );
+
+    if (collision) {
+      for (let i = 0; i < values.length; i++) {
+        if (values[i].i === value.i) continue;
+
+        if (values[i].i === collision.i) {
+          // values[i].y +
+        }
+      }
+    }
+
+    return values;
+  }
 
   useEffect(() => {
     onLayoutChange(items);
@@ -73,8 +98,6 @@ const Grid = ({
           const column = found.x + 1 + " / " + (found.x + 1 + found.w);
           const row = found.y + 1 + " / " + (found.y + 1 + found.h);
 
-          const isLastColumn = found.x + found.w == cols || found.x == cols;
-
           const { id, ...rest } = child.props;
 
           return (
@@ -87,7 +110,6 @@ const Grid = ({
               key={i}
               row={row}
               column={column}
-              resizable={!isLastColumn}
               columnWidthPixel={gridWidth / cols}
             >
               {cloneElement(child, { ...rest })}

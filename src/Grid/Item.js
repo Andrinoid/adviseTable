@@ -18,14 +18,14 @@ const Item = forwardRef(({ children, ...rest }, ref) => {
 });
 
 const ResizeableItem = forwardRef(
-  ({ id, updateItem, children, column, columnWidthPixel, ...rest }, ref) => {
+  ({ id, updateItem, children, column, columnWidthPixel, ...rest }) => {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [isResizing, setIsResizing] = useState(null);
 
     const containerRef = useRef(null);
     const initialDimensions = useRef(null);
 
-    useImperativeHandle(ref, () => ({}));
+    // useImperativeHandle(ref, () => ({}));
 
     /**
      * Because the grid is responsive, we need to update the dimensions since the
@@ -39,17 +39,18 @@ const ResizeableItem = forwardRef(
         if (containerRef.current) {
           const { width, height } =
             containerRef.current.getBoundingClientRect();
-          setDimensions({ width, height });
 
-          if (initialDimensions.current === null) {
-            initialDimensions.current = { width, height };
+          if (width !== dimensions.width || height !== dimensions.height) {
+            setDimensions({ width, height });
+
+            if (initialDimensions.current === null) {
+              initialDimensions.current = { width, height };
+            }
           }
         }
       };
 
-      if (containerRef.current) {
-        initializeDimensions();
-      }
+      initializeDimensions();
 
       window.addEventListener("resize", initializeDimensions);
 
@@ -76,16 +77,15 @@ const ResizeableItem = forwardRef(
     const onResizeStop = (_, { size }) => {
       setIsResizing(false);
 
-      const end = Math.round(size.width / columnWidthPixel);
-      const itemColumns = end - getItemStart();
-      const itemWidth = itemColumns * columnWidthPixel;
+      const columns = Math.round(size.width / columnWidthPixel);
+      const width = columns * columnWidthPixel - 5;
 
       setDimensions({
-        width: itemWidth,
+        width: width,
         height: dimensions.height,
       });
 
-      updateItem(id, getItemStart(), itemColumns);
+      updateItem(id, getItemStart(), columns);
     };
 
     function getItemStart() {
@@ -101,15 +101,15 @@ const ResizeableItem = forwardRef(
     }
 
     return (
-      <Item column={column} ref={containerRef} {...rest}>
+      <Item id="container" column={column} {...rest} ref={containerRef}>
         <ResizeableContainer
           resizing={isResizing}
           height={dimensions.height}
           width={dimensions.width}
         >
           <Resizable
-            width={dimensions.width}
             height={dimensions.height}
+            width={dimensions.width}
             onResize={onResize}
             onResizeStop={onResizeStop}
             resizeHandles={["se"]}
@@ -144,18 +144,4 @@ const ResizeableContainer = styled.div`
   }}
 `;
 
-export default forwardRef(({ resizable, children, ...rest }, ref) => {
-  if (resizable) {
-    return (
-      <ResizeableItem ref={ref} {...rest}>
-        {children}
-      </ResizeableItem>
-    );
-  }
-
-  return (
-    <Item ref={ref} {...rest}>
-      {children}
-    </Item>
-  );
-});
+export default ResizeableItem;

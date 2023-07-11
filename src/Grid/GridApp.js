@@ -127,14 +127,12 @@ function App() {
               id={item.i}
               data-testid={item.i}
               style={{
-                background: "yellow",
+                background: "#E1AA7D",
                 width: "100%",
                 height: "100%",
                 textAlign: "left",
               }}
-            >
-              <textarea />
-            </div>
+            ></div>
           );
         })}
       </Grid>
