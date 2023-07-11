@@ -18,14 +18,19 @@ const Item = forwardRef(({ children, ...rest }, ref) => {
 });
 
 const ResizeableItem = forwardRef(
-  ({ id, updateItem, children, column, columnWidthPixel, ...rest }) => {
+  ({ id, updateItem, children, column, ...rest }, ref) => {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [isResizing, setIsResizing] = useState(null);
 
     const containerRef = useRef(null);
     const initialDimensions = useRef(null);
 
-    // useImperativeHandle(ref, () => ({}));
+    useImperativeHandle(ref, () => ({
+      setWidth: (width) => {
+        setDimensions((d) => ({ ...d, width }));
+      },
+      getId: () => id,
+    }));
 
     /**
      * Because the grid is responsive, we need to update the dimensions since the
@@ -77,15 +82,7 @@ const ResizeableItem = forwardRef(
     const onResizeStop = (_, { size }) => {
       setIsResizing(false);
 
-      const columns = Math.round(size.width / columnWidthPixel);
-      const width = columns * columnWidthPixel - 5;
-
-      setDimensions({
-        width: width,
-        height: dimensions.height,
-      });
-
-      updateItem(id, getItemStart(), columns);
+      updateItem({ id, x: getItemStart(), size });
     };
 
     function getItemStart() {
@@ -101,7 +98,7 @@ const ResizeableItem = forwardRef(
     }
 
     return (
-      <Item id="container" column={column} {...rest} ref={containerRef}>
+      <Item column={column} {...rest} ref={containerRef}>
         <ResizeableContainer
           resizing={isResizing}
           height={dimensions.height}
@@ -130,6 +127,8 @@ const Container = styled.div`
 `;
 
 const ResizeableContainer = styled.div`
+  box-sizing: border-box;
+
   height: ${(props) =>
     typeof props.height == "number" ? props.height + "px" : props.height};
   width: ${(props) =>
@@ -142,6 +141,12 @@ const ResizeableContainer = styled.div`
       `;
     }
   }}
+
+  border: dashed 1px transparent;
+  &:hover {
+    border: dashed 1px #9ca5ae;
+  }
+  padding: 5px;
 `;
 
 export default ResizeableItem;

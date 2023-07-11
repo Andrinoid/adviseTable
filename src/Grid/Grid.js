@@ -24,23 +24,35 @@ const Grid = ({
   const itemsRefs = useRef([]);
 
   const updateItem = useCallback(
-    (id, x, w) => {
+    ({ id, x, size }) => {
       let values = [...items];
-      const index = values.findIndex((v) => v.i === id);
+      const found = values.find((v) => v.i === id);
 
-      if (index !== -1) {
-        const value = { ...items[index] };
-        value.x = x;
-        value.w = w;
-        values[index] = value;
+      if (found) {
+        const w = updateItemInnerState(id, size);
 
-        values = fixCollisions(values, value);
+        found.x = x;
+        found.w = w;
+
+        values = fixCollisions(values, found);
 
         setItems(values);
       }
     },
-    [items]
+    [items, gridWidth, cols]
   );
+
+  function updateItemInnerState(id, size) {
+    const ref = itemsRefs.current.find((r) => r.getId() === id);
+
+    const widthPixels = gridWidth / cols;
+    const columns = Math.round(size.width / widthPixels);
+    const width = columns * widthPixels - 5;
+
+    ref.setWidth(width);
+
+    return columns;
+  }
 
   function fixCollisions(values, value) {
     const collision = values.find(
@@ -104,7 +116,7 @@ const Grid = ({
             <Item
               id={id}
               ref={(el) => {
-                itemsRefs.current.push(el);
+                itemsRefs.current[i] = el;
               }}
               updateItem={updateItem}
               key={i}
@@ -132,6 +144,20 @@ const Container = styled.div`
     return `gap: ${gap}px;`;
   }}
   box-sizing: border-box;
+
+  .react-resizable-handle {
+    background: none;
+    width: 10px;
+    height: 100%;
+    bottom: 0;
+    right: -6px;
+    position: absolute;
+    cursor: col-resize;
+    transform: none;
+    top: 0;
+    margin: 0;
+    z-index: 1;
+  }
 `;
 
 export default Grid;
