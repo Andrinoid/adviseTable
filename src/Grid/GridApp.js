@@ -121,45 +121,10 @@ const data = [
 ]
 
 function App() {
-  const gridRef = useRef(null);
-  const [source, setSource] = useState(null);
-  const [target, setTarget] = useState(null);
 
   return (
-    <>
-      <div>
-        <div>
-          <label>Source</label>
-          <input
-            type="text"
-            value={source}
-            onChange={(e) => {
-              setSource(e.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <label>target</label>
-          <input
-            type="text"
-            value={target}
-            onChange={(e) => {
-              setTarget(e.target.value);
-            }}
-          />
-        </div>
-        <button
-          onClick={() => {
-            if (gridRef.current && source && target)
-              gridRef.current.changePosition(source, target);
-          }}
-        >
-          Change Position
-        </button>
-      </div>
-
       <div style={{ width: "90vw", height: "80vh", boxSizing: "border-box" }}>
-        <Grid ref={gridRef} layout={data} gap={10}>
+        <Grid layout={data}>
           {data.map((item) => {
             return (
               <div
@@ -179,7 +144,6 @@ function App() {
           })}
         </Grid>
       </div>
-    </>
   );
 }
 

@@ -1,7 +1,8 @@
 import React, { forwardRef, useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Resizable } from "react-resizable";
 import "react-resizable/css/styles.css";
+
 
 const Container = styled.div`
   grid-column: ${(props) => props.column};
@@ -11,7 +12,9 @@ const Container = styled.div`
   width: ${(props) => typeof props.width == 'number' ? props.width + 'px' : props.width};
 `;
 
-export const Item = forwardRef(({ children, ...rest }, ref) => {
+
+
+const Item = forwardRef(({ children, ...rest }, ref) => {
   return (
     <Container ref={ref} {...rest}>
       {children}
@@ -19,9 +22,12 @@ export const Item = forwardRef(({ children, ...rest }, ref) => {
   );
 });
 
-export const ResizeableItem = ({ children, ...rest }) => {
+
+const ResizeableItem = ({ children, containerWidth, columns, ...rest }) => {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const ref = useRef(null);
+
+
 
   useEffect(() => {
     if (ref.current) {
@@ -29,11 +35,14 @@ export const ResizeableItem = ({ children, ...rest }) => {
       const r = e.getBoundingClientRect();
       setSize({ width: r.width, height: r.height });
     }
-  }, [ref.current]);
+  }, []);
+
 
   const onResize = (event, { element, size: measures, handle }) => {
     setSize({ width: measures.width, height: size.height });
   };
+
+
 
   return (
     <Item
@@ -55,4 +64,11 @@ export const ResizeableItem = ({ children, ...rest }) => {
   );
 };
 
-export default ResizeableItem;
+
+export default ({ resizable, children, ...rest }) => {
+  if (resizable) {
+    return <ResizeableItem {...rest}>{children}</ResizeableItem>;
+  }
+
+  return <Item {...rest}>{children}</Item>;
+}
