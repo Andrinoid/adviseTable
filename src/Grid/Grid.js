@@ -1,6 +1,7 @@
 import React, {
   Children,
   cloneElement,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -9,11 +10,39 @@ import styled from "styled-components";
 
 import Item from "./Item";
 
-const Grid = ({ layout, children, cols = 21, gap = 10 }) => {
-  const [measures] = useState([...layout]);
+const Grid = ({
+  layout,
+  children,
+  cols = 21,
+  gap = 10,
+  onLayoutChange = (layout) => {},
+}) => {
+  const [items, setItems] = useState([...layout]);
   const [gridWidth, setGridWidth] = useState(0);
 
   const containerRef = useRef(null);
+  const itemsRefs = useRef([]);
+
+  const updateItem = useCallback(
+    (id, x, w) => {
+      const values = [...items];
+      const index = values.findIndex((v) => v.i === id);
+
+      if (index !== -1) {
+        const value = { ...items[index] };
+        value.x = x;
+        value.w = w;
+        values[index] = value;
+
+        setItems(values);
+      }
+    },
+    [items]
+  );
+
+  useEffect(() => {
+    onLayoutChange(items);
+  }, [items]);
 
   useEffect(() => {
     const resize = () => {
@@ -38,7 +67,7 @@ const Grid = ({ layout, children, cols = 21, gap = 10 }) => {
       {Children.map(children, (child, i) => {
         if (i + 1 > cols) return null;
 
-        const found = measures.find((item) => item.i === child.props.id);
+        const found = items.find((item) => item.i === child.props.id);
 
         if (found) {
           const column = found.x + 1 + " / " + (found.x + 1 + found.w);
@@ -46,15 +75,22 @@ const Grid = ({ layout, children, cols = 21, gap = 10 }) => {
 
           const isLastColumn = found.x + found.w == cols || found.x == cols;
 
+          const { id, ...rest } = child.props;
+
           return (
             <Item
+              id={id}
+              ref={(el) => {
+                itemsRefs.current.push(el);
+              }}
+              updateItem={updateItem}
               key={i}
               row={row}
               column={column}
               resizable={!isLastColumn}
               columnWidthPixel={gridWidth / cols}
             >
-              {cloneElement(child, { ...child.props })}
+              {cloneElement(child, { ...rest })}
             </Item>
           );
         }
