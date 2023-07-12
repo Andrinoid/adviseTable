@@ -45,10 +45,13 @@ const Inner = styled.div`
   height: 100%;
 `;
 
-function Section() {
-  const initialWidths = [33.33, 33.33, 33.33];
-  // const initialWidths = [25, 25, 25, 25];
-  const [widths, setWidths] = useState([0, 0, 0]);
+function array(n, callback) {
+  return Array.from({ length: n }, callback);
+}
+
+function Section({ columns = 3 }) {
+  const percentages = array(columns, () => 100 / columns);
+  const [widths, setWidths] = useState(array(columns, () => 0));
   const sectionRef = useRef(null);
 
   // Update widths in state whenever window resizes
@@ -56,9 +59,7 @@ function Section() {
     const handleResize = () => {
       if (sectionRef.current) {
         const parentWidth = sectionRef.current.offsetWidth;
-        setWidths(
-          initialWidths.map((percent) => (percent / 100) * parentWidth)
-        );
+        setWidths(percentages.map((percent) => (percent / 100) * parentWidth));
       }
     };
     // Initial resize
@@ -94,8 +95,8 @@ function Section() {
             key={index}
             width={width}
             onResize={(event, data) => onResize(index, event, data)}
-            resizeHandles={["se"]} //does't matter what we use here as we are overriding with css
-            minConstraints={[200]} // Set minimum width in pixels
+            resizeHandles={["se"]}
+            minConstraints={[200]}
           >
             <Column width={width}>
               <Inner>
