@@ -24,35 +24,43 @@ const Grid = ({
   const itemsRefs = useRef([]);
 
   const updateItem = useCallback(
-    ({ id, x, size }) => {
+    ({ id, x, size, initialWidth }) => {
       let values = [...items];
       const found = values.find((v) => v.i === id);
 
       if (found) {
-        const w = updateItemInnerState(id, size);
+        const ref = itemsRefs.current.find((r) => r.getId() === id);
+
+        const widthPixels = gridWidth / cols;
+        const columns = Math.round(size.width / widthPixels);
+        const width = columns * widthPixels - 5;
+
+        ref.setWidth(width);
 
         found.x = x;
-        found.w = w;
+        found.w = columns;
 
-        values = fixCollisions(values, found);
+        const result = values.find(
+          (v) =>
+            v.i !== found.i &&
+            v.x < found.x + found.w &&
+            v.x + v.w > found.x &&
+            v.y < found.y + found.h &&
+            v.y + v.h > found.y
+        );
 
-        setItems(values);
+        if (!result) {
+          setItems(values);
+        } else {
+          setItems([...items]);
+          ref.setWidth(initialWidth);
+        }
       }
     },
     [items, gridWidth, cols]
   );
 
-  function updateItemInnerState(id, size) {
-    const ref = itemsRefs.current.find((r) => r.getId() === id);
-
-    const widthPixels = gridWidth / cols;
-    const columns = Math.round(size.width / widthPixels);
-    const width = columns * widthPixels - 5;
-
-    ref.setWidth(width);
-
-    return columns;
-  }
+  function updateItemInnerState(id, size, columns) {}
 
   function fixCollisions(values, value) {
     const collision = values.find(

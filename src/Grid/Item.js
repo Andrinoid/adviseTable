@@ -82,7 +82,12 @@ const ResizeableItem = forwardRef(
     const onResizeStop = (_, { size }) => {
       setIsResizing(false);
 
-      updateItem({ id, x: getItemStart(), size });
+      updateItem({
+        id,
+        x: getItemStart(),
+        size,
+        initialWidth: initialDimensions.current.width,
+      });
     };
 
     function getItemStart() {
