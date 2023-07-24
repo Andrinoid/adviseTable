@@ -5,13 +5,13 @@ import React, {
   useLayoutEffect,
   useCallback,
   useMemo,
-  memo
+  memo,
 } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FixedSizeList as List, VariableSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso } from "react-virtuoso";
 import {
   EditOutlined,
   VerticalAlignBottomOutlined,
@@ -20,7 +20,7 @@ import {
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
 
-import { Table, Row, Col } from "./Table";
+import { Table, Row, Col } from "./components/Table";
 import { view, ui_prefs } from "./data/example2";
 import { default as mo } from "./data/months";
 import Plus from "./icons/Plus";
@@ -49,13 +49,13 @@ const MenuItem = styled.div`
 `;
 
 function getTotal(index) {
-  let result = '';
+  let result = "";
 
   for (let i = 0; i <= index; i++) {
     result += `${i}`;
   }
 
-  return result
+  return result;
 }
 
 function Example({
@@ -89,7 +89,6 @@ function Example({
   // useEffect(() => {
   //   console.log('expanded ids', expandedIds);
   // }, [expandedIds]);
-
 
   let months = mo.map((m) => m.system);
   // select range of months based on selectedMonths
@@ -165,11 +164,19 @@ function Example({
       }}
     >
       {[...monthRange, {}, {}].map((m, i) => {
-        if (i == 0) return <Col key={i} horizontalAlign="left">lykill {i}</Col>
-        return <Col key={i} allowEdition={allowEdition}>34567</Col>
+        if (i == 0)
+          return (
+            <Col key={i} horizontalAlign="left">
+              lykill {i}
+            </Col>
+          );
+        return (
+          <Col key={i} allowEdition={allowEdition}>
+            34567
+          </Col>
+        );
       })}
     </Row>
-
   ));
 
   const SubRowList = useCallback(({ monthRange, tableProvided }) => {
@@ -178,12 +185,19 @@ function Example({
         data={items}
         overscan={50}
         endReached={() => {
-          console.log('end reached')
-          setItems(Array.from(Array(items.length + 20).keys()))
+          console.log("end reached");
+          setItems(Array.from(Array(items.length + 20).keys()));
         }}
-        itemContent={(index) => <Item monthRange={monthRange} index={index} tableProvided={tableProvided} />}
-        style={{ height: '400px', background: "#f7f7f7", }}
-      />)
+        itemContent={(index) => (
+          <Item
+            monthRange={monthRange}
+            index={index}
+            tableProvided={tableProvided}
+          />
+        )}
+        style={{ height: "400px", background: "#f7f7f7" }}
+      />
+    );
     // <>
     //   {[1, 2, 3, 4].map((item, index) => (
     //     <Item index={index} key={index} tableProvided={tableProvided} />
@@ -191,7 +205,6 @@ function Example({
     // </>
     // );
   }, []);
-
 
   const table1Ref = useRef(null);
   const table2Ref = useRef(null);
@@ -211,7 +224,6 @@ function Example({
       window.removeEventListener("contextmenu", handleContextMenu);
     };
   }, [table1Ref, table2Ref]);
-
 
   return (
     <div className="App">
@@ -335,16 +347,12 @@ function Example({
                       <Row
                         style={{ minHeight: 40 }}
                         {...tableProvided.rowProps}
-                        menuContent={rowMenuContent(
-                          provided.dragHandleProps
-                        )}
+                        menuContent={rowMenuContent(provided.dragHandleProps)}
                       >
                         <Col
                           colspan={"fullwidth"}
                           spanSelection={false}
-                          horizontalAlign={
-                            "left"
-                          }
+                          horizontalAlign={"left"}
                           style={{ minHeight: 40 }}
                         >
                           <span style={{ fontSize: "inherit" }}>Label</span>
@@ -381,22 +389,24 @@ function Example({
                                     <Col
                                       key={i}
                                       allowEdition={allowEdition}
-                                      onSubmitCallback={() => { }}
+                                      onSubmitCallback={() => {}}
                                       inputType={"number"}
                                     >
                                       {row[month]}
                                     </Col>
                                   ))}
 
-                                  <Col allowEdition={allowEdition}>{getTotal(i)}</Col>
+                                  <Col allowEdition={allowEdition}>
+                                    {getTotal(i)}
+                                  </Col>
                                 </Row>
 
-                                {
-                                  expandedIds.includes(row.id) && (
-                                    <SubRowList monthRange={monthRange} tableProvided={tableProvided} />
-                                  )
-
-                                }
+                                {expandedIds.includes(row.id) && (
+                                  <SubRowList
+                                    monthRange={monthRange}
+                                    tableProvided={tableProvided}
+                                  />
+                                )}
                               </div>
                             )}
                           </Draggable>
