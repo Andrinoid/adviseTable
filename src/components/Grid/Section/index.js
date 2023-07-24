@@ -210,9 +210,10 @@ function Section({
                       isLast={colIndex === row.columns.length - 1}
                       breakpoint={breakpoint}
                     >
-                      {column.data.map((data, index) => (
-                        <DummyWidget key={index} initialHeight={100} />
-                      ))}
+                      {column.data.map((data, index) => {
+                        const Component = data.component;
+                        return Component ? <Component key={index} /> : null;
+                      })}
                     </Col>
                   ))}
                   <SectionHandle>
