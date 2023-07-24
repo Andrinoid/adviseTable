@@ -46,7 +46,8 @@
     "react-window": "^1.8.8",
     "react-window-infinite-loader": "^1.0.8",
     "rollup": "^3.9.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4"
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2"
   },
   "browserslist": {
     "production": [
