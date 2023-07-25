@@ -27,6 +27,10 @@ function Col({
 
   const draggableId = rowId + "_" + columnId;
 
+  const getRowId = (draggableId) => {
+    if (!draggableId) return draggableId;
+    return draggableId.split("_")[0];
+  };
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
@@ -38,7 +42,7 @@ function Col({
           breakpoint={breakpoint}
           showHoverHandler={colId === null || colId === draggableId}
           isResizing={colId === draggableId}
-          styled={colId !== draggableId}
+          styled={getRowId(colId) !== getRowId(draggableId)}
         >
           {isLast ? (
             <Column
