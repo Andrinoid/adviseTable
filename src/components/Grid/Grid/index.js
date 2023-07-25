@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
-import { useSectionCRUD } from "../Section/hooks";
+import { useController } from "../hooks";
 
 export const DataContext = createContext(null);
 
@@ -19,7 +19,7 @@ function Grid(
   const [sectionId, setSectionId] = useState(null);
   const [colId, setColId] = useState(null);
 
-  const { addRow } = useSectionCRUD(data, setData);
+  const { addRow } = useController();
 
   useImperativeHandle(ref, () => ({
     addRow,

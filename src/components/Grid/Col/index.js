@@ -7,8 +7,8 @@ import DragHandle from "../../../icons/DragHandle";
 import Plus from "../../../icons/Plus";
 import { DataContext } from "../Grid";
 import { useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Cursor } from "../Section/styled";
+import { useController } from "../hooks";
 
 function Col({
   width,
@@ -21,48 +21,9 @@ function Col({
   children,
   breakpoint,
 }) {
-  const { colId, data, setData, maxCols, minWidth, setColId } =
+  const { colId, minWidth, setColId, data, setData, maxCols } =
     useContext(DataContext);
-
-  function addColumn(rowId, columnId) {
-    const rowIndex = data.findIndex((row) => row.rowId === rowId);
-
-    if (data[rowIndex].columns.length < maxCols) {
-      const result = [...data];
-      const rowIndex = result.findIndex((row) => row.rowId === rowId);
-
-      const row = { ...result[rowIndex] };
-
-      const columnIndex = row.columns.findIndex((c) => c.columnId === columnId);
-
-      row.columns.splice(columnIndex + 1, 0, {
-        columnId: uuidv4(),
-        data: [{}],
-        width: 1 / row.columns.length + 1,
-      });
-
-      result[rowIndex] = { ...row };
-
-      setData([...result]);
-    }
-  }
-
-  function removeColumn(rowId, columnId) {
-    const result = [...data];
-
-    const rowIndex = result.findIndex((row) => row.rowId === rowId);
-
-    result[rowIndex].columns = result[rowIndex].columns.filter(
-      (c) => c.columnId !== columnId
-    );
-
-    result[rowIndex].columns = result[rowIndex].columns.map((c) => {
-      c.width = 1 / result[rowIndex].columns.length;
-      return c;
-    });
-
-    setData([...result]);
-  }
+  const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   const draggableId = rowId + "_" + columnId;
 

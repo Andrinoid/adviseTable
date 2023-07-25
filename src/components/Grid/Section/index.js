@@ -11,7 +11,7 @@ import { DataContext } from "../Grid";
 import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
-import { useSectionCRUD } from "./hooks";
+import { useController } from "../hooks";
 
 function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   // Define a ref to store a reference to the section element.
@@ -19,7 +19,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   const [initialHeight, setInitialHeight] = useState(null);
   const [height, setHeight] = useState("initial");
   const { data, setData, sectionId, minWidth } = useContext(DataContext);
-  const { addRow, removeRow } = useSectionCRUD(data, setData);
+  const { addRow, removeRow } = useController();
   // Define a state variable to store the flex factors of each column based on the number of columns
   // const [widths, updateWidths] = useState(() => initialWidths);
 
