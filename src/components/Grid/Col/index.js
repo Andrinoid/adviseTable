@@ -27,14 +27,10 @@ function Col({
 
   const draggableId = rowId + "_" + columnId;
 
-  const getRowId = (draggableId) => {
-    if (!draggableId) return draggableId;
-    return draggableId.split("_")[0];
-  };
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
-        <DraggableElement
+        <DraggableElm
           style={{ height: "100%" }}
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}
@@ -42,7 +38,6 @@ function Col({
           breakpoint={breakpoint}
           showHoverHandler={colId === null || colId === draggableId}
           isResizing={colId === draggableId}
-          styled={getRowId(colId) !== getRowId(draggableId)}
         >
           {isLast ? (
             <Column
@@ -133,27 +128,10 @@ function Col({
               </Column>
             </Resizable>
           )}
-        </DraggableElement>
+        </DraggableElm>
       )}
     </Draggable>
   );
 }
-
-const DraggableElement = forwardRef(
-  ({ children, styled = false, ...rest }, ref) => {
-    if (styled) {
-      return (
-        <DraggableElm {...rest} ref={ref} style={{}}>
-          {children}
-        </DraggableElm>
-      );
-    }
-    return (
-      <DraggableElm {...rest} ref={ref}>
-        {children}
-      </DraggableElm>
-    );
-  }
-);
 
 export default Col;

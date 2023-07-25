@@ -1,5 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const getRowId = (draggableId) => {
+  if (!draggableId) return draggableId;
+  return draggableId.split("_")[0];
+};
+
+export const getColumnId = (draggableId) => {
+  if (!draggableId) return draggableId;
+  return draggableId.split("_")[1];
+};
+
 export function useController(data, setData, maxCols) {
   function addRow(rowId) {
     const newRow = {
@@ -67,7 +77,6 @@ export function useController(data, setData, maxCols) {
     result[rowIndex].columns = result[rowIndex].columns.filter(
       (c) => c.columnId !== columnId
     );
-
     result[rowIndex].columns = result[rowIndex].columns.map((c) => {
       c.width = 1 / result[rowIndex].columns.length;
       return c;
