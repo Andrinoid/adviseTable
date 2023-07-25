@@ -8,7 +8,7 @@ export const SectionHandle = styled.div`
   left: 50%;
   top: -25px;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 4;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
   display: flex;
