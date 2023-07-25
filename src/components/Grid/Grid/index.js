@@ -17,8 +17,7 @@ function Grid(
 ) {
   const [data, setData] = useState(layout);
   const [droppableRowId, setDroppableRowId] = useState(null);
-  const [draggedFullId, setDraggedFullId] = useState(null);
-  const [resizingColumnId, setResizingColumnId] = useState(null);
+  const [currentId, setCurrentId] = useState(null);
 
   const { addRow } = useSectionCRUD(data, setData);
 
@@ -27,10 +26,10 @@ function Grid(
   }));
 
   useEffect(() => {
-    if (draggedFullId === null) {
+    if (currentId === null) {
       setDroppableRowId(null);
     }
-  }, [draggedFullId]);
+  }, [currentId]);
 
   function id(data) {
     return data.droppableId.split("_")[1];
@@ -85,17 +84,15 @@ function Grid(
         data,
         setData,
         droppableRowId,
-        draggedFullId,
+        currentId,
         maxCols,
         minWidth,
-        resizingColumnId,
-        setResizingColumnId,
-        setDraggedFullId,
+        setCurrentId,
       }}
     >
       <DragDropContext
         onDragStart={(e) => {
-          setDraggedFullId(e.draggableId);
+          setCurrentId(e.draggableId);
           setDroppableRowId(e.draggableId.split("_")[1]);
 
           if (e.type === "col") {
@@ -104,10 +101,10 @@ function Grid(
           }
         }}
         onBeforeDragStart={(e) => {
-          setDraggedFullId(e.draggableId);
+          setCurrentId(e.draggableId);
         }}
         onDragEnd={(e) => {
-          setDraggedFullId(null);
+          setCurrentId(null);
           const { destination, source, type } = e;
 
           if (!destination) {
@@ -142,7 +139,7 @@ function Grid(
                 <Section
                   key={row.rowId}
                   row={row}
-                  isBeforeDragging={draggedFullId !== null}
+                  isBeforeDragging={currentId !== null}
                   widths={row.columns.map((col) => col.width)}
                   index={index}
                   breakpoint={breakpoint}
