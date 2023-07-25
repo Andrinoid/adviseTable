@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Resizable } from "react-resizable";
 import { Column, Inner, Toolbar, ToolbarItem, DraggableElm } from "./styled";
 import "react-resizable/css/styles.css";
@@ -69,7 +69,7 @@ function Col({
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
-        <DraggableElm
+        <DraggableElement
           style={{ height: "100%" }}
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}
@@ -77,6 +77,7 @@ function Col({
           breakpoint={breakpoint}
           showHoverHandler={colId === null || colId === draggableId}
           isResizing={colId === draggableId}
+          styled={colId !== draggableId}
         >
           {isLast ? (
             <Column
@@ -167,10 +168,27 @@ function Col({
               </Column>
             </Resizable>
           )}
-        </DraggableElm>
+        </DraggableElement>
       )}
     </Draggable>
   );
 }
+
+const DraggableElement = forwardRef(
+  ({ children, styled = false, ...rest }, ref) => {
+    if (styled) {
+      return (
+        <DraggableElm {...rest} ref={ref} style={{}}>
+          {children}
+        </DraggableElm>
+      );
+    }
+    return (
+      <DraggableElm {...rest} ref={ref}>
+        {children}
+      </DraggableElm>
+    );
+  }
+);
 
 export default Col;
