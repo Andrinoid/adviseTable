@@ -73,15 +73,6 @@ function App() {
   const ref = useRef(null);
   return (
     <div style={{ paddingTop: 50 }}>
-      <button
-        onClick={() => {
-          if (ref.current) {
-            ref.current.addRow(0);
-          }
-        }}
-      >
-        add row
-      </button>
       <Grid ref={ref} layout={layout} onChange={(value) => {}} />
       <AddSection onClick={() => {
         if (ref.current) {
