@@ -46,7 +46,7 @@ export const Toolbar = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 4;
   background: white;
   border: solid 1px #e8e8e8;
   border-radius: 3px;
