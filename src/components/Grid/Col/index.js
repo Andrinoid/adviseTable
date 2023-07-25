@@ -22,15 +22,13 @@ function Col({
   breakpoint,
 }) {
   const {
-    isDragging,
-    columnId: columnIdNumber,
+    draggedFullId,
     data,
     setData,
     maxCols,
     minWidth,
-    resizingColumn,
-    setResizingColumn,
-    draggedColumn,
+    resizingColumnId,
+    setResizingColumnId,
   } = useContext(DataContext);
 
   function addColumn(rowId, columnId) {
@@ -82,17 +80,19 @@ function Col({
           style={{ height: "100%" }}
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}
-          $isDragging={isDragging && draggableId == columnIdNumber} //Only for styling. This is not part of dnd
+          $isDragging={draggableId == draggedFullId} //Only for styling. This is not part of dnd
           breakpoint={breakpoint}
           showHoverHandler={
-            (resizingColumn === null || resizingColumn === columnId) &&
-            draggedColumn === null
+            (resizingColumnId === null || resizingColumnId === columnId) &&
+            draggedFullId === null
           }
-          isResizing={resizingColumn === columnId || draggedColumn === columnId}
+          isResizing={
+            resizingColumnId === columnId || draggedFullId === columnId
+          }
         >
           {isLast ? (
             <Column
-              $isDragging={isDragging && draggableId == columnIdNumber}
+              $isDragging={draggableId == draggedFullId}
               style={{
                 width: width * sectionRef.current?.offsetWidth || 0,
                 flex: width * sectionRef.current?.offsetWidth || 0,
@@ -133,17 +133,17 @@ function Col({
               width={width * (sectionRef.current?.offsetWidth || 0)}
               height={100} // Add a fixed height here
               onResizeStart={(event, data) => {
-                setResizingColumn(columnId);
+                setResizingColumnId(columnId);
               }}
               onResizeStop={(event, data) => {
-                setResizingColumn(null);
+                setResizingColumnId(null);
               }}
               onResize={(event, data) => onResize(index, event, data)}
               resizeHandles={["se"]}
               minConstraints={[minWidth]} // Set minimum width in pixels
             >
               <Column
-                $isDragging={isDragging && draggableId == columnIdNumber}
+                $isDragging={draggableId == draggedFullId}
                 style={{
                   width: width * sectionRef.current?.offsetWidth || 0,
                   flex: width * sectionRef.current?.offsetWidth || 0,

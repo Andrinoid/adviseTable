@@ -3,26 +3,17 @@ import React, {
   useRef,
   useEffect,
   useContext,
-  useImperativeHandle,
   useLayoutEffect,
 } from "react";
 import { Cursor, SectionElm, SectionHandle, SectionHandleItem } from "./styled";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { DataContext } from "../Grid";
 import Col from "../Col";
-import DummyWidget from "../DummyWidget";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
 import { useSectionCRUD } from "./hooks";
 
-function Section({
-  widths,
-  isBeforeDragging,
-  isDragging,
-  index,
-  row,
-  breakpoint,
-}) {
+function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   // Define a ref to store a reference to the section element.
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);

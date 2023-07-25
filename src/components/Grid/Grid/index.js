@@ -16,12 +16,9 @@ function Grid(
   ref
 ) {
   const [data, setData] = useState(layout);
-  const [isDragging, setIsDragging] = useState(false);
   const [droppableRowId, setDroppableRowId] = useState(null);
-  const [columnId, setColumnId] = useState(null);
-  const [isBeforeDragging, setIsBeforeDragging] = useState(false);
-  const [resizingColumn, setResizingColumn] = useState(null);
-  const [draggedColumn, setDraggedColumn] = useState(null);
+  const [draggedFullId, setDraggedFullId] = useState(null);
+  const [resizingColumnId, setResizingColumnId] = useState(null);
 
   const { addRow } = useSectionCRUD(data, setData);
 
@@ -30,10 +27,10 @@ function Grid(
   }));
 
   useEffect(() => {
-    if (!isDragging) {
+    if (draggedFullId === null) {
       setDroppableRowId(null);
     }
-  }, [isDragging]);
+  }, [draggedFullId]);
 
   function id(data) {
     return data.droppableId.split("_")[1];
@@ -82,29 +79,24 @@ function Grid(
     }
   }, [data]);
 
-  console.log(data);
-
   return (
     <DataContext.Provider
       value={{
         data,
         setData,
         droppableRowId,
-        isDragging,
-        columnId,
+        draggedFullId,
         maxCols,
         minWidth,
-        resizingColumn,
-        setResizingColumn,
-        draggedColumn,
+        resizingColumnId,
+        setResizingColumnId,
+        setDraggedFullId,
       }}
     >
       <DragDropContext
         onDragStart={(e) => {
-          setColumnId(e.draggableId);
-          setIsDragging(true);
+          setDraggedFullId(e.draggableId);
           setDroppableRowId(e.draggableId.split("_")[1]);
-          setDraggedColumn(e.draggableId.split("_")[1]);
 
           if (e.type === "col") {
             const id = e.draggableId.split("_")[0];
@@ -112,12 +104,10 @@ function Grid(
           }
         }}
         onBeforeDragStart={(e) => {
-          setIsBeforeDragging(true);
+          setDraggedFullId(e.draggableId);
         }}
         onDragEnd={(e) => {
-          setDraggedColumn(null);
-          setIsBeforeDragging(false);
-          setIsDragging(false);
+          setDraggedFullId(null);
           const { destination, source, type } = e;
 
           if (!destination) {
@@ -152,8 +142,7 @@ function Grid(
                 <Section
                   key={row.rowId}
                   row={row}
-                  isDragging={isDragging}
-                  isBeforeDragging={isBeforeDragging}
+                  isBeforeDragging={draggedFullId !== null}
                   widths={row.columns.map((col) => col.width)}
                   index={index}
                   breakpoint={breakpoint}
