@@ -21,7 +21,7 @@ function Col({
   children,
   breakpoint,
 }) {
-  const { currentId, data, setData, maxCols, minWidth, setCurrentId } =
+  const { colId, data, setData, maxCols, minWidth, setColId } =
     useContext(DataContext);
 
   function addColumn(rowId, columnId) {
@@ -73,14 +73,14 @@ function Col({
           style={{ height: "100%" }}
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}
-          $isDragging={draggableId == currentId} //Only for styling. This is not part of dnd
+          $isDragging={draggableId == colId} //Only for styling. This is not part of dnd
           breakpoint={breakpoint}
-          showHoverHandler={currentId === null || currentId === draggableId}
-          isResizing={currentId === draggableId}
+          showHoverHandler={colId === null || colId === draggableId}
+          isResizing={colId === draggableId}
         >
           {isLast ? (
             <Column
-              $isDragging={draggableId == currentId}
+              $isDragging={draggableId == colId}
               style={{
                 width: width * sectionRef.current?.offsetWidth || 0,
                 flex: width * sectionRef.current?.offsetWidth || 0,
@@ -121,17 +121,17 @@ function Col({
               width={width * (sectionRef.current?.offsetWidth || 0)}
               height={100} // Add a fixed height here
               onResizeStart={(event, data) => {
-                setCurrentId(draggableId);
+                setColId(draggableId);
               }}
               onResizeStop={(event, data) => {
-                setCurrentId(null);
+                setColId(null);
               }}
               onResize={(event, data) => onResize(index, event, data)}
               resizeHandles={["se"]}
               minConstraints={[minWidth]} // Set minimum width in pixels
             >
               <Column
-                $isDragging={draggableId == currentId}
+                $isDragging={draggableId == colId}
                 style={{
                   width: width * sectionRef.current?.offsetWidth || 0,
                   flex: width * sectionRef.current?.offsetWidth || 0,

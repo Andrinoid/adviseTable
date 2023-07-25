@@ -18,7 +18,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
   const [height, setHeight] = useState("initial");
-  const { data, setData, droppableRowId, minWidth } = useContext(DataContext);
+  const { data, setData, sectionId, minWidth } = useContext(DataContext);
   const { addRow, removeRow } = useSectionCRUD(data, setData);
   // Define a state variable to store the flex factors of each column based on the number of columns
   // const [widths, updateWidths] = useState(() => initialWidths);
@@ -161,8 +161,10 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     }
   }, []);
 
+  const draggableId = "draggable_" + row.rowId;
+
   return (
-    <Draggable draggableId={"draggable_" + row.rowId} index={index}>
+    <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
         <div
           ref={draggableProvided.innerRef}
@@ -184,9 +186,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                   ref={sectionRef}
                   style={{ position: "relative" }}
                   breakpoint={breakpoint}
-                  beingDragged={
-                    droppableRowId === row.rowId || droppableRowId === null
-                  }
+                  beingDragged={sectionId === draggableId || sectionId === null}
                 >
                   {row.columns.map((column, colIndex) => (
                     <Col

@@ -16,8 +16,8 @@ function Grid(
   ref
 ) {
   const [data, setData] = useState(layout);
-  const [droppableRowId, setDroppableRowId] = useState(null);
-  const [currentId, setCurrentId] = useState(null);
+  const [sectionId, setSectionId] = useState(null);
+  const [colId, setColId] = useState(null);
 
   const { addRow } = useSectionCRUD(data, setData);
 
@@ -26,10 +26,10 @@ function Grid(
   }));
 
   useEffect(() => {
-    if (currentId === null) {
-      setDroppableRowId(null);
+    if (colId === null) {
+      setSectionId(null);
     }
-  }, [currentId]);
+  }, [colId]);
 
   function id(data) {
     return data.droppableId.split("_")[1];
@@ -83,28 +83,28 @@ function Grid(
       value={{
         data,
         setData,
-        droppableRowId,
-        currentId,
+        sectionId,
+        colId,
         maxCols,
         minWidth,
-        setCurrentId,
+        setColId,
       }}
     >
       <DragDropContext
         onDragStart={(e) => {
-          setCurrentId(e.draggableId);
-          setDroppableRowId(e.draggableId.split("_")[1]);
+          setSectionId(e.draggableId);
 
           if (e.type === "col") {
-            const id = e.draggableId.split("_")[0];
-            setDroppableRowId(id);
+            // const id = e.draggableId.split("_")[0];
+            // setDroppableRowId(e.draggableId);
+            setColId(e.draggableId);
           }
         }}
         onBeforeDragStart={(e) => {
-          setCurrentId(e.draggableId);
+          setColId(e.draggableId);
         }}
         onDragEnd={(e) => {
-          setCurrentId(null);
+          setColId(null);
           const { destination, source, type } = e;
 
           if (!destination) {
@@ -139,7 +139,7 @@ function Grid(
                 <Section
                   key={row.rowId}
                   row={row}
-                  isBeforeDragging={currentId !== null}
+                  isBeforeDragging={colId !== null}
                   widths={row.columns.map((col) => col.width)}
                   index={index}
                   breakpoint={breakpoint}
