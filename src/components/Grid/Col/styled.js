@@ -37,6 +37,7 @@ export const Column = styled.div`
 `;
 
 export const Inner = styled.div`
+  border: dashed 1px #9ca5aea6;
   box-sizing: border-box;
   height: 100%;
 `;

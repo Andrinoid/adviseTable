@@ -3,11 +3,15 @@ import Grid from "./Grid";
 import { v4 as uuidv4 } from "uuid";
 import DummyWidget from "./DummyWidget";
 
+import AddSection from "./AddSection";
+
+
 // import { sample1, sample2 } from "./components/Helpers/samples";
 // import {
 //   addaptLegacyToNewGrid,
 //   addaptNewGridToLegacy,
 // } from "./components/Helpers";
+
 
 function App() {
   const layout = [
@@ -24,7 +28,7 @@ function App() {
               component: () => <DummyWidget initialHeight={100} />,
             },
           ],
-          width: 0.5964343598055101,
+          width: 0.5,
         },
         {
           columnId: uuidv4(),
@@ -33,7 +37,7 @@ function App() {
               component: () => <DummyWidget initialHeight={100} />,
             },
           ],
-          width: 0.4035656401944899,
+          width: 0.5,
         },
       ],
     },
@@ -79,6 +83,11 @@ function App() {
         add row
       </button>
       <Grid ref={ref} layout={layout} onChange={(value) => {}} />
+      <AddSection onClick={() => {
+        if (ref.current) {
+          ref.current.addRow(0);
+        }
+      }} />
     </div>
   );
 }
