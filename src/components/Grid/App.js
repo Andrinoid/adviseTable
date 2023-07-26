@@ -5,13 +5,11 @@ import DummyWidget from "./DummyWidget";
 
 import AddSection from "./AddSection";
 
-
 // import { sample1, sample2 } from "./components/Helpers/samples";
 // import {
 //   addaptLegacyToNewGrid,
 //   addaptNewGridToLegacy,
 // } from "./components/Helpers";
-
 
 function App() {
   const layout = [
@@ -22,10 +20,14 @@ function App() {
           columnId: uuidv4(),
           data: [
             {
-              component: () => <DummyWidget initialHeight={100} />,
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
             },
             {
-              component: () => <DummyWidget initialHeight={100} />,
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
             },
           ],
           width: 0.5,
@@ -34,7 +36,9 @@ function App() {
           columnId: uuidv4(),
           data: [
             {
-              component: () => <DummyWidget initialHeight={100} />,
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
             },
           ],
           width: 0.5,
@@ -48,7 +52,9 @@ function App() {
           columnId: uuidv4(),
           data: [
             {
-              component: () => <DummyWidget initialHeight={100} />,
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
             },
           ],
           width: 1,
@@ -62,7 +68,9 @@ function App() {
           columnId: uuidv4(),
           data: [
             {
-              component: () => <DummyWidget initialHeight={100} />,
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
             },
           ],
           width: 1,
@@ -74,11 +82,13 @@ function App() {
   return (
     <div style={{ paddingTop: 50 }}>
       <Grid ref={ref} layout={layout} onChange={(value) => {}} />
-      <AddSection onClick={() => {
-        if (ref.current) {
-          ref.current.addRow(0);
-        }
-      }} />
+      <AddSection
+        onClick={() => {
+          if (ref.current) {
+            ref.current.addRow(0);
+          }
+        }}
+      />
     </div>
   );
 }

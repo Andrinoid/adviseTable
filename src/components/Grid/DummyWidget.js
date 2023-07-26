@@ -8,22 +8,26 @@ const Box = styled.div`
   border: 1px solid #369;
 `;
 
-function DummyWidget({ initialHeight }) {
+function DummyWidget({ initialHeight, style }) {
   const [height, setHeight] = useState(initialHeight);
 
   const onResize = (event, { element, size }) => {
     setHeight(size.height);
   };
 
+  console.log(style);
+
   return (
-    <Resizable
-      height={height}
-      width={100}
-      onResize={onResize}
-      resizeHandles={["s"]} // Vertical handle only
-    >
-      <Box style={{ height: height, width: "100%" }}>Widget</Box>
-    </Resizable>
+    <div style={style}>
+      <Resizable
+        height={height}
+        width={100}
+        onResize={onResize}
+        resizeHandles={["s"]} // Vertical handle only
+      >
+        <Box style={{ height: height, width: "100%" }}>Widget</Box>
+      </Resizable>
+    </div>
   );
 }
 
