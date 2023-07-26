@@ -202,14 +202,20 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                       breakpoint={breakpoint}
                     >
                       {column.data.map((data, index) => {
-                        const paddingBottom =
+                        const marginBottom =
                           column.data.length > 1 &&
                           index != column.data.length - 1
                             ? 10
                             : 0;
                         const Component = data.component;
                         return Component ? (
-                          <Component key={index} style={{ paddingBottom }} />
+                          <Component
+                            key={index}
+                            style={{
+                              marginBottom,
+                              border: "dashed 1px #9ca5aea6",
+                            }}
+                          />
                         ) : null;
                       })}
                     </Col>
