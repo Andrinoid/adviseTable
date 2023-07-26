@@ -46,6 +46,19 @@ export const SectionHandleItem = styled.div`
   height: 25px;
 `;
 
+export const SectionContainer = styled.div`
+  transition: background-color 0.2s ease-in-out;
+  background-color: transparent;
+
+  ${({ isDraggingOver }) => {
+    if (isDraggingOver) {
+      return `
+        background-color: rgb(55, 161, 246, 0.15);
+      `;
+    }
+  }}
+`;
+
 export const SectionElm = styled.section`
   box-sizing: border-box;
   position: relative;
@@ -53,7 +66,7 @@ export const SectionElm = styled.section`
   border: solid 1px transparent;
   transition: border 0.2s ease-in-out;
   height: 100%;
-  ${({ beingDragged }) => {
+  ${({ beingDragged, isDraggingOver }) => {
     if (beingDragged) {
       return `
         &:hover {
@@ -66,6 +79,14 @@ export const SectionElm = styled.section`
         }
       `;
     }
+
+    // if (isDraggingOver) {
+    //   return `
+    //     &:hover {
+    //       background: red !important;
+    //     }
+    //   `;
+    // }
   }}
 
   @media (max-width: ${({ breakpoint }) => breakpoint}px) {

@@ -8,7 +8,7 @@ import Plus from "../../../icons/Plus";
 import { DataContext } from "../Grid";
 import { useContext } from "react";
 import { Cursor } from "../Section/styled";
-import { useController } from "../hooks";
+import { getRowId, useController } from "../hooks";
 
 function Col({
   width,
@@ -30,7 +30,7 @@ function Col({
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
-        <DraggableElm
+        <DraggableElement
           style={{ height: "100%" }}
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}
@@ -38,6 +38,7 @@ function Col({
           breakpoint={breakpoint}
           showHoverHandler={colId === null || colId === draggableId}
           isResizing={colId === draggableId}
+          styled={getRowId(colId) !== getRowId(draggableId)}
         >
           {isLast ? (
             <Column
@@ -128,10 +129,27 @@ function Col({
               </Column>
             </Resizable>
           )}
-        </DraggableElm>
+        </DraggableElement>
       )}
     </Draggable>
   );
 }
+
+const DraggableElement = forwardRef(
+  ({ children, styled = false, ...rest }, ref) => {
+    if (styled) {
+      return (
+        <DraggableElm {...rest} ref={ref} style={{}}>
+          {children}
+        </DraggableElm>
+      );
+    }
+    return (
+      <DraggableElm {...rest} ref={ref}>
+        {children}
+      </DraggableElm>
+    );
+  }
+);
 
 export default Col;
