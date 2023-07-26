@@ -15,8 +15,6 @@ function DummyWidget({ initialHeight, style }) {
     setHeight(size.height);
   };
 
-  console.log(style);
-
   return (
     <div style={style}>
       <Resizable
