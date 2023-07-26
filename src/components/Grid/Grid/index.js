@@ -19,7 +19,7 @@ function Grid(
   const [sectionId, setSectionId] = useState(null);
   const [colId, setColId] = useState(null);
 
-  const { addRow } = useController();
+  const { addRow } = useController(data, setData, maxCols);
 
   useImperativeHandle(ref, () => ({
     addRow,

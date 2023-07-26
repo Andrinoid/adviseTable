@@ -18,8 +18,9 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
   const [height, setHeight] = useState("initial");
-  const { data, setData, sectionId, minWidth } = useContext(DataContext);
-  const { addRow, removeRow } = useController();
+  const { data, setData, sectionId, minWidth, maxCols } =
+    useContext(DataContext);
+  const { addRow, removeRow } = useController(data, setData, maxCols);
   // Define a state variable to store the flex factors of each column based on the number of columns
   // const [widths, updateWidths] = useState(() => initialWidths);
 
