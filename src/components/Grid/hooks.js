@@ -92,3 +92,42 @@ export function useController(data, setData, maxCols) {
     removeColumn,
   };
 }
+
+export function compute(widths, index, size, offsetWidth, minWidth) {
+  const temp = [...widths].map((w) => w * 100);
+  const minWidthPercent = (minWidth / offsetWidth) * 100;
+
+  let max = 0,
+    i = index + 1;
+  for (; i < temp.length; i++) {
+    if (temp[i] > minWidthPercent) {
+      max += temp[i] - minWidthPercent;
+    }
+  }
+  max += temp[index];
+
+  let newWidth = (size.width / offsetWidth) * 100;
+
+  if (newWidth > max) {
+    newWidth = max;
+  }
+
+  let diff = newWidth - temp[index];
+
+  temp[index] = newWidth;
+
+  for (let i = index + 1; i < temp.length; i++) {
+    if (temp[i] > minWidthPercent) {
+      if (diff <= temp[i] - minWidthPercent) {
+        temp[i] -= diff;
+        break;
+      } else {
+        const remain = temp[i] - minWidthPercent;
+        temp[i] -= remain;
+        diff -= remain;
+      }
+    }
+  }
+
+  return temp.map((w) => w / 100);
+}

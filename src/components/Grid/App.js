@@ -30,7 +30,7 @@ function App() {
               ),
             },
           ],
-          width: 0.5,
+          width: 0.33,
         },
         {
           columnId: uuidv4(),
@@ -41,7 +41,18 @@ function App() {
               ),
             },
           ],
-          width: 0.5,
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
+            },
+          ],
+          width: 0.33,
         },
       ],
     },
@@ -57,7 +68,18 @@ function App() {
               ),
             },
           ],
-          width: 1,
+          width: 0.5,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
+            },
+          ],
+          width: 0.5,
         },
       ],
     },

@@ -42,6 +42,7 @@ function Col({
         >
           {isLast ? (
             <Column
+              id={"col_" + columnId}
               $isDragging={draggableId == colId}
               style={{
                 width: width * sectionRef.current?.offsetWidth || 0,
