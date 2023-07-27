@@ -100,24 +100,21 @@ export function compute(values, index, size, offsetWidth, minWidth) {
   let maximumWidth = 0,
     i = index + 1;
   for (; i < widths.length; i++) {
-    if (widths[i] > minimumWidth) {
-      maximumWidth += widths[i] - minimumWidth;
-    }
+    maximumWidth += widths[i] - minimumWidth;
   }
   maximumWidth += widths[index];
 
   let newWidth = (size.width / offsetWidth) * 100;
 
-  if (newWidth > maximumWidth) {
-    newWidth = maximumWidth;
+  if (newWidth >= maximumWidth) {
+    newWidth -= newWidth - maximumWidth;
   }
-
   let diff = newWidth - widths[index];
 
   widths[index] = newWidth;
 
   for (let i = index + 1; i < widths.length; i++) {
-    if (widths[i] > minimumWidth) {
+    if (widths[i] >= minimumWidth) {
       if (diff <= widths[i] - minimumWidth) {
         widths[i] -= diff;
         break;

@@ -97,41 +97,19 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     };
   }, [row]);
 
-  function shouldIncrease(i, w) {
-    const nextColsMinWidth = (widths.length - (i + 1)) * minWidth;
-
-    return w <= sectionRef.current.offsetWidth - nextColsMinWidth;
-  }
-
   const onResize = (index, event, { size }) => {
     // Ensure the index is not out of range (i.e., not the last column)
     if (index < widths.length - 1) {
-      // Define the minimum width of the next column as a flex factor,
-      // by converting the minimum pixel width to a percentage of the section's width
-      // const minWidthOfNextColumn = minWidth / sectionRef.current.offsetWidth;
+      const newWidths = compute(
+        widths,
+        index,
+        size,
+        sectionRef.current.offsetWidth,
+        minWidth
+      );
 
-      // Calculate the maximum width the current column can take without forcing the next column below its minimum width
-      // The calculation is based on the current combined width of this column and the next, minus the minimum width of the next column
-      // const maxWidth = widths[index] + widths[index + 1] - minWidthOfNextColumn;
-
-      // Check if the new width respects this maximum width
-      // Convert the new pixel width to a flex factor by dividing by the section's width
-      if (
-        // size.width / sectionRef.current.offsetWidth <= maxWidth
-        shouldIncrease(index, size.width)
-      ) {
-        // Create a copy of the current flex factors
-        const newWidths = compute(
-          widths,
-          index,
-          size,
-          sectionRef.current.offsetWidth,
-          minWidth
-        );
-
-        // Update the state with the new flex factors
-        setWidths(newWidths);
-      }
+      // Update the state with the new flex factors
+      setWidths(newWidths);
     }
   };
 
