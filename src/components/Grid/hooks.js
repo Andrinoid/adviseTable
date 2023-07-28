@@ -111,7 +111,22 @@ export function compute(dimensions) {
   return widths.map(toFloat);
 }
 
-function decreasing(dimensions) {}
+function decreasing(dimensions) {
+  const { widths, minimumWidth, index, size, offsetWidth } = dimensions;
+  let newWidth = toInterger(size.width / offsetWidth);
+  if (index > 0) {
+    widths[index + 1] += widths[index] - minimumWidth;
+    widths[index] = minimumWidth;
+
+    for (let i = index - 1; i >= 0; i--) {
+      if (widths[i] >= minimumWidth) {
+        widths[i] -= minimumWidth - newWidth;
+        widths[index + 1] += minimumWidth - newWidth;
+        return;
+      }
+    }
+  }
+}
 
 export class Dimensions {
   constructor(widths, index, size, minWidth, offsetWidth) {
