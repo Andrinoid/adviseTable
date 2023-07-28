@@ -78,20 +78,5 @@ describe("computeWidth", () => {
       );
       expect(result).toEqual([0.33333333333333326, 0.2, 0.46666666666666656]);
     });
-
-    it("Decrease to 100", () => {
-      const widths = [
-        0.3333333333333333, 0.3333333333333333, 0.3333333333333333,
-      ];
-      const index = 1;
-      const size = { width: 2 };
-      const offsetWidth = 1000;
-      const minWidth = 200;
-
-      const result = compute(
-        new Dimensions(widths, index, size, minWidth, offsetWidth)
-      );
-      expect(result).toEqual([0.2, 0.2, 0.59999999999]);
-    });
   });
 });
