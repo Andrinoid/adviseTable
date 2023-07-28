@@ -17,7 +17,7 @@ import { DataContext } from "../Grid";
 import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
-import { compute, getRowId, useController } from "../hooks";
+import { Dimensions, compute, getRowId, useController } from "../hooks";
 
 function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   // Define a ref to store a reference to the section element.
@@ -30,6 +30,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   // Define a state variable to store the flex factors of each column based on the number of columns
   // const [widths, updateWidths] = useState(() => initialWidths);
 
+  console.log(widths);
   function setWidths(widthsData) {
     // const row = data[index];
     row.columns = row.columns.map((col, index) => {
@@ -101,11 +102,13 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     // Ensure the index is not out of range (i.e., not the last column)
     if (index < widths.length - 1) {
       const newWidths = compute(
-        widths,
-        index,
-        size,
-        sectionRef.current.offsetWidth,
-        minWidth
+        new Dimensions(
+          widths,
+          index,
+          size,
+          minWidth,
+          sectionRef.current.offsetWidth
+        )
       );
 
       // Update the state with the new flex factors

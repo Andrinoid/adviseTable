@@ -91,7 +91,7 @@ function Col({
               }}
               onResize={(event, data) => onResize(index, event, data)}
               resizeHandles={["se"]}
-              minConstraints={[minWidth]} // Set minimum width in pixels
+              // minConstraints={[minWidth]} // Set minimum width in pixels
             >
               <Column
                 $isDragging={draggableId == colId}

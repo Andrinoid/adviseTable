@@ -1,3 +1,4 @@
+import { min } from "lodash";
 import { v4 as uuidv4 } from "uuid";
 
 export const getRowId = (draggableId) => {
@@ -93,10 +94,40 @@ export function useController(data, setData, maxCols) {
   };
 }
 
-export function compute(values, index, size, offsetWidth, minWidth) {
-  const widths = values.map((w) => w * 100);
-  const minimumWidth = (minWidth / offsetWidth) * 100;
+export function compute(dimensions) {
+  const { widths, minWidth, size } = dimensions;
 
+  if (size.width >= minWidth) {
+    increasing(dimensions);
+  } else {
+    // decrease previous columns when below minimum width and increase next columns
+    // for (let i = index - 1; i >= 0; i--) {
+    //   const result = widths[i] - newWidth;
+    //   if (result >= minimumWidth) {
+    // }
+    decreasing(dimensions);
+  }
+
+  return widths.map(toFloat);
+}
+
+function decreasing(dimensions) {}
+
+export class Dimensions {
+  constructor(widths, index, size, minWidth, offsetWidth) {
+    this.widths = widths.map(toInterger);
+    this.index = index;
+    this.size = size;
+    this.minWidth = minWidth;
+    this.offsetWidth = offsetWidth;
+    this.minimumWidth = toInterger(minWidth / offsetWidth);
+  }
+}
+
+const toInterger = (v) => v * 100;
+const toFloat = (v) => v / 100;
+
+function increasing({ index, widths, minimumWidth, size, offsetWidth }) {
   let maximumWidth = 0,
     i = index + 1;
   for (; i < widths.length; i++) {
@@ -104,7 +135,7 @@ export function compute(values, index, size, offsetWidth, minWidth) {
   }
   maximumWidth += widths[index];
 
-  let newWidth = (size.width / offsetWidth) * 100;
+  let newWidth = toInterger(size.width / offsetWidth);
 
   if (newWidth >= maximumWidth) {
     newWidth -= newWidth - maximumWidth;
@@ -125,6 +156,4 @@ export function compute(values, index, size, offsetWidth, minWidth) {
       }
     }
   }
-
-  return widths.map((w) => w / 100);
 }
