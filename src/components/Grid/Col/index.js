@@ -21,7 +21,7 @@ function Col({
   children,
   breakpoint,
 }) {
-  const { colId, minWidth, setColId, data, setData, maxCols } =
+  const { colId, colOver, setColId, data, setData, maxCols } =
     useContext(DataContext);
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 

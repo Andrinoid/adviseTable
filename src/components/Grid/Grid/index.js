@@ -18,6 +18,7 @@ function Grid(
   const [data, setData] = useState(layout);
   const [sectionId, setSectionId] = useState(null);
   const [colId, setColId] = useState(null);
+  const [colOver, setColOver] = useState(null);
 
   const { addRow } = useController(data, setData, maxCols);
 
@@ -88,6 +89,7 @@ function Grid(
         maxCols,
         minWidth,
         setColId,
+        colOver,
       }}
     >
       <DragDropContext
@@ -103,7 +105,13 @@ function Grid(
         onBeforeDragStart={(e) => {
           setColId(e.draggableId);
         }}
+        onDragUpdate={(e) => {
+          if (e.type === "col") {
+            setColOver(e.destination);
+          }
+        }}
         onDragEnd={(e) => {
+          setColOver(null);
           setColId(null);
           const { destination, source, type } = e;
 

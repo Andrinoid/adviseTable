@@ -98,3 +98,13 @@ export const SectionElm = styled.section`
 export const Cursor = styled.div`
   cursor: ${(props) => props.type};
 `;
+
+export const Line = styled.div`
+  display: block;
+  width: 3px;
+  height: 100%;
+  background: #37a1f6;
+  position: absolute;
+  ${(props) => (props.right ? "right: 0;" : "left: 0;")}
+  top: 0;
+`;

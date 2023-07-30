@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import {
   Cursor,
+  Line,
   SectionContainer,
   SectionElm,
   SectionHandle,
@@ -18,19 +19,19 @@ import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
 import { Dimensions, compute, getRowId, useController } from "../hooks";
+import styled from "styled-components";
 
 function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   // Define a ref to store a reference to the section element.
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
   const [height, setHeight] = useState("initial");
-  const { colId, data, setData, sectionId, minWidth, maxCols } =
+  const { colId, colOver, data, setData, sectionId, minWidth, maxCols } =
     useContext(DataContext);
   const { addRow, removeRow } = useController(data, setData, maxCols);
   // Define a state variable to store the flex factors of each column based on the number of columns
   // const [widths, updateWidths] = useState(() => initialWidths);
 
-  console.log(widths);
   function setWidths(widthsData) {
     // const row = data[index];
     row.columns = row.columns.map((col, index) => {
@@ -167,17 +168,16 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
             ref={draggableProvided.innerRef}
             {...draggableProvided.draggableProps}
             isDraggingOver={
-              isDraggingOver && getRowId(colId) != getRowId(draggableId)
+              // isDraggingOver && getRowId(colId) != getRowId(draggableId)
+              false
             }
           >
             <Droppable
-              droppableId={"col_" + row.rowId}
+              droppableId={"section_" + row.rowId}
               type="col"
               direction={"horizontal"}
             >
               {(droppableProvided, snapshot) => {
-                setIsDraggingOver(snapshot.isDraggingOver);
-
                 return (
                   <div
                     ref={droppableProvided.innerRef}
@@ -193,38 +193,59 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                         sectionId === draggableId || sectionId === null
                       }
                     >
-                      {row.columns.map((column, colIndex) => (
-                        <Col
-                          key={column.columnId}
-                          index={colIndex}
-                          columnId={column.columnId}
-                          width={column.width}
-                          data={column.data}
-                          rowId={row.rowId}
-                          onResize={onResize}
-                          sectionRef={sectionRef}
-                          isLast={colIndex === row.columns.length - 1}
-                          breakpoint={breakpoint}
-                        >
-                          {column.data.map((data, index) => {
-                            const marginBottom =
-                              column.data.length > 1 &&
-                              index != column.data.length - 1
-                                ? 10
-                                : 0;
-                            const Component = data.component;
-                            return Component ? (
-                              <Component
-                                key={index}
-                                style={{
-                                  marginBottom,
-                                  border: "dashed 1px #9ca5aea6",
-                                }}
-                              />
-                            ) : null;
-                          })}
-                        </Col>
-                      ))}
+                      {row.columns.map((column, colIndex) => {
+                        if (colOver) {
+                          console.log("colIndex", colIndex);
+
+                          console.log("colOver.index", colOver.index);
+                        }
+                        return (
+                          <Col
+                            key={column.columnId}
+                            index={colIndex}
+                            columnId={column.columnId}
+                            width={column.width}
+                            data={column.data}
+                            rowId={row.rowId}
+                            onResize={onResize}
+                            sectionRef={sectionRef}
+                            isLast={colIndex === row.columns.length - 1}
+                            breakpoint={breakpoint}
+                          >
+                            {row.rowId != getRowId(sectionId) &&
+                              colOver &&
+                              colOver.droppableId == "section_" + row.rowId &&
+                              colOver.index == colIndex && <Line />}
+
+                            {row.rowId != getRowId(sectionId) &&
+                              colOver &&
+                              colOver.droppableId == "section_" + row.rowId &&
+                              colOver.index == row.columns.length &&
+                              colIndex + 1 == row.columns.length && (
+                                <Line right />
+                              )}
+
+                            {column.data.map((data, index) => {
+                              const marginBottom =
+                                column.data.length > 1 &&
+                                index != column.data.length - 1
+                                  ? 10
+                                  : 0;
+                              const Component = data.component;
+                              return Component ? (
+                                <Component
+                                  key={index}
+                                  style={{
+                                    marginBottom,
+                                    border: "dashed 1px #9ca5aea6",
+                                  }}
+                                />
+                              ) : null;
+                            })}
+                          </Col>
+                        );
+                      })}
+
                       <SectionHandle>
                         <SectionHandleItem
                           {...draggableProvided.dragHandleProps}
