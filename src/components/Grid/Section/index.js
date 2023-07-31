@@ -109,8 +109,26 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     };
   }, [row]);
 
+  const [offsetWidth, setOffsetWidth] = useState(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (sectionRef.current) {
+        setOffsetWidth(sectionRef.current.offsetWidth);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const onResizeStop = (index, event, { size }) => {
-    size = snap(sectionRef.current.offsetWidth, size, event.pageX, 0.3);
+    size = snap(offsetWidth, size, event.pageX, 0.3);
 
     onResize(index, event, { size });
   };
@@ -178,9 +196,9 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
 
   useEffect(() => {
     if (sectionRef.current) {
-      setBreakpoints(getBreakpoints(sectionRef.current.offsetWidth));
+      setBreakpoints(getBreakpoints(offsetWidth));
     }
-  }, []);
+  }, [offsetWidth]);
 
   return (
     <Draggable draggableId={draggableId} index={index}>
