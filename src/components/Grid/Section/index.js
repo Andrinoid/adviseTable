@@ -132,7 +132,8 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   // that are trigged by a change in the height of the columns children provided
   // by the user(aka dumby widget)
   useEffect(() => {
-    const rowElement = document.querySelector("#section-" + row.rowId);
+    const rowElement = sectionRef.current;
+
     if (rowElement) {
       columnHeight.current = rowElement.clientHeight;
 
