@@ -26,7 +26,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
   const [height, setHeight] = useState("initial");
-  const { colId, colOver, data, setData, sectionId, minWidth, maxCols } =
+  const { colOver, data, setData, sectionId, minWidth, maxCols } =
     useContext(DataContext);
   const { addRow, removeRow } = useController(data, setData, maxCols);
   // Define a state variable to store the flex factors of each column based on the number of columns
@@ -42,6 +42,10 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
 
     setData(newData);
   }
+
+  useEffect(() => {
+    setInitialHeight(sectionRef.current.offsetHeight);
+  }, [data]);
 
   // useLayoutEffect(() => {
   //   if (sectionRef.current) {
@@ -88,7 +92,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     }
 
     const debouncedCalculateWidths = debounce(calculateWidths, 300);
-
     debouncedCalculateWidths();
 
     window.addEventListener("resize", debouncedCalculateWidths);
@@ -160,8 +163,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
       resizeObserver.observe(rowElement);
     }
   }, []);
-
-  const [isDraggingOver, setIsDraggingOver] = useState(false);
 
   const draggableId = "draggable_" + row.rowId;
 
