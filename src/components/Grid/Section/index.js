@@ -328,9 +328,10 @@ const Breakpoint = styled.div`
   position: absolute;
   top: 0;
   left: ${(props) => props.x + "px"};
-  background-color: red;
+  background-color: blue;
   height: 100%;
   width: 3px;
+  z-index: 2;
 `;
 
 export default Section;
