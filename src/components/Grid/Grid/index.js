@@ -9,6 +9,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
 import "./index.css";
+import styled from "styled-components";
 export const DataContext = createContext(null);
 
 function Grid(
@@ -80,85 +81,87 @@ function Grid(
   }, [data]);
 
   return (
-    <DataContext.Provider
-      value={{
-        data,
-        setData,
-        sectionId,
-        colId,
-        maxCols,
-        minWidth,
-        setColId,
-        colOver,
-      }}
-    >
-      <DragDropContext
-        onDragStart={(e) => {
-          setSectionId(e.draggableId);
-
-          if (e.type === "col") {
-            // const id = e.draggableId.split("_")[0];
-            // setDroppableRowId(e.draggableId);
-            setColId(e.draggableId);
-          }
-        }}
-        onBeforeDragStart={(e) => {
-          setColId(e.draggableId);
-        }}
-        onDragUpdate={(e) => {
-          if (e.type === "col") {
-            setColOver(e.destination);
-          }
-        }}
-        onDragEnd={(e) => {
-          setColOver(null);
-          setColId(null);
-          const { destination, source, type } = e;
-
-          if (!destination) {
-            return;
-          }
-
-          if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-          ) {
-            return;
-          }
-
-          if (type === "col") {
-            setData(reorder(data, source, destination, "col"));
-
-            return;
-          }
-
-          const reordered = reorder(data, source, destination);
-
-          setData([...reordered]);
+    <div style={{ width: "99.5%" }}>
+      <DataContext.Provider
+        value={{
+          data,
+          setData,
+          sectionId,
+          colId,
+          maxCols,
+          minWidth,
+          setColId,
+          colOver,
         }}
       >
-        <Droppable droppableId={"grid"}>
-          {(droppableProvided) => (
-            <div
-              {...droppableProvided.droppableProps}
-              ref={droppableProvided.innerRef}
-            >
-              {data.map((row, index) => (
-                <Section
-                  key={row.rowId}
-                  row={row}
-                  isBeforeDragging={colId !== null}
-                  widths={row.columns.map((col) => col.width)}
-                  index={index}
-                  breakpoint={breakpoint}
-                />
-              ))}
-              {droppableProvided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </DataContext.Provider>
+        <DragDropContext
+          onDragStart={(e) => {
+            setSectionId(e.draggableId);
+
+            if (e.type === "col") {
+              // const id = e.draggableId.split("_")[0];
+              // setDroppableRowId(e.draggableId);
+              setColId(e.draggableId);
+            }
+          }}
+          onBeforeDragStart={(e) => {
+            setColId(e.draggableId);
+          }}
+          onDragUpdate={(e) => {
+            if (e.type === "col") {
+              setColOver(e.destination);
+            }
+          }}
+          onDragEnd={(e) => {
+            setColOver(null);
+            setColId(null);
+            const { destination, source, type } = e;
+
+            if (!destination) {
+              return;
+            }
+
+            if (
+              destination.droppableId === source.droppableId &&
+              destination.index === source.index
+            ) {
+              return;
+            }
+
+            if (type === "col") {
+              setData(reorder(data, source, destination, "col"));
+
+              return;
+            }
+
+            const reordered = reorder(data, source, destination);
+
+            setData([...reordered]);
+          }}
+        >
+          <Droppable droppableId={"grid"}>
+            {(droppableProvided) => (
+              <div
+                {...droppableProvided.droppableProps}
+                ref={droppableProvided.innerRef}
+              >
+                {data.map((row, index) => (
+                  <Section
+                    key={row.rowId}
+                    row={row}
+                    isBeforeDragging={colId !== null}
+                    widths={row.columns.map((col) => col.width)}
+                    index={index}
+                    breakpoint={breakpoint}
+                  />
+                ))}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </DataContext.Provider>
+    </div>
   );
 }
 
