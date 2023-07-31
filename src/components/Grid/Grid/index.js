@@ -44,9 +44,9 @@ function Grid(
     return data.map((row) => {
       row.columns = row.columns.map((col) => {
         col.width = 1 / row.columns.length;
-        return col;
+        return { ...col };
       });
-      return row;
+      return { ...row };
     });
   }
 
