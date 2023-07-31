@@ -172,3 +172,22 @@ function increasing({ index, widths, minimumWidth, size, offsetWidth }) {
     }
   }
 }
+
+export function snap(cols, totalWidth, size) {
+  const w = totalWidth / cols;
+  const breakpoints = Array.from({ length: cols }).map((_, i) => (i + 1) * w);
+  const twentyPercent = w * 0.2;
+  const closestFromW = breakpoints.reduce((prev, curr) => {
+    return Math.abs(curr - size.width) < Math.abs(prev - size.width)
+      ? curr
+      : prev;
+  });
+
+  if (closestFromW !== size.width) {
+    if (Math.abs(closestFromW - size.width) < twentyPercent) {
+      size.width = closestFromW;
+    }
+  }
+
+  return size;
+}

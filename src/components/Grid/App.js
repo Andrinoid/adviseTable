@@ -72,6 +72,22 @@ function App() {
                 <DummyWidget initialHeight={100} {...props} />
               ),
             },
+            {
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              component: (props) => (
+                <DummyWidget initialHeight={100} {...props} />
+              ),
+            },
           ],
           width: 0.33,
         },

@@ -18,7 +18,7 @@ import { DataContext } from "../Grid";
 import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
-import { Dimensions, compute, getRowId, useController } from "../hooks";
+import { Dimensions, compute, getRowId, snap, useController } from "../hooks";
 import styled from "styled-components";
 
 function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
@@ -98,6 +98,11 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
       window.removeEventListener("resize", debouncedCalculateWidths);
     };
   }, [row]);
+
+  const onResizeStop = (index, event, { size }) => {
+    size = snap(6, sectionRef.current.offsetWidth, size);
+    onResize(index, event, { size });
+  };
 
   const onResize = (index, event, { size }) => {
     // Ensure the index is not out of range (i.e., not the last column)
@@ -208,6 +213,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                             data={column.data}
                             rowId={row.rowId}
                             onResize={onResize}
+                            onResizeStop={onResizeStop}
                             sectionRef={sectionRef}
                             isLast={colIndex === row.columns.length - 1}
                             breakpoint={breakpoint}

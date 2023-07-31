@@ -1,4 +1,4 @@
-import { Dimensions, compute } from "../hooks";
+import { Dimensions, compute, snap } from "../hooks";
 
 describe("computeWidth", () => {
   describe("sequential", () => {
@@ -78,5 +78,23 @@ describe("computeWidth", () => {
       );
       expect(result).toEqual([0.33333333333333326, 0.2, 0.46666666666666656]);
     });
+  });
+});
+
+describe("Snap to grid", () => {
+  it("Dont snap", () => {
+    const columns = 6;
+    const offsetWidth = 1200;
+
+    expect(snap(columns, offsetWidth, { width: 160 })).toEqual({ width: 160 });
+    expect(snap(columns, offsetWidth, { width: 240 })).toEqual({ width: 240 });
+  });
+
+  it("Do snap", () => {
+    const columns = 6;
+    const offsetWidth = 1200;
+
+    expect(snap(columns, offsetWidth, { width: 190 })).toEqual({ width: 200 });
+    expect(snap(columns, offsetWidth, { width: 210 })).toEqual({ width: 200 });
   });
 });

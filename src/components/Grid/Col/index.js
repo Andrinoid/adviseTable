@@ -16,6 +16,7 @@ function Col({
   columnId,
   rowId,
   onResize,
+  onResizeStop,
   sectionRef,
   isLast,
   children,
@@ -88,6 +89,7 @@ function Col({
               }}
               onResizeStop={(event, data) => {
                 setColId(null);
+                onResizeStop(index, event, data);
               }}
               onResize={(event, data) => onResize(index, event, data)}
               resizeHandles={["se"]}
