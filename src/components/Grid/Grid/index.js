@@ -81,7 +81,7 @@ function Grid(
   }, [data]);
 
   return (
-    <div style={{ width: "99.5%" }}>
+    <div>
       <DataContext.Provider
         value={{
           data,

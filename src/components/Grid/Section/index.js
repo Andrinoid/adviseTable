@@ -192,13 +192,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   }, []);
 
   const draggableId = "draggable_" + row.rowId;
-  const [breakpoints, setBreakpoints] = useState(null);
-
-  useEffect(() => {
-    if (sectionRef.current) {
-      setBreakpoints(getBreakpoints(offsetWidth));
-    }
-  }, [offsetWidth]);
 
   return (
     <Draggable draggableId={draggableId} index={index}>
@@ -212,10 +205,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
               false
             }
           >
-            {breakpoints &&
-              breakpoints.map((breakpoint) => {
-                return <Breakpoint x={breakpoint} />;
-              })}
             <Droppable
               droppableId={"section_" + row.rowId}
               type="col"
@@ -323,15 +312,5 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     </Draggable>
   );
 }
-
-const Breakpoint = styled.div`
-  position: absolute;
-  top: 0;
-  left: ${(props) => props.x + "px"};
-  background-color: blue;
-  height: 100%;
-  width: 3px;
-  z-index: 2;
-`;
 
 export default Section;
