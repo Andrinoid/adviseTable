@@ -84,15 +84,14 @@ describe("computeWidth", () => {
 describe("Snap to grid", () => {
   it("Dont snap", () => {
     const offsetWidth = 1200;
-
-    expect(snap(offsetWidth, { width: 160 })).toEqual({ width: 160 });
-    expect(snap(offsetWidth, { width: 240 })).toEqual({ width: 240 });
+    expect(snap(offsetWidth, { width: 155 }, 240)).toEqual({ width: 115 });
+    expect(snap(offsetWidth, { width: 235 }, 240)).toEqual({ width: 195 });
   });
 
   it("Do snap", () => {
     const offsetWidth = 1200;
 
-    expect(snap(offsetWidth, { width: 190 })).toEqual({ width: 200 });
-    expect(snap(offsetWidth, { width: 210 })).toEqual({ width: 200 });
+    expect(snap(offsetWidth, { width: 190 }, 190)).toEqual({ width: 200 });
+    expect(snap(offsetWidth, { width: 210 }, 210)).toEqual({ width: 200 });
   });
 });

@@ -18,7 +18,14 @@ import { DataContext } from "../Grid";
 import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
-import { Dimensions, compute, getRowId, snap, useController } from "../hooks";
+import {
+  Dimensions,
+  compute,
+  getBreakpoints,
+  getRowId,
+  snap,
+  useController,
+} from "../hooks";
 import styled from "styled-components";
 
 function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
@@ -103,7 +110,11 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   }, [row]);
 
   const onResizeStop = (index, event, { size }) => {
-    size = snap(sectionRef.current.offsetWidth, size);
+    console.log("clientX", event.clientX);
+    console.log("size", size);
+    console.log("breakpoints", getBreakpoints(sectionRef.current.offsetWidth));
+    size = snap(sectionRef.current.offsetWidth, size, event.clientX);
+
     onResize(index, event, { size });
   };
 
@@ -166,6 +177,13 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   }, []);
 
   const draggableId = "draggable_" + row.rowId;
+  const [breakpoints, setBreakpoints] = useState(null);
+
+  useEffect(() => {
+    if (sectionRef.current) {
+      setBreakpoints(getBreakpoints(sectionRef.current.offsetWidth));
+    }
+  }, []);
 
   return (
     <Draggable draggableId={draggableId} index={index}>
@@ -179,6 +197,10 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
               false
             }
           >
+            {breakpoints &&
+              breakpoints.map((breakpoint) => {
+                return <Breakpoint x={breakpoint} />;
+              })}
             <Droppable
               droppableId={"section_" + row.rowId}
               type="col"
@@ -201,11 +223,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                       }
                     >
                       {row.columns.map((column, colIndex) => {
-                        if (colOver) {
-                          console.log("colIndex", colIndex);
-
-                          console.log("colOver.index", colOver.index);
-                        }
                         return (
                           <Col
                             key={column.columnId}
@@ -291,5 +308,14 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     </Draggable>
   );
 }
+
+const Breakpoint = styled.div`
+  position: absolute;
+  top: 0;
+  left: ${(props) => props.x + "px"};
+  background-color: red;
+  height: 100%;
+  width: 3px;
+`;
 
 export default Section;
