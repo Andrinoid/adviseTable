@@ -110,10 +110,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   }, [row]);
 
   const onResizeStop = (index, event, { size }) => {
-    console.log("clientX", event.clientX);
-    console.log("size", size);
-    console.log("breakpoints", getBreakpoints(sectionRef.current.offsetWidth));
-    size = snap(sectionRef.current.offsetWidth, size, event.clientX);
+    size = snap(sectionRef.current.offsetWidth, size, event.pageX, 0.3);
 
     onResize(index, event, { size });
   };

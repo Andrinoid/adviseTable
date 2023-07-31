@@ -173,23 +173,23 @@ function increasing({ index, widths, minimumWidth, size, offsetWidth }) {
   }
 }
 
-export function snap(totalWidth, size, x) {
+export function snap(totalWidth, size, x, range = 0.2) {
   const breakpoints = getBreakpoints(totalWidth);
 
   const w = totalWidth / breakpoints.length;
 
-  const twentyPercent = w * 0.2;
+  const pencent = w * range;
 
   const closestFromX = breakpoints.reduce((prev, curr) => {
     return Math.abs(curr - x) < Math.abs(prev - x) ? curr : prev;
   });
 
   if (closestFromX !== x) {
-    if (Math.abs(closestFromX - x) <= twentyPercent) {
+    if (Math.abs(closestFromX - x) <= pencent) {
       if (x < closestFromX) {
         size.width += closestFromX - x;
       } else {
-        size.width = closestFromX - (x - size.width);
+        size.width -= x - closestFromX;
       }
     }
   }
