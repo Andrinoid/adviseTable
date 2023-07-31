@@ -97,7 +97,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     return () => {
       window.removeEventListener("resize", debouncedCalculateWidths);
     };
-  }, [data]);
+  }, [row]);
 
   const onResize = (index, event, { size }) => {
     // Ensure the index is not out of range (i.e., not the last column)
