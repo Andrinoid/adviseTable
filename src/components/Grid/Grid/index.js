@@ -12,7 +12,7 @@ import "./index.css";
 export const DataContext = createContext(null);
 
 function Grid(
-  { layout, onChange, maxCols = 10, minWidth = 200, breakpoint = 768 },
+  { layout, onChange, maxCols = 10, minWidth = 100, breakpoint = 768 },
   ref
 ) {
   const [data, setData] = useState(layout);
