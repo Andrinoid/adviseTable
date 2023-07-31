@@ -83,18 +83,16 @@ describe("computeWidth", () => {
 
 describe("Snap to grid", () => {
   it("Dont snap", () => {
-    const columns = 6;
     const offsetWidth = 1200;
 
-    expect(snap(columns, offsetWidth, { width: 160 })).toEqual({ width: 160 });
-    expect(snap(columns, offsetWidth, { width: 240 })).toEqual({ width: 240 });
+    expect(snap(offsetWidth, { width: 160 })).toEqual({ width: 160 });
+    expect(snap(offsetWidth, { width: 240 })).toEqual({ width: 240 });
   });
 
   it("Do snap", () => {
-    const columns = 6;
     const offsetWidth = 1200;
 
-    expect(snap(columns, offsetWidth, { width: 190 })).toEqual({ width: 200 });
-    expect(snap(columns, offsetWidth, { width: 210 })).toEqual({ width: 200 });
+    expect(snap(offsetWidth, { width: 190 })).toEqual({ width: 200 });
+    expect(snap(offsetWidth, { width: 210 })).toEqual({ width: 200 });
   });
 });

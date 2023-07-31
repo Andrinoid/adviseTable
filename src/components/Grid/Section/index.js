@@ -100,7 +100,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   }, [row]);
 
   const onResizeStop = (index, event, { size }) => {
-    size = snap(6, sectionRef.current.offsetWidth, size);
+    size = snap(sectionRef.current.offsetWidth, size);
     onResize(index, event, { size });
   };
 

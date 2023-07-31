@@ -173,7 +173,8 @@ function increasing({ index, widths, minimumWidth, size, offsetWidth }) {
   }
 }
 
-export function snap(cols, totalWidth, size) {
+export function snap(totalWidth, size) {
+  const cols = 6;
   const w = totalWidth / cols;
   const breakpoints = Array.from({ length: cols }).map((_, i) => (i + 1) * w);
   const twentyPercent = w * 0.2;
