@@ -8,8 +8,6 @@ import React, {
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
-import "./index.css";
-import styled from "styled-components";
 export const DataContext = createContext(null);
 
 function Grid(
