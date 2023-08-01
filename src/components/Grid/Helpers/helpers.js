@@ -81,11 +81,15 @@ function mountColumns(data, rowId) {
 
   const cols = [...values];
   for (let i = 0; i < values.length; i++) {
-    if (i != 0) {
-      const previous = values[i - 1];
-      const current = values[i];
+    const current = values[i];
 
-      if (previous.x + previous.w < current.x - 1) {
+    if (i > 0 && i < values.length - 1) {
+      const previous = values[i - 1];
+
+      const end = previous.x + previous.w;
+      const start = current.x - 1;
+      const gap = start - end;
+      if (gap >= previous.w) {
         const newColumn = {
           x: previous.x + previous.w,
           w: current.x,
@@ -99,6 +103,42 @@ function mountColumns(data, rowId) {
         };
 
         cols.splice(i, 0, newColumn);
+        continue;
+      }
+    }
+
+    if (values.length == 1) {
+      if (i == 0 && current.x > 1) {
+        const newColumn = {
+          x: 1,
+          w: current.x,
+          y: current.y,
+          h: current.h,
+          i: current.i,
+          widget: {
+            ...current.widget,
+            type: "spacer",
+          },
+        };
+
+        cols.splice(i, 0, newColumn);
+      }
+
+      if (i == values.length - 1) {
+        if (current.x + current.w < 21) {
+          const newColumn = {
+            x: current.x + current.w,
+            w: 21,
+            y: current.y,
+            h: current.h,
+            i: current.i,
+            widget: {
+              ...current.widget,
+              type: "spacer",
+            },
+          };
+          cols.push(newColumn);
+        }
       }
     }
   }

@@ -6,7 +6,7 @@ describe("Sample 1", () => {
     const result = addaptLegacyToNewGrid(sample1);
     expect(result.length).toEqual(3);
     expect(result[0].columns.length).toBe(2);
-    expect(result[1].columns.length).toBe(1);
+    expect(result[1].columns.length).toBe(2);
     expect(result[2].columns.length).toBe(1);
   });
   it("should construct the columns", () => {
@@ -48,7 +48,7 @@ describe("Sample 4", () => {
     );
     expect(result.length).toEqual(5);
     expect(result[4].columns.length).toEqual(2);
-    expect(result[2].columns.length).toEqual(5);
+    expect(result[2].columns.length).toEqual(4);
     expect(result[3].columns.length).toEqual(2);
   });
 });
