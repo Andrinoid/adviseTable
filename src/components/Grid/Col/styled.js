@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Column = styled.div`
   position: relative;
   box-sizing: border-box;
-  min-height: 100px;
+  min-height: 20px;
   border: dashed 1px transparent;
   &:hover {
     border: dashed 1px #9ca5ae;
