@@ -94,11 +94,9 @@ function mountColumns(data, rowId) {
           i: current.i,
           widget: {
             ...current.widget,
-            type: "Spacer",
+            type: "spacer",
           },
         };
-
-        console.log(newColumn);
 
         cols.splice(i, 0, newColumn);
       }
