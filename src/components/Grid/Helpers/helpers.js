@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 export function addaptLegacyToNewGrid(data, component) {
   let ysHash = hashAxies(data, "y");
 
-  const rows = Object.keys(ysHash).map((y, i) => new Row(y, data));
+  const rows = Object.keys(ysHash).map((y, i) => new Row(y, data, i));
 
   return rows
     .sort((a, b) => a.rowNumber - b.rowNumber)
@@ -69,14 +69,6 @@ function mountColumns(data, rowId) {
     return d.y < maxY && d.y >= rowId;
   });
 
-  console.log("values", values);
-
-  // get the x axis only the elements that start at the row
-  // example: all the y 0 x axis elements
-  const columnsXs = values
-    .filter((v) => v.y == rowId)
-    .map((d) => parseFloat(d.x));
-
   // the first half of the algorithm a justs the data
   // in the original way, so we are adjusting the old
   // structure to be easier to fit the new one
@@ -86,14 +78,41 @@ function mountColumns(data, rowId) {
 
   // here we turn these elements into columns
   // data
-  let xsHash = hashAxies(values, "x");
+
+  const cols = [...values];
+  for (let i = 0; i < values.length; i++) {
+    if (i != 0) {
+      const previous = values[i - 1];
+      const current = values[i];
+
+      if (previous.x + previous.w < current.x - 1) {
+        const newColumn = {
+          x: previous.x + previous.w,
+          w: current.x,
+          y: current.y,
+          h: current.h,
+          i: current.i,
+          widget: {
+            ...current.widget,
+            type: "Spacer",
+          },
+        };
+
+        console.log(newColumn);
+
+        cols.splice(i, 0, newColumn);
+      }
+    }
+  }
+
+  let xsHash = hashAxies(cols, "x");
 
   const result = [];
 
   const keys = Object.keys(xsHash).map((x) => parseFloat(x));
 
-  keys.forEach((x, i) => {
-    const columns = values.filter((d) => d.x == x);
+  keys.forEach((x) => {
+    const columns = cols.filter((d) => d.x == x);
 
     result.push(new Column(x, columns));
   });
@@ -102,10 +121,10 @@ function mountColumns(data, rowId) {
 }
 
 class Row {
-  constructor(rowId, data) {
+  constructor(rowId, data, i) {
     this.rowId = parseFloat(rowId);
 
-    this.columns = mountColumns(data, this.rowId);
+    this.columns = mountColumns(data, this.rowId, i);
 
     const initialWidth = 1 / this.columns.length;
 

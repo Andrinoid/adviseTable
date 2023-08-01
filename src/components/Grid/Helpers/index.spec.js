@@ -48,5 +48,7 @@ describe("Sample 4", () => {
     );
     expect(result.length).toEqual(5);
     expect(result[4].columns.length).toEqual(2);
+    expect(result[2].columns.length).toEqual(5);
+    expect(result[3].columns.length).toEqual(2);
   });
 });
