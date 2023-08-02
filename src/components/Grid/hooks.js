@@ -178,14 +178,16 @@ export function snap(totalWidth, size, x, range = 0.2) {
 
   const w = totalWidth / breakpoints.length;
 
-  const pencent = w * range;
+  console.log("w", w);
+  const pixels = w * range;
+  // 200 * 0.2 = 40
 
   const closestFromX = breakpoints.reduce((prev, curr) => {
     return Math.abs(curr - x) < Math.abs(prev - x) ? curr : prev;
   });
 
   if (closestFromX !== x) {
-    if (Math.abs(closestFromX - x) <= pencent) {
+    if (Math.abs(closestFromX - x) <= pixels) {
       if (x < closestFromX) {
         size.width += closestFromX - x;
       } else {
