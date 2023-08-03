@@ -42,41 +42,42 @@ export default function Resizer({
   const handleOnMouseMove = useCallback(
     (e) => {
       e.preventDefault();
-      function snap(changedX) {
-        const range = 50;
-        for (let ri = 0; ri < positionXs.length; ri++) {
-          if (ri !== rowIndex) {
-            for (let ci = 0; ci < positionXs[ri].length; ci++) {
-              const nextValue = positionXs[ri][ci];
+      // function snap(changedX) {
+      //   const range = 50;
+      //   for (let ri = 0; ri < positionXs.length; ri++) {
+      //     if (ri !== rowIndex) {
+      //       for (let ci = 0; ci < positionXs[ri].length; ci++) {
+      //         const nextValue = positionXs[ri][ci];
 
-              if (
-                Math.round(x) == Math.round(nextValue) &&
-                changedX > nextValue - range &&
-                changedX < nextValue + range
-              ) {
-                console.log("entrou no false");
-                return [nextValue, false];
-              }
-            }
-          }
-        }
+      //         if (
+      //           Math.round(x) == Math.round(nextValue) &&
+      //           changedX > nextValue - range &&
+      //           changedX < nextValue + range
+      //         ) {
+      //           console.log("entrou no false");
+      //           return [nextValue, false];
+      //         }
+      //       }
+      //     }
+      //   }
 
-        return [changedX, true];
-      }
+      //   return [changedX, true];
+      // }
+      // TODO:
+      // -- snap to the next column
+      // -- stop resizer if min widths are reached
+      //    because right now the resizer is leaving the grid
 
       if (resizing.current) {
         const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
         let width = e.clientX - leftGap - start;
-        const [value, update] = snap(e.clientX - leftGap);
 
-        setX(value);
+        setX(e.clientX - leftGap);
 
-        if (update) {
-          const newWidths = compute(
-            new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
-          );
-          setWidths(newWidths, rowIndex);
-        }
+        const newWidths = compute(
+          new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
+        );
+        setWidths(newWidths, rowIndex);
       }
     },
     [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
