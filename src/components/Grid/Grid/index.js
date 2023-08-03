@@ -7,12 +7,13 @@ import React, {
   useRef,
   useLayoutEffect,
   useMemo,
+  useCallback,
 } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
 import Resizer from "../Resizer";
-import { getInitialX as getHandlersX, shouldStop } from "../Resizer/helpers";
+import { getInitialX as getHandlersX } from "../Resizer/helpers";
 import styled from "styled-components";
 
 export const DataContext = createContext(null);
@@ -132,6 +133,20 @@ function Grid(
     return window.innerWidth <= breakpoint;
   }, [breakpoint, window.innerWidth]);
 
+  const setWidths = useCallback(
+    (widthsData, rowIndex) => {
+      const row = data[rowIndex];
+      row.columns = row.columns.map((col, index) => {
+        col.width = widthsData[index];
+        return col;
+      });
+      const newData = [...data];
+
+      setData(newData);
+    },
+    [data]
+  );
+
   return (
     <Container ref={containerRef} resizing={resizing}>
       <DataContext.Provider
@@ -210,40 +225,19 @@ function Grid(
                     {!isMobileSize &&
                       xPosition.length > 0 &&
                       xPosition[rowIndex].slice(0, -1).map((x, colIndex) => {
-                        function setWidths(widthsData) {
-                          const row = data[rowIndex];
-                          row.columns = row.columns.map((col, index) => {
-                            col.width = widthsData[index];
-                            return col;
-                          });
-                          const newData = [...data];
-
-                          setData(newData);
-                        }
-
-                        const actualWidths = row.columns.map(
-                          (col) =>
-                            col.width * containerRef.current.offsetWidth || 0
-                        );
-
                         return (
                           <Resizer
-                            key={colIndex}
+                            key={rowIndex + "_" + colIndex}
                             x={x}
-                            resizing={resizing}
                             setResizing={setResizing}
                             leftGap={leftGap}
                             widths={row.columns.map((col) => col.width)}
                             colIndex={colIndex}
                             minWidth={minWidth}
-                            row={data[rowIndex]}
                             totalWidth={containerRef.current.offsetWidth || 0}
                             setWidths={setWidths}
                             positionXs={xPosition}
                             rowIndex={rowIndex}
-                            handleResizerPositions={handleResizerPositions}
-                            actualWidths={actualWidths}
-                            data={data}
                           />
                         );
                       })}

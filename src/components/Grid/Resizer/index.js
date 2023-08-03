@@ -7,8 +7,7 @@ import {
 } from "react";
 import styled from "styled-components";
 import { Dimensions, compute } from "../hooks";
-import { maxWidth } from "../hooks";
-import { shouldStop } from "./helpers";
+import { throttle } from "lodash";
 
 export const Handler = styled.div`
   position: absolute;
@@ -30,9 +29,7 @@ export default function Resizer({
   minWidth,
   totalWidth,
   setWidths,
-  actualWidths,
   rowIndex,
-  handleResizerPositions,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -42,38 +39,30 @@ export default function Resizer({
     setX(initialX);
   }, [initialX]);
 
-  useLayoutEffect(() => {
-    function handleOnMouseDown(e) {
+  const handleOnMouseMove = useCallback(
+    (e) => {
       e.preventDefault();
+      function snap(changedX) {
+        const range = 50;
+        for (let ri = 0; ri < positionXs.length; ri++) {
+          if (ri !== rowIndex) {
+            for (let ci = 0; ci < positionXs[ri].length; ci++) {
+              const nextValue = positionXs[ri][ci];
 
-      resizing.current = true;
-      setResizing(true);
-    }
-
-    function snap(changedX) {
-      const range = 50;
-      for (let ri = 0; ri < positionXs.length; ri++) {
-        if (ri !== rowIndex) {
-          for (let ci = 0; ci < positionXs[ri].length; ci++) {
-            const nextValue = positionXs[ri][ci];
-
-            if (
-              Math.round(x) == Math.round(nextValue) &&
-              changedX > nextValue - range &&
-              changedX < nextValue + range
-            ) {
-              console.log("entrou no false");
-              return [nextValue, false];
+              if (
+                Math.round(x) == Math.round(nextValue) &&
+                changedX > nextValue - range &&
+                changedX < nextValue + range
+              ) {
+                console.log("entrou no false");
+                return [nextValue, false];
+              }
             }
           }
         }
+
+        return [changedX, true];
       }
-
-      return [changedX, true];
-    }
-
-    function handleOnMouseMove(e) {
-      e.preventDefault();
 
       if (resizing.current) {
         const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
@@ -86,27 +75,36 @@ export default function Resizer({
           const newWidths = compute(
             new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
           );
-          setWidths(newWidths);
+          setWidths(newWidths, rowIndex);
         }
       }
+    },
+    [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
+  );
+
+  useLayoutEffect(() => {
+    function handleOnMouseDown(e) {
+      e.preventDefault();
+
+      resizing.current = true;
+      setResizing(true);
     }
 
     function handleOnClick(e) {
       e.preventDefault();
       resizing.current = false;
       setResizing(resizing.current);
-      handleResizerPositions();
     }
 
     function handleOnMouseUp(e) {
       resizing.current = false;
       setResizing(false);
-      handleResizerPositions();
     }
 
+    const throttled = throttle(handleOnClick, 1000);
     if (ref.current) {
       if (resizing.current) {
-        window.addEventListener("click", handleOnClick);
+        window.addEventListener("click", throttled);
       }
       ref.current.addEventListener("mousedown", handleOnMouseDown);
       window.addEventListener("mousemove", handleOnMouseMove);
@@ -120,21 +118,11 @@ export default function Resizer({
         }
 
         ref.current.removeEventListener("mousedown", handleOnMouseDown);
-        window.removeEventListener("mousemove", handleOnMouseMove);
+        window.removeEventListener("mousemove", throttled);
         ref.current.removeEventListener("mouseup", handleOnMouseUp);
       }
     };
-  }, [
-    colIndex,
-    leftGap,
-    minWidth,
-    setResizing,
-    totalWidth,
-    widths,
-    x,
-    rowIndex,
-    setWidths,
-  ]);
+  }, [x]);
 
   return <Handler ref={ref} x={x} />;
 }
