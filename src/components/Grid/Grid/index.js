@@ -240,6 +240,7 @@ function Grid(
                               colIndex,
                               minWidth
                             )}
+                            data={data}
                           />
                         );
                       })}

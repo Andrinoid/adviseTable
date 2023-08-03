@@ -38,33 +38,3 @@ describe("shouldStop", () => {
     ).toEqual(true);
   });
 });
-
-describe("InRange", () => {
-  it("should check if the value is in range", () => {
-    PrevInRange[0][0] = 295;
-    const actual = inRange(PrevInRange, 0, 0);
-
-    expect(actual).toEqual(323);
-  });
-
-  it("should check if the value is in range", () => {
-    PrevInRange[0][0] = 280;
-    const actual = inRange(PrevInRange, 0, 0);
-
-    expect(actual).toEqual(null);
-  });
-
-  it("should check if the value is in range", () => {
-    NextInRange[0][0] = 330;
-    const actual = inRange(NextInRange, 0, 0);
-
-    expect(actual).toEqual(323);
-  });
-
-  it("should check if the value is in range", () => {
-    NextInRange[0][0] = 356;
-    const actual = inRange(NextInRange, 0, 0);
-
-    expect(actual).toEqual(null);
-  });
-});

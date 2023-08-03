@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Dimensions, compute } from "../hooks";
-import { initial } from "lodash";
 
 export const Handler = styled.div`
   position: absolute;
@@ -49,28 +48,50 @@ export default function Resizer({
       setResizing(true);
     }
 
+    function snap(changedX, range = 30) {
+      for (let ri = rowIndex + 1; ri < positionXs.length; ri++) {
+        for (let ci = 0; ci < positionXs[ri].length; ci++) {
+          const nextValue = positionXs[ri][ci];
+
+          if (
+            x == nextValue &&
+            changedX > nextValue - range &&
+            changedX < nextValue + range
+          ) {
+            return [nextValue, false];
+          }
+        }
+      }
+
+      return [changedX, true];
+    }
+
     function handleOnMouseMove(e) {
       e.preventDefault();
 
       if (resizing.current) {
-        const resizerPosition = e.clientX - leftGap;
-        setX(resizerPosition);
-        const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
-        const width = e.clientX - leftGap - start;
+        const [value, update] = snap(e.clientX - leftGap, 100);
 
-        if (
-          colIndex == widths.length - 1 ||
-          (colIndex == 0 && width < minWidth) ||
-          e.clientX - leftGap < minWidth
-        ) {
-          resizing.current = false;
-          setResizing(false);
-          return;
+        setX(value);
+
+        if (update) {
+          const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
+          let width = e.clientX - leftGap - start;
+
+          if (
+            colIndex == widths.length - 1 ||
+            (colIndex == 0 && width < minWidth) ||
+            e.clientX - leftGap < minWidth
+          ) {
+            resizing.current = false;
+            setResizing(false);
+            return;
+          }
+          const newWidths = compute(
+            new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
+          );
+          setWidths(newWidths);
         }
-        const newWidths = compute(
-          new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
-        );
-        setWidths(newWidths);
       }
     }
 
@@ -92,7 +113,7 @@ export default function Resizer({
         ref.current.removeEventListener("mouseup", handleOnMouseUp);
       }
     };
-  }, [colIndex, leftGap, minWidth, setResizing, totalWidth, widths]);
+  }, [colIndex, leftGap, minWidth, setResizing, totalWidth, widths, x]);
 
   return <Handler ref={ref} x={x} />;
 }

@@ -29,16 +29,21 @@ export function shouldStop(values, index, minWidth) {
   return elsSum == length * minWidth;
 }
 
-export function inRange(values, rowIndex, colIndex, range = 30) {
-  const value = values[rowIndex][colIndex];
+export function inRange(values, rowIndex, x, current, range = 30) {
+  const value = x;
   for (let ri = rowIndex + 1; ri < values.length; ri++) {
     for (let ci = 0; ci < values[ri].length; ci++) {
       const nextValue = values[ri][ci];
-      if (nextValue < value + range && nextValue > value - range) {
+
+      if (
+        nextValue == x ||
+        (current == nextValue &&
+          value < nextValue + range &&
+          value > nextValue - range)
+      ) {
         return nextValue;
       }
     }
   }
-
   return null;
 }
