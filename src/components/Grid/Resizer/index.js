@@ -5,7 +5,7 @@ import { Dimensions, compute } from "../hooks";
 export const Handler = styled.div`
   position: absolute;
   top: 0;
-  width: 3px;
+  width: 5px;
   height: 100%;
   left: ${(props) => props.x}px;
   background-color: #37a1f6;
@@ -108,7 +108,9 @@ export default function Resizer({
     }
 
     if (ref.current) {
-      ref.current.addEventListener("click", handleOnClick);
+      if (resizing.current) {
+        window.addEventListener("click", handleOnClick);
+      }
       ref.current.addEventListener("mousedown", handleOnMouseDown);
       window.addEventListener("mousemove", handleOnMouseMove);
       ref.current.addEventListener("mouseup", handleOnMouseUp);
@@ -116,7 +118,9 @@ export default function Resizer({
 
     return () => {
       if (ref.current) {
-        ref.current.addEventListener("click", handleOnClick);
+        if (resizing.current) {
+          window.removeEventListener("click", handleOnClick);
+        }
 
         ref.current.removeEventListener("mousedown", handleOnMouseDown);
         window.removeEventListener("mousemove", handleOnMouseMove);

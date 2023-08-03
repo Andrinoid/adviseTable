@@ -122,10 +122,6 @@ function Grid(
     }, 350);
   }, []);
 
-  // TODO:
-  // - CONSTRAIN THE HANDLE MOVEMENTS ON MIN WIDTH AND MAX WIDTH
-  // - FIX PERFORMANCE ISSUES
-
   return (
     <Container ref={containerRef} resizing={resizing}>
       <DataContext.Provider
