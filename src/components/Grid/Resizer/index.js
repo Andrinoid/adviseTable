@@ -41,14 +41,15 @@ export default function Resizer({
   }, [shouldStop]);
 
   useLayoutEffect(() => {
-    function handleOnClick(e) {
+    function handleOnMouseDown(e) {
       e.preventDefault();
 
       resizing.current = true;
       setResizing(true);
     }
 
-    function snap(changedX, range = 30) {
+    function snap(changedX) {
+      const range = 50;
       for (let ri = rowIndex + 1; ri < positionXs.length; ri++) {
         for (let ci = 0; ci < positionXs[ri].length; ci++) {
           const nextValue = positionXs[ri][ci];
@@ -70,7 +71,7 @@ export default function Resizer({
       e.preventDefault();
 
       if (resizing.current) {
-        const [value, update] = snap(e.clientX - leftGap, 100);
+        const [value, update] = snap(e.clientX - leftGap);
 
         setX(value);
 
@@ -95,20 +96,29 @@ export default function Resizer({
       }
     }
 
+    function handleOnClick(e) {
+      e.preventDefault();
+      resizing.current = false;
+      setResizing(resizing.current);
+    }
+
     function handleOnMouseUp(e) {
       resizing.current = false;
       setResizing(false);
     }
 
     if (ref.current) {
-      ref.current.addEventListener("mousedown", handleOnClick);
+      ref.current.addEventListener("click", handleOnClick);
+      ref.current.addEventListener("mousedown", handleOnMouseDown);
       window.addEventListener("mousemove", handleOnMouseMove);
       ref.current.addEventListener("mouseup", handleOnMouseUp);
     }
 
     return () => {
       if (ref.current) {
-        ref.current.removeEventListener("mousedown", handleOnClick);
+        ref.current.addEventListener("click", handleOnClick);
+
+        ref.current.removeEventListener("mousedown", handleOnMouseDown);
         window.removeEventListener("mousemove", handleOnMouseMove);
         ref.current.removeEventListener("mouseup", handleOnMouseUp);
       }
