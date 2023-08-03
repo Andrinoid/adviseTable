@@ -120,7 +120,17 @@ function Grid(
         handleResizerPositions(data);
       }
     }, 350);
+
+    window.addEventListener("resize", handleResizerPositions);
+
+    return () => {
+      window.removeEventListener("resize", handleResizerPositions);
+    };
   }, []);
+
+  const isMobileSize = useMemo(() => {
+    return window.innerWidth <= breakpoint;
+  }, [breakpoint, window.innerWidth]);
 
   return (
     <Container ref={containerRef} resizing={resizing}>
@@ -197,7 +207,8 @@ function Grid(
                       index={rowIndex}
                       breakpoint={breakpoint}
                     />
-                    {xPosition.length > 0 &&
+                    {!isMobileSize &&
+                      xPosition.length > 0 &&
                       xPosition[rowIndex].slice(0, -1).map((x, colIndex) => {
                         function setWidths(widthsData) {
                           const row = data[rowIndex];
