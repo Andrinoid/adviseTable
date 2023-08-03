@@ -355,7 +355,7 @@ function App() {
   ];
   const ref = useRef(null);
   return (
-    <div style={{ paddingTop: 50 }}>
+    <div style={{ paddingTop: 50, paddingLeft: 200 }}>
       <Grid ref={ref} layout={layout} onChange={(value) => {}} />
       <AddSection
         onClick={() => {

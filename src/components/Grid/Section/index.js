@@ -226,11 +226,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                         sectionId === draggableId || sectionId === null
                       }
                     >
-                      {sectionRef.current &&
-                        sectionRef.current.offsetWidth &&
-                        getBreakpoints(sectionRef.current.offsetWidth).map(
-                          (b) => <Breakpoint left={b} key={index} />
-                        )}
                       {row.columns.map((column, colIndex) => {
                         return (
                           <Col
@@ -316,15 +311,5 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     </Draggable>
   );
 }
-
-const Breakpoint = styled.div`
-  position: absolute;
-  top: 0;
-  left: ${(props) => props.left}px;
-  width: 1px;
-  height: 100%;
-  background: blue;
-  display: block;
-`;
 
 export default Section;

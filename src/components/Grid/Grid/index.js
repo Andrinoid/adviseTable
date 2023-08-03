@@ -4,21 +4,35 @@ import React, {
   useState,
   forwardRef,
   useImperativeHandle,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
 } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
+import Resizer from "../Resizer";
+import { getInitialX as getHandlersX } from "../Resizer/helpers";
+import styled from "styled-components";
+import { set } from "lodash";
+
 export const DataContext = createContext(null);
 
 function Grid(
   { layout, onChange, maxCols = 10, minWidth = 100, breakpoint = 768 },
   ref
 ) {
-  const [data, setData] = useState(layout);
+  const [originalData, setData] = useState(layout);
+
+  const data = useMemo(() => originalData, [originalData]);
   const [sectionId, setSectionId] = useState(null);
   const [colId, setColId] = useState(null);
   const [colOver, setColOver] = useState(null);
-
+  const [resizing, setResizing] = useState(false);
+  const containerRef = useRef(null);
+  const [xPosition, setXPosition] = useState([]);
+  const [leftGap, setLeftGap] = useState(0);
   const { addRow } = useController(data, setData, maxCols);
 
   useImperativeHandle(ref, () => ({
@@ -78,8 +92,44 @@ function Grid(
     }
   }, [data]);
 
+  const handleResizerPositions = useMemo(
+    () => () => {
+      const position = getHandlersX(
+        data,
+        containerRef.current ? containerRef.current.offsetWidth : 0
+      );
+
+      setXPosition([...position]);
+    },
+    [data, containerRef.current]
+  );
+
+  useLayoutEffect(() => {
+    handleResizerPositions();
+  }, [resizing]);
+
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      const el = containerRef.current;
+      const { left } = el.getBoundingClientRect();
+      setLeftGap(left);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (data) {
+        handleResizerPositions(data);
+      }
+    }, 350);
+  }, []);
+
+  // TODO:
+  // - CONSTRAIN THE HANDLE MOVEMENTS ON MIN WIDTH AND MAX WIDTH
+  // - FIX PERFORMANCE ISSUES
+
   return (
-    <div>
+    <Container ref={containerRef} resizing={resizing}>
       <DataContext.Provider
         value={{
           data,
@@ -143,15 +193,47 @@ function Grid(
                 {...droppableProvided.droppableProps}
                 ref={droppableProvided.innerRef}
               >
-                {data.map((row, index) => (
-                  <Section
-                    key={row.rowId}
-                    row={row}
-                    isBeforeDragging={colId !== null}
-                    widths={row.columns.map((col) => col.width)}
-                    index={index}
-                    breakpoint={breakpoint}
-                  />
+                {data.map((row, rowIndex) => (
+                  <div style={{ position: "relative" }}>
+                    <Section
+                      key={row.rowId}
+                      row={row}
+                      isBeforeDragging={colId !== null}
+                      widths={row.columns.map((col) => col.width)}
+                      index={rowIndex}
+                      breakpoint={breakpoint}
+                    />
+                    {xPosition.length > 0 &&
+                      xPosition[rowIndex].slice(0, -1).map((x, colIndex) => {
+                        function setWidths(widthsData) {
+                          const row = data[rowIndex];
+                          row.columns = row.columns.map((col, index) => {
+                            col.width = widthsData[index];
+                            return col;
+                          });
+                          const newData = [...data];
+
+                          setData(newData);
+                        }
+                        return (
+                          <Resizer
+                            key={colIndex}
+                            x={x}
+                            resizing={resizing}
+                            setResizing={setResizing}
+                            leftGap={leftGap}
+                            widths={row.columns.map((col) => col.width)}
+                            colIndex={colIndex}
+                            minWidth={minWidth}
+                            row={data[rowIndex]}
+                            totalWidth={containerRef.current.offsetWidth || 0}
+                            setWidths={setWidths}
+                            positionXs={xPosition[rowIndex]}
+                            handleResizerPositions={handleResizerPositions}
+                          />
+                        );
+                      })}
+                  </div>
                 ))}
                 {droppableProvided.placeholder}
               </div>
@@ -159,8 +241,12 @@ function Grid(
           </Droppable>
         </DragDropContext>
       </DataContext.Provider>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  cursor: ${({ resizing }) => (resizing ? "col-resize" : "default")};
+`;
 
 export default forwardRef(Grid);

@@ -178,7 +178,7 @@ export function snap(totalWidth, size, x, range = 0.2) {
 
   const w = totalWidth / breakpoints.length;
 
-  console.log("w", w);
+  // console.log("w", w);
   const pixels = w * range;
   // 200 * 0.2 = 40
 

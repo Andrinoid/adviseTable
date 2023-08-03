@@ -1,0 +1,137 @@
+[
+  {
+    "rowId": "3febbb8f-0fa2-481e-8aa0-979b91cbfdd4",
+    "columns": [
+      {
+        "columnId": "dbbeabc7-1434-4fa1-9440-df7d3474c673",
+        "data": [{}, {}],
+        "width": 0.16666666666666666
+      },
+      {
+        "columnId": "a29be7a4-db0b-4a8a-96c8-a65f8efd8e93",
+        "data": [{}, {}],
+        "width": 0.16666666666666666
+      },
+      {
+        "columnId": "495cbe33-b64f-4309-b0b0-b1f06db64806",
+        "data": [{}, {}],
+        "width": 0.16666666666666666
+      },
+      {
+        "columnId": "ff6a8541-cb70-4362-aef1-7c76a415571e",
+        "data": [{}, {}],
+        "width": 0.16666666666666666
+      },
+      {
+        "columnId": "0d09bd47-23ec-4942-834c-7bcc2b53bd9e",
+        "data": [{}],
+        "width": 0.16666666666666666
+      },
+      {
+        "columnId": "2aa7e103-1e38-4f45-82f7-a9435f3b6874",
+        "data": [{}],
+        "width": 0.16666666666666666
+      }
+    ]
+  },
+  {
+    "rowId": "a1fab288-6aa1-4178-8e5e-53aea2e424dc",
+    "columns": [
+      {
+        "columnId": "fd8135cd-253f-4c78-9d62-11711c30685a",
+        "data": [{}, {}],
+        "width": 0.2
+      },
+      {
+        "columnId": "ddf0b8fb-3e94-4bc1-a13a-f06c88f35230",
+        "data": [{}, {}],
+        "width": 0.2
+      },
+      {
+        "columnId": "d4647aed-fef0-4f17-a031-0e0faf394d58",
+        "data": [{}, {}],
+        "width": 0.2
+      },
+      {
+        "columnId": "71c75893-b56c-4cf7-a1f4-6fc5aa467865",
+        "data": [{}, {}],
+        "width": 0.2
+      },
+      {
+        "columnId": "e389e2a0-3319-41d6-938b-2d2ff2fe730a",
+        "data": [{}],
+        "width": 0.2
+      }
+    ]
+  },
+  {
+    "rowId": "09974f5d-60d8-4a92-b063-cc28aebd7dc5",
+    "columns": [
+      {
+        "columnId": "5950f12d-cc60-49e2-a504-482c32ba043f",
+        "data": [{}, {}],
+        "width": 0.25
+      },
+      {
+        "columnId": "67a480eb-cf30-4793-a1ad-113e16dc0932",
+        "data": [{}, {}],
+        "width": 0.25
+      },
+      {
+        "columnId": "25d6055e-b84e-450b-a7b7-936cf6709101",
+        "data": [{}, {}],
+        "width": 0.25
+      },
+      {
+        "columnId": "0fefd0f9-0f3e-453c-a3f3-036f2dc3f508",
+        "data": [{}, {}],
+        "width": 0.25
+      }
+    ]
+  },
+  {
+    "rowId": "3c29ac75-27f6-4a33-ac5f-19b159f6eb73",
+    "columns": [
+      {
+        "columnId": "d88c002f-e092-4339-bdf4-c8ab3f1abe7d",
+        "data": [{}, {}],
+        "width": 0.3333333333333333
+      },
+      {
+        "columnId": "d05be5f9-212c-440f-97a6-93231ce021ac",
+        "data": [{}, {}],
+        "width": 0.3333333333333333
+      },
+      {
+        "columnId": "e1a8e33d-b741-49bb-a562-e05c33aba2ee",
+        "data": [{}, {}],
+        "width": 0.3333333333333333
+      }
+    ]
+  },
+  {
+    "rowId": "ac292603-9fe4-4ad4-a173-f22ad7cc53c6",
+    "columns": [
+      {
+        "columnId": "46ccc8af-7d40-483e-8b9e-83f8511417af",
+        "data": [{}],
+        "width": 0.5
+      },
+      {
+        "columnId": "a1421d20-4678-4147-845e-f16d064b3bb2",
+        "data": [{}],
+        "width": 0.5
+      }
+    ]
+  },
+  {
+    "rowId": "c54cf04f-97d2-4409-ac65-1b5914fc2ac8",
+    "columns": [
+      {
+        "columnId": "495c6651-8e6c-4cfd-8a48-44e6c9c51b0c",
+        "data": [{}],
+        "width": 1
+      }
+    ]
+  }
+]

@@ -41,7 +41,7 @@ function Col({
           isResizing={colId === draggableId}
           styled={getRowId(colId) !== getRowId(draggableId)}
         >
-          {isLast ? (
+          {true ? (
             <Column
               id={"col_" + columnId}
               $isDragging={draggableId == colId}
