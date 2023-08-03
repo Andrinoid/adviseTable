@@ -143,12 +143,7 @@ const toInterger = (v) => v * 100;
 const toFloat = (v) => v / 100;
 
 function increasing({ index, widths, minimumWidth, size, offsetWidth }) {
-  let maximumWidth = 0,
-    i = index + 1;
-  for (; i < widths.length; i++) {
-    maximumWidth += widths[i] - minimumWidth;
-  }
-  maximumWidth += widths[index];
+  let maximumWidth = maxWidth(index, widths, minimumWidth);
 
   let newWidth = toInterger(size.width / offsetWidth);
 
@@ -171,6 +166,16 @@ function increasing({ index, widths, minimumWidth, size, offsetWidth }) {
       }
     }
   }
+}
+
+export function maxWidth(index, widths, minimumWidth) {
+  let maximumWidth = 0,
+    i = index + 1;
+  for (; i < widths.length; i++) {
+    maximumWidth += widths[i] - minimumWidth;
+  }
+  maximumWidth += widths[index];
+  return maximumWidth;
 }
 
 export function snap(totalWidth, size, x, range = 0.2) {

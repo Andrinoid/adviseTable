@@ -104,7 +104,7 @@ function Grid(
 
   useLayoutEffect(() => {
     handleResizerPositions();
-  }, [resizing]);
+  }, [handleResizerPositions]);
 
   useLayoutEffect(() => {
     if (containerRef.current) {
@@ -112,7 +112,7 @@ function Grid(
       const { left } = el.getBoundingClientRect();
       setLeftGap(left);
     }
-  }, [data]);
+  }, []);
 
   useLayoutEffect(() => {
     setTimeout(() => {
@@ -242,11 +242,7 @@ function Grid(
                             positionXs={xPosition}
                             rowIndex={rowIndex}
                             handleResizerPositions={handleResizerPositions}
-                            shouldStop={shouldStop(
-                              actualWidths,
-                              colIndex,
-                              minWidth
-                            )}
+                            actualWidths={actualWidths}
                             data={data}
                           />
                         );

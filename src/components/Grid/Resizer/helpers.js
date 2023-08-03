@@ -17,18 +17,6 @@ export function getInitialX(data, totalWidth) {
   return result;
 }
 
-export function shouldStop(values, index, minWidth) {
-  const length = values.length - 1;
-  const elsSum = values.reduce((acc, el, i) => {
-    if (i == index) {
-      return acc;
-    }
-    return acc + Math.round(el);
-  }, 0);
-
-  return elsSum == length * minWidth;
-}
-
 export function inRange(values, rowIndex, x, current, range = 30) {
   const value = x;
   for (let ri = rowIndex + 1; ri < values.length; ri++) {

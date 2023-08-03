@@ -1,6 +1,14 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { Dimensions, compute } from "../hooks";
+import { maxWidth } from "../hooks";
+import { shouldStop } from "./helpers";
 
 export const Handler = styled.div`
   position: absolute;
@@ -22,8 +30,9 @@ export default function Resizer({
   minWidth,
   totalWidth,
   setWidths,
-  shouldStop,
+  actualWidths,
   rowIndex,
+  handleResizerPositions,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -32,13 +41,6 @@ export default function Resizer({
   useEffect(() => {
     setX(initialX);
   }, [initialX]);
-
-  useEffect(() => {
-    if (shouldStop) {
-      resizing.current = false;
-      setResizing(false);
-    }
-  }, [shouldStop]);
 
   useLayoutEffect(() => {
     function handleOnMouseDown(e) {
@@ -50,16 +52,19 @@ export default function Resizer({
 
     function snap(changedX) {
       const range = 50;
-      for (let ri = rowIndex + 1; ri < positionXs.length; ri++) {
-        for (let ci = 0; ci < positionXs[ri].length; ci++) {
-          const nextValue = positionXs[ri][ci];
+      for (let ri = 0; ri < positionXs.length; ri++) {
+        if (ri !== rowIndex) {
+          for (let ci = 0; ci < positionXs[ri].length; ci++) {
+            const nextValue = positionXs[ri][ci];
 
-          if (
-            x == nextValue &&
-            changedX > nextValue - range &&
-            changedX < nextValue + range
-          ) {
-            return [nextValue, false];
+            if (
+              Math.round(x) == Math.round(nextValue) &&
+              changedX > nextValue - range &&
+              changedX < nextValue + range
+            ) {
+              console.log("entrou no false");
+              return [nextValue, false];
+            }
           }
         }
       }
@@ -71,23 +76,13 @@ export default function Resizer({
       e.preventDefault();
 
       if (resizing.current) {
+        const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
+        let width = e.clientX - leftGap - start;
         const [value, update] = snap(e.clientX - leftGap);
 
         setX(value);
 
         if (update) {
-          const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
-          let width = e.clientX - leftGap - start;
-
-          if (
-            colIndex == widths.length - 1 ||
-            (colIndex == 0 && width < minWidth) ||
-            e.clientX - leftGap < minWidth
-          ) {
-            resizing.current = false;
-            setResizing(false);
-            return;
-          }
           const newWidths = compute(
             new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
           );
@@ -100,11 +95,13 @@ export default function Resizer({
       e.preventDefault();
       resizing.current = false;
       setResizing(resizing.current);
+      handleResizerPositions();
     }
 
     function handleOnMouseUp(e) {
       resizing.current = false;
       setResizing(false);
+      handleResizerPositions();
     }
 
     if (ref.current) {
@@ -127,7 +124,17 @@ export default function Resizer({
         ref.current.removeEventListener("mouseup", handleOnMouseUp);
       }
     };
-  }, [colIndex, leftGap, minWidth, setResizing, totalWidth, widths, x]);
+  }, [
+    colIndex,
+    leftGap,
+    minWidth,
+    setResizing,
+    totalWidth,
+    widths,
+    x,
+    rowIndex,
+    setWidths,
+  ]);
 
   return <Handler ref={ref} x={x} />;
 }
