@@ -18,29 +18,19 @@ import { DataContext } from "../Grid";
 import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
-import {
-  Dimensions,
-  compute,
-  getBreakpoints,
-  getRowId,
-  snap,
-  useController,
-} from "../hooks";
-import styled from "styled-components";
+import { getRowId, useController } from "../hooks";
 
 function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
-  // Define a ref to store a reference to the section element.
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
   const [height, setHeight] = useState("initial");
-  const { colOver, data, setData, sectionId, minWidth, maxCols } =
+  const columnHeight = useRef(null);
+  const resizing = useRef(false);
+  const { colOver, data, setData, sectionId, maxCols } =
     useContext(DataContext);
   const { addRow, removeRow } = useController(data, setData, maxCols);
-  // Define a state variable to store the flex factors of each column based on the number of columns
-  // const [widths, updateWidths] = useState(() => initialWidths);
 
   function setWidths(widthsData) {
-    // const row = data[index];
     row.columns = row.columns.map((col, index) => {
       col.width = widthsData[index];
       return col;
@@ -53,12 +43,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   useEffect(() => {
     setInitialHeight(sectionRef.current.offsetHeight);
   }, [data]);
-
-  // useLayoutEffect(() => {
-  //   if (sectionRef.current) {
-  //     setInitialHeight(sectionRef.current.offsetHeight);
-  //   }
-  // }, []);
 
   useLayoutEffect(() => {
     if (isBeforeDragging) {
@@ -73,9 +57,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     }
   }, [isBeforeDragging]);
 
-  // Initialize widths on component mount
   useEffect(() => {
-    // Debounce function
     function debounce(func, wait) {
       let timeout;
       return function executedFunction(...args) {
@@ -88,75 +70,23 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
       };
     }
 
-    // If the sectionRef is defined (i.e., the component has mounted),
-    // calculate the initial flex factors for each column
-    function calculateWidths() {
+    function updateFlexFactors() {
       if (sectionRef.current) {
         const initialWidths = widths.map(() => 1 / widths.length);
-        // Update the state with the new flex factors
         setWidths(initialWidths);
       }
     }
 
-    const debouncedCalculateWidths = debounce(calculateWidths, 300);
+    const debouncedCalculateWidths = debounce(updateFlexFactors, 300);
     debouncedCalculateWidths();
 
     window.addEventListener("resize", debouncedCalculateWidths);
 
-    // Cleanup function
     return () => {
       window.removeEventListener("resize", debouncedCalculateWidths);
     };
   }, [row]);
 
-  const [offsetWidth, setOffsetWidth] = useState(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (sectionRef.current) {
-        setOffsetWidth(sectionRef.current.offsetWidth);
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const onResizeStop = (index, event, { size }) => {
-    size = snap(offsetWidth, size, event.pageX, 0.3);
-    console.log("size", size);
-    onResize(index, event, { size });
-  };
-
-  const onResize = (index, event, { size }) => {
-    // Ensure the index is not out of range (i.e., not the last column)
-    if (index < widths.length - 1) {
-      const newWidths = compute(
-        new Dimensions(
-          widths,
-          index,
-          size,
-          minWidth,
-          sectionRef.current.offsetWidth
-        )
-      );
-
-      // Update the state with the new flex factors
-      setWidths(newWidths);
-    }
-  };
-
-  const columnHeight = useRef(null);
-  const resizing = useRef(false);
-
-  // the resizeable is used because we have to detect changes in the height of the row
-  // that are trigged by a change in the height of the columns children provided
-  // by the user(aka dumby widget)
   useEffect(() => {
     const rowElement = sectionRef.current;
 
@@ -178,7 +108,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
               if (timeout) clearTimeout(timeout);
 
               timeout = setTimeout(() => {
-                // setInitialHeight(currentHeight + 13);// what is the +13 for?
                 setInitialHeight(currentHeight);
                 resizing.current = false;
               }, 100);
@@ -200,17 +129,13 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
           <SectionContainer
             ref={draggableProvided.innerRef}
             {...draggableProvided.draggableProps}
-            isDraggingOver={
-              // isDraggingOver && getRowId(colId) != getRowId(draggableId)
-              false
-            }
           >
             <Droppable
               droppableId={"section_" + row.rowId}
               type="col"
               direction={"horizontal"}
             >
-              {(droppableProvided, snapshot) => {
+              {(droppableProvided) => {
                 return (
                   <div
                     ref={droppableProvided.innerRef}
@@ -235,8 +160,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                             width={column.width}
                             data={column.data}
                             rowId={row.rowId}
-                            onResize={onResize}
-                            onResizeStop={onResizeStop}
                             sectionRef={sectionRef}
                             isLast={colIndex === row.columns.length - 1}
                             breakpoint={breakpoint}

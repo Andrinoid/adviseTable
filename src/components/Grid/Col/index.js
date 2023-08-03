@@ -1,5 +1,4 @@
 import React, { forwardRef } from "react";
-import { Resizable } from "react-resizable";
 import { Column, Inner, Toolbar, ToolbarItem, DraggableElm } from "./styled";
 import "react-resizable/css/styles.css";
 import { Draggable } from "react-beautiful-dnd";
@@ -15,15 +14,11 @@ function Col({
   index,
   columnId,
   rowId,
-  onResize,
-  onResizeStop,
   sectionRef,
-  isLast,
   children,
   breakpoint,
 }) {
-  const { colId, colOver, setColId, data, setData, maxCols } =
-    useContext(DataContext);
+  const { colId, data, setData, maxCols } = useContext(DataContext);
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   const draggableId = rowId + "_" + columnId;
@@ -41,97 +36,43 @@ function Col({
           isResizing={colId === draggableId}
           styled={getRowId(colId) !== getRowId(draggableId)}
         >
-          {true ? (
-            <Column
-              id={"col_" + columnId}
-              $isDragging={draggableId == colId}
-              style={{
-                width: width * sectionRef.current?.offsetWidth || 0,
-                flex: width * sectionRef.current?.offsetWidth || 0,
-                height: "100%",
-              }}
-              breakpoint={breakpoint}
-            >
-              <Toolbar className="grid-toolbar">
-                <ToolbarItem {...draggableProvided.dragHandleProps}>
-                  {" "}
-                  <DragHandle />
+          <Column
+            id={"col_" + columnId}
+            $isDragging={draggableId == colId}
+            style={{
+              width: width * sectionRef.current?.offsetWidth || 0,
+              flex: width * sectionRef.current?.offsetWidth || 0,
+              height: "100%",
+            }}
+            breakpoint={breakpoint}
+          >
+            <Toolbar className="grid-toolbar">
+              <ToolbarItem {...draggableProvided.dragHandleProps}>
+                {" "}
+                <DragHandle />
+              </ToolbarItem>
+              <Cursor type="pointer">
+                <ToolbarItem
+                  onClick={() => {
+                    addColumn(rowId, columnId);
+                  }}
+                >
+                  <Plus />
                 </ToolbarItem>
-                <Cursor type="pointer">
-                  <ToolbarItem
-                    onClick={() => {
-                      addColumn(rowId, columnId);
-                    }}
-                  >
-                    <Plus />
-                  </ToolbarItem>
-                </Cursor>
-                <Cursor type="pointer">
-                  <ToolbarItem
-                    onClick={() => {
-                      removeColumn(rowId, columnId);
-                    }}
-                  >
-                    <Plus style={{ transform: "rotate(45deg)" }} />
-                  </ToolbarItem>
-                </Cursor>
-              </Toolbar>
+              </Cursor>
+              <Cursor type="pointer">
+                <ToolbarItem
+                  onClick={() => {
+                    removeColumn(rowId, columnId);
+                  }}
+                >
+                  <Plus style={{ transform: "rotate(45deg)" }} />
+                </ToolbarItem>
+              </Cursor>
+            </Toolbar>
 
-              <Inner>{children}</Inner>
-            </Column>
-          ) : (
-            <Resizable
-              key={index}
-              width={width * (sectionRef.current?.offsetWidth || 0)}
-              height={100} // Add a fixed height here
-              onResizeStart={(event, data) => {
-                setColId(draggableId);
-              }}
-              onResizeStop={(event, data) => {
-                setColId(null);
-                onResizeStop(index, event, data);
-              }}
-              onResize={(event, data) => onResize(index, event, data)}
-              resizeHandles={["se"]}
-              // minConstraints={[minWidth]} // Set minimum width in pixels
-            >
-              <Column
-                $isDragging={draggableId == colId}
-                style={{
-                  width: width * sectionRef.current?.offsetWidth || 0,
-                  flex: width * sectionRef.current?.offsetWidth || 0,
-                  height: "100%",
-                }}
-                breakpoint={breakpoint}
-              >
-                <Toolbar className="grid-toolbar">
-                  <ToolbarItem {...draggableProvided.dragHandleProps}>
-                    {" "}
-                    <DragHandle />
-                  </ToolbarItem>
-                  <Cursor type="pointer">
-                    <ToolbarItem
-                      onClick={() => {
-                        addColumn(rowId, columnId);
-                      }}
-                    >
-                      <Plus />
-                    </ToolbarItem>
-                  </Cursor>
-                  <Cursor type="pointer">
-                    <ToolbarItem
-                      onClick={() => {
-                        removeColumn(rowId, columnId);
-                      }}
-                    >
-                      <Plus style={{ transform: "rotate(45deg)" }} />
-                    </ToolbarItem>
-                  </Cursor>
-                </Toolbar>
-                <Inner>{children}</Inner>
-              </Column>
-            </Resizable>
-          )}
+            <Inner>{children}</Inner>
+          </Column>
         </DraggableElement>
       )}
     </Draggable>

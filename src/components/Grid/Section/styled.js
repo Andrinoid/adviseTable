@@ -49,14 +49,6 @@ export const SectionHandleItem = styled.div`
 export const SectionContainer = styled.div`
   transition: background-color 0.2s ease-in-out;
   background-color: transparent;
-
-  ${({ isDraggingOver }) => {
-    if (isDraggingOver) {
-      return `
-        background-color: rgb(55, 161, 246, 0.15);
-      `;
-    }
-  }}
 `;
 
 export const SectionElm = styled.section`

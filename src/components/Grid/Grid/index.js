@@ -114,7 +114,7 @@ function Grid(
     }
   }, [data]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTimeout(() => {
       if (data) {
         handleResizerPositions(data);
