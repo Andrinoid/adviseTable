@@ -23,6 +23,7 @@ export default function Resizer({
   minWidth,
   totalWidth,
   setWidths,
+  shouldStop,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -31,6 +32,13 @@ export default function Resizer({
   useEffect(() => {
     setX(initialX);
   }, [initialX]);
+
+  useEffect(() => {
+    if (shouldStop) {
+      resizing.current = false;
+      setResizing(false);
+    }
+  }, [shouldStop]);
 
   useLayoutEffect(() => {
     function handleOnClick(e) {

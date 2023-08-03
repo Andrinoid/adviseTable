@@ -12,7 +12,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
 import Resizer from "../Resizer";
-import { getInitialX as getHandlersX } from "../Resizer/helpers";
+import { getInitialX as getHandlersX, shouldStop } from "../Resizer/helpers";
 import styled from "styled-components";
 
 export const DataContext = createContext(null);
@@ -213,6 +213,12 @@ function Grid(
 
                           setData(newData);
                         }
+
+                        const actualWidths = row.columns.map(
+                          (col) =>
+                            col.width * containerRef.current.offsetWidth || 0
+                        );
+
                         return (
                           <Resizer
                             key={colIndex}
@@ -228,6 +234,11 @@ function Grid(
                             setWidths={setWidths}
                             positionXs={xPosition[rowIndex]}
                             handleResizerPositions={handleResizerPositions}
+                            shouldStop={shouldStop(
+                              actualWidths,
+                              colIndex,
+                              minWidth
+                            )}
                           />
                         );
                       })}

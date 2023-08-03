@@ -1,5 +1,5 @@
 import data from "./data.json";
-import { getInitialX } from "./helpers";
+import { getInitialX, shouldStop } from "./helpers";
 
 const totalWidth = 1000;
 
@@ -18,5 +18,18 @@ describe("getInitialX", () => {
     const actual = getInitialX(data, totalWidth);
     const expected = [200, 400, 600, 800, 1000];
     expect(actual[1]).toEqual(expected);
+  });
+
+  it("should check if it should force stop", () => {
+    expect(
+      shouldStop(
+        [
+          1114.9999999999998, 100.00000000000001, 100.00000000000001,
+          100.00000000000001, 100.00000000000001, 100.00000000000001,
+        ],
+        0,
+        100
+      )
+    ).toEqual(true);
   });
 });
