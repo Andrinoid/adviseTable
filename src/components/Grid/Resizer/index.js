@@ -47,19 +47,21 @@ export default function Resizer({
         const resizerPosition = e.clientX - leftGap;
         setX(resizerPosition);
         const start = colIndex == 0 ? 0 : positionXs[colIndex - 1];
+        const width = e.clientX - leftGap - start;
 
-        if (colIndex < widths.length - 1) {
-          const newWidths = compute(
-            new Dimensions(
-              widths,
-              colIndex,
-              { width: e.clientX - leftGap - start },
-              minWidth,
-              totalWidth
-            )
-          );
-          setWidths(newWidths);
+        if (
+          colIndex == widths.length - 1 ||
+          (colIndex == 0 && width < minWidth) ||
+          e.clientX - leftGap < minWidth
+        ) {
+          resizing.current = false;
+          setResizing(false);
+          return;
         }
+        const newWidths = compute(
+          new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
+        );
+        setWidths(newWidths);
       }
     }
 

@@ -5,7 +5,6 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useRef,
-  useCallback,
   useLayoutEffect,
   useMemo,
 } from "react";
@@ -15,7 +14,6 @@ import { useController } from "../hooks";
 import Resizer from "../Resizer";
 import { getInitialX as getHandlersX } from "../Resizer/helpers";
 import styled from "styled-components";
-import { set } from "lodash";
 
 export const DataContext = createContext(null);
 
