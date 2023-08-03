@@ -23,7 +23,6 @@ export default function Resizer({
   minWidth,
   totalWidth,
   setWidths,
-  handleResizerPositions,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -74,6 +73,14 @@ export default function Resizer({
       window.addEventListener("mousemove", handleOnMouseMove);
       ref.current.addEventListener("mouseup", handleOnMouseUp);
     }
+
+    return () => {
+      if (ref.current) {
+        ref.current.removeEventListener("mousedown", handleOnClick);
+        window.removeEventListener("mousemove", handleOnMouseMove);
+        ref.current.removeEventListener("mouseup", handleOnMouseUp);
+      }
+    };
   }, [colIndex, leftGap, minWidth, setResizing, totalWidth, widths]);
 
   return <Handler ref={ref} x={x} />;
