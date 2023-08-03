@@ -232,7 +232,8 @@ function Grid(
                             row={data[rowIndex]}
                             totalWidth={containerRef.current.offsetWidth || 0}
                             setWidths={setWidths}
-                            positionXs={xPosition[rowIndex]}
+                            positionXs={xPosition}
+                            rowIndex={rowIndex}
                             handleResizerPositions={handleResizerPositions}
                             shouldStop={shouldStop(
                               actualWidths,

@@ -28,3 +28,17 @@ export function shouldStop(values, index, minWidth) {
 
   return elsSum == length * minWidth;
 }
+
+export function inRange(values, rowIndex, colIndex, range = 30) {
+  const value = values[rowIndex][colIndex];
+  for (let ri = rowIndex + 1; ri < values.length; ri++) {
+    for (let ci = 0; ci < values[ri].length; ci++) {
+      const nextValue = values[ri][ci];
+      if (nextValue < value + range && nextValue > value - range) {
+        return nextValue;
+      }
+    }
+  }
+
+  return null;
+}

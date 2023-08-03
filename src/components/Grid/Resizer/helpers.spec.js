@@ -1,5 +1,8 @@
 import data from "./data.json";
+import PrevInRange from "./prev-to-handler.json";
+import NextInRange from "./next-to-handler.json";
 import { getInitialX, shouldStop } from "./helpers";
+import { inRange } from "../Resizer/helpers";
 
 const totalWidth = 1000;
 
@@ -19,7 +22,9 @@ describe("getInitialX", () => {
     const expected = [200, 400, 600, 800, 1000];
     expect(actual[1]).toEqual(expected);
   });
+});
 
+describe("shouldStop", () => {
   it("should check if it should force stop", () => {
     expect(
       shouldStop(
@@ -31,5 +36,35 @@ describe("getInitialX", () => {
         100
       )
     ).toEqual(true);
+  });
+});
+
+describe("InRange", () => {
+  it("should check if the value is in range", () => {
+    PrevInRange[0][0] = 295;
+    const actual = inRange(PrevInRange, 0, 0);
+
+    expect(actual).toEqual(323);
+  });
+
+  it("should check if the value is in range", () => {
+    PrevInRange[0][0] = 280;
+    const actual = inRange(PrevInRange, 0, 0);
+
+    expect(actual).toEqual(null);
+  });
+
+  it("should check if the value is in range", () => {
+    NextInRange[0][0] = 330;
+    const actual = inRange(NextInRange, 0, 0);
+
+    expect(actual).toEqual(323);
+  });
+
+  it("should check if the value is in range", () => {
+    NextInRange[0][0] = 356;
+    const actual = inRange(NextInRange, 0, 0);
+
+    expect(actual).toEqual(null);
   });
 });

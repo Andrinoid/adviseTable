@@ -24,6 +24,7 @@ export default function Resizer({
   totalWidth,
   setWidths,
   shouldStop,
+  rowIndex,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -54,7 +55,7 @@ export default function Resizer({
       if (resizing.current) {
         const resizerPosition = e.clientX - leftGap;
         setX(resizerPosition);
-        const start = colIndex == 0 ? 0 : positionXs[colIndex - 1];
+        const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
         const width = e.clientX - leftGap - start;
 
         if (
