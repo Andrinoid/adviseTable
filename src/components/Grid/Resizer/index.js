@@ -100,6 +100,7 @@ export default function Resizer({
     function handleOnMouseUp(e) {
       resizing.current = false;
       setResizing(false);
+      setX(initialX);
     }
 
     const throttled = throttle(handleOnClick, 1000);
@@ -109,7 +110,7 @@ export default function Resizer({
       }
       ref.current.addEventListener("mousedown", handleOnMouseDown);
       window.addEventListener("mousemove", handleOnMouseMove);
-      ref.current.addEventListener("mouseup", handleOnMouseUp);
+      window.addEventListener("mouseup", handleOnMouseUp);
     }
 
     return () => {
@@ -120,7 +121,7 @@ export default function Resizer({
 
         ref.current.removeEventListener("mousedown", handleOnMouseDown);
         window.removeEventListener("mousemove", throttled);
-        ref.current.removeEventListener("mouseup", handleOnMouseUp);
+        window.removeEventListener("mouseup", handleOnMouseUp);
       }
     };
   }, [x]);
