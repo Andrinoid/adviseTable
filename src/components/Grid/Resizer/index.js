@@ -30,6 +30,7 @@ export default function Resizer({
   totalWidth,
   setWidths,
   rowIndex,
+  onEnd,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -40,29 +41,53 @@ export default function Resizer({
     setX(initialX);
   }, [initialX]);
 
-  const snap = useCallback(
-    (changedX) => {
-      const range = 25;
-      for (let ri = 0; ri < positionXs.length; ri++) {
-        if (ri !== rowIndex) {
-          for (let ci = 0; ci < positionXs[ri].length; ci++) {
-            const nextValue = positionXs[ri][ci];
-
-            if (changedX > nextValue - range && changedX < nextValue + range) {
-              return nextValue;
-            }
-          }
-        }
-      }
-
-      return changedX;
-    },
-    [positionXs]
-  );
-
   const handleOnMouseMove = useCallback(
     (e) => {
       e.preventDefault();
+
+      if (resizing.current) {
+        const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
+        const snappedX = e.clientX - leftGap;
+
+        let width = snappedX - start;
+
+        if (snappedX != e.clientX - leftGap) {
+          snapped.current = true;
+        }
+
+        const newWidths = compute(
+          new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
+        );
+        setWidths([...newWidths], rowIndex);
+        setX(snappedX);
+      }
+    },
+    [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
+  );
+
+  const handleOnMouseUp = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      function snap(changedX) {
+        const range = 25;
+
+        for (let ri = 0; ri < positionXs.length; ri++) {
+          if (ri !== rowIndex) {
+            for (let ci = 0; ci < positionXs[ri].length; ci++) {
+              const nextValue = positionXs[ri][ci];
+              if (
+                changedX > nextValue - range &&
+                changedX < nextValue + range
+              ) {
+                return nextValue;
+              }
+            }
+          }
+        }
+
+        return changedX;
+      }
 
       if (resizing.current) {
         const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
@@ -77,12 +102,25 @@ export default function Resizer({
         const newWidths = compute(
           new Dimensions(widths, colIndex, { width }, minWidth, totalWidth)
         );
-        setWidths(newWidths, rowIndex);
+        setWidths([...newWidths], rowIndex);
         setX(snappedX);
+
+        resizing.current = false;
+        setResizing(false);
+
+        if (!snapped.current) {
+          setX(initialX);
+        } else {
+          snapped.current = false;
+        }
+
+        onEnd();
       }
     },
-    [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
+    [widths, totalWidth, positionXs]
   );
+
+  // [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
 
   useLayoutEffect(() => {
     function handleOnMouseDown(e) {
@@ -96,17 +134,6 @@ export default function Resizer({
       e.preventDefault();
       resizing.current = false;
       setResizing(resizing.current);
-    }
-
-    function handleOnMouseUp(e) {
-      resizing.current = false;
-      setResizing(false);
-
-      if (!snapped.current) {
-        setX(initialX);
-      } else {
-        snapped.current = false;
-      }
     }
 
     const throttled = throttle(handleOnClick, 1000);
@@ -130,7 +157,7 @@ export default function Resizer({
         window.removeEventListener("mouseup", handleOnMouseUp);
       }
     };
-  }, [positionXs]);
+  }, [handleOnMouseUp]);
 
   return <Handler ref={ref} x={x} />;
 }

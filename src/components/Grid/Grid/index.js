@@ -24,7 +24,6 @@ function Grid(
 ) {
   const [originalData, setData] = useState(layout);
 
-  const data = useMemo(() => originalData, [originalData]);
   const [sectionId, setSectionId] = useState(null);
   const [colId, setColId] = useState(null);
   const [colOver, setColOver] = useState(null);
@@ -32,7 +31,7 @@ function Grid(
   const containerRef = useRef(null);
   const [xPosition, setXPosition] = useState([]);
   const [leftGap, setLeftGap] = useState(0);
-  const { addRow } = useController(data, setData, maxCols);
+  const { addRow } = useController(originalData, setData, maxCols);
 
   useImperativeHandle(ref, () => ({
     addRow,
@@ -69,7 +68,7 @@ function Grid(
       const [removed] = result.splice(source.index, 1);
       result.splice(destination.index, 0, removed);
 
-      return result;
+      return [...result];
     }
 
     const sourceIndex = index(result, id(source));
@@ -87,25 +86,25 @@ function Grid(
 
   useEffect(() => {
     if (onChange) {
-      onChange(data);
+      onChange(originalData);
     }
-  }, [data]);
+  }, [originalData]);
 
   const handleResizerPositions = useMemo(
     () => () => {
       const position = getHandlersX(
-        data,
+        originalData,
         containerRef.current ? containerRef.current.offsetWidth : 0
       );
 
       setXPosition([...position]);
     },
-    [data, containerRef.current]
+    [originalData, containerRef.current]
   );
 
-  useLayoutEffect(() => {
-    handleResizerPositions();
-  }, [handleResizerPositions]);
+  // useLayoutEffect(() => {
+  //   handleResizerPositions();
+  // }, [originalData]);
 
   useLayoutEffect(() => {
     if (containerRef.current) {
@@ -117,8 +116,8 @@ function Grid(
 
   useLayoutEffect(() => {
     setTimeout(() => {
-      if (data) {
-        handleResizerPositions(data);
+      if (originalData) {
+        handleResizerPositions(originalData);
       }
     }, 350);
 
@@ -133,25 +132,22 @@ function Grid(
     return window.innerWidth <= breakpoint;
   }, [breakpoint, window.innerWidth]);
 
-  const setWidths = useCallback(
-    (widthsData, rowIndex) => {
-      const row = data[rowIndex];
-      row.columns = row.columns.map((col, index) => {
-        col.width = widthsData[index];
-        return col;
-      });
-      const newData = [...data];
+  const setWidths = (widthsData, rowIndex) => {
+    const row = { ...originalData[rowIndex] };
+    row.columns = row.columns.map((col, index) => {
+      col.width = widthsData[index];
+      return { ...col };
+    });
+    const newData = [...originalData];
 
-      setData(newData);
-    },
-    [data]
-  );
+    setData(newData);
+  };
 
   return (
     <Container ref={containerRef} resizing={resizing}>
       <DataContext.Provider
         value={{
-          data,
+          data: originalData,
           setData,
           sectionId,
           colId,
@@ -196,13 +192,12 @@ function Grid(
             }
 
             if (type === "col") {
-              setData(reorder(data, source, destination, "col"));
+              setData([...reorder(originalData, source, destination, "col")]);
 
               return;
             }
 
-            const reordered = reorder(data, source, destination);
-
+            const reordered = reorder(originalData, source, destination);
             setData([...reordered]);
           }}
         >
@@ -212,7 +207,7 @@ function Grid(
                 {...droppableProvided.droppableProps}
                 ref={droppableProvided.innerRef}
               >
-                {data.map((row, rowIndex) => (
+                {originalData.map((row, rowIndex) => (
                   <div style={{ position: "relative" }}>
                     <Section
                       key={row.rowId}
@@ -238,6 +233,9 @@ function Grid(
                             setWidths={setWidths}
                             positionXs={xPosition}
                             rowIndex={rowIndex}
+                            onEnd={() => {
+                              handleResizerPositions();
+                            }}
                           />
                         );
                       })}
