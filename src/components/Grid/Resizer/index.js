@@ -42,7 +42,7 @@ export default function Resizer({
 
   const snap = useCallback(
     (changedX) => {
-      const range = 15;
+      const range = 25;
       for (let ri = 0; ri < positionXs.length; ri++) {
         if (ri !== rowIndex) {
           for (let ci = 0; ci < positionXs[ri].length; ci++) {
@@ -130,7 +130,7 @@ export default function Resizer({
         window.removeEventListener("mouseup", handleOnMouseUp);
       }
     };
-  }, [x, positionXs]);
+  }, [positionXs]);
 
   return <Handler ref={ref} x={x} />;
 }
