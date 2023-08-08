@@ -81,7 +81,7 @@ function Grid(
       result.splice(sourceIndex, 1);
     }
 
-    return recomputeWidths(result);
+    return recomputeWidths([...result]);
   };
 
   useEffect(() => {
@@ -102,10 +102,6 @@ function Grid(
     [originalData, containerRef.current]
   );
 
-  // useLayoutEffect(() => {
-  //   handleResizerPositions();
-  // }, [originalData]);
-
   useLayoutEffect(() => {
     if (containerRef.current) {
       const el = containerRef.current;
@@ -113,6 +109,12 @@ function Grid(
       setLeftGap(left);
     }
   }, []);
+
+  useEffect(() => {
+    if (sectionId) {
+      handleResizerPositions();
+    }
+  }, [originalData, handleResizerPositions, colId]);
 
   useLayoutEffect(() => {
     setTimeout(() => {
