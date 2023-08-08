@@ -7,7 +7,7 @@ import {
 } from "react";
 import styled from "styled-components";
 import { Dimensions, compute } from "../hooks";
-import { throttle } from "lodash";
+import { debounce, throttle } from "lodash";
 
 export const Handler = styled.div`
   position: absolute;
@@ -37,7 +37,6 @@ export default function Resizer({
   const ref = useRef(null);
   const resizing = useRef(false);
   const snapped = useRef(false);
-  const moving = useRef(false);
 
   useEffect(() => {
     setX(initialX);
@@ -47,8 +46,8 @@ export default function Resizer({
     (e) => {
       e.preventDefault();
 
-      if (resizing.current && !moving.current) {
-        moving.current = true;
+      if (resizing.current) {
+        console.log("resizing", resizing.current);
         const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
         const snappedX = e.clientX - leftGap;
 
@@ -63,7 +62,6 @@ export default function Resizer({
         );
         setWidths([...newWidths], rowIndex);
         setX(snappedX);
-        moving.current = false;
       }
     },
     [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
@@ -127,16 +125,7 @@ export default function Resizer({
       setResizing(true);
     }
 
-    function handleOnClick(e) {
-      e.preventDefault();
-      resizing.current = false;
-      setResizing(resizing.current);
-    }
-
     if (ref.current) {
-      if (resizing.current) {
-        window.addEventListener("click", handleOnClick);
-      }
       ref.current.addEventListener("mousedown", handleOnMouseDown);
       window.addEventListener("mousemove", handleOnMouseMove);
       window.addEventListener("mouseup", handleOnMouseUp);
@@ -144,10 +133,6 @@ export default function Resizer({
 
     return () => {
       if (ref.current) {
-        if (resizing.current) {
-          window.removeEventListener("click", handleOnClick);
-        }
-
         ref.current.removeEventListener("mousedown", handleOnMouseDown);
         window.removeEventListener("mousemove", handleOnMouseMove);
         window.removeEventListener("mouseup", handleOnMouseUp);
