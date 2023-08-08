@@ -7,7 +7,6 @@ import {
 } from "react";
 import styled from "styled-components";
 import { Dimensions, compute } from "../hooks";
-import { debounce, throttle } from "lodash";
 
 export const Handler = styled.div`
   position: absolute;
@@ -15,7 +14,7 @@ export const Handler = styled.div`
   width: 5px;
   height: 100%;
   left: ${(props) => props.x}px;
-  background-color: #37a1f6;
+  background-color: transparent;
   cursor: col-resize;
 `;
 
