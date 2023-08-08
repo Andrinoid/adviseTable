@@ -31,6 +31,9 @@ export default function Resizer({
   rowIndex,
   onEnd,
   rulers,
+  setColId,
+  rowId,
+  colId,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -103,6 +106,7 @@ export default function Resizer({
 
         resizing.current = false;
         setResizing(false);
+        setColId(null);
 
         if (!snapped.current) {
           setX(initialX);
@@ -122,6 +126,7 @@ export default function Resizer({
 
       resizing.current = true;
       setResizing(true);
+      setColId(rowId + "_" + colId);
     }
 
     if (ref.current) {

@@ -19,13 +19,14 @@ function Col({
   children,
   breakpoint,
 }) {
-  const { colId, data, setData, maxCols } = useContext(DataContext);
+  const { colId, data, setData, maxCols, isResizing } = useContext(DataContext);
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   const draggableId = rowId + "_" + columnId;
 
   const debouncedAdd = debounce(() => addColumn(rowId, columnId), 300);
 
+  console.log(colId);
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
@@ -36,7 +37,7 @@ function Col({
           $isDragging={draggableId == colId} //Only for styling. This is not part of dnd
           breakpoint={breakpoint}
           showHoverHandler={colId === null || colId === draggableId}
-          isResizing={colId === draggableId}
+          isResizing={colId === draggableId && isResizing}
           styled={getRowId(colId) !== getRowId(draggableId)}
         >
           <Column
@@ -83,16 +84,16 @@ function Col({
 }
 
 const DraggableElement = forwardRef(
-  ({ children, styled = false, ...rest }, ref) => {
+  ({ children, styled = false, isResizing, ...rest }, ref) => {
     if (styled) {
       return (
-        <DraggableElm {...rest} ref={ref} style={{}}>
+        <DraggableElm {...rest} isResizing={isResizing} ref={ref} style={{}}>
           {children}
         </DraggableElm>
       );
     }
     return (
-      <DraggableElm {...rest} ref={ref}>
+      <DraggableElm {...rest} ref={ref} isResizing={isResizing}>
         {children}
       </DraggableElm>
     );

@@ -169,6 +169,7 @@ function Grid(
           minWidth,
           setColId,
           colOver,
+          isResizing: resizing,
         }}
       >
         <DragDropContext
@@ -254,6 +255,9 @@ function Grid(
                             onEnd={() => {
                               handleResizerPositions();
                             }}
+                            setColId={setColId}
+                            rowId={row.rowId}
+                            colId={row.columns[colIndex].columnId}
                           />
                         );
                       })}
