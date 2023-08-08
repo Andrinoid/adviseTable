@@ -111,17 +111,11 @@ function Grid(
   }, []);
 
   useEffect(() => {
-    if (sectionId) {
-      handleResizerPositions();
-    }
-  }, [originalData, handleResizerPositions, colId]);
+    handleResizerPositions();
+  }, [sectionId]);
 
   useLayoutEffect(() => {
-    setTimeout(() => {
-      if (originalData) {
-        handleResizerPositions(originalData);
-      }
-    }, 350);
+    setTimeout(handleResizerPositions, 350);
 
     window.addEventListener("resize", handleResizerPositions);
 
@@ -210,9 +204,8 @@ function Grid(
                 ref={droppableProvided.innerRef}
               >
                 {originalData.map((row, rowIndex) => (
-                  <div style={{ position: "relative" }}>
+                  <div style={{ position: "relative" }} key={row.rowId}>
                     <Section
-                      key={row.rowId}
                       row={row}
                       isBeforeDragging={colId !== null}
                       widths={row.columns.map((col) => col.width)}
@@ -224,7 +217,7 @@ function Grid(
                       xPosition[rowIndex].slice(0, -1).map((x, colIndex) => {
                         return (
                           <Resizer
-                            key={rowIndex + "_" + colIndex}
+                            key={row.rowId + "_" + colIndex}
                             x={x}
                             setResizing={setResizing}
                             leftGap={leftGap}
