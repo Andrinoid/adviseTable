@@ -26,7 +26,6 @@ function Col({
 
   const debouncedAdd = debounce(() => addColumn(rowId, columnId), 300);
 
-  console.log(colId);
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (

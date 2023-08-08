@@ -7,6 +7,7 @@ import React, {
   useRef,
   useLayoutEffect,
   useMemo,
+  useCallback,
 } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
@@ -145,16 +146,19 @@ function Grid(
     return window.innerWidth <= breakpoint;
   }, [breakpoint, window.innerWidth]);
 
-  const setWidths = (widthsData, rowIndex) => {
-    const row = { ...originalData[rowIndex] };
-    row.columns = row.columns.map((col, index) => {
-      col.width = widthsData[index];
-      return { ...col };
-    });
-    const newData = [...originalData];
+  const setWidths = useCallback(
+    (widthsData, rowIndex) => {
+      const row = { ...originalData[rowIndex] };
+      row.columns = row.columns.map((col, index) => {
+        col.width = widthsData[index];
+        return { ...col };
+      });
+      const newData = [...originalData];
 
-    setData(newData);
-  };
+      setData(newData);
+    },
+    [originalData]
+  );
 
   return (
     <Container ref={containerRef} resizing={resizing}>

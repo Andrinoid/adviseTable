@@ -49,7 +49,8 @@ export default function Resizer({
       e.preventDefault();
 
       if (resizing.current) {
-        console.log("resizing", resizing.current);
+        console.log("handleOnMouseMove");
+
         const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
         const snappedX = e.clientX - leftGap;
 
