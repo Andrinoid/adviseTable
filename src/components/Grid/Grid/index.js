@@ -161,7 +161,7 @@ function Grid(
 
   return (
     <Container ref={containerRef} resizing={resizing}>
-      {rulers[0] && rulers[0].map((r) => <Ruler x={r} />)}
+      {rulers[0] && rulers[0].map((r) => <Ruler key={r} x={r} />)}
       <DataContext.Provider
         value={{
           data: originalData,
@@ -225,7 +225,10 @@ function Grid(
                 ref={droppableProvided.innerRef}
               >
                 {originalData.map((row, rowIndex) => (
-                  <div style={{ position: "relative" }} key={row.rowId}>
+                  <div
+                    style={{ position: "relative" }}
+                    key={"sectioncontainer_" + row.rowId}
+                  >
                     <Section
                       row={row}
                       isBeforeDragging={colId !== null}
@@ -239,7 +242,7 @@ function Grid(
                       xPosition[rowIndex].slice(0, -1).map((x, colIndex) => {
                         return (
                           <Resizer
-                            key={row.rowId + "_" + colIndex}
+                            key={"resizer_" + row.rowId + "_" + colIndex}
                             x={x}
                             setResizing={setResizing}
                             leftGap={leftGap}

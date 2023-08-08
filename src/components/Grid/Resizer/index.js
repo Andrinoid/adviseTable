@@ -37,6 +37,7 @@ export default function Resizer({
   const ref = useRef(null);
   const resizing = useRef(false);
   const snapped = useRef(false);
+  const moving = useRef(false);
 
   useEffect(() => {
     setX(initialX);
@@ -46,7 +47,8 @@ export default function Resizer({
     (e) => {
       e.preventDefault();
 
-      if (resizing.current) {
+      if (resizing.current && !moving.current) {
+        moving.current = true;
         const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
         const snappedX = e.clientX - leftGap;
 
@@ -61,6 +63,7 @@ export default function Resizer({
         );
         setWidths([...newWidths], rowIndex);
         setX(snappedX);
+        moving.current = false;
       }
     },
     [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
@@ -116,8 +119,6 @@ export default function Resizer({
     [widths, totalWidth, positionXs]
   );
 
-  // [widths, colIndex, minWidth, totalWidth, leftGap, rowIndex, positionXs]
-
   useLayoutEffect(() => {
     function handleOnMouseDown(e) {
       e.preventDefault();
@@ -132,10 +133,9 @@ export default function Resizer({
       setResizing(resizing.current);
     }
 
-    const throttled = throttle(handleOnClick, 1000);
     if (ref.current) {
       if (resizing.current) {
-        window.addEventListener("click", throttled);
+        window.addEventListener("click", handleOnClick);
       }
       ref.current.addEventListener("mousedown", handleOnMouseDown);
       window.addEventListener("mousemove", handleOnMouseMove);
@@ -149,7 +149,7 @@ export default function Resizer({
         }
 
         ref.current.removeEventListener("mousedown", handleOnMouseDown);
-        window.removeEventListener("mousemove", throttled);
+        window.removeEventListener("mousemove", handleOnMouseMove);
         window.removeEventListener("mouseup", handleOnMouseUp);
       }
     };
