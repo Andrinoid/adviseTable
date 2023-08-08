@@ -7,7 +7,7 @@ import {
 } from "react";
 import styled from "styled-components";
 import { Dimensions, compute } from "../hooks";
-import { initial, throttle } from "lodash";
+import { throttle } from "lodash";
 
 export const Handler = styled.div`
   position: absolute;
@@ -15,7 +15,7 @@ export const Handler = styled.div`
   width: 5px;
   height: 100%;
   left: ${(props) => props.x}px;
-  background-color: #37a1f6;
+  background-color: transparent;
   cursor: col-resize;
 `;
 
@@ -31,6 +31,7 @@ export default function Resizer({
   setWidths,
   rowIndex,
   onEnd,
+  rulers,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -46,7 +47,6 @@ export default function Resizer({
       e.preventDefault();
 
       if (resizing.current) {
-        console.log("resizing - ", rowIndex, colIndex);
         const start = colIndex == 0 ? 0 : positionXs[rowIndex][colIndex - 1];
         const snappedX = e.clientX - leftGap;
 
@@ -73,16 +73,11 @@ export default function Resizer({
       function snap(changedX) {
         const range = 25;
 
-        for (let ri = 0; ri < positionXs.length; ri++) {
-          if (ri !== rowIndex) {
-            for (let ci = 0; ci < positionXs[ri].length; ci++) {
-              const nextValue = positionXs[ri][ci];
-              if (
-                changedX > nextValue - range &&
-                changedX < nextValue + range
-              ) {
-                return nextValue;
-              }
+        for (let ri = 0; ri < rulers.length; ri++) {
+          for (let ci = 0; ci < rulers[ri].length; ci++) {
+            const nextValue = rulers[ri][ci];
+            if (changedX > nextValue - range && changedX < nextValue + range) {
+              return nextValue;
             }
           }
         }

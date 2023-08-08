@@ -7,7 +7,6 @@ import React, {
   useRef,
   useLayoutEffect,
   useMemo,
-  useCallback,
 } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
@@ -31,6 +30,7 @@ function Grid(
   const containerRef = useRef(null);
   const [xPosition, setXPosition] = useState([]);
   const [leftGap, setLeftGap] = useState(0);
+  const [rulers, setRulers] = useState([]);
   const { addRow } = useController(originalData, setData, maxCols);
 
   useImperativeHandle(ref, () => ({
@@ -42,6 +42,20 @@ function Grid(
       setSectionId(null);
     }
   }, [colId]);
+
+  function updateRulers(total) {
+    const result = [...Array(6).keys()]
+      .slice(0, -1)
+      .map((_, i) => (i + 1) * (total / 6));
+
+    setRulers([result]);
+  }
+
+  useEffect(() => {
+    if (containerRef.current) {
+      updateRulers(containerRef.current.offsetWidth);
+    }
+  }, [containerRef.current]);
 
   function id(data) {
     return data.droppableId.split("_")[1];
@@ -92,6 +106,9 @@ function Grid(
 
   const handleResizerPositions = useMemo(
     () => () => {
+      if (containerRef.current) {
+        updateRulers(containerRef.current.offsetWidth);
+      }
       const position = getHandlersX(
         originalData,
         containerRef.current ? containerRef.current.offsetWidth : 0
@@ -139,8 +156,10 @@ function Grid(
     setData(newData);
   };
 
+  console.log(rulers[0]);
   return (
     <Container ref={containerRef} resizing={resizing}>
+      {rulers[0] && rulers[0].map((r) => <Ruler x={r} />)}
       <DataContext.Provider
         value={{
           data: originalData,
@@ -227,6 +246,7 @@ function Grid(
                             totalWidth={containerRef.current.offsetWidth || 0}
                             setWidths={setWidths}
                             positionXs={xPosition}
+                            rulers={rulers}
                             rowIndex={rowIndex}
                             onEnd={() => {
                               handleResizerPositions();
@@ -247,7 +267,17 @@ function Grid(
 }
 
 const Container = styled.div`
+  position: relative;
   cursor: ${({ resizing }) => (resizing ? "col-resize" : "default")};
+`;
+
+const Ruler = styled.div`
+  position: absolute;
+  top: 0;
+  left: ${({ x }) => x}px;
+  width: 0px;
+  height: 100%;
+  border-right: 2px dashed #37a1f6;
 `;
 
 export default forwardRef(Grid);
