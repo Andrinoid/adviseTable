@@ -265,7 +265,11 @@ function Grid(
                             }}
                             setColId={setColId}
                             rowId={row.rowId}
-                            colId={row.columns[colIndex].columnId}
+                            colId={
+                              row.columns[colIndex]
+                                ? row.columns[colIndex].columnId
+                                : null
+                            }
                           />
                         );
                       })}
