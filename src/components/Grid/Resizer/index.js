@@ -140,5 +140,5 @@ export default function Resizer({
     };
   }, [handleOnMouseUp]);
 
-  return <Handler ref={ref} x={x} />;
+  return <Handler ref={ref} x={x || 0} />;
 }

@@ -34,10 +34,7 @@ function Grid(
   const { addRow } = useController(originalData, setData, maxCols);
 
   useImperativeHandle(ref, () => ({
-    addRow: () => {
-      addRow();
-      handleResizerPositions();
-    },
+    addRow,
   }));
 
   useEffect(() => {
@@ -109,9 +106,6 @@ function Grid(
 
   const handleResizerPositions = useMemo(
     () => () => {
-      if (containerRef.current) {
-        updateRulers(containerRef.current.offsetWidth);
-      }
       const position = getHandlersX(
         originalData,
         containerRef.current ? containerRef.current.offsetWidth : 0
@@ -131,6 +125,9 @@ function Grid(
   }, []);
 
   useEffect(() => {
+    if (containerRef.current) {
+      updateRulers(containerRef.current.offsetWidth);
+    }
     handleResizerPositions();
   }, [sectionId, originalData]);
 
@@ -161,7 +158,7 @@ function Grid(
 
   return (
     <Container ref={containerRef} resizing={resizing}>
-      {rulers[0] && rulers[0].map((r) => <Ruler key={r} x={r} />)}
+      {rulers[0] && rulers[0].map((r) => <Ruler key={r} x={r || 0} />)}
       <DataContext.Provider
         value={{
           data: originalData,
@@ -243,7 +240,7 @@ function Grid(
                         return (
                           <Resizer
                             key={"resizer_" + row.rowId + "_" + colIndex}
-                            x={x}
+                            x={x || 0}
                             setResizing={setResizing}
                             leftGap={leftGap}
                             widths={row.columns.map((col) => col.width)}

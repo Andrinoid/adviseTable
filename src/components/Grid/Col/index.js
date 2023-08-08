@@ -8,6 +8,7 @@ import { DataContext } from "../Grid";
 import { useContext } from "react";
 import { Cursor } from "../Section/styled";
 import { getRowId, useController } from "../hooks";
+import { debounce } from "lodash";
 
 function Col({
   width,
@@ -22,6 +23,8 @@ function Col({
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   const draggableId = rowId + "_" + columnId;
+
+  const debouncedAdd = debounce(() => addColumn(rowId, columnId), 300);
 
   return (
     <Draggable draggableId={draggableId} index={index}>
@@ -54,7 +57,7 @@ function Col({
               <Cursor type="pointer">
                 <ToolbarItem
                   onClick={() => {
-                    addColumn(rowId, columnId);
+                    debouncedAdd();
                   }}
                 >
                   <Plus />
