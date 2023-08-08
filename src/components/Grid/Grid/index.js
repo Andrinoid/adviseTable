@@ -34,7 +34,10 @@ function Grid(
   const { addRow } = useController(originalData, setData, maxCols);
 
   useImperativeHandle(ref, () => ({
-    addRow,
+    addRow: () => {
+      addRow();
+      handleResizerPositions();
+    },
   }));
 
   useEffect(() => {
@@ -129,7 +132,7 @@ function Grid(
 
   useEffect(() => {
     handleResizerPositions();
-  }, [sectionId]);
+  }, [sectionId, originalData]);
 
   useLayoutEffect(() => {
     setTimeout(handleResizerPositions, 350);
@@ -156,7 +159,6 @@ function Grid(
     setData(newData);
   };
 
-  console.log(rulers[0]);
   return (
     <Container ref={containerRef} resizing={resizing}>
       {rulers[0] && rulers[0].map((r) => <Ruler x={r} />)}
@@ -233,6 +235,7 @@ function Grid(
                     />
                     {!isMobileSize &&
                       xPosition.length > 0 &&
+                      xPosition[rowIndex] &&
                       xPosition[rowIndex].slice(0, -1).map((x, colIndex) => {
                         return (
                           <Resizer
