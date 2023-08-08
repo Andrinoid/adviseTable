@@ -96,7 +96,11 @@ function Grid(
       result.splice(sourceIndex, 1);
     }
 
-    return recomputeWidths([...result]);
+    if (destIndex === sourceIndex) {
+      return result;
+    }
+
+    return recomputeWidths(result);
   };
 
   useEffect(() => {
