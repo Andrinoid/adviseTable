@@ -1,3 +1,4 @@
+import React from "react";
 import PlusCircle from "../../../icons/PlusCircle";
 import styled from "styled-components";
 
@@ -15,7 +16,7 @@ const EmptySection = styled.div`
     font-style: italic;
     font-size: 13px;
     color: #818181;
-    font-family: 'Heebo',sans-serif;
+    font-family: "Heebo", sans-serif;
   }
 `;
 
@@ -28,18 +29,17 @@ const Inner = styled.div`
   border: 2px dashed #d8d8d8;
 `;
 
-
 const AddSection = ({ onClick }) => {
-    return (
-        <EmptySection>
-            <Inner>
-                <div>
-                    <PlusCircle onClick={onClick} size={40} color={'#1b90ff'} />
-                </div>
-                <p>Drag and drop widgets here</p>
-            </Inner>
-        </EmptySection>
-    )
-}
+  return (
+    <EmptySection>
+      <Inner>
+        <div>
+          <PlusCircle onClick={onClick} size={40} color={"#1b90ff"} />
+        </div>
+        <p>Drag and drop widgets here</p>
+      </Inner>
+    </EmptySection>
+  );
+};
 
 export default AddSection;
