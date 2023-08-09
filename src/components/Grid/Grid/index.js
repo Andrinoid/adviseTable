@@ -231,7 +231,7 @@ function Grid(
             setData([...reordered]);
           }}
         >
-          <Droppable droppableId={"grid"}>
+          <Droppable droppableId={"advise-grid"}>
             {(droppableProvided) => (
               <div
                 {...droppableProvided.droppableProps}
