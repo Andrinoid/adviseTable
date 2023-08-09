@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Grid from "./Grid";
 import { v4 as uuidv4 } from "uuid";
 import DummyWidget from "./DummyWidget";
@@ -12,7 +12,7 @@ import AddSection from "./AddSection";
 // } from "./components/Helpers";
 
 function App() {
-  const layout = [
+  const [layout, setLayout] = useState([
     {
       rowId: uuidv4(),
       columns: [
@@ -349,11 +349,17 @@ function App() {
         },
       ],
     },
-  ];
+  ]);
   const ref = useRef(null);
   return (
     <div style={{ paddingTop: 50, paddingLeft: 200 }}>
-      <Grid ref={ref} layout={layout} onChange={(value) => {}} />
+      <Grid
+        ref={ref}
+        layout={layout}
+        onChange={(data) => {
+          setLayout(data);
+        }}
+      />
       <AddSection
         onClick={() => {
           if (ref.current) {
