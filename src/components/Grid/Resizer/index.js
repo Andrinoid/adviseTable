@@ -16,6 +16,7 @@ export const Handler = styled.div`
   left: ${(props) => props.x}px;
   background-color: transparent;
   cursor: col-resize;
+  z-index: 5;
 `;
 
 export default function Resizer({
