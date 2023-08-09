@@ -166,7 +166,10 @@ function Grid(
 
   return (
     <Container ref={containerRef} resizing={resizing}>
-      {rulers[0] && rulers[0].map((r) => <Ruler key={r} x={r || 0} />)}
+      {rulers[0] &&
+        rulers[0].map((r) => (
+          <Ruler style={{ opacity: resizing ? 1 : 0 }} key={r} x={r || 0} />
+        ))}
       <DataContext.Provider
         value={{
           data: originalData,
