@@ -161,7 +161,6 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                             data={column.data}
                             rowId={row.rowId}
                             sectionRef={sectionRef}
-                            isLast={colIndex === row.columns.length - 1}
                             breakpoint={breakpoint}
                           >
                             {row.rowId != getRowId(sectionId) &&
