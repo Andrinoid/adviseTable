@@ -351,6 +351,21 @@ function App() {
     },
   ]);
   const ref = useRef(null);
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    //ev.target.appendChild(document.getElementById(data));
+  }
+
   return (
     <div style={{ paddingTop: 50, paddingLeft: 200 }}>
       <Grid
@@ -367,6 +382,22 @@ function App() {
           }
         }}
       />
+
+      <h2>Drag and Drop</h2>
+      <p>Drag the image back and forth between the two div elements.</p>
+
+      <div id="div1" onDrop={drop} onDragOver={allowDrop}>
+        <img
+          src="img_w3slogo.gif"
+          draggable="true"
+          onDragStart={drag}
+          id="drag1"
+          width="88"
+          height="31"
+        />
+      </div>
+
+      <div id="div2" onDrop={drop} onDragOver={allowDrop}></div>
     </div>
   );
 }

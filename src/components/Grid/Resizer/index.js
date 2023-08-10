@@ -47,8 +47,6 @@ export default function Resizer({
 
   const handleOnMouseMove = useCallback(
     (e) => {
-      e.preventDefault();
-
       if (resizing.current) {
         console.log("handleOnMouseMove");
 
@@ -73,8 +71,6 @@ export default function Resizer({
 
   const handleOnMouseUp = useCallback(
     (e) => {
-      e.preventDefault();
-
       function snap(changedX) {
         const range = 25;
 
@@ -124,8 +120,6 @@ export default function Resizer({
 
   useLayoutEffect(() => {
     function handleOnMouseDown(e) {
-      e.preventDefault();
-
       resizing.current = true;
       setResizing(true);
       setColId(rowId + "_" + colId);
