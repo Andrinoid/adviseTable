@@ -22,7 +22,7 @@ function Grid(
   { layout, onChange, maxCols = 10, minWidth = 100, breakpoint = 768 },
   ref
 ) {
-  const [originalData, setData] = useState(layout);
+  const [data, setData] = useState(layout);
 
   const [sectionId, setSectionId] = useState(null);
   const [colId, setColId] = useState(null);
@@ -32,11 +32,15 @@ function Grid(
   const [xPosition, setXPosition] = useState([]);
   const [leftGap, setLeftGap] = useState(0);
   const [rulers, setRulers] = useState([]);
-  const { addRow } = useController(originalData, setData, maxCols);
+  const { addRow } = useController(data, setData, maxCols);
 
   useImperativeHandle(ref, () => ({
     addRow,
   }));
+
+  useEffect(() => {
+    setData(layout);
+  }, [layout]);
 
   useEffect(() => {
     if (colId === null) {
@@ -105,20 +109,20 @@ function Grid(
 
   useEffect(() => {
     if (onChange) {
-      onChange(originalData);
+      onChange(data);
     }
-  }, [originalData]);
+  }, [data]);
 
   const handleResizerPositions = useMemo(
     () => () => {
       const position = getHandlersX(
-        originalData,
+        data,
         containerRef.current ? containerRef.current.offsetWidth : 0
       );
 
       setXPosition([...position]);
     },
-    [originalData, containerRef.current]
+    [data, containerRef.current]
   );
 
   useLayoutEffect(() => {
@@ -134,7 +138,7 @@ function Grid(
       updateRulers(containerRef.current.offsetWidth);
     }
     handleResizerPositions();
-  }, [sectionId, originalData]);
+  }, [sectionId, data]);
 
   useLayoutEffect(() => {
     setTimeout(handleResizerPositions, 350);
@@ -152,16 +156,16 @@ function Grid(
 
   const setWidths = useCallback(
     (widthsData, rowIndex) => {
-      const row = { ...originalData[rowIndex] };
+      const row = { ...data[rowIndex] };
       row.columns = row.columns.map((col, index) => {
         col.width = widthsData[index];
         return { ...col };
       });
-      const newData = [...originalData];
+      const newData = [...data];
 
       setData(newData);
     },
-    [originalData]
+    [data]
   );
 
   return (
@@ -176,7 +180,7 @@ function Grid(
         ))}
       <DataContext.Provider
         value={{
-          data: originalData,
+          data: data,
           setData,
           sectionId,
           colId,
@@ -222,12 +226,12 @@ function Grid(
             }
 
             if (type === "col") {
-              setData([...reorder(originalData, source, destination, "col")]);
+              setData([...reorder(data, source, destination, "col")]);
 
               return;
             }
 
-            const reordered = reorder(originalData, source, destination);
+            const reordered = reorder(data, source, destination);
             setData([...reordered]);
           }}
         >
@@ -237,7 +241,7 @@ function Grid(
                 {...droppableProvided.droppableProps}
                 ref={droppableProvided.innerRef}
               >
-                {originalData.map((row, rowIndex) => (
+                {data.map((row, rowIndex) => (
                   <div
                     style={{ position: "relative" }}
                     key={"sectioncontainer_" + row.rowId}
