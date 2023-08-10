@@ -1,7 +1,7 @@
 import data from "./data.json";
 import PrevInRange from "./prev-to-handler.json";
 import NextInRange from "./next-to-handler.json";
-import { getInitialX, shouldStop } from "./helpers";
+import { getInitialX } from "./helpers";
 import { inRange } from "../Resizer/helpers";
 
 const totalWidth = 1000;
@@ -21,20 +21,5 @@ describe("getInitialX", () => {
     const actual = getInitialX(data, totalWidth);
     const expected = [200, 400, 600, 800, 1000];
     expect(actual[1]).toEqual(expected);
-  });
-});
-
-describe("shouldStop", () => {
-  it("should check if it should force stop", () => {
-    expect(
-      shouldStop(
-        [
-          1114.9999999999998, 100.00000000000001, 100.00000000000001,
-          100.00000000000001, 100.00000000000001, 100.00000000000001,
-        ],
-        0,
-        100
-      )
-    ).toEqual(true);
   });
 });

@@ -105,6 +105,7 @@ function mountColumns(data, rowId) {
         cols.splice(i, 0, newColumn);
         continue;
       }
+      // }
     }
 
     if (values.length == 1) {
@@ -155,7 +156,16 @@ function mountColumns(data, rowId) {
     result.push(new Column(x, columns));
   });
 
-  return result;
+  return result.map((c) => {
+    c.data = c.data.map((d) => {
+      return {
+        styles: d.styles,
+        widget: d.widget,
+      };
+    });
+
+    return c;
+  });
 }
 
 class Row {
