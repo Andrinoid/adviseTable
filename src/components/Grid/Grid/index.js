@@ -108,10 +108,10 @@ function Grid(
   };
 
   useEffect(() => {
-    if (onChange) {
+    if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
       onChange(data);
     }
-  }, [data]);
+  }, [data, layout]);
 
   const handleResizerPositions = useMemo(
     () => () => {
