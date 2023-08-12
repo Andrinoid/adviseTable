@@ -38,9 +38,9 @@ function Grid(
     addRow,
   }));
 
-  useEffect(() => {
-    setData(layout);
-  }, [layout]);
+  // useEffect(() => {
+  //   setData(layout);
+  // }, [layout]);
 
   useEffect(() => {
     if (colId === null) {
