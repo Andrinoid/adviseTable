@@ -172,6 +172,7 @@ function Grid(
 
   const handleOnDragEnd = useCallback(
     (e) => {
+      console.log("handleOnDragEnd data before", data);
       setColOver(null);
       setColId(null);
       const { destination, source, type } = e;
@@ -188,7 +189,9 @@ function Grid(
       }
 
       if (type === "col") {
-        setData([...reorder(data, source, destination, "col")]);
+        const result = reorder(data, source, destination, "col");
+        setData([...result]);
+        console.log("handleOnDragEnd data after", result);
 
         return;
       }
