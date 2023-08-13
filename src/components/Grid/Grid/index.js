@@ -170,6 +170,35 @@ function Grid(
     [data]
   );
 
+  const handleOnDragEnd = useCallback(
+    (e) => {
+      setColOver(null);
+      setColId(null);
+      const { destination, source, type } = e;
+
+      if (!destination) {
+        return;
+      }
+
+      if (
+        destination.droppableId === source.droppableId &&
+        destination.index === source.index
+      ) {
+        return;
+      }
+
+      if (type === "col") {
+        setData([...reorder(data, source, destination, "col")]);
+
+        return;
+      }
+
+      const reordered = reorder(data, source, destination);
+      setData([...reordered]);
+    },
+    [data]
+  );
+
   return (
     <Container ref={containerRef} resizing={resizing}>
       {rulers[0] &&
@@ -211,31 +240,7 @@ function Grid(
               setColOver(e.destination);
             }
           }}
-          onDragEnd={(e) => {
-            setColOver(null);
-            setColId(null);
-            const { destination, source, type } = e;
-
-            if (!destination) {
-              return;
-            }
-
-            if (
-              destination.droppableId === source.droppableId &&
-              destination.index === source.index
-            ) {
-              return;
-            }
-
-            if (type === "col") {
-              setData([...reorder(data, source, destination, "col")]);
-
-              return;
-            }
-
-            const reordered = reorder(data, source, destination);
-            setData([...reordered]);
-          }}
+          onDragEnd={handleOnDragEnd}
         >
           <Droppable droppableId={"advise-grid"} type="advise-grid">
             {(droppableProvided) => (
