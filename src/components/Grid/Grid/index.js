@@ -319,7 +319,7 @@ const Ruler = styled.div`
   left: ${({ x }) => x}px;
   width: 0px;
   height: 100%;
-  border-right: 2px dashed #37a1f6;
+  border-right: 1px solid #37a1f6;
 `;
 
 export default forwardRef(Grid);
