@@ -40,13 +40,15 @@ function Grid(
 
   useEffect(() => {
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
-      setData(layout);
-
-      if (onChange) {
-        onChange(layout);
-      }
+      setData([...layout]);
     }
   }, [layout, data]);
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (colId === null) {
