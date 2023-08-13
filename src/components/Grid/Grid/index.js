@@ -40,9 +40,9 @@ function Grid(
   }));
 
   useEffect(() => {
-    if (JSON.stringify(data) !== JSON.stringify(layout)) {
-      setData(cloneDeep(layout));
-    }
+    // if (JSON.stringify(data) !== JSON.stringify(layout)) {
+    setData(layout);
+    // }
   }, [layout]);
 
   useEffect(() => {
