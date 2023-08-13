@@ -38,9 +38,15 @@ function Grid(
     addRow,
   }));
 
-  // useEffect(() => {
-  //   setData(layout);
-  // }, [layout]);
+  useEffect(() => {
+    if (JSON.stringify(data) !== JSON.stringify(layout)) {
+      setData(layout);
+
+      if (onChange) {
+        onChange(layout);
+      }
+    }
+  }, [layout, data]);
 
   useEffect(() => {
     if (colId === null) {
@@ -106,12 +112,6 @@ function Grid(
 
     return recomputeWidths(result);
   };
-
-  useEffect(() => {
-    if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
-      onChange(data);
-    }
-  }, [data, layout]);
 
   const handleResizerPositions = useMemo(
     () => () => {
