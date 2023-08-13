@@ -39,14 +39,9 @@ function Grid(
     addRow,
   }));
 
-  const debouncedSetData = useCallback(
-    debounce((data) => setData(data), 5),
-    []
-  );
-
   useEffect(() => {
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
-      debouncedSetData(cloneDeep(layout));
+      setData(cloneDeep(layout));
     }
   }, [layout]);
 
