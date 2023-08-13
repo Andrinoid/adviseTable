@@ -43,7 +43,7 @@ function Grid(
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
       setData(cloneDeep(layout));
     }
-  }, [layout, data]);
+  }, [layout]);
 
   useEffect(() => {
     if (onChange) {
