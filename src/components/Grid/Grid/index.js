@@ -15,6 +15,7 @@ import { useController } from "../hooks";
 import Resizer from "../Resizer";
 import { getInitialX as getHandlersX } from "../Resizer/helpers";
 import styled from "styled-components";
+import { cloneDeep } from "lodash";
 
 export const DataContext = createContext(null);
 
@@ -40,7 +41,7 @@ function Grid(
 
   useEffect(() => {
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
-      setData([...layout]);
+      setData(cloneDeep(layout));
     }
   }, [layout, data]);
 
