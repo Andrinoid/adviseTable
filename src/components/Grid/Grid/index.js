@@ -46,10 +46,10 @@ function Grid(
   }, [layout]);
 
   useEffect(() => {
-    if (onChange) {
+    if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
       onChange(data);
     }
-  }, [data]);
+  }, [data, layout]);
 
   useEffect(() => {
     if (colId === null) {
