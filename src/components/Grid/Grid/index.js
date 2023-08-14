@@ -47,7 +47,7 @@ function Grid(
   }, [layout]);
 
   const callOnChange = useCallback(() => {
-    setTimeout(() => {
+    setInterval(() => {
       console.log("entrou no timeout");
 
       if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
@@ -58,7 +58,7 @@ function Grid(
 
   useEffect(() => {
     callOnChange();
-  }, [callOnChange]);
+  }, []);
 
   useEffect(() => {
     if (colId === null) {
