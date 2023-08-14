@@ -41,22 +41,24 @@ function Grid(
 
   useEffect(() => {
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
+      console.log("entrou no layout changed");
       setData(layout);
     }
   }, [layout]);
 
-  const callOnChange = useCallback(
-    debounce((data) => {
+  const callOnChange = useCallback(() => {
+    setTimeout(() => {
+      console.log("entrou no timeout");
+
       if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
         onChange(data);
       }
-    }, 5000),
-    []
-  );
+    }, 5000);
+  }, [data]);
 
   useEffect(() => {
-    callOnChange(data);
-  }, [data]);
+    callOnChange();
+  }, [callOnChange]);
 
   useEffect(() => {
     if (colId === null) {
