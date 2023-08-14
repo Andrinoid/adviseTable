@@ -45,11 +45,18 @@ function Grid(
     }
   }, [layout]);
 
+  const callOnChange = useCallback(
+    debounce((data) => {
+      if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
+        onChange(data);
+      }
+    }, 5000),
+    []
+  );
+
   useEffect(() => {
-    if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
-      onChange(data);
-    }
-  }, [data, layout]);
+    callOnChange(data);
+  }, [data]);
 
   useEffect(() => {
     if (colId === null) {
