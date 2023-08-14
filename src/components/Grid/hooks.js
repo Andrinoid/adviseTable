@@ -19,7 +19,11 @@ export function useController(data, setData, maxCols) {
         {
           columnId: uuidv4(),
           width: 1,
-          data: [{}],
+          data: [
+            {
+              id: uuidv4(),
+            },
+          ],
         },
       ],
     };
@@ -60,7 +64,11 @@ export function useController(data, setData, maxCols) {
 
       row.columns.splice(columnIndex + 1, 0, {
         columnId: uuidv4(),
-        data: [{}],
+        data: [
+          {
+            id: uuidv4(),
+          },
+        ],
         width: 1 / row.columns.length + 1,
       });
 

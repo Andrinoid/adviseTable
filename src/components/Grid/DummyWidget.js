@@ -8,7 +8,7 @@ const Box = styled.div`
   border: 1px solid #369;
 `;
 
-function DummyWidget({ initialHeight, style }) {
+function DummyWidget({ initialHeight, children, style }) {
   const [height, setHeight] = useState(initialHeight);
 
   const onResize = (event, { element, size }) => {
@@ -23,7 +23,7 @@ function DummyWidget({ initialHeight, style }) {
         onResize={onResize}
         resizeHandles={["s"]} // Vertical handle only
       >
-        <Box style={{ height: height, width: "100%" }}>Widget</Box>
+        <Box style={{ height: height, width: "100%" }}>{children}</Box>
       </Resizable>
     </div>
   );

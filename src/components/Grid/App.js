@@ -18,107 +18,88 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [{}, {}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [{}, {}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [{}, {}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [{}, {}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [{}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [{}],
-          width: 0.33,
-        },
-      ],
-    },
-    {
-      rowId: uuidv4(),
-      columns: [
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}],
-          width: 0.33,
-        },
-      ],
-    },
-    {
-      rowId: uuidv4(),
-      columns: [
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-      ],
-    },
-    {
-      rowId: uuidv4(),
-      columns: [
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [{}, {}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.33,
         },
       ],
@@ -128,12 +109,226 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [{}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+      ],
+    },
+    {
+      rowId: uuidv4(),
+      columns: [
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+      ],
+    },
+    {
+      rowId: uuidv4(),
+      columns: [
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
+          width: 0.33,
+        },
+      ],
+    },
+    {
+      rowId: uuidv4(),
+      columns: [
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.5,
         },
         {
           columnId: uuidv4(),
-          data: [{}],
+          data: [
+            {
+              widget: {
+                title: "widget 1",
+              },
+            },
+          ],
           width: 0.5,
         },
       ],
@@ -143,7 +338,13 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [{}],
+          data: [
+            {
+              widget: {
+                title: "Widget 1",
+              },
+            },
+          ],
           width: 1,
         },
       ],
@@ -167,6 +368,353 @@ function App() {
 
   return (
     <div style={{ paddingTop: 50, paddingLeft: 200 }}>
+      <input
+        type="text"
+        id="fname"
+        name="fname"
+        onChange={(e) => {
+          console.log(e.target.value);
+
+          setLayout([
+            {
+              rowId: uuidv4(),
+              columns: [
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+              ],
+            },
+            {
+              rowId: uuidv4(),
+              columns: [
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+              ],
+            },
+            {
+              rowId: uuidv4(),
+              columns: [
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+              ],
+            },
+            {
+              rowId: uuidv4(),
+              columns: [
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.33,
+                },
+              ],
+            },
+            {
+              rowId: uuidv4(),
+              columns: [
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.5,
+                },
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: "widget 1",
+                      },
+                    },
+                  ],
+                  width: 0.5,
+                },
+              ],
+            },
+            {
+              rowId: uuidv4(),
+              columns: [
+                {
+                  columnId: uuidv4(),
+                  data: [
+                    {
+                      widget: {
+                        title: e.target.value,
+                      },
+                    },
+                  ],
+                  width: 1,
+                },
+              ],
+            },
+          ]);
+        }}
+      />
       <Grid
         ref={ref}
         layout={layout}
@@ -175,7 +723,14 @@ function App() {
         }}
       >
         {(item, style) => {
-          return <DummyWidget initialHeight={100} style={style} />;
+          console.log(item);
+          return (
+            <DummyWidget initialHeight={100} style={style}>
+              {item && item.widget && item.widget.title
+                ? item.widget.title
+                : ""}
+            </DummyWidget>
+          );
         }}
       </Grid>
       <AddSection
