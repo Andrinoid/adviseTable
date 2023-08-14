@@ -63,6 +63,7 @@ export const ToolbarItem = styled.div`
 `;
 
 export const DraggableElm = styled.div`
+  height: 100%;
   ${({ showHoverHandler }) => {
     if (showHoverHandler) {
       return `
