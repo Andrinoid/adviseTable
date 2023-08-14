@@ -40,16 +40,16 @@ function Grid(
   }));
 
   useEffect(() => {
-    // if (JSON.stringify(data) !== JSON.stringify(layout)) {
-    setData(layout);
-    // }
+    if (JSON.stringify(data) !== JSON.stringify(layout)) {
+      setData(layout);
+    }
   }, [layout]);
 
   useEffect(() => {
-    if (onChange) {
+    if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
       onChange(data);
     }
-  }, [data]);
+  }, [data, layout]);
 
   useEffect(() => {
     if (colId === null) {
