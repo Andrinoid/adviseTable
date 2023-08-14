@@ -26,7 +26,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   const [height, setHeight] = useState("initial");
   const columnHeight = useRef(null);
   const resizing = useRef(false);
-  const { colOver, data, setData, sectionId, maxCols } =
+  const { colOver, data, setData, sectionId, maxCols, cell } =
     useContext(DataContext);
   const { addRow, removeRow } = useController(data, setData, maxCols);
 
@@ -177,21 +177,13 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                               )}
 
                             {column.data.map((data, index) => {
-                              const marginBottom =
-                                column.data.length > 1 &&
-                                index != column.data.length - 1
-                                  ? 10
-                                  : 0;
-                              const Component = data.component;
-                              return Component ? (
-                                <Component
-                                  key={index}
-                                  style={{
-                                    marginBottom,
-                                    border: "dashed 1px #9ca5aea6",
-                                  }}
-                                />
-                              ) : null;
+                              return cell(data, {
+                                marginBottom:
+                                  column.data.length > 1 &&
+                                  index != column.data.length - 1
+                                    ? 10
+                                    : 0,
+                              });
                             })}
                           </Col>
                         );

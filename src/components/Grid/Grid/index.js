@@ -20,7 +20,14 @@ import { cloneDeep, debounce } from "lodash";
 export const DataContext = createContext(null);
 
 function Grid(
-  { layout, onChange, maxCols = 10, minWidth = 100, breakpoint = 768 },
+  {
+    children,
+    layout,
+    onChange,
+    maxCols = 10,
+    minWidth = 100,
+    breakpoint = 768,
+  },
   ref
 ) {
   const [data, setData] = useState(layout);
@@ -233,6 +240,7 @@ function Grid(
           setColId,
           colOver,
           isResizing: resizing,
+          cell: children,
         }}
       >
         <DragDropContext

@@ -18,88 +18,32 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}],
           width: 0.33,
         },
       ],
@@ -109,77 +53,27 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}],
           width: 0.33,
         },
       ],
@@ -189,66 +83,22 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
       ],
@@ -258,50 +108,17 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}, {}],
           width: 0.33,
         },
       ],
@@ -311,24 +128,12 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}],
           width: 0.5,
         },
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}],
           width: 0.5,
         },
       ],
@@ -338,13 +143,7 @@ function App() {
       columns: [
         {
           columnId: uuidv4(),
-          data: [
-            {
-              component: (props) => (
-                <DummyWidget initialHeight={100} {...props} />
-              ),
-            },
-          ],
+          data: [{}],
           width: 1,
         },
       ],
@@ -374,7 +173,11 @@ function App() {
         onChange={(data) => {
           setLayout(data);
         }}
-      />
+      >
+        {(item, style) => {
+          return <DummyWidget initialHeight={100} style={style} />;
+        }}
+      </Grid>
       <AddSection
         onClick={() => {
           if (ref.current) {
