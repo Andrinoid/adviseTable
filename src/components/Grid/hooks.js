@@ -1,5 +1,4 @@
-import { min } from "lodash";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 export const getRowId = (draggableId) => {
   if (!draggableId) return draggableId;
@@ -14,14 +13,14 @@ export const getColumnId = (draggableId) => {
 export function useController(data, setData, maxCols) {
   function addRow(rowId) {
     const newRow = {
-      rowId: uuidv4(),
+      rowId: uuid(),
       columns: [
         {
-          columnId: uuidv4(),
+          columnId: uuid(),
           width: 1,
           data: [
             {
-              id: uuidv4(),
+              id: uuid(),
             },
           ],
         },
@@ -63,10 +62,10 @@ export function useController(data, setData, maxCols) {
       const columnIndex = row.columns.findIndex((c) => c.columnId === columnId);
 
       row.columns.splice(columnIndex + 1, 0, {
-        columnId: uuidv4(),
+        columnId: uuid(),
         data: [
           {
-            id: uuidv4(),
+            id: uuid(),
           },
         ],
         width: 1 / row.columns.length + 1,
@@ -217,4 +216,33 @@ export function getBreakpoints(totalWidth) {
   const w = totalWidth / cols;
   const breakpoints = Array.from({ length: cols }).map((_, i) => (i + 1) * w);
   return breakpoints;
+}
+
+export function copyColumn(layout, columnId) {
+  const newLayout = [...layout];
+
+  for (let i = 0; i < newLayout.length; i++) {
+    const section = newLayout[i];
+
+    for (let j = 0; j < section.columns.length; j++) {
+      const column = section.columns[j];
+
+      if (column.columnId === columnId) {
+        const newColumn = {
+          ...column,
+          columnId: uuid(),
+          data: column.data.map((item) => ({
+            ...item,
+            id: uuid(),
+          })),
+        };
+
+        newLayout[i].columns.splice(j + 1, 0, newColumn);
+
+        return newLayout;
+      }
+    }
+  }
+
+  return newLayout;
 }
