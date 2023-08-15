@@ -27,6 +27,7 @@ function Grid(
     maxCols = 10,
     minWidth = 100,
     breakpoint = 768,
+    editing = false,
   },
   ref
 ) {
@@ -241,6 +242,7 @@ function Grid(
           colOver,
           isResizing: resizing,
           cell: children,
+          editing,
         }}
       >
         <DragDropContext

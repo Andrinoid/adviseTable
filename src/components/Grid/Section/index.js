@@ -26,7 +26,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
   const [height, setHeight] = useState("initial");
   const columnHeight = useRef(null);
   const resizing = useRef(false);
-  const { colOver, data, setData, sectionId, maxCols, cell } =
+  const { colOver, data, setData, sectionId, maxCols, cell, editing } =
     useContext(DataContext);
   const { addRow, removeRow } = useController(data, setData, maxCols);
 
@@ -150,6 +150,7 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                       beingDragged={
                         sectionId === draggableId || sectionId === null
                       }
+                      editing={editing}
                     >
                       {row.columns.map((column, colIndex) => {
                         return (
@@ -188,31 +189,33 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                           </Col>
                         );
                       })}
-                      <SectionHandle>
-                        <SectionHandleItem
-                          {...draggableProvided.dragHandleProps}
-                        >
-                          <DragHandle />
-                        </SectionHandleItem>
-                        <Cursor type="pointer">
+                      {editing && (
+                        <SectionHandle>
                           <SectionHandleItem
-                            onClick={() => {
-                              addRow(row.rowId);
-                            }}
+                            {...draggableProvided.dragHandleProps}
                           >
-                            <Plus />
+                            <DragHandle />
                           </SectionHandleItem>
-                        </Cursor>
-                        <Cursor type="pointer">
-                          <SectionHandleItem
-                            onClick={() => {
-                              removeRow(row.rowId);
-                            }}
-                          >
-                            <Plus style={{ transform: "rotate(45deg)" }} />
-                          </SectionHandleItem>
-                        </Cursor>
-                      </SectionHandle>
+                          <Cursor type="pointer">
+                            <SectionHandleItem
+                              onClick={() => {
+                                addRow(row.rowId);
+                              }}
+                            >
+                              <Plus />
+                            </SectionHandleItem>
+                          </Cursor>
+                          <Cursor type="pointer">
+                            <SectionHandleItem
+                              onClick={() => {
+                                removeRow(row.rowId);
+                              }}
+                            >
+                              <Plus style={{ transform: "rotate(45deg)" }} />
+                            </SectionHandleItem>
+                          </Cursor>
+                        </SectionHandle>
+                      )}
                     </SectionElm>
                     {droppableProvided.placeholder}
                   </div>

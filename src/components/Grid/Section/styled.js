@@ -59,8 +59,8 @@ export const SectionElm = styled.section`
   border: solid 1px transparent;
   transition: border 0.2s ease-in-out;
   height: 100%;
-  ${({ beingDragged, isDraggingOver }) => {
-    if (beingDragged) {
+  ${({ beingDragged, editing }) => {
+    if (beingDragged && editing) {
       return `
         &:hover {
           border: solid 1px #37a1f6;

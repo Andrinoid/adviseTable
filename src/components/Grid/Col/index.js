@@ -20,7 +20,8 @@ function Col({
   children,
   breakpoint,
 }) {
-  const { colId, data, setData, maxCols, isResizing } = useContext(DataContext);
+  const { colId, data, setData, maxCols, isResizing, editing } =
+    useContext(DataContext);
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   const draggableId = rowId + "_" + columnId;
@@ -50,39 +51,41 @@ function Col({
             }}
             breakpoint={breakpoint}
           >
-            <Toolbar className="grid-toolbar">
-              <ToolbarItem {...draggableProvided.dragHandleProps}>
-                {" "}
-                <DragHandle />
-              </ToolbarItem>
-              <Cursor type="pointer">
-                <ToolbarItem
-                  onClick={() => {
-                    debouncedAdd();
-                  }}
-                >
-                  <Plus />
+            {editing && (
+              <Toolbar className="grid-toolbar">
+                <ToolbarItem {...draggableProvided.dragHandleProps}>
+                  {" "}
+                  <DragHandle />
                 </ToolbarItem>
-              </Cursor>
-              <Cursor type="pointer">
-                <ToolbarItem
-                  onClick={() => {
-                    removeColumn(rowId, columnId);
-                  }}
-                >
-                  <Plus style={{ transform: "rotate(45deg)" }} />
-                </ToolbarItem>
-              </Cursor>
-              <Cursor type="pointer">
-                <ToolbarItem
-                  onClick={() => {
-                    setData(copyColumn(data, columnId));
-                  }}
-                >
-                  <Copy style={{ fontSize: "0.7em" }} />
-                </ToolbarItem>
-              </Cursor>
-            </Toolbar>
+                <Cursor type="pointer">
+                  <ToolbarItem
+                    onClick={() => {
+                      debouncedAdd();
+                    }}
+                  >
+                    <Plus />
+                  </ToolbarItem>
+                </Cursor>
+                <Cursor type="pointer">
+                  <ToolbarItem
+                    onClick={() => {
+                      removeColumn(rowId, columnId);
+                    }}
+                  >
+                    <Plus style={{ transform: "rotate(45deg)" }} />
+                  </ToolbarItem>
+                </Cursor>
+                <Cursor type="pointer">
+                  <ToolbarItem
+                    onClick={() => {
+                      setData(copyColumn(data, columnId));
+                    }}
+                  >
+                    <Copy style={{ fontSize: "0.7em" }} />
+                  </ToolbarItem>
+                </Cursor>
+              </Toolbar>
+            )}
 
             <Inner>{children}</Inner>
           </Column>
