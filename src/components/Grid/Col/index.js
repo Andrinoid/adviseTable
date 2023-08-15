@@ -7,8 +7,9 @@ import Plus from "../../../icons/Plus";
 import { DataContext } from "../Grid";
 import { useContext } from "react";
 import { Cursor } from "../Section/styled";
-import { getRowId, useController } from "../hooks";
+import { copyColumn, getRowId, useController } from "../hooks";
 import { debounce } from "lodash";
+import Copy from "../../../icons/Copy";
 
 function Col({
   width,
@@ -70,6 +71,15 @@ function Col({
                   }}
                 >
                   <Plus style={{ transform: "rotate(45deg)" }} />
+                </ToolbarItem>
+              </Cursor>
+              <Cursor type="pointer">
+                <ToolbarItem
+                  onClick={() => {
+                    setData(copyColumn(data, columnId));
+                  }}
+                >
+                  <Copy style={{ fontSize: "0.7em" }} />
                 </ToolbarItem>
               </Cursor>
             </Toolbar>
