@@ -12,6 +12,7 @@ export const getColumnId = (draggableId) => {
 
 export function useController(data, setData, maxCols) {
   function addRow(rowId) {
+    console.log("data", data);
     const newRow = {
       rowId: uuid(),
       columns: [
@@ -37,6 +38,7 @@ export function useController(data, setData, maxCols) {
       newData.splice(index, 0, newRow);
     }
 
+    console.log("end data", data);
     setData(newData);
   }
 

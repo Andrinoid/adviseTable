@@ -49,7 +49,6 @@ function Grid(
 
   useEffect(() => {
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
-      console.log("entrou no layout changed");
       setData(layout);
     }
   }, [layout]);
