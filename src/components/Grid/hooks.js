@@ -12,7 +12,7 @@ export const getColumnId = (draggableId) => {
 
 export function useController(data, setData, maxCols) {
   function addRow(rowId) {
-    console.log("data", data);
+    console.log("data", data, rowId);
     const newRow = {
       rowId: uuid(),
       columns: [
@@ -31,6 +31,8 @@ export function useController(data, setData, maxCols) {
     const newData = [...data];
 
     const index = newData.findIndex((row) => row.rowId === rowId);
+
+    console.log("index", data, rowId);
 
     if (index === -1) {
       newData.push(newRow);
