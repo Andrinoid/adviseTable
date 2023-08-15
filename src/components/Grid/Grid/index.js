@@ -54,11 +54,17 @@ function Grid(
     }
   }, [layout]);
 
+  const callOnChange = useCallback(() => {
+    setInterval(() => {
+      if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
+        onChange(data);
+      }
+    }, 1000);
+  }, [data]);
+
   useEffect(() => {
-    if (onChange && JSON.stringify(data) !== JSON.stringify(layout)) {
-      onChange(data);
-    }
-  }, [data, layout]);
+    callOnChange();
+  }, []);
 
   useEffect(() => {
     if (colId === null) {
