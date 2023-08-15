@@ -85,10 +85,15 @@ export function useController(data, setData, maxCols) {
     result[rowIndex].columns = result[rowIndex].columns.filter(
       (c) => c.columnId !== columnId
     );
+
     result[rowIndex].columns = result[rowIndex].columns.map((c) => {
       c.width = 1 / result[rowIndex].columns.length;
       return c;
     });
+
+    if (result[rowIndex].columns.length === 0) {
+      result.splice(rowIndex, 1);
+    }
 
     setData([...result]);
   }
