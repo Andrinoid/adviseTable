@@ -239,6 +239,13 @@ export function copyColumn(layout, columnId) {
 
         newLayout[i].columns.splice(j + 1, 0, newColumn);
 
+        newLayout[i].columns = newLayout[i].columns.map((c) => {
+          return {
+            ...c,
+            width: 1 / newLayout[i].columns.length,
+          };
+        });
+
         return newLayout;
       }
     }
