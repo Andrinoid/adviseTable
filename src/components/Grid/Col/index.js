@@ -50,6 +50,7 @@ function Col({
               height: "100%",
             }}
             breakpoint={breakpoint}
+            editing={editing}
           >
             {editing && (
               <Toolbar className="grid-toolbar">

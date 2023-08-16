@@ -5,9 +5,17 @@ export const Column = styled.div`
   box-sizing: border-box;
   min-height: 20px;
   border: dashed 1px transparent;
-  &:hover {
-    border: dashed 1px #9ca5ae;
-  }
+  ${({ editing }) => {
+    if (editing) {
+      return `
+        &:hover {
+          border: dashed 1px #9ca5ae;
+        }
+      `;
+    }
+
+    return "";
+  }}
   ${({ $isDragging }) => {
     if ($isDragging) {
       return `

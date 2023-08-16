@@ -302,6 +302,7 @@ function Grid(
                                 ? row.columns[colIndex].columnId
                                 : null
                             }
+                            editing={editing}
                           />
                         );
                       })}

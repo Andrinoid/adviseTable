@@ -15,7 +15,7 @@ export const Handler = styled.div`
   height: 100%;
   left: ${(props) => props.x}px;
   background-color: transparent;
-  cursor: col-resize;
+  cursor: ${({ editing }) => (editing ? "col-resize" : "default")};
   z-index: 5;
 `;
 
@@ -35,6 +35,7 @@ export default function Resizer({
   setColId,
   rowId,
   colId,
+  editing,
 }) {
   const [x, setX] = useState(initialX);
   const ref = useRef(null);
@@ -119,26 +120,28 @@ export default function Resizer({
   );
 
   useLayoutEffect(() => {
-    function handleOnMouseDown(e) {
-      resizing.current = true;
-      setResizing(true);
-      setColId(rowId + "_" + colId);
-    }
-
-    if (ref.current) {
-      ref.current.addEventListener("mousedown", handleOnMouseDown);
-      window.addEventListener("mousemove", handleOnMouseMove);
-      window.addEventListener("mouseup", handleOnMouseUp);
-    }
-
-    return () => {
-      if (ref.current) {
-        ref.current.removeEventListener("mousedown", handleOnMouseDown);
-        window.removeEventListener("mousemove", handleOnMouseMove);
-        window.removeEventListener("mouseup", handleOnMouseUp);
+    if (editing) {
+      function handleOnMouseDown(e) {
+        resizing.current = true;
+        setResizing(true);
+        setColId(rowId + "_" + colId);
       }
-    };
-  }, [handleOnMouseUp]);
 
-  return <Handler ref={ref} x={x || 0} />;
+      if (ref.current) {
+        ref.current.addEventListener("mousedown", handleOnMouseDown);
+        window.addEventListener("mousemove", handleOnMouseMove);
+        window.addEventListener("mouseup", handleOnMouseUp);
+      }
+
+      return () => {
+        if (ref.current) {
+          ref.current.removeEventListener("mousedown", handleOnMouseDown);
+          window.removeEventListener("mousemove", handleOnMouseMove);
+          window.removeEventListener("mouseup", handleOnMouseUp);
+        }
+      };
+    }
+  }, [handleOnMouseUp, editing]);
+
+  return <Handler ref={ref} x={x || 0} editing={editing} />;
 }
