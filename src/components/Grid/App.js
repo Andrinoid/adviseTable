@@ -30,7 +30,6 @@ function App() {
               },
             },
           ],
-          width: 0.33,
         },
         {
           columnId: uuidv4(),
@@ -46,7 +45,6 @@ function App() {
               },
             },
           ],
-          width: 0.33,
         },
         {
           columnId: uuidv4(),
@@ -62,7 +60,6 @@ function App() {
               },
             },
           ],
-          width: 0.33,
         },
       ],
     },
@@ -83,7 +80,6 @@ function App() {
               },
             },
           ],
-          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -99,7 +95,6 @@ function App() {
               },
             },
           ],
-          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -115,7 +110,6 @@ function App() {
               },
             },
           ],
-          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -131,7 +125,6 @@ function App() {
               },
             },
           ],
-          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -142,7 +135,6 @@ function App() {
               },
             },
           ],
-          width: 0.2,
         },
       ],
     },
@@ -163,7 +155,6 @@ function App() {
               },
             },
           ],
-          width: 0.33,
         },
         {
           columnId: uuidv4(),
@@ -179,7 +170,6 @@ function App() {
               },
             },
           ],
-          width: 0.33,
         },
         {
           columnId: uuidv4(),
@@ -195,7 +185,6 @@ function App() {
               },
             },
           ],
-          width: 0.33,
         },
       ],
     },
@@ -211,7 +200,6 @@ function App() {
               },
             },
           ],
-          width: 0.5,
         },
         {
           columnId: uuidv4(),
@@ -222,7 +210,6 @@ function App() {
               },
             },
           ],
-          width: 0.5,
         },
       ],
     },
@@ -238,7 +225,6 @@ function App() {
               },
             },
           ],
-          width: 1,
         },
       ],
     },
