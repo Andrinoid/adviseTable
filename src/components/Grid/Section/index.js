@@ -30,15 +30,15 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     useContext(DataContext);
   const { addRow, removeRow } = useController(data, setData, maxCols);
 
-  function setWidths(widthsData) {
-    row.columns = row.columns.map((col, index) => {
-      col.width = widthsData[index];
-      return col;
-    });
-    const newData = [...data];
+  // function setWidths(widthsData) {
+  //   row.columns = row.columns.map((col, index) => {
+  //     col.width = widthsData[index];
+  //     return col;
+  //   });
+  //   const newData = [...data];
 
-    setData(newData);
-  }
+  //   setData(newData);
+  // }
 
   useEffect(() => {
     setInitialHeight(sectionRef.current.offsetHeight);
@@ -57,35 +57,35 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
     }
   }, [isBeforeDragging]);
 
-  useEffect(() => {
-    function debounce(func, wait) {
-      let timeout;
-      return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-      };
-    }
+  // useEffect(() => {
+  // function debounce(func, wait) {
+  //   let timeout;
+  //   return function executedFunction(...args) {
+  //     const later = () => {
+  //       clearTimeout(timeout);
+  //       func(...args);
+  //     };
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(later, wait);
+  //   };
+  // }
 
-    function updateFlexFactors() {
-      if (sectionRef.current) {
-        const initialWidths = widths.map(() => 1 / widths.length);
-        setWidths(initialWidths);
-      }
-    }
+  // function updateFlexFactors() {
+  //   if (sectionRef.current) {
+  //     const initialWidths = widths.map(() => 1 / widths.length);
+  //     setWidths(initialWidths);
+  //   }
+  // }
 
-    const debouncedCalculateWidths = debounce(updateFlexFactors, 300);
-    debouncedCalculateWidths();
+  // const debouncedCalculateWidths = debounce(updateFlexFactors, 300);
+  // debouncedCalculateWidths();
 
-    window.addEventListener("resize", debouncedCalculateWidths);
+  // window.addEventListener("resize", debouncedCalculateWidths);
 
-    return () => {
-      window.removeEventListener("resize", debouncedCalculateWidths);
-    };
-  }, [row]);
+  // return () => {
+  // window.removeEventListener("resize", debouncedCalculateWidths);
+  // };
+  // }, [row]);
 
   useEffect(() => {
     const rowElement = sectionRef.current;

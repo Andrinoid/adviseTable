@@ -64,44 +64,6 @@ function App() {
           ],
           width: 0.33,
         },
-        {
-          columnId: uuidv4(),
-          data: [
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-          ],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-          ],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-          ],
-          width: 0.33,
-        },
       ],
     },
     {
@@ -121,7 +83,7 @@ function App() {
               },
             },
           ],
-          width: 0.33,
+          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -137,7 +99,7 @@ function App() {
               },
             },
           ],
-          width: 0.33,
+          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -153,7 +115,7 @@ function App() {
               },
             },
           ],
-          width: 0.33,
+          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -169,7 +131,7 @@ function App() {
               },
             },
           ],
-          width: 0.33,
+          width: 0.2,
         },
         {
           columnId: uuidv4(),
@@ -180,76 +142,7 @@ function App() {
               },
             },
           ],
-          width: 0.33,
-        },
-      ],
-    },
-    {
-      rowId: uuidv4(),
-      columns: [
-        {
-          columnId: uuidv4(),
-          data: [
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-          ],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-          ],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-          ],
-          width: 0.33,
-        },
-        {
-          columnId: uuidv4(),
-          data: [
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-            {
-              widget: {
-                title: "widget 1",
-              },
-            },
-          ],
-          width: 0.33,
+          width: 0.2,
         },
       ],
     },

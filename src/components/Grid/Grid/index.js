@@ -167,7 +167,7 @@ function Grid(
 
   const setWidths = useCallback(
     (widthsData, rowIndex) => {
-      const row = { ...data[rowIndex] };
+      const row = data[rowIndex];
       row.columns = row.columns.map((col, index) => {
         col.width = widthsData[index];
         return { ...col };
@@ -179,9 +179,27 @@ function Grid(
     [data]
   );
 
+  const updateWidths = useCallback(() => {
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i];
+      row.columns = row.columns.map((col) => {
+        if (!col.width) {
+          col.width = 1 / row.columns.length;
+          return { ...col };
+        }
+
+        console.log("col", col);
+        return col;
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    updateWidths();
+  }, []);
+
   const handleOnDragEnd = useCallback(
     (e) => {
-      console.log("handleOnDragEnd data before", data);
       setColOver(null);
       setColId(null);
       const { destination, source, type } = e;
