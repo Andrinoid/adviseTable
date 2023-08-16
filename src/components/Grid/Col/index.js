@@ -26,8 +26,6 @@ function Col({
 
   const draggableId = rowId + "_" + columnId;
 
-  const debouncedAdd = debounce(() => addColumn(rowId, columnId), 300);
-
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
@@ -61,7 +59,7 @@ function Col({
                 <Cursor type="pointer">
                   <ToolbarItem
                     onClick={() => {
-                      debouncedAdd();
+                      addColumn(rowId, columnId);
                     }}
                   >
                     <Plus />
