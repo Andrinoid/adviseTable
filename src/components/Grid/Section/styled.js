@@ -8,10 +8,11 @@ export const SectionHandle = styled.div`
   left: 50%;
   top: -25px;
   transform: translateX(-50%);
-  z-index: 4;
+  z-index: 6;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  display: flex;
+  display: none;
+
   &:before,
   &:after {
     content: "";
@@ -68,18 +69,11 @@ export const SectionElm = styled.section`
           /* Target the SectionHandle when SectionElm is hovered */
           ${SectionHandle} {
             opacity: 1;
+            display: flex;
           }
         }
       `;
     }
-
-    // if (isDraggingOver) {
-    //   return `
-    //     &:hover {
-    //       background: red !important;
-    //     }
-    //   `;
-    // }
   }}
 
   @media (max-width: ${({ breakpoint }) => breakpoint}px) {

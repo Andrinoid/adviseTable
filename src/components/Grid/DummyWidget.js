@@ -21,7 +21,9 @@ function DummyWidget({ initialHeight, children, style }) {
         height={height}
         width={100}
         onResize={onResize}
-        resizeHandles={["s"]} // Vertical handle only
+        resizeHandles={["s"]}
+
+        // Vertical handle only
       >
         <Box style={{ height: height, width: "100%" }}>{children}</Box>
       </Resizable>
