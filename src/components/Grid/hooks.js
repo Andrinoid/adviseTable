@@ -75,6 +75,11 @@ export function useController(data, setData, maxCols) {
         width: 1 / row.columns.length + 1,
       });
 
+      row.columns = row.columns.map((c) => {
+        c.width = 1 / row.columns.length;
+        return c;
+      });
+
       result[rowIndex] = { ...row };
 
       setData([...result]);
