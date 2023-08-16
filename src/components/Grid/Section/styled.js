@@ -11,7 +11,7 @@ export const SectionHandle = styled.div`
   z-index: 6;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  display: flex;
+  display: none;
   &:before,
   &:after {
     content: "";
@@ -68,6 +68,8 @@ export const SectionElm = styled.section`
           /* Target the SectionHandle when SectionElm is hovered */
           ${SectionHandle} {
             opacity: 1;
+            display: flex;
+
           }
         }
       `;
