@@ -35,7 +35,6 @@ function Grid(
   const [colOver, setColOver] = useState(null);
   const [resizing, setResizing] = useState(false);
   const containerRef = useRef(null);
-  const [xPosition, setXPosition] = useState([]);
   const [leftGap, setLeftGap] = useState(0);
   const [rulers, setRulers] = useState([]);
   const { addRow } = useController(data, setData, maxCols);
@@ -188,11 +187,7 @@ function Grid(
   );
 
   return (
-    <Container
-      ref={containerRef}
-      resizing={resizing}
-      style={{ marginLeft: 300 }}
-    >
+    <Container ref={containerRef} resizing={resizing}>
       {rulers[0] &&
         rulers[0].map((r) => (
           <Ruler
@@ -259,6 +254,7 @@ function Grid(
                       breakpoint={breakpoint}
                       leftGap={leftGap}
                       mobile={mobile}
+                      rulers={rulers[0]}
                     />
                   </div>
                 ))}

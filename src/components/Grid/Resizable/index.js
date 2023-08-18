@@ -6,6 +6,7 @@ export default function Resizable({
   resizing: isResizing,
   children,
   leftGap,
+  snapPoints = [],
   onResizeStart = () => {},
   onResizeEnd = () => {},
   onResize = () => {},
@@ -13,6 +14,7 @@ export default function Resizable({
 }) {
   const [resizing, setResizing] = useState(false);
   const [x, setX] = useState(0);
+  const [width, setWidth] = useState(0);
   const changing = useRef(false);
   const ref = useRef(null);
 
@@ -20,6 +22,8 @@ export default function Resizable({
     changing,
     resizing,
     x,
+    snapPoints,
+    width,
     onResizeStart,
     onResizeEnd,
     onResize,
@@ -31,6 +35,9 @@ export default function Resizable({
     changing,
     resizing,
     leftGap,
+    x,
+    snapPoints,
+    setWidth,
     setResizing,
     setX,
     ref,

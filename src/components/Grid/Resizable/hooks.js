@@ -1,39 +1,30 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export function Resizing({
+  x,
   changing,
   resizing,
   onResizeStart,
   onResizeEnd,
   onResize,
-  x,
-  ref,
+  width,
 }) {
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    if (ref.current) {
-      const { current: el } = ref;
-      setWidth(Math.floor(x - el.offsetLeft + 2));
-    }
-  }, [x, ref.current]);
-
   useEffect(() => {
     if (changing.current) {
       if (resizing) {
         onResizeStart();
       } else {
-        onResizeEnd();
+        onResizeEnd(width, x);
         changing.current = false;
       }
     }
   }, [resizing, onResizeStart, onResizeEnd, changing.current]);
 
   useEffect(() => {
-    if (onResize && changing.current && resizing) {
-      onResize(width);
+    if (onResize && x) {
+      onResize(width, x);
     }
-  }, [width, changing.current, resizing]);
+  }, [width]);
 }
 
 export function ResizingMouseEvents({
@@ -43,38 +34,25 @@ export function ResizingMouseEvents({
   setResizing,
   setX,
   x,
+  setWidth,
   snapPoints,
   ref,
   changing,
 }) {
   useEffect(() => {
     if (resizing) {
-      function snap(changedX) {
-        const range = 25;
-
-        for (let sp = 0; sp < snapPoints.length; sp++) {
-          const nextValue = snapPoints[sp];
-          if (changedX > nextValue - range && changedX < nextValue + range) {
-            return nextValue;
-          }
-        }
-
-        return changedX;
-      }
-
       function handleMouseUp(e) {
         setResizing(false);
-
-        const changedX = snap(x);
-
-        if (changedX !== x) {
-          setX(changedX);
-        }
       }
 
       function handleMouseMove(e) {
-        if (resizing) {
-          setX(e.clientX - leftGap);
+        if (resizing && ref.current) {
+          const value = e.clientX - leftGap;
+
+          setX(value);
+
+          const { current: el } = ref;
+          setWidth(Math.floor(value - el.offsetLeft + 2));
         }
       }
 
@@ -94,25 +72,13 @@ export function ResizingMouseEvents({
 
       setX(el.offsetLeft + el.offsetWidth - 2);
     }
-
-    function handleResize() {
-      if (ref.current) {
-        const { current: el } = ref;
-        setX(Math.floor(el.offsetLeft - el.offsetWidth - 2));
-      }
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, [ref.current, globalIsResizing]);
 
   useLayoutEffect(() => {
     if (ref.current) {
       function handleMouseDown(e) {
         setResizing(true);
+
         changing.current = true;
       }
 

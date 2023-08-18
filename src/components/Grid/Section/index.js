@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useContext,
   useLayoutEffect,
+  useCallback,
 } from "react";
 import {
   Cursor,
@@ -30,6 +31,7 @@ function Section({
   breakpoint,
   leftGap,
   mobile,
+  rulers,
 }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
@@ -49,7 +51,6 @@ function Section({
     totalWidth,
     isResizing,
   } = useContext(DataContext);
-  console.log(isResizing);
   const [factors, setFactors] = useState(widths);
   const { addRow, removeRow } = useController(data, setData, maxCols);
 
@@ -109,6 +110,19 @@ function Section({
 
   const draggableId = "draggable_" + row.rowId;
 
+  function snap(changedX) {
+    const range = 25;
+
+    for (let sp = 0; sp < rulers.length; sp++) {
+      const nextValue = rulers[sp];
+      if (changedX > nextValue - range && changedX < nextValue + range) {
+        return nextValue;
+      }
+    }
+
+    return changedX;
+  }
+
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => {
@@ -142,31 +156,45 @@ function Section({
                       {row.columns.map((column, colIndex) => {
                         return (
                           <Resizable
+                            key={colIndex}
                             resizing={isResizing}
                             onResizeStart={() => {
                               setResizing(true);
                             }}
-                            onResizeEnd={() => {
+                            onResizeEnd={(width, x) => {
                               setResizing(false);
+
+                              const diff = x - snap(x);
+
+                              const result = compute(
+                                new Dimensions(
+                                  factors,
+                                  colIndex,
+                                  { width: width - diff },
+                                  minWidth,
+                                  totalWidth
+                                )
+                              );
 
                               // update global state with new widths
                               const clone = cloneDeep(data);
 
                               clone[index].columns = clone[index].columns.map(
                                 (col, index) => {
-                                  col.width = factors[index];
+                                  col.width = result[index];
                                   return col;
                                 }
                               );
 
                               setData(clone);
+                              setFactors([...result]);
                             }}
-                            onResize={(width) => {
+                            onResize={(width, x) => {
                               const result = compute(
                                 new Dimensions(
                                   factors,
                                   colIndex,
-                                  { width },
+                                  { width: width },
                                   minWidth,
                                   totalWidth
                                 )
@@ -178,6 +206,7 @@ function Section({
                             enabled={
                               row.columns.length - 1 != colIndex && !mobile
                             }
+                            snapPoints={rulers}
                           >
                             <Col
                               key={column.columnId}
@@ -203,13 +232,17 @@ function Section({
                                 )}
 
                               {column.data.map((data, index) => {
-                                return cell(data, {
-                                  marginBottom:
-                                    column.data.length > 1 &&
-                                    index != column.data.length - 1
-                                      ? 10
-                                      : 0,
-                                });
+                                return (
+                                  <div key={index}>
+                                    {cell(data, {
+                                      marginBottom:
+                                        column.data.length > 1 &&
+                                        index != column.data.length - 1
+                                          ? 10
+                                          : 0,
+                                    })}
+                                  </div>
+                                );
                               })}
                             </Col>
                           </Resizable>
