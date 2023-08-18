@@ -33,7 +33,7 @@ export function Resizing({
     if (onResize && changing.current && resizing) {
       onResize(width);
     }
-  }, [width, onResize, changing.current, resizing]);
+  }, [width, changing.current, resizing]);
 }
 
 export function ResizingMouseEvents({
@@ -42,13 +42,34 @@ export function ResizingMouseEvents({
   leftGap,
   setResizing,
   setX,
+  x,
+  snapPoints,
   ref,
   changing,
 }) {
   useEffect(() => {
     if (resizing) {
+      function snap(changedX) {
+        const range = 25;
+
+        for (let sp = 0; sp < snapPoints.length; sp++) {
+          const nextValue = snapPoints[sp];
+          if (changedX > nextValue - range && changedX < nextValue + range) {
+            return nextValue;
+          }
+        }
+
+        return changedX;
+      }
+
       function handleMouseUp(e) {
         setResizing(false);
+
+        const changedX = snap(x);
+
+        if (changedX !== x) {
+          setX(changedX);
+        }
       }
 
       function handleMouseMove(e) {
@@ -65,12 +86,12 @@ export function ResizingMouseEvents({
         window.removeEventListener("mouseup", handleMouseUp);
       };
     }
-  }, [resizing, leftGap]);
-  console.log("globalIsResizing", globalIsResizing);
+  }, [resizing, leftGap, x, setX, snapPoints]);
 
   useEffect(() => {
     if (ref.current) {
       const { current: el } = ref;
+
       setX(el.offsetLeft + el.offsetWidth - 2);
     }
 
