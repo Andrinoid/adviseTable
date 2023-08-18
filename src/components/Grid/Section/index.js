@@ -19,16 +19,39 @@ import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
 import { getRowId, useController } from "../hooks";
+import Resizable from "../Resizable";
 
-function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
+function Section({
+  widths,
+  isBeforeDragging,
+  index,
+  row,
+  breakpoint,
+  leftGap,
+}) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
   const [height, setHeight] = useState("initial");
   const columnHeight = useRef(null);
   const resizing = useRef(false);
-  const { colOver, data, setData, sectionId, maxCols, cell, editing } =
-    useContext(DataContext);
+  const {
+    colOver,
+    data,
+    setData,
+    sectionId,
+    maxCols,
+    cell,
+    editing,
+    setResizing,
+  } = useContext(DataContext);
+
+  console.log(widths, "widths");
+  const [factors, setFactors] = useState(widths);
   const { addRow, removeRow } = useController(data, setData, maxCols);
+
+  useEffect(() => {
+    setFactors(widths);
+  }, [widths]);
 
   // function setWidths(widthsData) {
   //   row.columns = row.columns.map((col, index) => {
@@ -153,40 +176,55 @@ function Section({ widths, isBeforeDragging, index, row, breakpoint }) {
                       editing={editing}
                     >
                       {row.columns.map((column, colIndex) => {
+                        console.log(column.width, "column.width");
                         return (
-                          <Col
-                            key={column.columnId}
-                            index={colIndex}
-                            columnId={column.columnId}
-                            width={column.width}
-                            data={column.data}
-                            rowId={row.rowId}
-                            sectionRef={sectionRef}
-                            breakpoint={breakpoint}
+                          <Resizable
+                            onResizeStart={() => {
+                              setResizing(true);
+                            }}
+                            onResizeEnd={() => {
+                              setResizing(false);
+                            }}
+                            onResize={(width) => {
+                              console.log(width);
+                            }}
+                            leftGap={leftGap}
+                            enabled={row.columns.length - 1 != colIndex}
                           >
-                            {row.rowId != getRowId(sectionId) &&
-                              colOver &&
-                              colOver.droppableId == "section_" + row.rowId &&
-                              colOver.index == colIndex && <Line />}
+                            <Col
+                              key={column.columnId}
+                              index={colIndex}
+                              columnId={column.columnId}
+                              width={factors[colIndex]}
+                              data={column.data}
+                              rowId={row.rowId}
+                              sectionRef={sectionRef}
+                              breakpoint={breakpoint}
+                            >
+                              {row.rowId != getRowId(sectionId) &&
+                                colOver &&
+                                colOver.droppableId == "section_" + row.rowId &&
+                                colOver.index == colIndex && <Line />}
 
-                            {row.rowId != getRowId(sectionId) &&
-                              colOver &&
-                              colOver.droppableId == "section_" + row.rowId &&
-                              colOver.index == row.columns.length &&
-                              colIndex + 1 == row.columns.length && (
-                                <Line right />
-                              )}
+                              {row.rowId != getRowId(sectionId) &&
+                                colOver &&
+                                colOver.droppableId == "section_" + row.rowId &&
+                                colOver.index == row.columns.length &&
+                                colIndex + 1 == row.columns.length && (
+                                  <Line right />
+                                )}
 
-                            {column.data.map((data, index) => {
-                              return cell(data, {
-                                marginBottom:
-                                  column.data.length > 1 &&
-                                  index != column.data.length - 1
-                                    ? 10
-                                    : 0,
-                              });
-                            })}
-                          </Col>
+                              {column.data.map((data, index) => {
+                                return cell(data, {
+                                  marginBottom:
+                                    column.data.length > 1 &&
+                                    index != column.data.length - 1
+                                      ? 10
+                                      : 0,
+                                });
+                              })}
+                            </Col>
+                          </Resizable>
                         );
                       })}
                       {editing && (

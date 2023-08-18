@@ -188,7 +188,6 @@ function Grid(
           return { ...col };
         }
 
-        console.log("col", col);
         return col;
       });
     }
@@ -218,7 +217,6 @@ function Grid(
       if (type === "col") {
         const result = reorder(data, source, destination, "col");
         setData([...result]);
-        console.log("handleOnDragEnd data after", result);
 
         return;
       }
@@ -230,7 +228,11 @@ function Grid(
   );
 
   return (
-    <Container ref={containerRef} resizing={resizing}>
+    <Container
+      ref={containerRef}
+      resizing={resizing}
+      style={{ marginLeft: 300 }}
+    >
       {rulers[0] &&
         rulers[0].map((r) => (
           <Ruler
@@ -250,6 +252,7 @@ function Grid(
           setColId,
           colOver,
           isResizing: resizing,
+          setResizing,
           cell: children,
           editing,
         }}
@@ -291,39 +294,8 @@ function Grid(
                       widths={row.columns.map((col) => col.width)}
                       index={rowIndex}
                       breakpoint={breakpoint}
+                      leftGap={leftGap}
                     />
-                    {!isMobileSize &&
-                      xPosition.length > 0 &&
-                      xPosition[rowIndex] &&
-                      xPosition[rowIndex].slice(0, -1).map((x, colIndex) => {
-                        return (
-                          <Resizer
-                            key={"resizer_" + row.rowId + "_" + colIndex}
-                            x={x || 0}
-                            setResizing={setResizing}
-                            leftGap={leftGap}
-                            widths={row.columns.map((col) => col.width)}
-                            colIndex={colIndex}
-                            minWidth={minWidth}
-                            totalWidth={containerRef.current.offsetWidth || 0}
-                            setWidths={setWidths}
-                            positionXs={xPosition}
-                            rulers={rulers}
-                            rowIndex={rowIndex}
-                            onEnd={() => {
-                              handleResizerPositions();
-                            }}
-                            setColId={setColId}
-                            rowId={row.rowId}
-                            colId={
-                              row.columns[colIndex]
-                                ? row.columns[colIndex].columnId
-                                : null
-                            }
-                            editing={editing}
-                          />
-                        );
-                      })}
                   </div>
                 ))}
                 {droppableProvided.placeholder}

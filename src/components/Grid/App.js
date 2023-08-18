@@ -256,7 +256,6 @@ function App() {
         }}
       >
         {(item, style) => {
-          console.log(item);
           return (
             <DummyWidget initialHeight={100} style={style}>
               {item && item.widget && item.widget.title
