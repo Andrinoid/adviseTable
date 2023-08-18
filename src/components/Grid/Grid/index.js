@@ -12,10 +12,7 @@ import React, {
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
-import Resizer from "../Resizer";
-import { getInitialX as getHandlersX } from "../Resizer/helpers";
 import styled from "styled-components";
-import { cloneDeep, debounce } from "lodash";
 
 export const DataContext = createContext(null);
 
@@ -124,18 +121,6 @@ function Grid(
     return recomputeWidths(result);
   };
 
-  const handleResizerPositions = useMemo(
-    () => () => {
-      const position = getHandlersX(
-        data,
-        containerRef.current ? containerRef.current.offsetWidth : 0
-      );
-
-      setXPosition([...position]);
-    },
-    [data, containerRef.current]
-  );
-
   useLayoutEffect(() => {
     if (containerRef.current) {
       const el = containerRef.current;
@@ -148,36 +133,7 @@ function Grid(
     if (containerRef.current) {
       updateRulers(containerRef.current.offsetWidth);
     }
-    handleResizerPositions();
   }, [sectionId, data]);
-
-  useLayoutEffect(() => {
-    setTimeout(handleResizerPositions, 350);
-
-    window.addEventListener("resize", handleResizerPositions);
-
-    return () => {
-      window.removeEventListener("resize", handleResizerPositions);
-    };
-  }, []);
-
-  const isMobileSize = useMemo(() => {
-    return window.innerWidth <= breakpoint;
-  }, [breakpoint, window.innerWidth]);
-
-  const setWidths = useCallback(
-    (widthsData, rowIndex) => {
-      const row = data[rowIndex];
-      row.columns = row.columns.map((col, index) => {
-        col.width = widthsData[index];
-        return { ...col };
-      });
-      const newData = [...data];
-
-      setData(newData);
-    },
-    [data]
-  );
 
   const updateWidths = useCallback(() => {
     for (let i = 0; i < data.length; i++) {
@@ -196,6 +152,10 @@ function Grid(
   useEffect(() => {
     updateWidths();
   }, []);
+
+  const mobile = useMemo(() => {
+    return window.innerWidth <= breakpoint;
+  }, [breakpoint, window.innerWidth]);
 
   const handleOnDragEnd = useCallback(
     (e) => {
@@ -255,6 +215,9 @@ function Grid(
           setResizing,
           cell: children,
           editing,
+          totalWidth: containerRef.current
+            ? containerRef.current.offsetWidth
+            : 0,
         }}
       >
         <DragDropContext
@@ -295,6 +258,7 @@ function Grid(
                       index={rowIndex}
                       breakpoint={breakpoint}
                       leftGap={leftGap}
+                      mobile={mobile}
                     />
                   </div>
                 ))}

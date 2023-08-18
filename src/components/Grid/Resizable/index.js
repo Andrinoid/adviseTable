@@ -3,6 +3,7 @@ import { Container, Handler } from "./styled";
 import { Resizing, ResizingMouseEvents } from "./hooks";
 
 export default function Resizable({
+  resizing: isResizing,
   children,
   leftGap,
   onResizeStart = () => {},
@@ -26,6 +27,7 @@ export default function Resizable({
   });
 
   ResizingMouseEvents({
+    globalIsResizing: isResizing,
     changing,
     resizing,
     leftGap,

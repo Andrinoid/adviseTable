@@ -18,8 +18,9 @@ import { DataContext } from "../Grid";
 import Col from "../Col";
 import Plus from "../../../icons/Plus";
 import DragHandle from "../../../icons/DragHandle";
-import { getRowId, useController } from "../hooks";
+import { Dimensions, compute, getRowId, useController } from "../hooks";
 import Resizable from "../Resizable";
+import { cloneDeep } from "lodash";
 
 function Section({
   widths,
@@ -28,6 +29,7 @@ function Section({
   row,
   breakpoint,
   leftGap,
+  mobile,
 }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
@@ -43,25 +45,17 @@ function Section({
     cell,
     editing,
     setResizing,
+    minWidth,
+    totalWidth,
+    isResizing,
   } = useContext(DataContext);
-
-  console.log(widths, "widths");
+  console.log(isResizing);
   const [factors, setFactors] = useState(widths);
   const { addRow, removeRow } = useController(data, setData, maxCols);
 
   useEffect(() => {
     setFactors(widths);
   }, [widths]);
-
-  // function setWidths(widthsData) {
-  //   row.columns = row.columns.map((col, index) => {
-  //     col.width = widthsData[index];
-  //     return col;
-  //   });
-  //   const newData = [...data];
-
-  //   setData(newData);
-  // }
 
   useEffect(() => {
     setInitialHeight(sectionRef.current.offsetHeight);
@@ -79,36 +73,6 @@ function Section({
       }
     }
   }, [isBeforeDragging]);
-
-  // useEffect(() => {
-  // function debounce(func, wait) {
-  //   let timeout;
-  //   return function executedFunction(...args) {
-  //     const later = () => {
-  //       clearTimeout(timeout);
-  //       func(...args);
-  //     };
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(later, wait);
-  //   };
-  // }
-
-  // function updateFlexFactors() {
-  //   if (sectionRef.current) {
-  //     const initialWidths = widths.map(() => 1 / widths.length);
-  //     setWidths(initialWidths);
-  //   }
-  // }
-
-  // const debouncedCalculateWidths = debounce(updateFlexFactors, 300);
-  // debouncedCalculateWidths();
-
-  // window.addEventListener("resize", debouncedCalculateWidths);
-
-  // return () => {
-  // window.removeEventListener("resize", debouncedCalculateWidths);
-  // };
-  // }, [row]);
 
   useEffect(() => {
     const rowElement = sectionRef.current;
@@ -176,20 +140,44 @@ function Section({
                       editing={editing}
                     >
                       {row.columns.map((column, colIndex) => {
-                        console.log(column.width, "column.width");
                         return (
                           <Resizable
+                            resizing={isResizing}
                             onResizeStart={() => {
                               setResizing(true);
                             }}
                             onResizeEnd={() => {
                               setResizing(false);
+
+                              // update global state with new widths
+                              const clone = cloneDeep(data);
+
+                              clone[index].columns = clone[index].columns.map(
+                                (col, index) => {
+                                  col.width = factors[index];
+                                  return col;
+                                }
+                              );
+
+                              setData(clone);
                             }}
                             onResize={(width) => {
-                              console.log(width);
+                              const result = compute(
+                                new Dimensions(
+                                  factors,
+                                  colIndex,
+                                  { width },
+                                  minWidth,
+                                  totalWidth
+                                )
+                              );
+
+                              setFactors([...result]);
                             }}
                             leftGap={leftGap}
-                            enabled={row.columns.length - 1 != colIndex}
+                            enabled={
+                              row.columns.length - 1 != colIndex && !mobile
+                            }
                           >
                             <Col
                               key={column.columnId}

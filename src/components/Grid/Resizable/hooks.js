@@ -30,13 +30,14 @@ export function Resizing({
   }, [resizing, onResizeStart, onResizeEnd, changing.current]);
 
   useEffect(() => {
-    if (onResize) {
+    if (onResize && changing.current && resizing) {
       onResize(width);
     }
-  }, [width, onResize]);
+  }, [width, onResize, changing.current, resizing]);
 }
 
 export function ResizingMouseEvents({
+  globalIsResizing,
   resizing,
   leftGap,
   setResizing,
@@ -65,8 +66,9 @@ export function ResizingMouseEvents({
       };
     }
   }, [resizing, leftGap]);
+  console.log("globalIsResizing", globalIsResizing);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (ref.current) {
       const { current: el } = ref;
       setX(el.offsetLeft + el.offsetWidth - 2);
@@ -84,7 +86,7 @@ export function ResizingMouseEvents({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [ref.current]);
+  }, [ref.current, globalIsResizing]);
 
   useLayoutEffect(() => {
     if (ref.current) {

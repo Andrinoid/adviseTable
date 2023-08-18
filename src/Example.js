@@ -185,7 +185,6 @@ function Example({
         data={items}
         overscan={50}
         endReached={() => {
-          console.log("end reached");
           setItems(Array.from(Array(items.length + 20).keys()));
         }}
         itemContent={(index) => (
