@@ -37,7 +37,20 @@ function Grid(
   const containerRef = useRef(null);
   const [leftGap, setLeftGap] = useState(0);
   const [rulers, setRulers] = useState([]);
+  const [totalWidth, setTotalWidth] = useState(0);
   const { addRow } = useController(data, setData, maxCols);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setTotalWidth(containerRef.current.offsetWidth);
+    }
+
+    window.addEventListener("resize", () => {
+      if (containerRef.current) {
+        setTotalWidth(containerRef.current.offsetWidth);
+      }
+    });
+  }, [containerRef.current]);
 
   useImperativeHandle(ref, () => ({
     addRow,
@@ -210,9 +223,7 @@ function Grid(
           setResizing,
           cell: children,
           editing,
-          totalWidth: containerRef.current
-            ? containerRef.current.offsetWidth
-            : 0,
+          totalWidth,
         }}
       >
         <DragDropContext

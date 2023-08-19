@@ -161,6 +161,7 @@ function Section({
                             onResizeStart={() => {
                               setResizing(true);
                             }}
+                            totalWidth={totalWidth}
                             onResizeEnd={(width, x) => {
                               setResizing(false);
 
@@ -217,6 +218,7 @@ function Section({
                               rowId={row.rowId}
                               sectionRef={sectionRef}
                               breakpoint={breakpoint}
+                              totalWidth={totalWidth}
                             >
                               {row.rowId != getRowId(sectionId) &&
                                 colOver &&

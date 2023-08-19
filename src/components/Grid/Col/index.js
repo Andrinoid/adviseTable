@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { Column, Inner, Toolbar, ToolbarItem, DraggableElm } from "./styled";
 import "react-resizable/css/styles.css";
 import { Draggable } from "react-beautiful-dnd";
@@ -19,6 +19,7 @@ function Col({
   sectionRef,
   children,
   breakpoint,
+  totalWidth,
 }) {
   const { colId, data, setData, maxCols, isResizing, editing } =
     useContext(DataContext);
@@ -43,8 +44,8 @@ function Col({
             id={"col_" + columnId}
             $isDragging={draggableId == colId}
             style={{
-              width: width * sectionRef.current?.offsetWidth || 0,
-              flex: width * sectionRef.current?.offsetWidth || 0,
+              width: width * totalWidth,
+              flex: width * totalWidth,
               height: "100%",
             }}
             breakpoint={breakpoint}

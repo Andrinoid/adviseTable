@@ -38,6 +38,7 @@ export function ResizingMouseEvents({
   snapPoints,
   ref,
   changing,
+  totalWidth,
 }) {
   useEffect(() => {
     if (resizing) {
@@ -72,7 +73,7 @@ export function ResizingMouseEvents({
 
       setX(el.offsetLeft + el.offsetWidth - 2);
     }
-  }, [ref.current, globalIsResizing]);
+  }, [ref.current, globalIsResizing, totalWidth]);
 
   useLayoutEffect(() => {
     if (ref.current) {

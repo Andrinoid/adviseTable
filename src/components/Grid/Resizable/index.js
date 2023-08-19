@@ -11,6 +11,7 @@ export default function Resizable({
   onResizeEnd = () => {},
   onResize = () => {},
   enabled = true,
+  totalWidth,
 }) {
   const [resizing, setResizing] = useState(false);
   const [x, setX] = useState(0);
@@ -41,6 +42,7 @@ export default function Resizable({
     setResizing,
     setX,
     ref,
+    totalWidth,
   });
 
   return (
