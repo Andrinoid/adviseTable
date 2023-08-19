@@ -29,7 +29,6 @@ function Section({
   index,
   row,
   breakpoint,
-  leftGap,
   mobile,
   rulers,
 }) {
@@ -157,11 +156,9 @@ function Section({
                         return (
                           <Resizable
                             key={colIndex}
-                            resizing={isResizing}
                             onResizeStart={() => {
                               setResizing(true);
                             }}
-                            totalWidth={totalWidth}
                             onResizeEnd={(width, x) => {
                               setResizing(false);
 
@@ -203,7 +200,6 @@ function Section({
 
                               setFactors([...result]);
                             }}
-                            leftGap={leftGap}
                             enabled={
                               row.columns.length - 1 != colIndex && !mobile
                             }

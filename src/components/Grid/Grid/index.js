@@ -224,6 +224,7 @@ function Grid(
           cell: children,
           editing,
           totalWidth,
+          leftGap,
         }}
       >
         <DragDropContext
@@ -263,7 +264,6 @@ function Grid(
                       widths={row.columns.map((col) => col.width)}
                       index={rowIndex}
                       breakpoint={breakpoint}
-                      leftGap={leftGap}
                       mobile={mobile}
                       rulers={rulers[0]}
                     />

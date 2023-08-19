@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Container, Handler } from "./styled";
 import { Resizing, ResizingMouseEvents } from "./hooks";
+import { DataContext } from "../Grid";
 
 export default function Resizable({
-  resizing: isResizing,
   children,
-  leftGap,
   snapPoints = [],
   onResizeStart = () => {},
   onResizeEnd = () => {},
   onResize = () => {},
   enabled = true,
-  totalWidth,
 }) {
+  const { totalWidth, isResizing, leftGap } = useContext(DataContext);
   const [resizing, setResizing] = useState(false);
   const [x, setX] = useState(0);
   const [width, setWidth] = useState(0);
