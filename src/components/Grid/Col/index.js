@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import { Column, Inner, Toolbar, ToolbarItem, DraggableElm } from "./styled";
 import "react-resizable/css/styles.css";
 import { Draggable } from "react-beautiful-dnd";
@@ -8,24 +8,34 @@ import { DataContext } from "../Grid";
 import { useContext } from "react";
 import { Cursor } from "../Section/styled";
 import { copyColumn, getRowId, useController } from "../hooks";
-import { debounce } from "lodash";
 import Copy from "../../../icons/Copy";
+import Resizable from "../Resizable";
 
 function Col({
   width,
   index,
   columnId,
   rowId,
-  sectionRef,
   children,
   breakpoint,
   totalWidth,
+  onResizeStart,
+  onResizeEnd,
+  onResize,
+  resizeable,
 }) {
   const { colId, data, setData, maxCols, isResizing, editing } =
     useContext(DataContext);
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
+  const resizableRef = useRef(null);
 
   const draggableId = rowId + "_" + columnId;
+
+  useEffect(() => {
+    if (resizableRef.current) {
+      resizableRef.current?.initializeHandle();
+    }
+  }, [width]);
 
   return (
     <Draggable draggableId={draggableId} index={index}>
@@ -40,55 +50,64 @@ function Col({
           isResizing={colId === draggableId && isResizing}
           styled={getRowId(colId) !== getRowId(draggableId)}
         >
-          <Column
-            id={"col_" + columnId}
-            $isDragging={draggableId == colId}
-            style={{
-              width: (width || 0) * totalWidth,
-              flex: (width || 0) * totalWidth,
-              height: "100%",
-            }}
-            breakpoint={breakpoint}
-            editing={editing}
+          <Resizable
+            ref={resizableRef}
+            key={index}
+            onResizeStart={onResizeStart}
+            onResizeEnd={onResizeEnd}
+            onResize={onResize}
+            enabled={resizeable}
           >
-            {editing && (
-              <Toolbar className="grid-toolbar">
-                <ToolbarItem {...draggableProvided.dragHandleProps}>
-                  {" "}
-                  <DragHandle />
-                </ToolbarItem>
-                <Cursor type="pointer">
-                  <ToolbarItem
-                    onClick={() => {
-                      addColumn(rowId, columnId);
-                    }}
-                  >
-                    <Plus />
+            <Column
+              id={"col_" + columnId}
+              $isDragging={draggableId == colId}
+              style={{
+                width: (width || 0) * totalWidth,
+                flex: (width || 0) * totalWidth,
+                height: "100%",
+              }}
+              breakpoint={breakpoint}
+              editing={editing}
+            >
+              {editing && (
+                <Toolbar className="grid-toolbar">
+                  <ToolbarItem {...draggableProvided.dragHandleProps}>
+                    {" "}
+                    <DragHandle />
                   </ToolbarItem>
-                </Cursor>
-                <Cursor type="pointer">
-                  <ToolbarItem
-                    onClick={() => {
-                      removeColumn(rowId, columnId);
-                    }}
-                  >
-                    <Plus style={{ transform: "rotate(45deg)" }} />
-                  </ToolbarItem>
-                </Cursor>
-                <Cursor type="pointer">
-                  <ToolbarItem
-                    onClick={() => {
-                      setData(copyColumn(data, columnId));
-                    }}
-                  >
-                    <Copy style={{ fontSize: "0.7em" }} />
-                  </ToolbarItem>
-                </Cursor>
-              </Toolbar>
-            )}
+                  <Cursor type="pointer">
+                    <ToolbarItem
+                      onClick={() => {
+                        addColumn(rowId, columnId);
+                      }}
+                    >
+                      <Plus />
+                    </ToolbarItem>
+                  </Cursor>
+                  <Cursor type="pointer">
+                    <ToolbarItem
+                      onClick={() => {
+                        removeColumn(rowId, columnId);
+                      }}
+                    >
+                      <Plus style={{ transform: "rotate(45deg)" }} />
+                    </ToolbarItem>
+                  </Cursor>
+                  <Cursor type="pointer">
+                    <ToolbarItem
+                      onClick={() => {
+                        setData(copyColumn(data, columnId));
+                      }}
+                    >
+                      <Copy style={{ fontSize: "0.7em" }} />
+                    </ToolbarItem>
+                  </Cursor>
+                </Toolbar>
+              )}
 
-            <Inner>{children}</Inner>
-          </Column>
+              <Inner>{children}</Inner>
+            </Column>
+          </Resizable>
         </DraggableElement>
       )}
     </Draggable>

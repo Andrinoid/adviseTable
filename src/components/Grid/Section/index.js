@@ -154,8 +154,16 @@ function Section({
                     >
                       {row.columns.map((column, colIndex) => {
                         return (
-                          <Resizable
-                            key={colIndex}
+                          <Col
+                            key={column.columnId}
+                            index={colIndex}
+                            columnId={column.columnId}
+                            width={factors[colIndex]}
+                            data={column.data}
+                            rowId={row.rowId}
+                            sectionRef={sectionRef}
+                            breakpoint={breakpoint}
+                            totalWidth={totalWidth}
                             onResizeStart={() => {
                               setResizing(true);
                             }}
@@ -200,50 +208,37 @@ function Section({
 
                               setFactors([...result]);
                             }}
-                            enabled={
+                            resizeable={
                               row.columns.length - 1 != colIndex && !mobile
                             }
-                            snapPoints={rulers}
                           >
-                            <Col
-                              key={column.columnId}
-                              index={colIndex}
-                              columnId={column.columnId}
-                              width={factors[colIndex]}
-                              data={column.data}
-                              rowId={row.rowId}
-                              sectionRef={sectionRef}
-                              breakpoint={breakpoint}
-                              totalWidth={totalWidth}
-                            >
-                              {row.rowId != getRowId(sectionId) &&
-                                colOver &&
-                                colOver.droppableId == "section_" + row.rowId &&
-                                colOver.index == colIndex && <Line />}
+                            {row.rowId != getRowId(sectionId) &&
+                              colOver &&
+                              colOver.droppableId == "section_" + row.rowId &&
+                              colOver.index == colIndex && <Line />}
 
-                              {row.rowId != getRowId(sectionId) &&
-                                colOver &&
-                                colOver.droppableId == "section_" + row.rowId &&
-                                colOver.index == row.columns.length &&
-                                colIndex + 1 == row.columns.length && (
-                                  <Line right />
-                                )}
+                            {row.rowId != getRowId(sectionId) &&
+                              colOver &&
+                              colOver.droppableId == "section_" + row.rowId &&
+                              colOver.index == row.columns.length &&
+                              colIndex + 1 == row.columns.length && (
+                                <Line right />
+                              )}
 
-                              {column.data.map((data, index) => {
-                                return (
-                                  <div key={index}>
-                                    {cell(data, {
-                                      marginBottom:
-                                        column.data.length > 1 &&
-                                        index != column.data.length - 1
-                                          ? 10
-                                          : 0,
-                                    })}
-                                  </div>
-                                );
-                              })}
-                            </Col>
-                          </Resizable>
+                            {column.data.map((data, index) => {
+                              return (
+                                <div key={index}>
+                                  {cell(data, {
+                                    marginBottom:
+                                      column.data.length > 1 &&
+                                      index != column.data.length - 1
+                                        ? 10
+                                        : 0,
+                                  })}
+                                </div>
+                              );
+                            })}
+                          </Col>
                         );
                       })}
                       {editing && (

@@ -1,4 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 export function Resizing({
   x,
@@ -40,6 +47,7 @@ export function ResizingMouseEvents({
   changing,
   totalWidth,
   handlerRef,
+  resizableRef,
 }) {
   useEffect(() => {
     if (resizing) {
@@ -69,12 +77,20 @@ export function ResizingMouseEvents({
   }, [resizing, leftGap, x, setX, snapPoints]);
 
   useEffect(() => {
+    initializeHandle();
+  }, [ref.current, globalIsResizing, totalWidth]);
+
+  const initializeHandle = useCallback(() => {
     if (ref.current) {
       const { current: el } = ref;
 
       setX(el.offsetLeft + el.offsetWidth - 2);
     }
-  }, [ref.current, globalIsResizing, totalWidth]);
+  }, [ref.current]);
+
+  useImperativeHandle(resizableRef, () => ({
+    initializeHandle,
+  }));
 
   useLayoutEffect(() => {
     if (handlerRef.current) {

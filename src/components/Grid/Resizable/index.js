@@ -1,17 +1,24 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useContext, useRef, useState } from "react";
 import { Container, Handler } from "./styled";
 import { Resizing, ResizingMouseEvents } from "./hooks";
 import { DataContext } from "../Grid";
 
-export default function Resizable({
-  children,
-  snapPoints = [],
-  onResizeStart = () => {},
-  onResizeEnd = () => {},
-  onResize = () => {},
-  enabled = true,
-}) {
-  const { totalWidth, isResizing, leftGap } = useContext(DataContext);
+export default forwardRef(function Resizable(
+  {
+    children,
+    onResizeStart = () => {},
+    onResizeEnd = () => {},
+    onResize = () => {},
+    enabled = true,
+  },
+  resizableRef
+) {
+  const {
+    totalWidth,
+    isResizing,
+    leftGap,
+    snapPoints = [],
+  } = useContext(DataContext);
   const [resizing, setResizing] = useState(false);
   const [x, setX] = useState(0);
   const [width, setWidth] = useState(0);
@@ -44,6 +51,7 @@ export default function Resizable({
     ref,
     totalWidth,
     handlerRef,
+    resizableRef,
   });
 
   return (
@@ -51,4 +59,4 @@ export default function Resizable({
       {children} {enabled && <Handler ref={handlerRef} x={x} />}
     </Container>
   );
-}
+});

@@ -225,6 +225,7 @@ function Grid(
           editing,
           totalWidth,
           leftGap,
+          snapPoints: rulers[0],
         }}
       >
         <DragDropContext
