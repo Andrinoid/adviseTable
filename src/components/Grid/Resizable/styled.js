@@ -12,7 +12,7 @@ export const Handler = styled.div`
   width: 6px;
   height: 100%;
   left: ${({ x }) => x}px;
-  background-color: blue;
+  background-color: transparent;
   cursor: ${({ editing }) => (editing ? "col-resize" : "default")};
   z-index: 3;
   cursor: col-resize;
