@@ -18,6 +18,7 @@ export default function Resizable({
   const [width, setWidth] = useState(0);
   const changing = useRef(false);
   const ref = useRef(null);
+  const handlerRef = useRef(null);
 
   Resizing({
     changing,
@@ -43,11 +44,12 @@ export default function Resizable({
     setX,
     ref,
     totalWidth,
+    handlerRef,
   });
 
   return (
     <Container ref={ref}>
-      {children} {enabled && <Handler x={x} />}
+      {children} {enabled && <Handler ref={handlerRef} x={x} />}
     </Container>
   );
 }

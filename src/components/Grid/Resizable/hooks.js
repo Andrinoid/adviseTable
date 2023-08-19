@@ -39,6 +39,7 @@ export function ResizingMouseEvents({
   ref,
   changing,
   totalWidth,
+  handlerRef,
 }) {
   useEffect(() => {
     if (resizing) {
@@ -76,14 +77,14 @@ export function ResizingMouseEvents({
   }, [ref.current, globalIsResizing, totalWidth]);
 
   useLayoutEffect(() => {
-    if (ref.current) {
+    if (handlerRef.current) {
       function handleMouseDown(e) {
         setResizing(true);
 
         changing.current = true;
       }
 
-      ref.current.addEventListener("mousedown", handleMouseDown);
+      handlerRef.current.addEventListener("mousedown", handleMouseDown);
     }
   }, []);
 }
