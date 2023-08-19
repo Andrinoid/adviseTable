@@ -44,8 +44,8 @@ function Col({
             id={"col_" + columnId}
             $isDragging={draggableId == colId}
             style={{
-              width: width * totalWidth,
-              flex: width * totalWidth,
+              width: (width || 0) * totalWidth,
+              flex: (width || 0) * totalWidth,
               height: "100%",
             }}
             breakpoint={breakpoint}
