@@ -3,8 +3,6 @@ import React, {
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
-  useRef,
-  useState,
 } from "react";
 
 export function Resizing({
