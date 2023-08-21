@@ -148,17 +148,22 @@ function Grid(
   }, [sectionId, data]);
 
   const updateWidths = useCallback(() => {
-    for (let i = 0; i < data.length; i++) {
-      const row = data[i];
-      row.columns = row.columns.map((col) => {
+    // Create a new array by mapping over the existing data
+    const newData = data.map(row => {
+      // Map over the columns and update them
+      const updatedColumns = row.columns.map(col => {
         if (!col.width) {
-          col.width = 1 / row.columns.length;
-          return { ...col };
+          return { ...col, width: 1 / row.columns.length };
         }
-
         return col;
       });
-    }
+
+      // Return the updated row
+      return { ...row, columns: updatedColumns };
+    });
+
+    setData(newData);
+
   }, [data]);
 
   useEffect(() => {
