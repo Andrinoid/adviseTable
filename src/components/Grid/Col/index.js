@@ -46,7 +46,7 @@ function Col({
         >
           <Column
             id={"col_" + columnId}
-            $isDragging={dragging}
+            active={dragging}
             style={{
               width: (width || 0) * totalWidth,
               flex: (width || 0) * totalWidth,

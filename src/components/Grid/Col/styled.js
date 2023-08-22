@@ -16,8 +16,8 @@ export const Column = styled.div`
 
     return "";
   }}
-  ${({ $isDragging }) => {
-    if ($isDragging) {
+  ${({ active }) => {
+    if (active) {
       return `
         border: dashed 1px #9ca5ae;
         background: rgb(255 255 255 / 50%);
