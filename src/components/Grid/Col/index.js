@@ -5,6 +5,7 @@ import { DataContext } from "../Grid";
 import { useContext } from "react";
 import Resizable from "../Resizable";
 import Toolbar from "./Toolbar";
+import DraggableContainer from "./DraggableContainer";
 
 function Col({
   width,
