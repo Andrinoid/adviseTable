@@ -15,7 +15,7 @@ export default function Tools({ rowId, columnId, hidden, dragHandleProps }) {
   return (
     <Toolbar
       className="grid-toolbar"
-      style={{ display: hidden ? "none" : "initial" }}
+      style={{ display: hidden ? "none" : "flex" }}
     >
       <ToolbarItem {...dragHandleProps}>
         {" "}

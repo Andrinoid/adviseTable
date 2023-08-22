@@ -228,7 +228,7 @@ function App() {
   return (
     <div style={{ paddingTop: 20 }}>
       <Grid
-        editing={false}
+        editing={true}
         ref={ref}
         layout={layout}
         onChange={(data) => {
