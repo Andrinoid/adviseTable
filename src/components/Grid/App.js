@@ -5,12 +5,6 @@ import DummyWidget from "./DummyWidget";
 
 import AddSection from "./AddSection";
 
-// import { sample1, sample2 } from "./components/Helpers/samples";
-// import {
-//   addaptLegacyToNewGrid,
-//   addaptNewGridToLegacy,
-// } from "./components/Helpers";
-
 function App() {
   const [layout, setLayout] = useState([
     {
@@ -231,24 +225,10 @@ function App() {
   ]);
   const ref = useRef(null);
 
-  function allowDrop(ev) {
-    ev.preventDefault();
-  }
-
-  function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-  }
-
-  function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    //ev.target.appendChild(document.getElementById(data));
-  }
-
   return (
     <div style={{ paddingTop: 20 }}>
       <Grid
-        editing={true}
+        editing={false}
         ref={ref}
         layout={layout}
         onChange={(data) => {

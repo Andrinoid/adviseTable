@@ -209,7 +209,9 @@ function Section({
                               setFactors([...result]);
                             }}
                             resizeable={
-                              row.columns.length - 1 != colIndex && !mobile
+                              row.columns.length - 1 != colIndex &&
+                              !mobile &&
+                              editing
                             }
                           >
                             {row.rowId != getRowId(sectionId) &&
