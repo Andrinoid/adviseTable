@@ -1,15 +1,12 @@
 import React, { forwardRef, useEffect, useRef } from "react";
-import { Column, Inner, Toolbar, ToolbarItem, DraggableElm } from "./styled";
+import { Column, Inner, DraggableElm } from "./styled";
 import "react-resizable/css/styles.css";
 import { Draggable } from "react-beautiful-dnd";
-import DragHandle from "../../../icons/DragHandle";
-import Plus from "../../../icons/Plus";
 import { DataContext } from "../Grid";
 import { useContext } from "react";
-import { Cursor } from "../Section/styled";
-import { copyColumn, getRowId, useController } from "../hooks";
-import Copy from "../../../icons/Copy";
+import { getRowId } from "../hooks";
 import Resizable from "../Resizable";
+import Toolbar from "./Toolbar";
 
 function Col({
   width,
@@ -24,9 +21,7 @@ function Col({
   onResize,
   resizeable,
 }) {
-  const { colId, data, setData, maxCols, isResizing, editing } =
-    useContext(DataContext);
-  const { addColumn, removeColumn } = useController(data, setData, maxCols);
+  const { colId, isResizing, editing } = useContext(DataContext);
   const resizableRef = useRef(null);
 
   const draggableId = rowId + "_" + columnId;
@@ -70,39 +65,11 @@ function Col({
               editing={editing}
             >
               {editing && (
-                <Toolbar className="grid-toolbar">
-                  <ToolbarItem {...draggableProvided.dragHandleProps}>
-                    {" "}
-                    <DragHandle />
-                  </ToolbarItem>
-                  <Cursor type="pointer">
-                    <ToolbarItem
-                      onClick={() => {
-                        addColumn(rowId, columnId);
-                      }}
-                    >
-                      <Plus />
-                    </ToolbarItem>
-                  </Cursor>
-                  <Cursor type="pointer">
-                    <ToolbarItem
-                      onClick={() => {
-                        removeColumn(rowId, columnId);
-                      }}
-                    >
-                      <Plus style={{ transform: "rotate(45deg)" }} />
-                    </ToolbarItem>
-                  </Cursor>
-                  <Cursor type="pointer">
-                    <ToolbarItem
-                      onClick={() => {
-                        setData(copyColumn(data, columnId));
-                      }}
-                    >
-                      <Copy style={{ fontSize: "0.7em" }} />
-                    </ToolbarItem>
-                  </Cursor>
-                </Toolbar>
+                <Toolbar
+                  dragHandleProps={draggableProvided.dragHandleProps}
+                  rowId={rowId}
+                  columnId={columnId}
+                />
               )}
 
               <Inner>{children}</Inner>
