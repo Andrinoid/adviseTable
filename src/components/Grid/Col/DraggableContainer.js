@@ -32,6 +32,7 @@ export default function DraggableContainer({
   );
 }
 
+// Do not allow transform on dragelement between rows
 const DraggableElement = forwardRef(
   ({ children, styled = false, isResizing, ...rest }, ref) => {
     if (styled) {
