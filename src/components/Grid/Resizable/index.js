@@ -56,7 +56,12 @@ export default forwardRef(function Resizable(
 
   return (
     <Container ref={ref}>
-      {children} {enabled && <Handler ref={handlerRef} x={x} />}
+      {children}
+      <Handler
+        ref={handlerRef}
+        x={x}
+        style={!enabled ? { display: "none" } : {}}
+      />
     </Container>
   );
 });

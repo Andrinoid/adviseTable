@@ -149,9 +149,9 @@ function Grid(
 
   const updateWidths = useCallback(() => {
     // Create a new array by mapping over the existing data
-    const newData = data.map(row => {
+    const newData = data.map((row) => {
       // Map over the columns and update them
-      const updatedColumns = row.columns.map(col => {
+      const updatedColumns = row.columns.map((col) => {
         if (!col.width) {
           return { ...col, width: 1 / row.columns.length };
         }
@@ -163,7 +163,6 @@ function Grid(
     });
 
     setData(newData);
-
   }, [data]);
 
   useEffect(() => {

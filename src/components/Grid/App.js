@@ -224,11 +224,19 @@ function App() {
     },
   ]);
   const ref = useRef(null);
+  const [editing, setEditing] = useState(true);
 
   return (
     <div style={{ paddingTop: 20 }}>
+      <button
+        onClick={() => {
+          setEditing(!editing);
+        }}
+      >
+        {editing ? "Stop editing" : "Start editing"}
+      </button>
       <Grid
-        editing={true}
+        editing={editing}
         ref={ref}
         layout={layout}
         onChange={(data) => {
