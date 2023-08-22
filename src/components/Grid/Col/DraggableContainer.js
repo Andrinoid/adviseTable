@@ -1,8 +1,7 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useContext } from "react";
 import { DraggableElm } from "./styled";
 import { Draggable } from "react-beautiful-dnd";
 import { DataContext } from "../Grid";
-import { useContext } from "react";
 import { getRowId } from "../hooks";
 
 export default function DraggableContainer({
@@ -12,6 +11,9 @@ export default function DraggableContainer({
   children,
 }) {
   const { colId, isResizing } = useContext(DataContext);
+
+  const dragging = draggableId == colId;
+
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
@@ -22,28 +24,28 @@ export default function DraggableContainer({
           $isDragging={draggableId == colId} //Only for styling. This is not part of dnd
           breakpoint={breakpoint}
           showHoverHandler={colId === null || colId === draggableId}
-          isResizing={colId === draggableId && isResizing}
-          styled={getRowId(colId) !== getRowId(draggableId)}
+          displayFlex={colId === draggableId && isResizing}
+          betweenDroppables={getRowId(colId) !== getRowId(draggableId)}
         >
-          {children(draggableProvided.dragHandleProps, draggableId == colId)}
+          {children(draggableProvided.dragHandleProps, dragging)}
         </DraggableElement>
       )}
     </Draggable>
   );
 }
 
-// Do not allow transform on dragelement between rows
+// Do not allow transform on dragelement between sections
 const DraggableElement = forwardRef(
-  ({ children, styled = false, isResizing, ...rest }, ref) => {
-    if (styled) {
+  ({ children, betweenDroppables = false, ...rest }, ref) => {
+    if (betweenDroppables) {
       return (
-        <DraggableElm {...rest} isResizing={isResizing} ref={ref} style={{}}>
+        <DraggableElm {...rest} ref={ref} style={{}}>
           {children}
         </DraggableElm>
       );
     }
     return (
-      <DraggableElm {...rest} ref={ref} isResizing={isResizing}>
+      <DraggableElm {...rest} ref={ref}>
         {children}
       </DraggableElm>
     );

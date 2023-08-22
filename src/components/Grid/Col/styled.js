@@ -83,8 +83,8 @@ export const DraggableElm = styled.div`
       `;
     }
   }}
-  ${({ isResizing }) => {
-    if (isResizing) {
+  ${({ displayFlex }) => {
+    if (displayFlex) {
       return `
         .grid-toolbar {
           display: flex !important;
