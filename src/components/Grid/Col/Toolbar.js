@@ -13,10 +13,7 @@ export default function Tools({ rowId, columnId, hidden, dragHandleProps }) {
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   return (
-    <Toolbar
-      className="grid-toolbar"
-      style={{ display: hidden ? "none" : "flex" }}
-    >
+    <Toolbar className={hidden ? "" : "grid-toolbar"}>
       <ToolbarItem {...dragHandleProps}>
         {" "}
         <DragHandle />
