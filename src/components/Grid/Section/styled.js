@@ -36,6 +36,16 @@ export const SectionHandle = styled.div`
   svg {
     fill: white;
   }
+
+  ${({ hidden }) => {
+    if (hidden) {
+      return `
+        display: none;
+      `;
+    }
+
+    return "";
+  }}
 `;
 
 export const SectionHandleItem = styled.div`

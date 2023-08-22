@@ -55,13 +55,12 @@ function Col({
             breakpoint={breakpoint}
             editing={editing}
           >
-            {editing && (
-              <Toolbar
-                dragHandleProps={dragHandleProps}
-                rowId={rowId}
-                columnId={columnId}
-              />
-            )}
+            <Toolbar
+              dragHandleProps={dragHandleProps}
+              rowId={rowId}
+              columnId={columnId}
+              hidden={!editing}
+            />
 
             <Inner>{children}</Inner>
           </Column>

@@ -243,33 +243,31 @@ function Section({
                           </Col>
                         );
                       })}
-                      {editing && (
-                        <SectionHandle>
+                      <SectionHandle hidden={!editing}>
+                        <SectionHandleItem
+                          {...draggableProvided.dragHandleProps}
+                        >
+                          <DragHandle />
+                        </SectionHandleItem>
+                        <Cursor type="pointer">
                           <SectionHandleItem
-                            {...draggableProvided.dragHandleProps}
+                            onClick={() => {
+                              addRow(row.rowId);
+                            }}
                           >
-                            <DragHandle />
+                            <Plus />
                           </SectionHandleItem>
-                          <Cursor type="pointer">
-                            <SectionHandleItem
-                              onClick={() => {
-                                addRow(row.rowId);
-                              }}
-                            >
-                              <Plus />
-                            </SectionHandleItem>
-                          </Cursor>
-                          <Cursor type="pointer">
-                            <SectionHandleItem
-                              onClick={() => {
-                                removeRow(row.rowId);
-                              }}
-                            >
-                              <Plus style={{ transform: "rotate(45deg)" }} />
-                            </SectionHandleItem>
-                          </Cursor>
-                        </SectionHandle>
-                      )}
+                        </Cursor>
+                        <Cursor type="pointer">
+                          <SectionHandleItem
+                            onClick={() => {
+                              removeRow(row.rowId);
+                            }}
+                          >
+                            <Plus style={{ transform: "rotate(45deg)" }} />
+                          </SectionHandleItem>
+                        </Cursor>
+                      </SectionHandle>
                     </SectionElm>
                     {droppableProvided.placeholder}
                   </div>

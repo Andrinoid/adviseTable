@@ -7,13 +7,16 @@ import { copyColumn, useController } from "../hooks";
 import Copy from "../../../icons/Copy";
 import { DataContext } from "../Grid";
 
-export default function Tools({ rowId, columnId, dragHandleProps }) {
+export default function Tools({ rowId, columnId, hidden, dragHandleProps }) {
   const { data, setData, maxCols } = useContext(DataContext);
 
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   return (
-    <Toolbar className="grid-toolbar">
+    <Toolbar
+      className="grid-toolbar"
+      style={{ display: hidden ? "none" : "initial" }}
+    >
       <ToolbarItem {...dragHandleProps}>
         {" "}
         <DragHandle />
