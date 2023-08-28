@@ -21,10 +21,11 @@ const headerTheme = {
 const BACKGROUND_TRANSITION = "background-color 0.03s";
 
 const RowElm = styled.div`
-  position: sticky;
+  position: stickywhite-space;
   top: ${({ stickyTopOffset }) => stickyTopOffset}px;
   z-index: 2;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1;
   width: 100%;
   overflow: hidden;
 `;
@@ -36,7 +37,11 @@ const Label = styled.div`
 
 const PressableBrick = styled.button`
   background: ${({ selected, themeKey }) =>
-    selected ? headerTheme[themeKey].background : themeKey == 'light' ? "#Eff1f1" : "#0A0A0A"};
+    selected
+      ? headerTheme[themeKey].background
+      : themeKey == "light"
+      ? "#Eff1f1"
+      : "#0A0A0A"};
   border: none;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;
   cursor: pointer;
@@ -55,17 +60,16 @@ const PressableBrick = styled.button`
 `;
 
 const Triangle = styled.div`
-    width: 0; 
-    height: 0; 
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-    border-left: 12px solid rgb(181, 177, 177);
-    transform: rotate(45deg);
-    position: absolute;
-    right: 3px;
-    bottom: -3px;
-    
-`
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 12px solid rgb(181, 177, 177);
+  transform: rotate(45deg);
+  position: absolute;
+  right: 3px;
+  bottom: -3px;
+`;
 
 const Header = React.forwardRef(
   (
@@ -103,8 +107,6 @@ const Header = React.forwardRef(
     };
     return (
       <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
-
-
         <div
           style={{
             ...theTheme.header,
@@ -132,7 +134,6 @@ const Header = React.forwardRef(
               position: "sticky",
               top: 0,
               left: 0,
-
             }}
           >
             <Triangle />
@@ -216,7 +217,6 @@ const Header = React.forwardRef(
                           width: lastColWidth ? lastColWidth : "auto",
                           height: colHeight,
                           ...selectedBackground,
-
                         }}
                       >
                         <Label style={selectedColor}>{item.title}</Label>
