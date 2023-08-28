@@ -45,7 +45,7 @@ export const Column = styled.div`
 `;
 
 export const Inner = styled.div`
-  /* border: dashed 1px #9ca5aea6; */
+  border: dashed 1px ${({ active }) => (active ? "#d3d7db" : "transparent")};
   box-sizing: border-box;
   /* height: 100%; */
 `;

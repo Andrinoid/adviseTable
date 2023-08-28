@@ -62,7 +62,7 @@ function Col({
               hidden={!editing}
             />
 
-            <Inner>{children}</Inner>
+            <Inner active={editing}>{children}</Inner>
           </Column>
         </Resizable>
       )}
