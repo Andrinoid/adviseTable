@@ -20,7 +20,7 @@ import {
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
 
-import { Table, Row, Col } from "./components/Table";
+import { Table, Row, Col } from "./components";
 import { view, ui_prefs } from "./data/example2";
 import { default as mo } from "./data/months";
 import Plus from "./icons/Plus";
@@ -225,7 +225,7 @@ function Example({
   }, [table1Ref, table2Ref]);
 
   return (
-    <div className="App">
+    <div className="App" style={{ paddingBottom: 500 }}>
       <button
         onClick={() => {
           const result = {
