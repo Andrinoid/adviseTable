@@ -21,7 +21,7 @@ const headerTheme = {
 const BACKGROUND_TRANSITION = "background-color 0.03s";
 
 const RowElm = styled.div`
-  position: stickywhite-space;
+  position: sticky;
   top: ${({ stickyTopOffset }) => stickyTopOffset}px;
   z-index: 2;
   white-space: normal;
