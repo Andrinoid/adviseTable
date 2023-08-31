@@ -222,6 +222,51 @@ function App() {
         },
       ],
     },
+    {
+      rowId: uuidv4(),
+      columns: [
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "Widget 1",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      rowId: uuidv4(),
+      columns: [
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "Widget 1",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      rowId: uuidv4(),
+      columns: [
+        {
+          columnId: uuidv4(),
+          data: [
+            {
+              widget: {
+                title: "Widget 1",
+              },
+            },
+          ],
+        },
+      ],
+    },
   ]);
   const ref = useRef(null);
   const [editing, setEditing] = useState(true);
