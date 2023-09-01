@@ -10,7 +10,6 @@ function Menu(props) {
   const { controller, setOpen, id, tableId, width, children, ...rest } = props;
   const [position] = HandlePositioning(controller);
 
-  console.log(tableId, "tableId");
   HandleDevtoolsOpening(controller);
   HandleControllerExecution(controller, tableId, setOpen);
 
