@@ -249,6 +249,7 @@ function Example({
         Update table columns amount
       </button>
       <Table
+        printLayout={true}
         ref={table1Ref}
         headerData={header}
         theme={theme}

@@ -27,7 +27,7 @@ const RowElm = styled.div`
   white-space: normal;
   line-height: 1;
   width: 100%;
-  overflow: hidden;
+  overflow: ${props => (props.printLayout ? 'visible' : 'hidden')};;
 `;
 
 const Label = styled.div`
@@ -94,6 +94,7 @@ const Header = React.forwardRef(
       selectAll,
       deselectAll,
       isTableSelected,
+      printLayout,
     },
     ref
   ) => {
@@ -106,7 +107,7 @@ const Header = React.forwardRef(
       color: isTableSelected ? headerTheme[themeKey].color : "inherit",
     };
     return (
-      <RowElm ref={ref} stickyTopOffset={stickyTopOffset}>
+      <RowElm ref={ref} stickyTopOffset={stickyTopOffset} printLayout={printLayout}>
         <div
           style={{
             ...theTheme.header,

@@ -33,8 +33,8 @@ const Wrapper = styled.div`
 
 const ViewPort = styled.div`
   width: 100%;
-  overflow: hidden;
-  overflow-x: auto;
+  overflow: ${props => (props.printLayout ? 'visible' : 'hidden')};
+  overflow-x: ${props => (props.printLayout ? 'visible' : 'auto')};
   min-width: 0;
   flex-direction: row;
   display: flex;
@@ -94,10 +94,11 @@ const MENU_WIDTH = 300;
 
 const Table = (
   {
-    onFirstColumnResize = () => {},
-    firstColumnWidth,
+    onFirstColumnResize = () => { },
     onSelection = () => {},
+    firstColumnWidth,
     editOnType = true,
+    printLayout = false,
     headerStickyTopOffset = 0,
     selectionMode = "cell",
     leftBrickWidth = 30,
@@ -770,12 +771,14 @@ const Table = (
               autoAdjustLastColWidth={autoAdjustLastColWidth}
               lasColumnRisizeable={lasColumnRisizeable}
               isTableSelected={isTableSelected}
+              printLayout={printLayout}
             />
           ) : null}
 
           <ViewPort
             id={tableId + "-viewport"}
             className={`viewPort${tableId} scrollable`}
+            printLayout={printLayout}
             style={theTheme.secondary}
             ref={(el) => {
               viewportRef.current = el;
@@ -805,10 +808,12 @@ const Table = (
 
             <Scroller active={selectColDraging} tableId={tableId} />
             <LeftEdge scrollStatus={scrollStatus} offsetLeft={leftBrickWidth} />
+            {!printLayout && (
             <Edge
               isViewPortOverflow={isViewPortOverflow}
               scrollStatus={scrollStatus}
             />
+            )}
           </ViewPort>
           <div className="table-end"></div>
           <Footer
