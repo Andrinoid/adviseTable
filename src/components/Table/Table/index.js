@@ -170,8 +170,6 @@ const Table = (
 
   const handleExporting = HandleExporting();
 
-  console.log(tableId, "tableId");
-
   useEffect(() => {
     onFirstColumnResize(firstColWidth);
   }, [firstColWidth]);
