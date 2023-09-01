@@ -33,8 +33,8 @@ const Wrapper = styled.div`
 
 const ViewPort = styled.div`
   width: 100%;
-  overflow: ${props => (props.printLayout ? 'visible' : 'hidden')};
-  overflow-x: ${props => (props.printLayout ? 'visible' : 'auto')};
+  overflow: ${(props) => (props.printLayout ? "visible" : "hidden")};
+  overflow-x: ${(props) => (props.printLayout ? "visible" : "auto")};
   min-width: 0;
   flex-direction: row;
   display: flex;
@@ -94,7 +94,7 @@ const MENU_WIDTH = 300;
 
 const Table = (
   {
-    onFirstColumnResize = () => { },
+    onFirstColumnResize = () => {},
     onSelection = () => {},
     firstColumnWidth,
     editOnType = true,
@@ -315,13 +315,33 @@ const Table = (
   ]);
 
   useEffect(() => {
-    function handleClick(e) {
-      setMenuIsOpen(false);
-    }
+    const element = viewportRef.current;
+    if (!element) return;
 
+    const handleScroll = debounce(() => {
+      if (element.scrollLeft === 0) {
+        setScrollStatus("start");
+      } else if (
+        Math.ceil(element.scrollLeft) + element.offsetWidth >=
+        element.scrollWidth
+      ) {
+        setScrollStatus("end");
+      } else {
+        setScrollStatus("middle");
+      }
+    }, 100);
+
+    const handleClick = (e) => {
+      if (e.target.closest(".table-container")) {
+        setMenuIsOpen(false);
+      }
+    };
+
+    element.addEventListener("scroll", handleScroll);
     window.addEventListener("click", handleClick, false);
 
     return () => {
+      element.removeEventListener("scroll", handleScroll);
       window.removeEventListener("click", handleClick, false);
     };
   }, []);
@@ -380,33 +400,6 @@ const Table = (
         setIsViewPortOverflow(false);
       }
     }
-
-    const handleScroll = debounce(() => {
-      if (element.scrollLeft === 0) {
-        setScrollStatus("start");
-      } else if (
-        Math.ceil(element.scrollLeft) + element.offsetWidth >=
-        element.scrollWidth
-      ) {
-        setScrollStatus("end");
-      } else {
-        setScrollStatus("middle");
-      }
-    }, 100);
-
-    const handleClick = (e) => {
-      if (e.target.closest(".table-container")) {
-        setMenuIsOpen(false);
-      }
-    };
-
-    element.addEventListener("scroll", handleScroll);
-    window.addEventListener("click", handleClick, false);
-
-    return () => {
-      element.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("click", handleClick, false);
-    };
   }, [viewportRef, totalWidth]);
 
   /**
@@ -809,10 +802,10 @@ const Table = (
             <Scroller active={selectColDraging} tableId={tableId} />
             <LeftEdge scrollStatus={scrollStatus} offsetLeft={leftBrickWidth} />
             {!printLayout && (
-            <Edge
-              isViewPortOverflow={isViewPortOverflow}
-              scrollStatus={scrollStatus}
-            />
+              <Edge
+                isViewPortOverflow={isViewPortOverflow}
+                scrollStatus={scrollStatus}
+              />
             )}
           </ViewPort>
           <div className="table-end"></div>
