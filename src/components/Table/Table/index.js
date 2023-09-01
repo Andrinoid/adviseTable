@@ -332,9 +332,7 @@ const Table = (
     }, 100);
 
     const handleClick = (e) => {
-      if (e.target.closest(".table-container")) {
-        setMenuIsOpen(false);
-      }
+      setMenuIsOpen(false);
     };
 
     element.addEventListener("scroll", handleScroll);
