@@ -13,6 +13,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
 import styled from "styled-components";
+import { produce } from "immer";
 
 export const DataContext = createContext(null);
 
@@ -58,7 +59,7 @@ function Grid(
 
   useEffect(() => {
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
-      setData(layout);
+      setData(produce(layout, (draft) => {}));
     }
   }, [layout]);
 
@@ -97,40 +98,36 @@ function Grid(
   }
 
   function recomputeWidths(data) {
-    return data.map((row) => {
-      row.columns = row.columns.map((col) => {
-        col.width = 1 / row.columns.length;
-        return { ...col };
+    return produce(data, (draft) => {
+      draft.forEach((row) => {
+        row.columns.forEach((col) => {
+          col.width = 1 / row.columns.length;
+        });
       });
-      return { ...row };
     });
   }
 
   const reorder = (data, source, destination, type) => {
-    const result = Array.from(data);
+    return produce(data, (draft) => {
+      if (type !== "col") {
+        const [removed] = draft.splice(source.index, 1);
+        draft.splice(destination.index, 0, removed);
+      } else {
+        const sourceIndex = draft.findIndex((item) => item.id === source.id);
+        const destIndex = draft.findIndex((item) => item.id === destination.id);
+        const [removed] = draft[sourceIndex].columns.splice(source.index, 1);
 
-    if (type !== "col") {
-      const [removed] = result.splice(source.index, 1);
-      result.splice(destination.index, 0, removed);
+        draft[destIndex].columns.splice(destination.index, 0, removed);
 
-      return [...result];
-    }
+        if (draft[sourceIndex].columns.length === 0) {
+          draft.splice(sourceIndex, 1);
+        }
+      }
 
-    const sourceIndex = index(result, id(source));
-    const destIndex = index(result, id(destination));
-    const [removed] = result[sourceIndex].columns.splice(source.index, 1);
-
-    result[destIndex].columns.splice(destination.index, 0, removed);
-
-    if (result[sourceIndex].columns.length === 0) {
-      result.splice(sourceIndex, 1);
-    }
-
-    if (destIndex === sourceIndex) {
-      return result;
-    }
-
-    return recomputeWidths(result);
+      if (source.index !== destination.index || source.id !== destination.id) {
+        recomputeWidths(draft);
+      }
+    });
   };
 
   useLayoutEffect(() => {
@@ -148,22 +145,18 @@ function Grid(
   }, [sectionId, data]);
 
   const updateWidths = useCallback(() => {
-    // Create a new array by mapping over the existing data
-    const newData = data.map((row) => {
-      // Map over the columns and update them
-      const updatedColumns = row.columns.map((col) => {
-        if (!col.width) {
-          return { ...col, width: 1 / row.columns.length };
-        }
-        return col;
+    setData((prevData) => {
+      return produce(prevData, (draftData) => {
+        draftData.forEach((row) => {
+          row.columns.forEach((col) => {
+            if (!col.width) {
+              col.width = 1 / row.columns.length;
+            }
+          });
+        });
       });
-
-      // Return the updated row
-      return { ...row, columns: updatedColumns };
     });
-
-    setData(newData);
-  }, [data]);
+  }, [setData]);
 
   useEffect(() => {
     updateWidths();

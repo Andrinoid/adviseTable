@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { v4 as uuid } from "uuid";
 
 export const getRowId = (draggableId) => {
@@ -27,80 +28,75 @@ export function useController(data, setData, maxCols) {
       ],
     };
 
-    const newData = [...data];
-
-    const index = newData.findIndex((row) => row.rowId === rowId);
-
-    if (index === -1) {
-      newData.push(newRow);
-    } else {
-      newData.splice(index, 0, newRow);
-    }
-
-    setData(newData);
+    setData((data) =>
+      produce(data, (draft) => {
+        const index = draft.findIndex((row) => row.rowId === rowId);
+        if (index === -1) {
+          draft.push(newRow);
+        } else {
+          draft.splice(index, 0, newRow);
+        }
+      })
+    );
   }
 
   function removeRow(rowId) {
-    const newData = [...data];
-
-    const index = newData.findIndex((row) => row.rowId === rowId);
-
-    newData.splice(index, 1);
-
-    setData(newData);
+    setData((data) =>
+      produce(data, (draft) => {
+        const index = draft.findIndex((row) => row.rowId === rowId);
+        if (index !== -1) {
+          draft.splice(index, 1);
+        }
+      })
+    );
   }
 
   function addColumn(rowId, columnId) {
-    const rowIndex = data.findIndex((row) => row.rowId === rowId);
+    setData((data) =>
+      produce(data, (draft) => {
+        const rowIndex = draft.findIndex((row) => row.rowId === rowId);
+        if (rowIndex !== -1 && draft[rowIndex].columns.length < maxCols) {
+          const row = draft[rowIndex];
 
-    if (data[rowIndex].columns.length < maxCols) {
-      const result = [...data];
-      const rowIndex = result.findIndex((row) => row.rowId === rowId);
+          const columnIndex = row.columns.findIndex(
+            (c) => c.columnId === columnId
+          );
 
-      const row = { ...result[rowIndex] };
+          if (columnIndex !== -1) {
+            row.columns.splice(columnIndex + 1, 0, {
+              columnId: uuid(),
+              data: [{ id: uuid() }],
+              width: 1 / (row.columns.length + 1),
+            });
 
-      const columnIndex = row.columns.findIndex((c) => c.columnId === columnId);
-
-      row.columns.splice(columnIndex + 1, 0, {
-        columnId: uuid(),
-        data: [
-          {
-            id: uuid(),
-          },
-        ],
-        width: 1 / row.columns.length + 1,
-      });
-
-      row.columns = row.columns.map((c) => {
-        c.width = 1 / row.columns.length;
-        return c;
-      });
-
-      result[rowIndex] = { ...row };
-
-      setData([...result]);
-    }
+            row.columns.forEach((c) => {
+              c.width = 1 / row.columns.length;
+            });
+          }
+        }
+      })
+    );
   }
 
   function removeColumn(rowId, columnId) {
-    const result = [...data];
+    setData((data) =>
+      produce(data, (draft) => {
+        const rowIndex = draft.findIndex((row) => row.rowId === rowId);
 
-    const rowIndex = result.findIndex((row) => row.rowId === rowId);
+        if (rowIndex !== -1) {
+          const row = draft[rowIndex];
+          row.columns = row.columns.filter((c) => c.columnId !== columnId);
 
-    result[rowIndex].columns = result[rowIndex].columns.filter(
-      (c) => c.columnId !== columnId
+          row.columns.forEach((c) => {
+            c.width = 1 / row.columns.length;
+          });
+
+          if (row.columns.length === 0) {
+            draft.splice(rowIndex, 1);
+          }
+        }
+      })
     );
-
-    result[rowIndex].columns = result[rowIndex].columns.map((c) => {
-      c.width = 1 / result[rowIndex].columns.length;
-      return c;
-    });
-
-    if (result[rowIndex].columns.length === 0) {
-      result.splice(rowIndex, 1);
-    }
-
-    setData([...result]);
   }
 
   return {
@@ -229,37 +225,33 @@ export function getBreakpoints(totalWidth) {
 }
 
 export function copyColumn(layout, columnId) {
-  const newLayout = [...layout];
+  return produce(layout, (draft) => {
+    for (let i = 0; i < draft.length; i++) {
+      const section = draft[i];
 
-  for (let i = 0; i < newLayout.length; i++) {
-    const section = newLayout[i];
+      for (let j = 0; j < section.columns.length; j++) {
+        const column = section.columns[j];
 
-    for (let j = 0; j < section.columns.length; j++) {
-      const column = section.columns[j];
-
-      if (column.columnId === columnId) {
-        const newColumn = {
-          ...column,
-          columnId: uuid(),
-          data: column.data.map((item) => ({
-            ...item,
-            id: uuid(),
-          })),
-        };
-
-        newLayout[i].columns.splice(j + 1, 0, newColumn);
-
-        newLayout[i].columns = newLayout[i].columns.map((c) => {
-          return {
-            ...c,
-            width: 1 / newLayout[i].columns.length,
+        if (column.columnId === columnId) {
+          const newColumn = {
+            ...column,
+            columnId: uuid(),
+            data: column.data.map((item) => ({
+              ...item,
+              id: uuid(),
+            })),
           };
-        });
 
-        return newLayout;
+          draft[i].columns.splice(j + 1, 0, newColumn);
+
+          draft[i].columns = draft[i].columns.map((c) => ({
+            ...c,
+            width: 1 / draft[i].columns.length,
+          }));
+
+          return;
+        }
       }
     }
-  }
-
-  return newLayout;
+  });
 }
