@@ -80,12 +80,12 @@ const data = [
         data: [
           {
             widget: {
-              title: "widget 1",
+              title: "widget 2",
             },
           },
           {
             widget: {
-              title: "widget 1",
+              title: "widget 2",
             },
           },
         ],
@@ -95,12 +95,12 @@ const data = [
         data: [
           {
             widget: {
-              title: "widget 1",
+              title: "widget 3",
             },
           },
           {
             widget: {
-              title: "widget 1",
+              title: "widget 3",
             },
           },
         ],

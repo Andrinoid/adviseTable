@@ -93,16 +93,10 @@ function Grid(
     return data.droppableId.split("_")[1];
   }
 
-  function index(data, id) {
-    return data.findIndex((row) => row.rowId === id);
-  }
-
-  function recomputeWidths(data) {
-    return produce(data, (draft) => {
-      draft.forEach((row) => {
-        row.columns.forEach((col) => {
-          col.width = 1 / row.columns.length;
-        });
+  function recomputeWidths(draft) {
+    draft.forEach((row) => {
+      row.columns.forEach((col) => {
+        col.width = 1 / row.columns.length;
       });
     });
   }
@@ -113,19 +107,19 @@ function Grid(
         const [removed] = draft.splice(source.index, 1);
         draft.splice(destination.index, 0, removed);
       } else {
-        const sourceIndex = draft.findIndex((item) => item.id === source.id);
-        const destIndex = draft.findIndex((item) => item.id === destination.id);
-        const [removed] = draft[sourceIndex].columns.splice(source.index, 1);
+        const sectionId = source.droppableId.split("_")[1];
+        const sectionIndex = draft.findIndex((s) => s.rowId == sectionId);
 
-        draft[destIndex].columns.splice(destination.index, 0, removed);
+        const temp = draft[sectionIndex].columns[destination.index];
 
-        if (draft[sourceIndex].columns.length === 0) {
-          draft.splice(sourceIndex, 1);
+        draft[sectionIndex].columns[destination.index] =
+          draft[sectionIndex].columns[source.index];
+
+        draft[sectionIndex].columns[source.index] = temp;
+
+        if (draft[sectionIndex].columns.length === 0) {
+          draft.splice(sectionIndex, 1);
         }
-      }
-
-      if (source.index !== destination.index || source.id !== destination.id) {
-        recomputeWidths(draft);
       }
     });
   };
@@ -168,6 +162,7 @@ function Grid(
 
   const handleOnDragEnd = useCallback(
     (e) => {
+      console.log(e);
       setColOver(null);
       setColId(null);
       const { destination, source, type } = e;
@@ -184,14 +179,12 @@ function Grid(
       }
 
       if (type === "col") {
-        const result = reorder(data, source, destination, "col");
-        setData([...result]);
+        setData(reorder(data, source, destination, "col"));
 
         return;
       }
 
-      const reordered = reorder(data, source, destination);
-      setData([...reordered]);
+      setData(reorder(data, source, destination));
     },
     [data]
   );
