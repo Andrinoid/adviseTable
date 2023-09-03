@@ -10,7 +10,7 @@ module.exports = {
   output: [
     {
       file: pkg.main,
-      format: "esm",
+      format: "cjs",
       exports: "named",
       sourcemap: true,
       strict: false,
