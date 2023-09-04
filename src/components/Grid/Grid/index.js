@@ -90,25 +90,50 @@ function Grid(
     }
   }, [containerRef.current]);
 
+  function recomputeWidths(draft) {
+    draft.forEach((row) => {
+      row.columns.forEach((col) => {
+        col.width = 1 / row.columns.length;
+      });
+    });
+  }
+
   const reorder = (data, source, destination, type) => {
     return produce(data, (draft) => {
       if (type !== "col") {
-        const [removed] = draft.splice(source.index, 1);
-        draft.splice(destination.index, 0, removed);
+        // exchanging section position
+        const temp = draft[destination.index];
+
+        draft[destination.index] = draft[source.index];
+        draft[source.index] = temp;
       } else {
-        const sectionId = source.droppableId.split("_")[1];
-        const sectionIndex = draft.findIndex((s) => s.rowId == sectionId);
+        // moving column to another section
+        const sourceSectionId = source.droppableId.split("_")[1];
+        const sourceSectionIndex = draft.findIndex(
+          (s) => s.rowId == sourceSectionId
+        );
 
-        const temp = draft[sectionIndex].columns[destination.index];
+        const destinationSectionId = destination.droppableId.split("_")[1];
+        const destinationSectionIndex = draft.findIndex(
+          (s) => s.rowId == destinationSectionId
+        );
 
-        draft[sectionIndex].columns[destination.index] =
-          draft[sectionIndex].columns[source.index];
+        const [removed] = draft[sourceSectionIndex].columns.splice(
+          source.index,
+          1
+        );
 
-        draft[sectionIndex].columns[source.index] = temp;
+        draft[destinationSectionIndex].columns.splice(
+          destination.index,
+          0,
+          removed
+        );
 
-        if (draft[sectionIndex].columns.length === 0) {
-          draft.splice(sectionIndex, 1);
+        if (draft[destinationSectionIndex].columns.length === 0) {
+          draft.splice(sourceSectionIndex, 1);
         }
+
+        recomputeWidths(draft);
       }
     });
   };
@@ -173,14 +198,18 @@ function Grid(
       }
 
       if (type === "col") {
-        setData(reorder(data, source, destination, "col"));
+        setData((data) => {
+          return reorder(data, source, destination, "col");
+        });
 
         return;
       }
 
-      setData(reorder(data, source, destination));
+      setData((data) => {
+        return reorder(data, source, destination);
+      });
     },
-    [data]
+    [setData]
   );
 
   const debouncedOnDragUpdate = debounce((e) => {

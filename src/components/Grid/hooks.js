@@ -30,6 +30,7 @@ export function useController(data, setData, maxCols) {
 
     setData((data) =>
       produce(data, (draft) => {
+        // console.log(JSON.stringify(draft));
         const index = draft.findIndex((row) => row.rowId === rowId);
         if (index === -1) {
           draft.push(newRow);
