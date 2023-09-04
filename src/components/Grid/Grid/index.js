@@ -14,6 +14,7 @@ import Section from "../Section";
 import { useController } from "../hooks";
 import styled from "styled-components";
 import { produce } from "immer";
+import { debounce } from "lodash";
 
 export const DataContext = createContext(null);
 
@@ -189,6 +190,12 @@ function Grid(
     [data]
   );
 
+  const debouncedOnDragUpdate = debounce((e) => {
+    if (e.type === "col" && e.destination) {
+      setColOver(e.destination);
+    }
+  }, 500);
+
   return (
     <Container ref={containerRef} resizing={resizing}>
       {rulers[0] &&
@@ -231,11 +238,7 @@ function Grid(
           onBeforeDragStart={(e) => {
             setColId(e.draggableId);
           }}
-          onDragUpdate={(e) => {
-            if (e.type === "col") {
-              setColOver(e.destination);
-            }
-          }}
+          onDragUpdate={debouncedOnDragUpdate}
           onDragEnd={handleOnDragEnd}
         >
           <Droppable droppableId={"advise-grid"} type="advise-grid">
