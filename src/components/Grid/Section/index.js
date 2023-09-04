@@ -22,6 +22,7 @@ import DragHandle from "../../../icons/DragHandle";
 import { Dimensions, compute, getRowId, useController } from "../hooks";
 import Resizable from "../Resizable";
 import { cloneDeep } from "lodash";
+import produce from "immer";
 
 function Section({
   widths,
@@ -182,17 +183,16 @@ function Section({
                                 )
                               );
 
-                              // update global state with new widths
-                              const clone = cloneDeep(data);
-
-                              clone[index].columns = clone[index].columns.map(
-                                (col, index) => {
-                                  col.width = result[index];
-                                  return col;
-                                }
-                              );
-
-                              setData(clone);
+                              setData((data) => {
+                                return produce(data, (draft) => {
+                                  draft[index].columns = draft[
+                                    index
+                                  ].columns.map((col, index) => {
+                                    col.width = result[index];
+                                    return col;
+                                  });
+                                });
+                              });
                               setFactors([...result]);
                             }}
                             onResize={(width, x) => {

@@ -90,18 +90,6 @@ function Grid(
     }
   }, [containerRef.current]);
 
-  function id(data) {
-    return data.droppableId.split("_")[1];
-  }
-
-  function recomputeWidths(draft) {
-    draft.forEach((row) => {
-      row.columns.forEach((col) => {
-        col.width = 1 / row.columns.length;
-      });
-    });
-  }
-
   const reorder = (data, source, destination, type) => {
     return produce(data, (draft) => {
       if (type !== "col") {
@@ -159,7 +147,7 @@ function Grid(
 
   useEffect(() => {
     if (colId == null && colOver != null) {
-      setColOver(colOver);
+      setColOver(null);
     }
   }, [colId, colOver]);
 
@@ -200,7 +188,6 @@ function Grid(
       setColOver(e.destination);
     }
   }, 500);
-
   return (
     <Container ref={containerRef} resizing={resizing}>
       {rulers[0] &&
@@ -252,22 +239,24 @@ function Grid(
                 {...droppableProvided.droppableProps}
                 ref={droppableProvided.innerRef}
               >
-                {data.map((row, rowIndex) => (
-                  <div
-                    style={{ position: "relative" }}
-                    key={"sectioncontainer_" + row.rowId}
-                  >
-                    <Section
-                      row={row}
-                      isBeforeDragging={colId !== null}
-                      widths={row.columns.map((col) => col.width)}
-                      index={rowIndex}
-                      breakpoint={breakpoint}
-                      mobile={mobile}
-                      rulers={rulers[0]}
-                    />
-                  </div>
-                ))}
+                {data.map((row, rowIndex) => {
+                  return (
+                    <div
+                      style={{ position: "relative" }}
+                      key={"sectioncontainer_" + row.rowId}
+                    >
+                      <Section
+                        row={row}
+                        isBeforeDragging={colId !== null}
+                        widths={row.columns.map((col) => col.width)}
+                        index={rowIndex}
+                        breakpoint={breakpoint}
+                        mobile={mobile}
+                        rulers={rulers[0]}
+                      />
+                    </div>
+                  );
+                })}
                 {droppableProvided.placeholder}
               </div>
             )}
