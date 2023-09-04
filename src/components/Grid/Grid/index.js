@@ -13,6 +13,8 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Section from "../Section";
 import { useController } from "../hooks";
 import styled from "styled-components";
+import { produce } from "immer";
+import { debounce } from "lodash";
 
 export const DataContext = createContext(null);
 
@@ -58,7 +60,7 @@ function Grid(
 
   useEffect(() => {
     if (JSON.stringify(data) !== JSON.stringify(layout)) {
-      setData(layout);
+      setData(produce(layout, (draft) => {}));
     }
   }, [layout]);
 
@@ -88,49 +90,27 @@ function Grid(
     }
   }, [containerRef.current]);
 
-  function id(data) {
-    return data.droppableId.split("_")[1];
-  }
-
-  function index(data, id) {
-    return data.findIndex((row) => row.rowId === id);
-  }
-
-  function recomputeWidths(data) {
-    return data.map((row) => {
-      row.columns = row.columns.map((col) => {
-        col.width = 1 / row.columns.length;
-        return { ...col };
-      });
-      return { ...row };
-    });
-  }
-
   const reorder = (data, source, destination, type) => {
-    const result = Array.from(data);
+    return produce(data, (draft) => {
+      if (type !== "col") {
+        const [removed] = draft.splice(source.index, 1);
+        draft.splice(destination.index, 0, removed);
+      } else {
+        const sectionId = source.droppableId.split("_")[1];
+        const sectionIndex = draft.findIndex((s) => s.rowId == sectionId);
 
-    if (type !== "col") {
-      const [removed] = result.splice(source.index, 1);
-      result.splice(destination.index, 0, removed);
+        const temp = draft[sectionIndex].columns[destination.index];
 
-      return [...result];
-    }
+        draft[sectionIndex].columns[destination.index] =
+          draft[sectionIndex].columns[source.index];
 
-    const sourceIndex = index(result, id(source));
-    const destIndex = index(result, id(destination));
-    const [removed] = result[sourceIndex].columns.splice(source.index, 1);
+        draft[sectionIndex].columns[source.index] = temp;
 
-    result[destIndex].columns.splice(destination.index, 0, removed);
-
-    if (result[sourceIndex].columns.length === 0) {
-      result.splice(sourceIndex, 1);
-    }
-
-    if (destIndex === sourceIndex) {
-      return result;
-    }
-
-    return recomputeWidths(result);
+        if (draft[sectionIndex].columns.length === 0) {
+          draft.splice(sectionIndex, 1);
+        }
+      }
+    });
   };
 
   useLayoutEffect(() => {
@@ -148,26 +128,28 @@ function Grid(
   }, [sectionId, data]);
 
   const updateWidths = useCallback(() => {
-    // Create a new array by mapping over the existing data
-    const newData = data.map((row) => {
-      // Map over the columns and update them
-      const updatedColumns = row.columns.map((col) => {
-        if (!col.width) {
-          return { ...col, width: 1 / row.columns.length };
-        }
-        return col;
+    setData((prevData) => {
+      return produce(prevData, (draftData) => {
+        draftData.forEach((row) => {
+          row.columns.forEach((col) => {
+            if (!col.width) {
+              col.width = 1 / row.columns.length;
+            }
+          });
+        });
       });
-
-      // Return the updated row
-      return { ...row, columns: updatedColumns };
     });
-
-    setData(newData);
-  }, [data]);
+  }, [setData]);
 
   useEffect(() => {
     updateWidths();
   }, []);
+
+  useEffect(() => {
+    if (colId == null && colOver != null) {
+      setColOver(null);
+    }
+  }, [colId, colOver]);
 
   const mobile = useMemo(() => {
     return window.innerWidth <= breakpoint;
@@ -191,18 +173,21 @@ function Grid(
       }
 
       if (type === "col") {
-        const result = reorder(data, source, destination, "col");
-        setData([...result]);
+        setData(reorder(data, source, destination, "col"));
 
         return;
       }
 
-      const reordered = reorder(data, source, destination);
-      setData([...reordered]);
+      setData(reorder(data, source, destination));
     },
     [data]
   );
 
+  const debouncedOnDragUpdate = debounce((e) => {
+    if (e.type === "col" && e.destination) {
+      setColOver(e.destination);
+    }
+  }, 500);
   return (
     <Container ref={containerRef} resizing={resizing}>
       {rulers[0] &&
@@ -245,11 +230,7 @@ function Grid(
           onBeforeDragStart={(e) => {
             setColId(e.draggableId);
           }}
-          onDragUpdate={(e) => {
-            if (e.type === "col") {
-              setColOver(e.destination);
-            }
-          }}
+          onDragUpdate={debouncedOnDragUpdate}
           onDragEnd={handleOnDragEnd}
         >
           <Droppable droppableId={"advise-grid"} type="advise-grid">
@@ -258,22 +239,24 @@ function Grid(
                 {...droppableProvided.droppableProps}
                 ref={droppableProvided.innerRef}
               >
-                {data.map((row, rowIndex) => (
-                  <div
-                    style={{ position: "relative" }}
-                    key={"sectioncontainer_" + row.rowId}
-                  >
-                    <Section
-                      row={row}
-                      isBeforeDragging={colId !== null}
-                      widths={row.columns.map((col) => col.width)}
-                      index={rowIndex}
-                      breakpoint={breakpoint}
-                      mobile={mobile}
-                      rulers={rulers[0]}
-                    />
-                  </div>
-                ))}
+                {data.map((row, rowIndex) => {
+                  return (
+                    <div
+                      style={{ position: "relative" }}
+                      key={"sectioncontainer_" + row.rowId}
+                    >
+                      <Section
+                        row={row}
+                        isBeforeDragging={colId !== null}
+                        widths={row.columns.map((col) => col.width)}
+                        index={rowIndex}
+                        breakpoint={breakpoint}
+                        mobile={mobile}
+                        rulers={rulers[0]}
+                      />
+                    </div>
+                  );
+                })}
                 {droppableProvided.placeholder}
               </div>
             )}
