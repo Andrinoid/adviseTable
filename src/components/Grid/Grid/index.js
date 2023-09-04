@@ -157,13 +157,18 @@ function Grid(
     updateWidths();
   }, []);
 
+  useEffect(() => {
+    if (colId == null && colOver != null) {
+      setColOver(colOver);
+    }
+  }, [colId, colOver]);
+
   const mobile = useMemo(() => {
     return window.innerWidth <= breakpoint;
   }, [breakpoint, window.innerWidth]);
 
   const handleOnDragEnd = useCallback(
     (e) => {
-      console.log(e);
       setColOver(null);
       setColId(null);
       const { destination, source, type } = e;
