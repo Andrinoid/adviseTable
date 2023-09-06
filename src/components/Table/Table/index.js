@@ -286,6 +286,7 @@ const Table = (
     setTimeout(() => {
       setInitialLoaded(true);
     }, 1);
+    return adjustedSize;
   };
 
   /**
