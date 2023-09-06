@@ -5,5 +5,7 @@ import Col from "./Table/Col";
 import Grid from "./Grid/Grid";
 import AddSection from "./Grid/AddSection";
 
+export * as ContextMenu from "./ContextMenu";
+
 // expose the components
 export { Table, Header, Row, Col, Grid, AddSection };
