@@ -1,8 +1,7 @@
 import React from "react";
 import { useContextMenu } from "./ContextMenuProvider";
-import styled from "styled-components";
 
-const Container = ({ id, width, children }) => {
+const Container = ({ id, children }) => {
   const { openMenu, closeMenu } = useContextMenu();
 
   return (
