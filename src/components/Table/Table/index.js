@@ -20,16 +20,6 @@ import { useLayoutEffect } from "react";
 import useKeyboardControler from "./KeyboardControler";
 import { HandleExporting } from "./HandleExporting";
 import { Copier } from "./Copier";
-import {
-  SelectOutlined,
-  CopyOutlined,
-  ExportOutlined,
-} from "@ant-design/icons";
-import {
-  ContextMenu,
-  ContextMenuContainer,
-  ContextMenuProvider,
-} from "../../ContextMenu";
 
 const Wrapper = styled.div`
   width: 100%;
