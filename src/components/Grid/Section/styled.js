@@ -68,7 +68,6 @@ export const SectionElm = styled.section`
   display: flex;
   border: solid 1px transparent;
   transition: border 0.2s ease-in-out;
-  height: 100%;
   ${({ beingDragged, editing }) => {
     if (beingDragged && editing) {
       return `
