@@ -62,7 +62,7 @@ export const SectionContainer = styled.div`
   page-break-inside: avoid;
 `;
 
-export const SectionElm = styled.section`
+export const SectionElm = styled.div`
   box-sizing: border-box;
   position: relative;
   display: flex;
