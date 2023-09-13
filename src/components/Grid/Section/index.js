@@ -230,7 +230,10 @@ function Section({
 
                             {column.data.map((data, index) => {
                               return (
-                                <div key={index}>
+                                <div
+                                  key={index}
+                                  className="advise-ui-grid-cell"
+                                >
                                   {cell(
                                     data,
                                     {
