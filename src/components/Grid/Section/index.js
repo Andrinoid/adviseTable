@@ -152,6 +152,7 @@ function Section({
                         sectionId === draggableId || sectionId === null
                       }
                       editing={editing}
+                      className="advise-ui-grid-section"
                     >
                       {row.columns.map((column, colIndex) => {
                         return (
@@ -229,14 +230,18 @@ function Section({
 
                             {column.data.map((data, index) => {
                               return (
-                                <div key={index} className="cell-container">
-                                  {cell(data, {
-                                    marginBottom:
-                                      column.data.length > 1 &&
-                                      index != column.data.length - 1
-                                        ? 10
-                                        : 0,
-                                  })}
+                                <div key={index}>
+                                  {cell(
+                                    data,
+                                    {
+                                      marginBottom:
+                                        column.data.length > 1 &&
+                                        index != column.data.length - 1
+                                          ? 10
+                                          : 0,
+                                    },
+                                    index
+                                  )}
                                 </div>
                               );
                             })}
@@ -264,7 +269,11 @@ function Section({
                               removeRow(row.rowId);
                             }}
                           >
-                            <Plus style={{ transform: "rotate(45deg)" }} />
+                            <Plus
+                              style={{
+                                transform: "rotate(45deg)",
+                              }}
+                            />
                           </SectionHandleItem>
                         </Cursor>
                       </SectionHandle>
