@@ -63,14 +63,14 @@ export const SectionContainer = styled.div`
 `;
 
 export const SectionElm = styled.div`
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    border: solid 1px transparent;
-    transition: border 0.2s ease-in-out;
-    ${({ beingDragged, editing }) => {
-        if (beingDragged && editing) {
-            return `
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  border: solid 1px transparent;
+  transition: border 0.2s ease-in-out;
+  ${({ beingDragged, editing }) => {
+    if (beingDragged && editing) {
+      return `
         &:hover {
           border: solid 1px #37a1f6;
 
@@ -82,13 +82,13 @@ export const SectionElm = styled.div`
           }
         }
       `;
-        }
-    }}
-
-    @media (max-width: ${({ breakpoint }) => breakpoint}px) {
-        flex-direction: row;
-        flex-wrap: wrap;
     }
+  }}
+
+  @media (max-width: ${({ breakpoint }) => breakpoint}px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 `;
 
 export const Cursor = styled.div`
