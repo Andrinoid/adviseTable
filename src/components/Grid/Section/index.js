@@ -232,7 +232,11 @@ function Section({
                               return (
                                 <div
                                   key={index}
-                                  className="advise-ui-grid-cell"
+                                  className={
+                                    index == column.data.length - 1
+                                      ? "advise-ui-grid-cell advise-ui-grid-last-cell"
+                                      : "advise-ui-grid-cell"
+                                  }
                                 >
                                   {cell(
                                     data,
