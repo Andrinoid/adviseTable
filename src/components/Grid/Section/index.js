@@ -138,139 +138,172 @@ function Section({
             >
               {(droppableProvided) => {
                 return (
-                  <div
-                    ref={droppableProvided.innerRef}
-                    {...droppableProvided.droppableProps}
-                    style={{ height: height }}
-                  >
-                    <SectionElm
-                      id={"section_" + row.rowId}
-                      ref={sectionRef}
-                      style={{ position: "relative" }}
-                      breakpoint={breakpoint}
-                      beingDragged={
-                        sectionId === draggableId || sectionId === null
-                      }
-                      editing={editing}
+                    <div
+                        ref={droppableProvided.innerRef}
+                        {...droppableProvided.droppableProps}
+                        style={{ height: height }}
                     >
-                      {row.columns.map((column, colIndex) => {
-                        return (
-                          <Col
-                            key={column.columnId}
-                            index={colIndex}
-                            columnId={column.columnId}
-                            width={factors[colIndex]}
-                            data={column.data}
-                            rowId={row.rowId}
-                            sectionRef={sectionRef}
+                        <SectionElm
+                            id={"section_" + row.rowId}
+                            ref={sectionRef}
+                            style={{ position: "relative" }}
                             breakpoint={breakpoint}
-                            totalWidth={totalWidth}
-                            onResizeStart={() => {
-                              setResizing(true);
-                            }}
-                            onResizeEnd={(width, x) => {
-                              setResizing(false);
-
-                              const diff = x - snap(x);
-
-                              const result = compute(
-                                new Dimensions(
-                                  factors,
-                                  colIndex,
-                                  { width: width - diff },
-                                  minWidth,
-                                  totalWidth
-                                )
-                              );
-
-                              setData((data) => {
-                                return produce(data, (draft) => {
-                                  draft[index].columns = draft[
-                                    index
-                                  ].columns.map((col, index) => {
-                                    col.width = result[index];
-                                    return col;
-                                  });
-                                });
-                              });
-                              setFactors([...result]);
-                            }}
-                            onResize={(width, x) => {
-                              const result = compute(
-                                new Dimensions(
-                                  factors,
-                                  colIndex,
-                                  { width: width },
-                                  minWidth,
-                                  totalWidth
-                                )
-                              );
-
-                              setFactors([...result]);
-                            }}
-                            resizeable={
-                              row.columns.length - 1 != colIndex &&
-                              !mobile &&
-                              editing
+                            beingDragged={
+                                sectionId === draggableId || sectionId === null
                             }
-                          >
-                            {row.rowId != getRowId(sectionId) &&
-                              colOver &&
-                              colOver.droppableId == "section_" + row.rowId &&
-                              colOver.index == colIndex && <Line />}
-
-                            {row.rowId != getRowId(sectionId) &&
-                              colOver &&
-                              colOver.droppableId == "section_" + row.rowId &&
-                              colOver.index == row.columns.length &&
-                              colIndex + 1 == row.columns.length && (
-                                <Line right />
-                              )}
-
-                            {column.data.map((data, index) => {
-                              return (
-                                <div key={index}>
-                                  {cell(data, {
-                                    marginBottom:
-                                      column.data.length > 1 &&
-                                      index != column.data.length - 1
-                                        ? 10
-                                        : 0,
-                                  })}
-                                </div>
-                              );
-                            })}
-                          </Col>
-                        );
-                      })}
-                      <SectionHandle hidden={!editing}>
-                        <SectionHandleItem
-                          {...draggableProvided.dragHandleProps}
+                            editing={editing}
+                            className="advise-ui-grid-section"
                         >
-                          <DragHandle />
-                        </SectionHandleItem>
-                        <Cursor type="pointer">
-                          <SectionHandleItem
-                            onClick={() => {
-                              addRow(row.rowId);
-                            }}
-                          >
-                            <Plus />
-                          </SectionHandleItem>
-                        </Cursor>
-                        <Cursor type="pointer">
-                          <SectionHandleItem
-                            onClick={() => {
-                              removeRow(row.rowId);
-                            }}
-                          >
-                            <Plus style={{ transform: "rotate(45deg)" }} />
-                          </SectionHandleItem>
-                        </Cursor>
-                      </SectionHandle>
-                    </SectionElm>
-                    {droppableProvided.placeholder}
-                  </div>
+                            {row.columns.map((column, colIndex) => {
+                                return (
+                                    <Col
+                                        key={column.columnId}
+                                        index={colIndex}
+                                        columnId={column.columnId}
+                                        width={factors[colIndex]}
+                                        data={column.data}
+                                        rowId={row.rowId}
+                                        sectionRef={sectionRef}
+                                        breakpoint={breakpoint}
+                                        totalWidth={totalWidth}
+                                        onResizeStart={() => {
+                                            setResizing(true);
+                                        }}
+                                        onResizeEnd={(width, x) => {
+                                            setResizing(false);
+
+                                            const diff = x - snap(x);
+
+                                            const result = compute(
+                                                new Dimensions(
+                                                    factors,
+                                                    colIndex,
+                                                    { width: width - diff },
+                                                    minWidth,
+                                                    totalWidth
+                                                )
+                                            );
+
+                                            setData((data) => {
+                                                return produce(
+                                                    data,
+                                                    (draft) => {
+                                                        draft[index].columns =
+                                                            draft[
+                                                                index
+                                                            ].columns.map(
+                                                                (
+                                                                    col,
+                                                                    index
+                                                                ) => {
+                                                                    col.width =
+                                                                        result[
+                                                                            index
+                                                                        ];
+                                                                    return col;
+                                                                }
+                                                            );
+                                                    }
+                                                );
+                                            });
+                                            setFactors([...result]);
+                                        }}
+                                        onResize={(width, x) => {
+                                            const result = compute(
+                                                new Dimensions(
+                                                    factors,
+                                                    colIndex,
+                                                    { width: width },
+                                                    minWidth,
+                                                    totalWidth
+                                                )
+                                            );
+
+                                            setFactors([...result]);
+                                        }}
+                                        resizeable={
+                                            row.columns.length - 1 !=
+                                                colIndex &&
+                                            !mobile &&
+                                            editing
+                                        }
+                                    >
+                                        {row.rowId != getRowId(sectionId) &&
+                                            colOver &&
+                                            colOver.droppableId ==
+                                                "section_" + row.rowId &&
+                                            colOver.index == colIndex && (
+                                                <Line />
+                                            )}
+
+                                        {row.rowId != getRowId(sectionId) &&
+                                            colOver &&
+                                            colOver.droppableId ==
+                                                "section_" + row.rowId &&
+                                            colOver.index ==
+                                                row.columns.length &&
+                                            colIndex + 1 ==
+                                                row.columns.length && (
+                                                <Line right />
+                                            )}
+
+                                        {column.data.map((data, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    {cell(
+                                                        data,
+                                                        {
+                                                            marginBottom:
+                                                                column.data
+                                                                    .length >
+                                                                    1 &&
+                                                                index !=
+                                                                    column.data
+                                                                        .length -
+                                                                        1
+                                                                    ? 10
+                                                                    : 0,
+                                                        },
+                                                        index
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </Col>
+                                );
+                            })}
+                            <SectionHandle hidden={!editing}>
+                                <SectionHandleItem
+                                    {...draggableProvided.dragHandleProps}
+                                >
+                                    <DragHandle />
+                                </SectionHandleItem>
+                                <Cursor type="pointer">
+                                    <SectionHandleItem
+                                        onClick={() => {
+                                            addRow(row.rowId);
+                                        }}
+                                    >
+                                        <Plus />
+                                    </SectionHandleItem>
+                                </Cursor>
+                                <Cursor type="pointer">
+                                    <SectionHandleItem
+                                        onClick={() => {
+                                            removeRow(row.rowId);
+                                        }}
+                                    >
+                                        <Plus
+                                            style={{
+                                                transform: "rotate(45deg)",
+                                            }}
+                                        />
+                                    </SectionHandleItem>
+                                </Cursor>
+                            </SectionHandle>
+                        </SectionElm>
+                        {droppableProvided.placeholder}
+                    </div>
                 );
               }}
             </Droppable>
