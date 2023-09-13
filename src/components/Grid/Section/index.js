@@ -229,7 +229,7 @@ function Section({
 
                             {column.data.map((data, index) => {
                               return (
-                                <div key={index}>
+                                <div key={index} className="cell-container">
                                   {cell(data, {
                                     marginBottom:
                                       column.data.length > 1 &&
