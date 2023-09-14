@@ -21,13 +21,13 @@ const headerTheme = {
 const BACKGROUND_TRANSITION = "background-color 0.03s";
 
 const RowElm = styled.div`
-  position: sticky;
-  top: ${({ stickyTopOffset }) => stickyTopOffset}px;
-  z-index: 2;
-  white-space: normal;
-  line-height: 1;
-  width: 100%;
-  overflow: ${props => (props.printLayout ? 'visible' : 'hidden')};;
+    position: ${({ printLayout }) => (printLayout ? "static" : "sticky")};
+    top: ${({ stickyTopOffset }) => stickyTopOffset}px;
+    z-index: 2;
+    white-space: normal;
+    line-height: 1;
+    width: 100%;
+    overflow: ${(props) => (props.printLayout ? "visible" : "hidden")};
 `;
 
 const Label = styled.div`
