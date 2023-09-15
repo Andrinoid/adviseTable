@@ -58,6 +58,7 @@ export default forwardRef(function Resizable(
     <Container ref={ref}>
       {children}
       <Handler
+        active={resizing}
         ref={handlerRef}
         x={x}
         style={!enabled ? { display: "none" } : {}}

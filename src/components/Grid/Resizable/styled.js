@@ -18,6 +18,13 @@ export const Handler = styled.div`
   cursor: col-resize;
 
   &:hover {
-    border-right: 1px solid #64b2fe;
+    border-left: 1px solid #64b2fe;
   }
+
+  ${({ active }) => {
+    if (active) {
+      return "border-left: 1px solid #64b2fe";
+    }
+    return "";
+  }}
 `;
