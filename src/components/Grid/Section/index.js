@@ -228,27 +228,17 @@ function Section({
                                 <Line right />
                               )}
 
-                            {column.data.map((data, index) => {
+                            {column.data.map((data, cellIndex) => {
                               return (
                                 <div
-                                  key={index}
+                                  key={cellIndex}
                                   className={
-                                    index == column.data.length - 1
+                                    cellIndex == column.data.length - 1
                                       ? "advise-ui-grid-cell advise-ui-grid-last-cell"
                                       : "advise-ui-grid-cell"
                                   }
                                 >
-                                  {cell(
-                                    data,
-                                    {
-                                      marginBottom:
-                                        column.data.length > 1 &&
-                                        index != column.data.length - 1
-                                          ? 10
-                                          : 0,
-                                    },
-                                    index
-                                  )}
+                                  {cell(data, index, colIndex, cellIndex)}
                                 </div>
                               );
                             })}
