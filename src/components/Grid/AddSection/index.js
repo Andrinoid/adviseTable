@@ -31,8 +31,8 @@ const Inner = styled.div`
 
 const AddSection = ({ onClick, style }) => {
   return (
-    <EmptySection style={style}>
-      <Inner>
+    <EmptySection>
+      <Inner style={style}>
         <div>
           <PlusCircle onClick={onClick} size={40} color={"#1b90ff"} />
         </div>
