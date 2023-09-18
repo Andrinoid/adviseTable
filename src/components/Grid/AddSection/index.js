@@ -29,9 +29,9 @@ const Inner = styled.div`
   border: 2px dashed #d8d8d8;
 `;
 
-const AddSection = ({ onClick }) => {
+const AddSection = ({ onClick, style }) => {
   return (
-    <EmptySection>
+    <EmptySection style={style}>
       <Inner>
         <div>
           <PlusCircle onClick={onClick} size={40} color={"#1b90ff"} />
