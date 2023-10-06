@@ -42,7 +42,7 @@ export default function Example() {
 
               <SiderItem
                 onClick={() => {
-                  pushSider(<CompanySettings />);
+                  pushSider(<AnotherSider name="Company Settings" />);
                 }}
               >
                 <img src={process.env.PUBLIC_URL + "/home.svg"} />
@@ -50,7 +50,7 @@ export default function Example() {
 
               <SiderItem
                 onClick={() => {
-                  pushSider(<CompanySettings />);
+                  pushSider(<AnotherSider name="App Settings" />);
                 }}
               >
                 <img src={process.env.PUBLIC_URL + "/gear.svg"} />
@@ -174,11 +174,11 @@ export default function Example() {
   );
 }
 
-const CompanySettings = () => {
+const AnotherSider = ({ name }) => {
   return (
     <Sider width={250} borderLeft={0} resizeable>
       <SiderTop padding={12}>
-        <p>Company Settings</p>
+        <p>{name}</p>
       </SiderTop>
 
       <SiderItem>

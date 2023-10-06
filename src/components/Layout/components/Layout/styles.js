@@ -5,9 +5,19 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
 
-  ${({ vertical }) => {
+  ${({ vertical, reverse }) => {
+    if (vertical && reverse) {
+      return "flex-direction: column-reverse;";
+    }
+
     if (vertical) {
       return "flex-direction: column;";
     }
+
+    if (reverse) {
+      return "flex-direction: row-reverse;";
+    }
+
+    return "flex-direction: row;";
   }}
 `;

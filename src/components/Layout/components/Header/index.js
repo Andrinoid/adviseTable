@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "./styles";
 
-const Header = ({ children }) => {
-  return <Container>{children}</Container>;
+const Header = ({ children, ...rest }) => {
+  return <Container {...rest}>{children}</Container>;
 };
 
 export default Header;
