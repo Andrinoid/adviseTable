@@ -1,9 +1,9 @@
 import React from "react";
-import Layout from "./Layout";
-import Sider from "./Sider";
-import Header from "./Header";
-import Content from "./Content";
-import Footer from "./Footer";
+import Layout from "./components/Layout";
+import Sider from "./components/Sider";
+import Header from "./components/Header";
+import Content from "./components/Content";
+import Footer from "./components/Footer";
 
 import "./styles.css";
 import {
@@ -16,33 +16,47 @@ import {
   ControlButton,
 } from "./styles";
 import MenuIcon from "../../icons/MenuIcon";
+import usePushSider from "./hooks/usePushSider";
+import Siders from "./components/Siders";
 
 export default function Example() {
+  const pushSider = usePushSider();
+
   return (
     <div className="container">
       <Layout vertical>
         <Layout>
-          <Sider>
-            <SiderTop padding={12}>
-              <img
-                src={process.env.PUBLIC_URL + "/advise.png"}
-                alt="Logo"
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  maxWidth: 60,
+          <Siders>
+            <Sider>
+              <SiderTop padding={12}>
+                <img
+                  src={process.env.PUBLIC_URL + "/advise.png"}
+                  alt="Logo"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    maxWidth: 60,
+                  }}
+                />
+              </SiderTop>
+
+              <SiderItem
+                onClick={() => {
+                  pushSider(<CompanySettings />);
                 }}
-              />
-            </SiderTop>
+              >
+                <img src={process.env.PUBLIC_URL + "/home.svg"} />
+              </SiderItem>
 
-            <SiderItem>
-              <img src={process.env.PUBLIC_URL + "/home.svg"} />
-            </SiderItem>
-
-            <SiderItem>
-              <img src={process.env.PUBLIC_URL + "/gear.svg"} />
-            </SiderItem>
-          </Sider>
+              <SiderItem
+                onClick={() => {
+                  pushSider(<CompanySettings />);
+                }}
+              >
+                <img src={process.env.PUBLIC_URL + "/gear.svg"} />
+              </SiderItem>
+            </Sider>
+          </Siders>
 
           <Layout vertical>
             <Header>
@@ -159,3 +173,21 @@ export default function Example() {
     </div>
   );
 }
+
+const CompanySettings = () => {
+  return (
+    <Sider width={250}>
+      <SiderTop padding={12}>
+        <p>Company Settings</p>
+      </SiderTop>
+
+      <SiderItem>
+        <p>Home</p>
+      </SiderItem>
+
+      <SiderItem>
+        <p>Settings</p>
+      </SiderItem>
+    </Sider>
+  );
+};

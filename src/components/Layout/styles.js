@@ -42,7 +42,9 @@ SiderTop.defaultProps = {
   padding: 20, // Set default padding value to 20
 };
 
-export const SiderItem = styled.div`
+export const SiderItem = styled.button`
+  border: none;
+  background: none;
   box-sizing: border-box;
   display: flex;
   align-items: center;

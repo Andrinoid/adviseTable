@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 60px;
+  width: ${({ width }) => (width ? width : 60)}px;
   background-color: #242a43;
   border-right: 1px solid #e8eaed;
   border-left: 1px solid #e8eaed;
