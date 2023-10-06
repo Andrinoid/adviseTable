@@ -10,7 +10,5 @@ export const Container = styled.div`
   border-left: 1px solid #e8eaed;
   background: #f8fafb;
   flex-shrink: 0;
-  position: fixed;
-  left: 0;
   z-index: 2;
 `;

@@ -80,3 +80,32 @@ export const MenuButton = styled.div`
     background-color: rgba(0, 0, 0, 0.08);
   }
 `;
+
+export const ControlButton = styled.button`
+  border: none;
+  background-color: ${({ inverted }) =>
+    inverted ? "rgb(66, 82, 110)" : "rgb(248, 250, 251)"};
+  color: ${({ inverted }) =>
+    !inverted ? "rgb(66, 82, 110)" : "rgb(248, 250, 251)"};
+  font-size: 15px;
+  padding: 0 20px;
+  height: 60px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  max-width: 125px;
+  margin-bottom: 10px;
+`;
+
+export const Flex = styled.div`
+  display: flex;
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
+  flex-direction: ${(props) => props.flexDirection};
+  min-height: ${(props) => props.height}px;
+  max-width: ${(props) => props.maxWidth}px;
+  border: ${(props) => props.dashed && "2px dashed rgb(66, 82, 110)"};
+  width: ${(props) => props.width}px;
+  padding: ${(props) => props.padding}px;
+  flex-wrap: wrap;
+`;
