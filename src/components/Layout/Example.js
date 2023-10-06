@@ -6,17 +6,42 @@ import Content from "./Content";
 import Footer from "./Footer";
 
 import "./styles.css";
-import { Tab, Tabs } from "./styles";
+import { Tab, Tabs, SiderTop, SiderItem, MenuButton } from "./styles";
+import MenuIcon from "./icons/MenuIcon";
 
 export default function Example() {
   return (
     <div className="container">
       <Layout vertical>
-        <Layout horizontal>
-          <Sider></Sider>
+        <Layout>
+          <Sider>
+            <SiderTop padding={12}>
+              <img
+                src={process.env.PUBLIC_URL + "/advise.png"}
+                alt="Logo"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  maxWidth: 60,
+                }}
+              />
+            </SiderTop>
+
+            <SiderItem>
+              <img src={process.env.PUBLIC_URL + "/home.svg"} />
+            </SiderItem>
+
+            <SiderItem>
+              <img src={process.env.PUBLIC_URL + "/gear.svg"} />
+            </SiderItem>
+          </Sider>
 
           <Layout vertical>
-            <Header></Header>
+            <Header>
+              <MenuButton style={{ marginLeft: 60 }}>
+                <MenuIcon />
+              </MenuButton>
+            </Header>
             <Content></Content>
           </Layout>
         </Layout>
