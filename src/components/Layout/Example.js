@@ -176,7 +176,7 @@ export default function Example() {
 
 const CompanySettings = () => {
   return (
-    <Sider width={250} resizeable>
+    <Sider width={250} borderLeft={0} resizeable>
       <SiderTop padding={12}>
         <p>Company Settings</p>
       </SiderTop>

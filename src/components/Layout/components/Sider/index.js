@@ -4,7 +4,13 @@ import PropTypes from "prop-types";
 import { Container } from "./styles";
 import Resizable from "./Resizeable";
 
-const Sider = ({ children, width, resizeable = false, ...rest }) => {
+const Sider = ({
+  children,
+  width,
+  borderLeft,
+  resizeable = false,
+  ...rest
+}) => {
   if (resizeable) {
     return (
       <Resizable initialWidth={width}>
@@ -25,6 +31,7 @@ const Sider = ({ children, width, resizeable = false, ...rest }) => {
 Sider.propTypes = {
   width: PropTypes.number,
   resizeable: PropTypes.bool,
+  borderLeft: PropTypes.number,
 };
 
 export default Sider;

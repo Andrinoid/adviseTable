@@ -8,11 +8,12 @@ const Container = styled.div`
   box-sizing: border-box;
   flex-grow: 0;
   user-select: none;
-  transition: width 0.2s ease, opacity 0.1s ease;
-  transition: ${({ isResizing }) => (isResizing ? "none" : "width 0.2s ease")};
+  transition: ${({ isResizing }) =>
+    isResizing ? "none" : "width 0.2s ease, opacity 0.1s ease"};
   flex-shrink: 0;
   width: 100%;
 `;
+
 const Handle = styled.div`
   position: absolute;
   top: 0;
@@ -25,119 +26,109 @@ const Handle = styled.div`
   transition: background-color 0.3s ease;
   &:hover {
     background-color: rgb(232 232 232 / 79%);
-    transition: background-color 0.5s ease;
-    transition-delay: 0.5s;
+    transition: background-color 0.5s ease 0.5s;
   }
 `;
 
-const ResizableContainer = React.forwardRef(function ({
-  children,
-  initialWidth = 320,
-  minWidth = 0,
-  maxWidth = Infinity,
-}) {
-  const containerRef = useRef(null);
-  const handleRef = useRef(null);
-  const prevClientXRef = useRef(null);
+const ResizableContainer = React.forwardRef(
+  (
+    { children, initialWidth = 320, minWidth = 0, maxWidth = Infinity },
+    ref
+  ) => {
+    const containerRef = useRef(null);
+    const handleRef = useRef(null);
+    const prevClientXRef = useRef(null);
 
-  const [w, setW] = useState(initialWidth);
-  const [x, setX] = useState(0);
-  const [newWidth, setNewWidth] = useState(initialWidth);
-  const [isResizing, setIsResizing] = useState(false);
+    const [w, setW] = useState(initialWidth);
+    const [x, setX] = useState(0);
+    const [newWidth, setNewWidth] = useState(initialWidth);
+    const [isResizing, setIsResizing] = useState(false);
 
-  const [hoverActive, setHoverActive] = useState(false);
-  const hoverTimeout = useRef(null);
+    const [hoverActive, setHoverActive] = useState(false);
+    const hoverTimeout = useRef(null);
 
-  const handleMouseEnter = () => {
-    hoverTimeout.current = setTimeout(() => {
-      setHoverActive(true);
-    }, 500);
-  };
+    const handleMouseEvents = (isHovered) => {
+      clearTimeout(hoverTimeout.current);
+      setHoverActive(isHovered);
+    };
 
-  const handleMouseLeave = () => {
-    clearTimeout(hoverTimeout.current);
-    setHoverActive(false);
-  };
+    const mouseDownHandler = (e) => {
+      const { clientX } = e;
+      setIsResizing(true);
 
-  const mouseDownHandler = (e) => {
-    const { clientX } = e;
-    setIsResizing(true);
+      // capture the initial x position on drag start
+      setX(clientX);
+      // capture the initial container width on drag start
+      setW(containerRef.current.offsetWidth);
+    };
 
-    // capture the initial x position on drag start
-    setX(clientX);
-    // capture the initial container width on drag start
-    setW(containerRef.current.offsetWidth);
-  };
+    const mouseMoveHandler = (e) => {
+      if (!isResizing) return;
 
-  const mouseMoveHandler = (e) => {
-    if (!isResizing) return;
-
-    // If the previous clientX position is null, assign the current clientX position
-    if (prevClientXRef.current === null) {
-      prevClientXRef.current = e.clientX;
-      return;
-    }
-
-    const dx = e.clientX - x;
-    let newWidth = w + dx;
-
-    prevClientXRef.current = e.clientX;
-
-    if (newWidth < minWidth) {
-      const tension = w + dx - minWidth;
-      if (tension < -150) {
-        newWidth = 0;
-      } else {
-        newWidth = minWidth;
+      // If the previous clientX position is null, assign the current clientX position
+      if (prevClientXRef.current === null) {
+        prevClientXRef.current = e.clientX;
+        return;
       }
-    } else if (newWidth > maxWidth) {
-      newWidth = maxWidth;
-    }
-    setNewWidth(newWidth);
-  };
 
-  const mouseUpHandler = () => {
-    // Remove the handlers of `mousemove` and `mouseup`
-    document.removeEventListener("mousemove", mouseMoveHandler);
-    document.removeEventListener("mouseup", mouseUpHandler);
-    prevClientXRef.current = null;
-    setIsResizing(false);
-  };
+      const dx = e.clientX - x;
+      let newWidth = w + dx;
 
-  const handleDoubleClick = () => {
-    setNewWidth(initialWidth);
-  };
+      prevClientXRef.current = e.clientX;
 
-  useEffect(() => {
-    if (!isResizing) return;
-    document.addEventListener("mousemove", mouseMoveHandler);
-    document.addEventListener("mouseup", mouseUpHandler);
-    return () => {
+      if (newWidth < minWidth) {
+        const tension = w + dx - minWidth;
+        if (tension < -150) {
+          newWidth = 0;
+        } else {
+          newWidth = minWidth;
+        }
+      } else if (newWidth > maxWidth) {
+        newWidth = maxWidth;
+      }
+      setNewWidth(newWidth);
+    };
+
+    const mouseUpHandler = () => {
+      // Remove the handlers of `mousemove` and `mouseup`
       document.removeEventListener("mousemove", mouseMoveHandler);
       document.removeEventListener("mouseup", mouseUpHandler);
+      prevClientXRef.current = null;
+      setIsResizing(false);
     };
-  }, [isResizing]);
 
-  return (
-    <Container
-      ref={containerRef}
-      width={newWidth}
-      style={{ width: newWidth }}
-      isResizing={isResizing}
-    >
-      {children}
+    const handleDoubleClick = () => {
+      setNewWidth(initialWidth);
+    };
 
-      <Handle
-        onMouseDown={mouseDownHandler}
+    useEffect(() => {
+      if (!isResizing) return;
+      document.addEventListener("mousemove", mouseMoveHandler);
+      document.addEventListener("mouseup", mouseUpHandler);
+      return () => {
+        document.removeEventListener("mousemove", mouseMoveHandler);
+        document.removeEventListener("mouseup", mouseUpHandler);
+      };
+    }, [isResizing]);
+
+    return (
+      <Container
+        ref={containerRef}
+        style={{ width: newWidth }}
         isResizing={isResizing}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onDoubleClick={handleDoubleClick}
-        hoverActive={hoverActive}
-        ref={handleRef}
-      />
-    </Container>
-  );
-});
+      >
+        {children}
+        <Handle
+          onMouseDown={mouseDownHandler}
+          onMouseEnter={() => handleMouseEvents(true)}
+          onMouseLeave={() => handleMouseEvents(false)}
+          onDoubleClick={handleDoubleClick}
+          hoverActive={hoverActive}
+          ref={handleRef}
+        />
+      </Container>
+    );
+  }
+);
 
 export default ResizableContainer;

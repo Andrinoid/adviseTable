@@ -17,7 +17,9 @@ export const Container = styled.div`
   }};
   background-color: #242a43;
   border-right: 1px solid #e8eaed;
-  border-left: 1px solid #e8eaed;
+  border-left: ${({ borderLeft }) =>
+      typeof borderLeft == "number" ? borderLeft : 1}px
+    solid #e8eaed;
   background: #f8fafb;
   flex-shrink: 0;
   z-index: 2;
