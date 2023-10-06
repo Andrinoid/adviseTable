@@ -1,8 +1,13 @@
 import React from "react";
 import Example from "./Example";
+import { LayoutProvider } from "./LayoutContext";
 
 const App = () => {
-  return <Example />;
+  return (
+    <LayoutProvider>
+      <Example />
+    </LayoutProvider>
+  );
 };
 
 export default App;

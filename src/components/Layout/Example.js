@@ -15,7 +15,7 @@ import {
   Flex,
   ControlButton,
 } from "./styles";
-import MenuIcon from "./icons/MenuIcon";
+import MenuIcon from "../../icons/MenuIcon";
 
 export default function Example() {
   return (
