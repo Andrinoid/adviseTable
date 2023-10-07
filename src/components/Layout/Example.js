@@ -18,9 +18,12 @@ import {
 import MenuIcon from "../../icons/MenuIcon";
 import usePushSider from "./hooks/usePushSider";
 import Siders from "./components/Siders";
+import usePopSider from "./hooks/usePopSider";
+var lastName = "";
 
 export default function Example() {
   const pushSider = usePushSider();
+  const popSider = usePopSider();
 
   return (
     <div className="container">
@@ -101,7 +104,9 @@ export default function Example() {
                     }}
                   >
                     <ControlButton inverted>Push on sidebar {0}</ControlButton>
-                    <ControlButton inverted>Pop on sidebar {0}</ControlButton>
+                    <ControlButton inverted onClick={() => {}}>
+                      Pop on sidebar {0}
+                    </ControlButton>
                   </Flex>
 
                   <span
@@ -122,39 +127,51 @@ export default function Example() {
                   style={{ marginTop: 10 }}
                   justifyContent="space-between"
                 >
-                  <ControlButton inverted>Add sidebar</ControlButton>
+                  <ControlButton
+                    inverted
+                    onClick={() => {
+                      console.log(lastName);
+                      if (lastName == "") {
+                        pushSider(<AnotherSider name={"Company Settings"} />);
+                        lastName = "Company Settings";
+                        return;
+                      }
+
+                      if (lastName == "Company Settings") {
+                        pushSider(<AnotherSider name={"App Settings"} />);
+                        lastName = "App Settings";
+                        return;
+                      }
+
+                      if (lastName == "App Settings") {
+                        pushSider(<AnotherSider name={"Company Settings"} />);
+                        lastName = "Company Settings";
+                        return;
+                      }
+                    }}
+                  >
+                    Add sidebar
+                  </ControlButton>
 
                   <ControlButton inverted>Add drawer</ControlButton>
 
-                  <ControlButton inverted>Pop</ControlButton>
-
-                  <ControlButton inverted>Pop all</ControlButton>
-                </Flex>
-
-                <Flex
-                  flexDirection="column"
-                  minHeight={100}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  dashed
-                  padding={20}
-                  width={400}
-                >
-                  <input
-                    value={0}
-                    placeholder="Sidebar Width"
-                    type="number"
-                    style={{
-                      width: 350,
-                      minHeight: 40,
-                      fontSize: 20,
-                      textAlign: "center",
-                      border: "2px solid rgb(66, 82, 110)",
-                      borderRadius: 5,
-                      outline: "none",
-                      marginBottom: 10,
+                  <ControlButton
+                    inverted
+                    onClick={() => {
+                      popSider();
                     }}
-                  />
+                  >
+                    Pop
+                  </ControlButton>
+
+                  <ControlButton
+                    inverted
+                    onClick={() => {
+                      popSider(0);
+                    }}
+                  >
+                    Pop all
+                  </ControlButton>
                 </Flex>
               </Flex>
             </Content>
