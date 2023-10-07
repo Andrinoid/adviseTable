@@ -1,5 +1,4 @@
 import React from "react";
-import produce from "immer";
 
 import useLayout from "./useLayout";
 
@@ -8,12 +7,7 @@ const useCollapse = () => {
 
   return () => {
     setBackup(siders);
-    setSiders(
-      produce(siders, (draft) => {
-        draft = [];
-        return draft;
-      })
-    );
+    setSiders([]);
   };
 };
 

@@ -20,12 +20,20 @@ import usePushSider from "./hooks/usePushSider";
 import Siders from "./components/Siders";
 import usePopSider from "./hooks/usePopSider";
 import styled from "styled-components";
+import useCollapsed from "./hooks/useCollapsed";
+import useCollapse from "./hooks/useCollapse";
+import useExpand from "./hooks/useExpand";
+import useLayout from "./hooks/useLayout";
 var lastName = "";
 
 export default function Example() {
   const [reverse, setReverse] = useState(false);
   const pushSider = usePushSider();
   const popSider = usePopSider();
+  const collapsed = useCollapsed();
+  const collapse = useCollapse();
+  const expand = useExpand();
+  const { siders } = useLayout();
 
   return (
     <div className="container">
@@ -69,8 +77,16 @@ export default function Example() {
 
           <Layout vertical>
             <Header style={reverse ? { justifyContent: "flex-end" } : {}}>
-              <MenuButton>
-                <MenuIcon />
+              <MenuButton
+                onClick={() => {
+                  if (collapsed) {
+                    expand();
+                  } else {
+                    collapse();
+                  }
+                }}
+              >
+                <MenuIcon collapsed={collapsed} />
               </MenuButton>
             </Header>
             <Content>
@@ -236,7 +252,6 @@ const AnotherSider = ({ name, index }) => {
           <p>{name}</p>
           <CloseBtn
             onClick={() => {
-              console.log(index);
               popSider(index);
             }}
           >

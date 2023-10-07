@@ -7,13 +7,9 @@ const useExpand = () => {
   const { setBackup, setSiders, backup } = useLayout();
 
   return () => {
+    setSiders(backup);
+
     setBackup([]);
-    setSiders(
-      produce(backup, (draft) => {
-        draft = [];
-        return draft;
-      })
-    );
   };
 };
 
