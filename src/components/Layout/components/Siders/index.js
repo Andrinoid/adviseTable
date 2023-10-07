@@ -6,8 +6,8 @@ const Siders = ({ children }) => {
   const { siders } = useLayout();
 
   const transition = {
-    stiffness: 10,
-    duration: 0.025,
+    stiffness: 100,
+    duration: 0.03,
   };
 
   return (
@@ -18,9 +18,9 @@ const Siders = ({ children }) => {
           <motion.div
             key={siderIndex}
             transition={transition}
-            initial={{ x: -50, opacity: 0 }}
+            initial={{ x: -15, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -50, opacity: 0 }}
+            exit={{ x: -15, opacity: 0 }}
           >
             {sider[sider.length - 1](siderIndex)}
           </motion.div>
