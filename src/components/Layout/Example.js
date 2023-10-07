@@ -33,7 +33,7 @@ export default function Example() {
   const collapsed = useCollapsed();
   const collapse = useCollapse();
   const expand = useExpand();
-  const { siders } = useLayout();
+  const { siders, backup } = useLayout();
 
   return (
     <div className="container">
@@ -77,17 +77,19 @@ export default function Example() {
 
           <Layout vertical>
             <Header style={reverse ? { justifyContent: "flex-end" } : {}}>
-              <MenuButton
-                onClick={() => {
-                  if (collapsed) {
-                    expand();
-                  } else {
-                    collapse();
-                  }
-                }}
-              >
-                <MenuIcon collapsed={collapsed} />
-              </MenuButton>
+              {siders.length > 0 || backup.length > 0 ? (
+                <MenuButton
+                  onClick={() => {
+                    if (collapsed) {
+                      expand();
+                    } else {
+                      collapse();
+                    }
+                  }}
+                >
+                  <MenuIcon collapsed={reverse ? !collapsed : collapsed} />
+                </MenuButton>
+              ) : null}
             </Header>
             <Content>
               <Flex
