@@ -8,8 +8,8 @@ const Siders = ({ children }) => {
     <>
       {children}
 
-      {siders.map((sider) => {
-        return <>{sider}</>;
+      {siders.map((sider, siderIndex) => {
+        return <>{sider[sider.length - 1](siderIndex)}</>;
       })}
     </>
   );

@@ -19,6 +19,7 @@ import MenuIcon from "../../icons/MenuIcon";
 import usePushSider from "./hooks/usePushSider";
 import Siders from "./components/Siders";
 import usePopSider from "./hooks/usePopSider";
+import styled from "styled-components";
 var lastName = "";
 
 export default function Example() {
@@ -46,7 +47,9 @@ export default function Example() {
 
               <SiderItem
                 onClick={() => {
-                  pushSider(<AnotherSider name="Company Settings" />);
+                  pushSider((index) => (
+                    <AnotherSider index={index} name="Company Settings" />
+                  ));
                 }}
               >
                 <img src={process.env.PUBLIC_URL + "/home.svg"} />
@@ -54,7 +57,9 @@ export default function Example() {
 
               <SiderItem
                 onClick={() => {
-                  pushSider(<AnotherSider name="App Settings" />);
+                  pushSider((index) => (
+                    <AnotherSider index={index} name="App Settings" />
+                  ));
                 }}
               >
                 <img src={process.env.PUBLIC_URL + "/gear.svg"} />
@@ -131,22 +136,36 @@ export default function Example() {
                   <ControlButton
                     inverted
                     onClick={() => {
-                      console.log(lastName);
                       if (lastName == "") {
-                        pushSider(<AnotherSider name={"Company Settings"} />);
+                        pushSider((index) => (
+                          <AnotherSider
+                            index={index}
+                            name={"Company Settings"}
+                          />
+                        ));
                         lastName = "Company Settings";
+
                         return;
                       }
 
                       if (lastName == "Company Settings") {
-                        pushSider(<AnotherSider name={"App Settings"} />);
+                        pushSider((index) => (
+                          <AnotherSider index={index} name={"App Settings"} />
+                        ));
                         lastName = "App Settings";
+
                         return;
                       }
 
                       if (lastName == "App Settings") {
-                        pushSider(<AnotherSider name={"Company Settings"} />);
+                        pushSider((index) => (
+                          <AnotherSider
+                            index={index}
+                            name={"Company Settings"}
+                          />
+                        ));
                         lastName = "Company Settings";
+
                         return;
                       }
                     }}
@@ -201,11 +220,29 @@ export default function Example() {
   );
 }
 
-const AnotherSider = ({ name }) => {
+const AnotherSider = ({ name, index }) => {
+  const popSider = usePopSider();
   return (
     <Sider width={250} borderLeft={0} resizeable>
       <SiderTop padding={12}>
-        <p>{name}</p>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <p>{name}</p>
+          <CloseBtn
+            onClick={() => {
+              console.log(index);
+              popSider(index);
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/cross.svg"} />
+          </CloseBtn>
+        </div>
       </SiderTop>
 
       <SiderItem>
@@ -218,3 +255,29 @@ const AnotherSider = ({ name }) => {
     </Sider>
   );
 };
+
+const CloseBtn = styled.div`
+  border: none;
+  outline: 0px;
+  user-select: none;
+  margin-left: auto;
+  padding: 0px;
+  font-family: inherit;
+  font-size: 11px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  border-radius: 2px;
+  color: rgb(171, 171, 171);
+  box-sizing: border-box;
+  box-shadow: none;
+  align-self: center;
+  width: 24px;
+  cursor: pointer;
+  background: transparent;
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+`;
