@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { Container } from "./styles";
 import Resizable from "./Resizeable";
+import useLayout from "../../hooks/useLayout";
 
 const Sider = ({
   children,
@@ -11,10 +12,17 @@ const Sider = ({
   resizeable = false,
   ...rest
 }) => {
+  const { reverse } = useLayout();
+
   if (resizeable) {
     return (
-      <Resizable initialWidth={width}>
-        <Container {...rest} width={"100%"}>
+      <Resizable initialWidth={width} right={reverse}>
+        <Container
+          {...rest}
+          borderLeftWidth={!reverse ? 0 : 1}
+          borderRightWidth={reverse ? 0 : 1}
+          width={"100%"}
+        >
           {children}
         </Container>
       </Resizable>
@@ -32,6 +40,7 @@ Sider.propTypes = {
   width: PropTypes.number,
   resizeable: PropTypes.bool,
   borderLeft: PropTypes.number,
+  siderPosition: PropTypes.string,
 };
 
 export default Sider;

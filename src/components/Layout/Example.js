@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./components/Layout";
 import Sider from "./components/Sider";
 import Header from "./components/Header";
@@ -22,13 +22,14 @@ import usePopSider from "./hooks/usePopSider";
 var lastName = "";
 
 export default function Example() {
+  const [reverse, setReverse] = useState(false);
   const pushSider = usePushSider();
   const popSider = usePopSider();
 
   return (
     <div className="container">
       <Layout vertical>
-        <Layout>
+        <Layout reverse={reverse}>
           <Siders>
             <Sider>
               <SiderTop padding={12}>
@@ -62,7 +63,7 @@ export default function Example() {
           </Siders>
 
           <Layout vertical>
-            <Header>
+            <Header style={reverse ? { justifyContent: "flex-end" } : {}}>
               <MenuButton>
                 <MenuIcon />
               </MenuButton>
@@ -171,6 +172,15 @@ export default function Example() {
                     }}
                   >
                     Pop all
+                  </ControlButton>
+
+                  <ControlButton
+                    inverted
+                    onClick={() => {
+                      setReverse((value) => !value);
+                    }}
+                  >
+                    Reverse
                   </ControlButton>
                 </Flex>
               </Flex>

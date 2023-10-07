@@ -17,7 +17,13 @@ const Container = styled.div`
 const Handle = styled.div`
   position: absolute;
   top: 0;
-  right: 0;
+  ${({ right }) => {
+    if (right) {
+      return "left: 0;";
+    } else {
+      return "right: 0;";
+    }
+  }}
   width: 4px;
   height: 100%;
   cursor: col-resize;
@@ -31,10 +37,13 @@ const Handle = styled.div`
 `;
 
 const ResizableContainer = React.forwardRef(
-  (
-    { children, initialWidth = 320, minWidth = 0, maxWidth = Infinity },
-    ref
-  ) => {
+  ({
+    children,
+    right,
+    initialWidth = 320,
+    minWidth = 0,
+    maxWidth = Infinity,
+  }) => {
     const containerRef = useRef(null);
     const handleRef = useRef(null);
     const prevClientXRef = useRef(null);
@@ -72,7 +81,7 @@ const ResizableContainer = React.forwardRef(
       }
 
       const dx = e.clientX - x;
-      let newWidth = w + dx;
+      let newWidth = right ? w - dx : w + dx;
 
       prevClientXRef.current = e.clientX;
 
@@ -118,6 +127,7 @@ const ResizableContainer = React.forwardRef(
         isResizing={isResizing}
       >
         {children}
+
         <Handle
           onMouseDown={mouseDownHandler}
           onMouseEnter={() => handleMouseEvents(true)}
@@ -125,6 +135,7 @@ const ResizableContainer = React.forwardRef(
           onDoubleClick={handleDoubleClick}
           hoverActive={hoverActive}
           ref={handleRef}
+          right={right}
         />
       </Container>
     );

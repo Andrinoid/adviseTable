@@ -3,7 +3,7 @@ import useLayout from "./useLayout";
 import produce from "immer";
 
 const usePopSider = () => {
-  const [siders, setSiders] = useLayout();
+  const { siders, setSiders } = useLayout();
 
   return (index) => {
     setSiders(

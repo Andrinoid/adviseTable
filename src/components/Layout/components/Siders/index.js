@@ -2,7 +2,8 @@ import React from "react";
 import useLayout from "../../hooks/useLayout";
 
 const Siders = ({ children }) => {
-  const [siders] = useLayout();
+  const { siders } = useLayout();
+
   return (
     <>
       {children}
