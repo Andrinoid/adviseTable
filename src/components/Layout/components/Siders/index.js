@@ -3,11 +3,10 @@ import useLayout from "../../hooks/useLayout";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Siders = ({ children }) => {
-  const { siders } = useLayout();
+  const { siders, reverse } = useLayout();
 
   const transition = {
-    stiffness: 100,
-    duration: 0.03,
+    duration: 0.1,
   };
 
   return (
@@ -26,9 +25,10 @@ const Siders = ({ children }) => {
           return (
             <motion.div
               key={`${siderIndex}`}
-              transition={transition}
-              initial={{ x: -15, opacity: 0 }}
+              transition={{ ...transition, ease: "easeIn" }}
+              initial={{ x: reverse ? 500 : -500, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
+              exit={{ x: reverse ? 500 : -500, opacity: 0 }}
               style={{ position: "relative" }}
             >
               {/* These code here ensures that when stacking, the stacked element
