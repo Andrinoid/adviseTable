@@ -16,13 +16,26 @@ const Siders = ({ children }) => {
       <AnimatePresence>
         {siders.map((sider, siderIndex) => (
           <motion.div
-            key={siderIndex}
+            key={`${siderIndex}`}
             transition={transition}
             initial={{ x: -15, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -15, opacity: 0 }}
           >
-            {sider[sider.length - 1](siderIndex)}
+            {sider.length > 1 ? (
+              <motion.div
+                key={`${sider.length - 1}`}
+                transition={{ ...transition, duration: 0.5 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={{ height: "100%" }}
+              >
+                {sider[sider.length - 1](siderIndex)}
+              </motion.div>
+            ) : (
+              sider[sider.length - 1](siderIndex)
+            )}
           </motion.div>
         ))}
       </AnimatePresence>
