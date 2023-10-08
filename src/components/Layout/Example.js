@@ -24,7 +24,8 @@ import useCollapsed from "./hooks/useCollapsed";
 import useCollapse from "./hooks/useCollapse";
 import useExpand from "./hooks/useExpand";
 import useLayout from "./hooks/useLayout";
-import useStackSider from "./hooks/useStackSider";
+import useStackPush from "./hooks/useStackPush";
+import useStackPop from "./hooks/useStackPop";
 var lastName = "";
 
 export default function Example() {
@@ -35,7 +36,8 @@ export default function Example() {
   const collapse = useCollapse();
   const expand = useExpand();
   const { siders, backup } = useLayout();
-  const stackSider = useStackSider();
+  const stackPush = useStackPush();
+  const stackPop = useStackPop();
 
   const [siderIndex, setSiderIndex] = useState(-1);
 
@@ -139,14 +141,19 @@ export default function Example() {
                     <ControlButton
                       inverted
                       onClick={() => {
-                        stackSider(siderIndex, (index) => (
+                        stackPush(siderIndex, (index) => (
                           <AnotherSider index={index} name={"Random name"} />
                         ));
                       }}
                     >
                       Push on sidebar {siderIndex}
                     </ControlButton>
-                    <ControlButton inverted onClick={() => {}}>
+                    <ControlButton
+                      inverted
+                      onClick={() => {
+                        stackPop(siderIndex);
+                      }}
+                    >
                       Pop on sidebar {siderIndex}
                     </ControlButton>
                   </Flex>

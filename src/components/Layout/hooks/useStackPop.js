@@ -3,14 +3,14 @@ import { produce } from "immer";
 
 import useLayout from "./useLayout";
 
-const useStackSider = () => {
+const useStackPop = () => {
   const { siders, setSiders } = useLayout();
 
-  return (index, component) => {
-    if (siders[index]) {
+  return (index) => {
+    if (siders[index] && siders[index].length > 1) {
       setSiders(
         produce(siders, (draft) => {
-          draft[index].push(component);
+          draft[index].pop();
 
           return draft;
         })
@@ -19,4 +19,4 @@ const useStackSider = () => {
   };
 };
 
-export default useStackSider;
+export default useStackPop;
