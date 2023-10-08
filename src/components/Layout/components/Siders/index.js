@@ -40,7 +40,7 @@ const Siders = ({ children }) => {
                 key={`${sider.length - 1}`}
                 transition={
                   containsPrevious
-                    ? { ...transition, duration: 0.3 }
+                    ? { ...transition, duration: 0.1 }
                     : transition
                 }
                 initial={{ opacity: 0 }}
