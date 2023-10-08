@@ -142,7 +142,10 @@ export default function Example() {
                       inverted
                       onClick={() => {
                         stackPush(siderIndex, (index) => (
-                          <AnotherSider index={index} name={"Random name"} />
+                          <AnotherSider
+                            index={index}
+                            name={`Random ${Math.random()}`}
+                          />
                         ));
                       }}
                     >

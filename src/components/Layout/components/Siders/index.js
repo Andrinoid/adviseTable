@@ -14,30 +14,49 @@ const Siders = ({ children }) => {
     <>
       {children}
       <AnimatePresence>
-        {siders.map((sider, siderIndex) => (
-          <motion.div
-            key={`${siderIndex}`}
-            transition={transition}
-            initial={{ x: -15, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -15, opacity: 0 }}
-          >
-            {sider.length > 1 ? (
+        {siders.map((sider, siderIndex) => {
+          const containsPrevious = sider.length > 1;
+
+          const previous = containsPrevious
+            ? sider[sider.length - 2](siderIndex)
+            : null;
+
+          const current = sider[sider.length - 1](siderIndex);
+
+          return (
+            <motion.div
+              key={`${siderIndex}`}
+              transition={transition}
+              initial={{ x: -15, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              style={{ position: "relative" }}
+            >
+              {/* These code here ensures that when stacking, the stacked element
+            kindof fadein overlaying the previous element. But these doesnt happens
+            when adding a siderbar, only when stacking on the sidebar */}
+              {previous}
+
               <motion.div
                 key={`${sider.length - 1}`}
-                transition={{ ...transition, duration: 0.5 }}
+                transition={
+                  containsPrevious
+                    ? { ...transition, duration: 0.3 }
+                    : transition
+                }
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                style={{ height: "100%" }}
+                style={
+                  containsPrevious
+                    ? { height: "100%", position: "absolute", left: 0, top: 0 }
+                    : { height: "100%" }
+                }
               >
-                {sider[sider.length - 1](siderIndex)}
+                {current}
               </motion.div>
-            ) : (
-              sider[sider.length - 1](siderIndex)
-            )}
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </AnimatePresence>
     </>
   );
