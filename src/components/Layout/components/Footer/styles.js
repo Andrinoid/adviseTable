@@ -26,3 +26,7 @@ export const PaddingBottom = styled.div`
     }
   }}
 `;
+
+export const PositionRelative = styled.div`
+  position: relative;
+`;

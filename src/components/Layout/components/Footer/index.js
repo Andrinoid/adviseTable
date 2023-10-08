@@ -1,11 +1,13 @@
 import React from "react";
-import { Container, PaddingBottom } from "./styles";
+import { Container, PaddingBottom, PositionRelative } from "./styles";
 
 const Footer = ({ children, ...rest }) => {
   return (
-    <PaddingBottom>
-      <Container {...rest}>{children}</Container>
-    </PaddingBottom>
+    <PositionRelative>
+      <PaddingBottom>
+        <Container {...rest}>{children}</Container>
+      </PaddingBottom>
+    </PositionRelative>
   );
 };
 
