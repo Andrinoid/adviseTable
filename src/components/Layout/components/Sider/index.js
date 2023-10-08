@@ -40,7 +40,6 @@ Sider.propTypes = {
   width: PropTypes.number,
   resizeable: PropTypes.bool,
   borderLeft: PropTypes.number,
-  siderPosition: PropTypes.string,
 };
 
 export default Sider;

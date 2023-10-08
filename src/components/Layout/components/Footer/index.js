@@ -1,14 +1,8 @@
 import React from "react";
-import { Container, PaddingBottom, PositionRelative } from "./styles";
+import { Container } from "./styles";
 
 const Footer = ({ children, ...rest }) => {
-  return (
-    <PositionRelative>
-      <PaddingBottom>
-        <Container {...rest}>{children}</Container>
-      </PaddingBottom>
-    </PositionRelative>
-  );
+  return <Container {...rest}>{children}</Container>;
 };
 
 export default Footer;

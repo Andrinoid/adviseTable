@@ -18,7 +18,9 @@ const Layout = ({ children, reverse, ...rest }) => {
 };
 
 Layout.propTypes = {
+  children: PropTypes.node.isRequired,
   vertical: PropTypes.bool,
+  reverse: PropTypes.bool,
 };
 
 export default Layout;

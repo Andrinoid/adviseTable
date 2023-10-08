@@ -9,24 +9,12 @@ export const Container = styled.div`
   left: 0;
   right: 0;
   z-index: 1000;
+  padding-bottom: 38px;
+  position: relative;
 
   ${({ height }) => {
     if (height) {
       return `height: ${height}px;`;
     }
   }}
-`;
-
-export const PaddingBottom = styled.div`
-  padding-bottom: 38px;
-
-  ${({ height }) => {
-    if (height) {
-      return `padding-bottom: ${height}px;`;
-    }
-  }}
-`;
-
-export const PositionRelative = styled.div`
-  position: relative;
 `;

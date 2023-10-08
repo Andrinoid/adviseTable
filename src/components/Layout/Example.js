@@ -280,7 +280,7 @@ const AnotherSider = ({ name, index }) => {
             alignItems: "center",
           }}
         >
-          <p>{name}</p>
+          <b>{name}</b>
           <CloseBtn
             onClick={() => {
               popSider(index);

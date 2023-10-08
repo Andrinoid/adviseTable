@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
   position: relative;
@@ -141,5 +142,13 @@ const ResizableContainer = React.forwardRef(
     );
   }
 );
+
+ResizableContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+  right: PropTypes.bool,
+  initialWidth: PropTypes.number,
+  minWidth: PropTypes.number,
+  maxWidth: PropTypes.number,
+};
 
 export default ResizableContainer;
