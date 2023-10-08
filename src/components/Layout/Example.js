@@ -24,6 +24,7 @@ import useCollapsed from "./hooks/useCollapsed";
 import useCollapse from "./hooks/useCollapse";
 import useExpand from "./hooks/useExpand";
 import useLayout from "./hooks/useLayout";
+import useStackSider from "./hooks/useStackSider";
 var lastName = "";
 
 export default function Example() {
@@ -34,6 +35,9 @@ export default function Example() {
   const collapse = useCollapse();
   const expand = useExpand();
   const { siders, backup } = useLayout();
+  const stackSider = useStackSider();
+
+  const [siderIndex, setSiderIndex] = useState(-1);
 
   return (
     <div className="container">
@@ -108,7 +112,12 @@ export default function Example() {
                 >
                   <input
                     type="number"
-                    value={0}
+                    value={siderIndex}
+                    onChange={(e) => {
+                      if (e.target.value < siders.length) {
+                        setSiderIndex(e.target.value);
+                      }
+                    }}
                     style={{
                       width: 350,
                       minHeight: 40,
@@ -127,9 +136,18 @@ export default function Example() {
                       marginBottom: 20,
                     }}
                   >
-                    <ControlButton inverted>Push on sidebar {0}</ControlButton>
+                    <ControlButton
+                      inverted
+                      onClick={() => {
+                        stackSider(siderIndex, (index) => (
+                          <AnotherSider index={index} name={"Random name"} />
+                        ));
+                      }}
+                    >
+                      Push on sidebar {siderIndex}
+                    </ControlButton>
                     <ControlButton inverted onClick={() => {}}>
-                      Pop on sidebar {0}
+                      Pop on sidebar {siderIndex}
                     </ControlButton>
                   </Flex>
 
@@ -140,7 +158,8 @@ export default function Example() {
                       color: "rgb(66, 82, 110)",
                     }}
                   >
-                    sidebar {0} stack size {0}
+                    sidebar {siderIndex} stack size{" "}
+                    {siders[siderIndex] ? siders[siderIndex].length : 0}
                   </span>
                 </Flex>
 
