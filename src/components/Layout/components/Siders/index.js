@@ -28,6 +28,7 @@ const Siders = ({ children }) => {
               transition={{ ...transition, ease: "easeIn" }}
               initial={{ x: reverse ? 50 : -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
+              exit={{ x: reverse ? 50 : -50, opacity: 0 }}
               style={{ position: "relative" }}
             >
               {/* These code here ensures that when stacking, the stacked element
@@ -44,7 +45,7 @@ const Siders = ({ children }) => {
                 }
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                // exit={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
                 style={
                   containsPrevious
                     ? { height: "100%", position: "absolute", left: 0, top: 0 }
