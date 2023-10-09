@@ -4,12 +4,14 @@ import { produce } from "immer";
 import useLayout from "./useLayout";
 
 const usePushSider = () => {
-  const { siders, setSiders } = useLayout();
+  const { siders, setSiders, setDrawers } = useLayout();
 
   return (value) => {
     setSiders(
       produce(siders, (draft) => {
         draft = [...draft, [value]];
+
+        setDrawers([]);
 
         return draft;
       })

@@ -26,6 +26,8 @@ import useExpand from "./hooks/useExpand";
 import useLayout from "./hooks/useLayout";
 import useStackPush from "./hooks/useStackPush";
 import useStackPop from "./hooks/useStackPop";
+import usePushDrawer from "./hooks/usePushDrawer";
+import usePopDrawer from "./hooks/usePopDrawer";
 var lastName = "";
 
 export default function Example() {
@@ -38,6 +40,8 @@ export default function Example() {
   const { siders, backup } = useLayout();
   const stackPush = useStackPush();
   const stackPop = useStackPop();
+  const pushDrawer = usePushDrawer();
+  const popDrawer = usePopDrawer();
 
   const [siderIndex, setSiderIndex] = useState(-1);
 
@@ -220,7 +224,14 @@ export default function Example() {
                     Add sidebar
                   </ControlButton>
 
-                  <ControlButton inverted>Add drawer</ControlButton>
+                  <ControlButton
+                    inverted
+                    onClick={() => {
+                      pushDrawer(<AnotherDrawer name="Drawer Settings" />);
+                    }}
+                  >
+                    Add drawer
+                  </ControlButton>
 
                   <ControlButton
                     inverted
@@ -299,6 +310,41 @@ const AnotherSider = ({ name, index }) => {
         <p>Settings</p>
       </SiderItem>
     </Sider>
+  );
+};
+
+const AnotherDrawer = ({ name, index }) => {
+  const popDrawer = usePopDrawer();
+  return (
+    <div style={{ width: "100%", height: "100%" }}>
+      <SiderTop padding={12}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <b>{name}</b>
+          <CloseBtn
+            onClick={() => {
+              popDrawer();
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/cross.svg"} />
+          </CloseBtn>
+        </div>
+      </SiderTop>
+
+      <SiderItem>
+        <p>Home</p>
+      </SiderItem>
+
+      <SiderItem>
+        <p>Settings</p>
+      </SiderItem>
+    </div>
   );
 };
 
