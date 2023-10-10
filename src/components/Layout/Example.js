@@ -20,7 +20,6 @@ import {
 import MenuIcon from "../../icons/MenuIcon";
 import usePushSider from "./hooks/usePushSider";
 import Siders from "./components/Siders";
-import usePopSider from "./hooks/usePopSider";
 import styled from "styled-components";
 import useCollapsed from "./hooks/useCollapsed";
 import useCollapse from "./hooks/useCollapse";
@@ -30,12 +29,13 @@ import useStackPush from "./hooks/useStackPush";
 import useStackPop from "./hooks/useStackPop";
 import usePushDrawer from "./hooks/usePushDrawer";
 import usePopDrawer from "./hooks/usePopDrawer";
+
 var lastName = "";
 
 export default function Example() {
   const [reverse, setReverse] = useState(false);
   const pushSider = usePushSider();
-  const popSider = usePopSider();
+  const popSider = usePopDrawer();
   const collapsed = useCollapsed();
   const collapse = useCollapse();
   const expand = useExpand();
@@ -81,9 +81,7 @@ export default function Example() {
                 </Link>
                 <SiderItem
                   onClick={() => {
-                    pushSider((index) => (
-                      <AnotherSider index={index} name="App Settings" />
-                    ));
+                    pushSider((index) => <ManageCompany index={index} />);
                   }}
                 >
                   <img src={process.env.PUBLIC_URL + "/gear.svg"} />
@@ -152,7 +150,7 @@ export default function Example() {
                         inverted
                         onClick={() => {
                           stackPush(siderIndex, (index) => (
-                            <AnotherSider
+                            <Navbar
                               index={index}
                               name={`Random ${Math.random()}`}
                             />
@@ -195,10 +193,7 @@ export default function Example() {
                       onClick={() => {
                         if (lastName == "") {
                           pushSider((index) => (
-                            <AnotherSider
-                              index={index}
-                              name={"Company Settings"}
-                            />
+                            <Navbar index={index} name={"Company Settings"} />
                           ));
                           lastName = "Company Settings";
 
@@ -207,7 +202,7 @@ export default function Example() {
 
                         if (lastName == "Company Settings") {
                           pushSider((index) => (
-                            <AnotherSider index={index} name={"App Settings"} />
+                            <Navbar index={index} name={"App Settings"} />
                           ));
                           lastName = "App Settings";
 
@@ -216,10 +211,7 @@ export default function Example() {
 
                         if (lastName == "App Settings") {
                           pushSider((index) => (
-                            <AnotherSider
-                              index={index}
-                              name={"Company Settings"}
-                            />
+                            <Navbar index={index} name={"Company Settings"} />
                           ));
                           lastName = "Company Settings";
 
@@ -233,7 +225,7 @@ export default function Example() {
                     <ControlButton
                       inverted
                       onClick={() => {
-                        pushDrawer(<AnotherDrawer name="Drawer Settings" />);
+                        pushDrawer(<Drawer name="Drawer Settings" />);
                       }}
                     >
                       Add drawer
@@ -294,8 +286,9 @@ export default function Example() {
   );
 }
 
-const AnotherSider = ({ name, index }) => {
-  const popSider = usePopSider();
+const Navbar = ({ name, index }) => {
+  const popSider = usePopDrawer();
+
   return (
     <Sider width={250} borderLeft={0} resizeable>
       <SiderTop padding={12}>
@@ -329,7 +322,7 @@ const AnotherSider = ({ name, index }) => {
   );
 };
 
-const AnotherDrawer = ({ name, index }) => {
+const Drawer = ({ name }) => {
   const popDrawer = usePopDrawer();
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -361,6 +354,61 @@ const AnotherDrawer = ({ name, index }) => {
         <p>Settings</p>
       </SiderItem>
     </div>
+  );
+};
+
+const ManageCompany = ({ index }) => {
+  const popSider = usePopDrawer();
+  const pushDrawer = usePushDrawer();
+
+  return (
+    <Sider width={250} borderLeft={0} resizeable>
+      <SiderTop padding={12}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <b>Manage company</b>
+          </div>
+          <CloseBtn
+            onClick={() => {
+              popSider(index);
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/cross.svg"} />
+          </CloseBtn>
+        </div>
+      </SiderTop>
+
+      <SiderItem
+        onClick={() => {
+          pushDrawer(<Drawer name={"Company Profile"} />);
+        }}
+      >
+        <p>Company Profile</p>
+      </SiderItem>
+
+      <SiderItem
+        onClick={() => {
+          pushDrawer(<Drawer name={"User & Permissions"} />);
+        }}
+      >
+        <p>User & Permissions</p>
+      </SiderItem>
+
+      <SiderItem
+        onClick={() => {
+          pushDrawer(<Drawer name={"Invitation Center"} />);
+        }}
+      >
+        <p>Invitation Center</p>
+      </SiderItem>
+    </Sider>
   );
 };
 
