@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import Layout from "./components/Layout";
 import Sider from "./components/Sider";
 import Header from "./components/Header";
@@ -47,233 +49,247 @@ export default function Example() {
 
   return (
     <div className="container">
-      <Layout vertical>
-        <Layout reverse={reverse}>
-          <Siders>
-            <Sider>
-              <SiderTop padding={12}>
-                <img
-                  src={process.env.PUBLIC_URL + "/advise.png"}
-                  alt="Logo"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    maxWidth: 60,
-                  }}
-                />
-              </SiderTop>
+      <Router>
+        <Layout vertical>
+          <Layout reverse={reverse}>
+            <Siders>
+              <Sider>
+                <SiderTop padding={12}>
+                  <Link to={`/`}>
+                    <img
+                      src={process.env.PUBLIC_URL + "/advise.png"}
+                      alt="Logo"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxWidth: 60,
+                      }}
+                    />
+                  </Link>
+                </SiderTop>
 
-              <SiderItem
-                onClick={() => {
-                  pushSider((index) => (
-                    <AnotherSider index={index} name="Company Settings" />
-                  ));
-                }}
-              >
-                <img src={process.env.PUBLIC_URL + "/home.svg"} />
-              </SiderItem>
-
-              <SiderItem
-                onClick={() => {
-                  pushSider((index) => (
-                    <AnotherSider index={index} name="App Settings" />
-                  ));
-                }}
-              >
-                <img src={process.env.PUBLIC_URL + "/gear.svg"} />
-              </SiderItem>
-            </Sider>
-          </Siders>
-
-          <Layout vertical>
-            <Header style={reverse ? { justifyContent: "flex-end" } : {}}>
-              {siders.length > 0 || backup.length > 0 ? (
-                <MenuButton
-                  onClick={() => {
-                    if (collapsed) {
-                      expand();
-                    } else {
-                      collapse();
-                    }
-                  }}
-                >
-                  <MenuIcon collapsed={reverse ? !collapsed : collapsed} />
-                </MenuButton>
-              ) : null}
-            </Header>
-            <Content>
-              <Flex
-                justifyContent="center"
-                alignItems="center"
-                flexDirection="column"
-              >
-                <Flex
-                  flexDirection="column"
-                  minHeight={100}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  dashed
-                  padding={20}
-                  width={400}
-                >
-                  <input
-                    type="number"
-                    value={siderIndex}
-                    onChange={(e) => {
-                      if (e.target.value < siders.length) {
-                        setSiderIndex(e.target.value);
-                      }
-                    }}
-                    style={{
-                      width: 350,
-                      minHeight: 40,
-                      fontSize: 20,
-                      textAlign: "center",
-                      border: "2px solid rgb(66, 82, 110)",
-                      borderRadius: 5,
-                      outline: "none",
-                      marginBottom: 10,
-                    }}
-                  />
-                  <Flex
-                    justifyContent="space-around"
-                    style={{
-                      width: 350,
-                      marginBottom: 20,
+                <Link to={`/overview`}>
+                  <SiderItem
+                    onClick={() => {
+                      // pushSider((index) => (
+                      //   <AnotherSider index={index} name="Company Settings" />
+                      // ));
                     }}
                   >
-                    <ControlButton
-                      inverted
-                      onClick={() => {
-                        stackPush(siderIndex, (index) => (
-                          <AnotherSider
-                            index={index}
-                            name={`Random ${Math.random()}`}
-                          />
-                        ));
+                    <img src={process.env.PUBLIC_URL + "/home.svg"} />
+                  </SiderItem>
+                </Link>
+                <SiderItem
+                  onClick={() => {
+                    pushSider((index) => (
+                      <AnotherSider index={index} name="App Settings" />
+                    ));
+                  }}
+                >
+                  <img src={process.env.PUBLIC_URL + "/gear.svg"} />
+                </SiderItem>
+              </Sider>
+            </Siders>
+
+            <Layout vertical>
+              <Header style={reverse ? { justifyContent: "flex-end" } : {}}>
+                {siders.length > 0 || backup.length > 0 ? (
+                  <MenuButton
+                    onClick={() => {
+                      if (collapsed) {
+                        expand();
+                      } else {
+                        collapse();
+                      }
+                    }}
+                  >
+                    <MenuIcon collapsed={reverse ? !collapsed : collapsed} />
+                  </MenuButton>
+                ) : null}
+              </Header>
+              <Content>
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="column"
+                >
+                  <Flex
+                    flexDirection="column"
+                    minHeight={100}
+                    justifyContent="space-between"
+                    alignItems="center"
+                    dashed
+                    padding={20}
+                    width={400}
+                  >
+                    <input
+                      type="number"
+                      value={siderIndex}
+                      onChange={(e) => {
+                        if (e.target.value < siders.length) {
+                          setSiderIndex(e.target.value);
+                        }
+                      }}
+                      style={{
+                        width: 350,
+                        minHeight: 40,
+                        fontSize: 20,
+                        textAlign: "center",
+                        border: "2px solid rgb(66, 82, 110)",
+                        borderRadius: 5,
+                        outline: "none",
+                        marginBottom: 10,
+                      }}
+                    />
+                    <Flex
+                      justifyContent="space-around"
+                      style={{
+                        width: 350,
+                        marginBottom: 20,
                       }}
                     >
-                      Push on sidebar {siderIndex}
-                    </ControlButton>
-                    <ControlButton
-                      inverted
-                      onClick={() => {
-                        stackPop(siderIndex);
+                      <ControlButton
+                        inverted
+                        onClick={() => {
+                          stackPush(siderIndex, (index) => (
+                            <AnotherSider
+                              index={index}
+                              name={`Random ${Math.random()}`}
+                            />
+                          ));
+                        }}
+                      >
+                        Push on sidebar {siderIndex}
+                      </ControlButton>
+                      <ControlButton
+                        inverted
+                        onClick={() => {
+                          stackPop(siderIndex);
+                        }}
+                      >
+                        Pop on sidebar {siderIndex}
+                      </ControlButton>
+                    </Flex>
+
+                    <span
+                      style={{
+                        textTransform: "uppercase",
+                        fontWeight: "bold",
+                        color: "rgb(66, 82, 110)",
                       }}
                     >
-                      Pop on sidebar {siderIndex}
-                    </ControlButton>
+                      sidebar {siderIndex} stack size{" "}
+                      {siders[siderIndex] ? siders[siderIndex].length : 0}
+                    </span>
                   </Flex>
 
-                  <span
-                    style={{
-                      textTransform: "uppercase",
-                      fontWeight: "bold",
-                      color: "rgb(66, 82, 110)",
-                    }}
+                  <Flex
+                    dashed
+                    padding={20}
+                    width={400}
+                    style={{ marginTop: 10 }}
+                    justifyContent="space-between"
                   >
-                    sidebar {siderIndex} stack size{" "}
-                    {siders[siderIndex] ? siders[siderIndex].length : 0}
-                  </span>
+                    <ControlButton
+                      inverted
+                      onClick={() => {
+                        if (lastName == "") {
+                          pushSider((index) => (
+                            <AnotherSider
+                              index={index}
+                              name={"Company Settings"}
+                            />
+                          ));
+                          lastName = "Company Settings";
+
+                          return;
+                        }
+
+                        if (lastName == "Company Settings") {
+                          pushSider((index) => (
+                            <AnotherSider index={index} name={"App Settings"} />
+                          ));
+                          lastName = "App Settings";
+
+                          return;
+                        }
+
+                        if (lastName == "App Settings") {
+                          pushSider((index) => (
+                            <AnotherSider
+                              index={index}
+                              name={"Company Settings"}
+                            />
+                          ));
+                          lastName = "Company Settings";
+
+                          return;
+                        }
+                      }}
+                    >
+                      Add sidebar
+                    </ControlButton>
+
+                    <ControlButton
+                      inverted
+                      onClick={() => {
+                        pushDrawer(<AnotherDrawer name="Drawer Settings" />);
+                      }}
+                    >
+                      Add drawer
+                    </ControlButton>
+
+                    <ControlButton
+                      inverted
+                      onClick={() => {
+                        popSider();
+                      }}
+                    >
+                      Pop
+                    </ControlButton>
+
+                    <ControlButton
+                      inverted
+                      onClick={() => {
+                        popSider(0);
+                      }}
+                    >
+                      Pop all
+                    </ControlButton>
+
+                    <ControlButton
+                      inverted
+                      onClick={() => {
+                        setReverse((value) => !value);
+                      }}
+                    >
+                      Reverse
+                    </ControlButton>
+                  </Flex>
                 </Flex>
 
-                <Flex
-                  dashed
-                  padding={20}
-                  width={400}
-                  style={{ marginTop: 10 }}
-                  justifyContent="space-between"
-                >
-                  <ControlButton
-                    inverted
-                    onClick={() => {
-                      if (lastName == "") {
-                        pushSider((index) => (
-                          <AnotherSider
-                            index={index}
-                            name={"Company Settings"}
-                          />
-                        ));
-                        lastName = "Company Settings";
-
-                        return;
-                      }
-
-                      if (lastName == "Company Settings") {
-                        pushSider((index) => (
-                          <AnotherSider index={index} name={"App Settings"} />
-                        ));
-                        lastName = "App Settings";
-
-                        return;
-                      }
-
-                      if (lastName == "App Settings") {
-                        pushSider((index) => (
-                          <AnotherSider
-                            index={index}
-                            name={"Company Settings"}
-                          />
-                        ));
-                        lastName = "Company Settings";
-
-                        return;
-                      }
-                    }}
-                  >
-                    Add sidebar
-                  </ControlButton>
-
-                  <ControlButton
-                    inverted
-                    onClick={() => {
-                      pushDrawer(<AnotherDrawer name="Drawer Settings" />);
-                    }}
-                  >
-                    Add drawer
-                  </ControlButton>
-
-                  <ControlButton
-                    inverted
-                    onClick={() => {
-                      popSider();
-                    }}
-                  >
-                    Pop
-                  </ControlButton>
-
-                  <ControlButton
-                    inverted
-                    onClick={() => {
-                      popSider(0);
-                    }}
-                  >
-                    Pop all
-                  </ControlButton>
-
-                  <ControlButton
-                    inverted
-                    onClick={() => {
-                      setReverse((value) => !value);
-                    }}
-                  >
-                    Reverse
-                  </ControlButton>
-                </Flex>
-              </Flex>
-            </Content>
+                <Switch>
+                  <Route path="/overview">
+                    <div>company overview</div>
+                  </Route>
+                  <Route path="/">
+                    <div>initial</div>
+                  </Route>
+                </Switch>
+              </Content>
+            </Layout>
           </Layout>
-        </Layout>
 
-        <Footer>
-          <Tabs>
-            <Tab>Actual</Tab>
-            <Tab>Budget</Tab>
-            <Tab>Comparison</Tab>
-            <Tab>Dashboard</Tab>
-          </Tabs>
-        </Footer>
-      </Layout>
+          <Footer>
+            <Tabs>
+              <Tab>Actual</Tab>
+              <Tab>Budget</Tab>
+              <Tab>Comparison</Tab>
+              <Tab>Dashboard</Tab>
+            </Tabs>
+          </Footer>
+        </Layout>
+      </Router>
     </div>
   );
 }
