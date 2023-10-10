@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -446,11 +446,17 @@ const CloseBtn = styled.div`
 
 const SiderItems = ({ children }) => {
   const [active, setActive] = useState(null);
+  const { drawers } = useLayout();
+
+  useEffect(() => {
+    if (drawers.length == 0) {
+      setActive(null);
+    }
+  }, [drawers]);
 
   return (
     <>
       {React.Children.map(children, (child) => {
-        console.log(child);
         return React.cloneElement(child, {
           onClick: () => {
             setActive(child.props.id);
