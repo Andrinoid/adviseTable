@@ -18,35 +18,22 @@ import {
   ControlButton,
 } from "./styles";
 import MenuIcon from "../../icons/MenuIcon";
-import usePushSider from "./hooks/usePushSider";
+
 import Siders from "./components/Siders";
 import styled from "styled-components";
-import useCollapsed from "./hooks/useCollapsed";
-import useCollapse from "./hooks/useCollapse";
-import useExpand from "./hooks/useExpand";
+
 import useLayout from "./hooks/useLayout";
-import useStackPush from "./hooks/useStackPush";
-import useStackPop from "./hooks/useStackPop";
-import usePushDrawer from "./hooks/usePushDrawer";
-import usePopDrawer from "./hooks/usePopDrawer";
-import usePopSider from "./hooks/usePopSider";
+
 import { uniqueId } from "lodash";
+import useControls from "./hooks";
 
 var lastName = "";
 
 export default function Example() {
   const [reverse, setReverse] = useState(false);
-  const pushSider = usePushSider();
-  const popSider = usePopSider();
-  const collapsed = useCollapsed();
-  const collapse = useCollapse();
-  const expand = useExpand();
-  const { siders, backup } = useLayout();
-  const stackPush = useStackPush();
-  const stackPop = useStackPop();
-  const pushDrawer = usePushDrawer();
-
   const [siderIndex, setSiderIndex] = useState(-1);
+
+  const controls = useControls();
 
   return (
     <div className="container">
@@ -82,7 +69,10 @@ export default function Example() {
                 </Link>
                 <SiderItem
                   onClick={() => {
-                    pushSider((index) => <ManageCompany index={index} />, true);
+                    controls.pushSider(
+                      (index) => <ManageCompany index={index} />,
+                      true
+                    );
                   }}
                 >
                   <img src={process.env.PUBLIC_URL + "/gear.svg"} />
@@ -90,7 +80,10 @@ export default function Example() {
 
                 <SiderItem
                   onClick={() => {
-                    pushSider((index) => <Monitors index={index} />, true);
+                    controls.pushSider(
+                      (index) => <Monitors index={index} />,
+                      true
+                    );
                   }}
                 >
                   <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
@@ -100,7 +93,7 @@ export default function Example() {
 
                 <SiderItem
                   onClick={() => {
-                    pushSider(
+                    controls.pushSider(
                       (index) => (
                         <Navbar name={"Monitor Settings"} index={index} />
                       ),
@@ -118,17 +111,21 @@ export default function Example() {
 
             <Layout vertical>
               <Header style={reverse ? { justifyContent: "flex-end" } : {}}>
-                {siders.length > 0 || backup.length > 0 ? (
+                {controls.siders.length > 0 || controls.backup.length > 0 ? (
                   <MenuButton
                     onClick={() => {
-                      if (collapsed) {
-                        expand();
+                      if (controls.collapsed) {
+                        controls.expand();
                       } else {
-                        collapse();
+                        controls.collapse();
                       }
                     }}
                   >
-                    <MenuIcon collapsed={reverse ? !collapsed : collapsed} />
+                    <MenuIcon
+                      collapsed={
+                        reverse ? !controls.collapsed : controls.collapsed
+                      }
+                    />
                   </MenuButton>
                 ) : null}
               </Header>
@@ -151,7 +148,7 @@ export default function Example() {
                       type="number"
                       value={siderIndex}
                       onChange={(e) => {
-                        if (e.target.value < siders.length) {
+                        if (e.target.value < controls.siders.length) {
                           setSiderIndex(e.target.value);
                         }
                       }}
@@ -176,7 +173,7 @@ export default function Example() {
                       <ControlButton
                         inverted
                         onClick={() => {
-                          stackPush(siderIndex, (index) => (
+                          controls.stackPush(siderIndex, (index) => (
                             <Navbar
                               index={index}
                               name={`Random ${Math.random()}`}
@@ -189,7 +186,7 @@ export default function Example() {
                       <ControlButton
                         inverted
                         onClick={() => {
-                          stackPop(siderIndex);
+                          controls.stackPop(siderIndex);
                         }}
                       >
                         Pop on sidebar {siderIndex}
@@ -204,7 +201,9 @@ export default function Example() {
                       }}
                     >
                       sidebar {siderIndex} stack size{" "}
-                      {siders[siderIndex] ? siders[siderIndex].length : 0}
+                      {controls.siders[siderIndex]
+                        ? controls.siders[siderIndex].length
+                        : 0}
                     </span>
                   </Flex>
 
@@ -219,7 +218,7 @@ export default function Example() {
                       inverted
                       onClick={() => {
                         if (lastName == "") {
-                          pushSider((index) => (
+                          controls.pushSider((index) => (
                             <Navbar index={index} name={"Company Settings"} />
                           ));
                           lastName = "Company Settings";
@@ -228,7 +227,7 @@ export default function Example() {
                         }
 
                         if (lastName == "Company Settings") {
-                          pushSider((index) => (
+                          controls.pushSider((index) => (
                             <Navbar index={index} name={"App Settings"} />
                           ));
                           lastName = "App Settings";
@@ -237,7 +236,7 @@ export default function Example() {
                         }
 
                         if (lastName == "App Settings") {
-                          pushSider((index) => (
+                          controls.pushSider((index) => (
                             <Navbar index={index} name={"Company Settings"} />
                           ));
                           lastName = "Company Settings";
@@ -252,7 +251,7 @@ export default function Example() {
                     <ControlButton
                       inverted
                       onClick={() => {
-                        pushDrawer(<Drawer name="Drawer Settings" />);
+                        controls.pushDrawer(<Drawer name="Drawer Settings" />);
                       }}
                     >
                       Add drawer
@@ -261,7 +260,7 @@ export default function Example() {
                     <ControlButton
                       inverted
                       onClick={() => {
-                        popSider();
+                        controls.popSider();
                       }}
                     >
                       Pop
@@ -270,7 +269,7 @@ export default function Example() {
                     <ControlButton
                       inverted
                       onClick={() => {
-                        popSider(0);
+                        controls.popSider(0);
                       }}
                     >
                       Pop all
@@ -314,7 +313,7 @@ export default function Example() {
 }
 
 const Navbar = ({ name, index }) => {
-  const popSider = usePopSider();
+  const controls = useControls();
 
   return (
     <Sider width={250} borderLeft={0} resizeable>
@@ -330,7 +329,7 @@ const Navbar = ({ name, index }) => {
           <b>{name}</b>
           <CloseBtn
             onClick={() => {
-              popSider(index);
+              controls.popSider(index);
             }}
           >
             <img src={process.env.PUBLIC_URL + "/cross.svg"} />
@@ -350,7 +349,7 @@ const Navbar = ({ name, index }) => {
 };
 
 const Monitors = ({ index }) => {
-  const popSider = usePopSider();
+  const controls = useControls();
 
   return (
     <Sider width={250} borderLeft={0} resizeable>
@@ -366,7 +365,7 @@ const Monitors = ({ index }) => {
           <b>Monitors</b>
           <CloseBtn
             onClick={() => {
-              popSider(index);
+              controls.popSider(index);
             }}
           >
             <img src={process.env.PUBLIC_URL + "/cross.svg"} />
@@ -432,7 +431,7 @@ const Monitors = ({ index }) => {
 };
 
 const Drawer = ({ name }) => {
-  const popDrawer = usePopDrawer();
+  const controls = useControls();
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <SiderTop padding={12}>
@@ -447,7 +446,7 @@ const Drawer = ({ name }) => {
           <b>{name}</b>
           <CloseBtn
             onClick={() => {
-              popDrawer();
+              controls.popDrawer();
             }}
           >
             <img src={process.env.PUBLIC_URL + "/cross.svg"} />
@@ -467,8 +466,7 @@ const Drawer = ({ name }) => {
 };
 
 const ManageCompany = ({ index }) => {
-  const popSider = usePopSider();
-  const pushDrawer = usePushDrawer();
+  const controls = useControls();
 
   return (
     <Sider width={250} borderLeft={0} resizeable>
@@ -486,7 +484,7 @@ const ManageCompany = ({ index }) => {
           </div>
           <CloseBtn
             onClick={() => {
-              popSider(index);
+              controls.popSider(index);
             }}
           >
             <img src={process.env.PUBLIC_URL + "/cross.svg"} />
@@ -498,7 +496,7 @@ const ManageCompany = ({ index }) => {
         <SiderItem
           id="CompanyProfile"
           onClick={() => {
-            pushDrawer(<Drawer name={"Company Profile"} />);
+            controls.pushDrawer(<Drawer name={"Company Profile"} />);
           }}
         >
           <p>Company Profile</p>
@@ -507,7 +505,7 @@ const ManageCompany = ({ index }) => {
         <SiderItem
           id={"User&Permissions"}
           onClick={() => {
-            pushDrawer(<Drawer name={"User & Permissions"} />);
+            controls.pushDrawer(<Drawer name={"User & Permissions"} />);
           }}
         >
           <p>User & Permissions</p>
@@ -516,7 +514,7 @@ const ManageCompany = ({ index }) => {
         <SiderItem
           id={"InvitationCenter"}
           onClick={() => {
-            pushDrawer(<Drawer name={"Invitation Center"} />);
+            controls.pushDrawer(<Drawer name={"Invitation Center"} />);
           }}
         >
           <p>Invitation Center</p>
