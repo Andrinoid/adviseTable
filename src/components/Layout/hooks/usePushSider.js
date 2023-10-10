@@ -5,23 +5,31 @@ import useLayout from "./useLayout";
 const usePushSider = () => {
   const { siders, setSiders, setDrawers } = useLayout();
 
-  return (value) => {
-    const exists = siders.some(
-      (sider) =>
-        sider[0] &&
-        sider[0](0).type === value(0).type &&
-        JSON.stringify(sider[0](0).props) === JSON.stringify(value(0).props)
-    );
+  const pushSider = (value, reset = false) => {
+    const updatedSiders = produce(siders, (draft) => {
+      if (reset) {
+        return [[value]];
+      }
 
-    if (!exists) {
-      const updatedSiders = produce(siders, (draft) => {
+      const exists = siders.some(
+        (sider) =>
+          sider[0] &&
+          sider[0](0).type === value(0).type &&
+          JSON.stringify(sider[0](0).props) === JSON.stringify(value(0).props)
+      );
+
+      if (!exists) {
         draft.push([value]);
-      });
+      }
 
-      setSiders(updatedSiders);
-      setDrawers([]);
-    }
+      return draft;
+    });
+
+    setSiders(updatedSiders);
+    setDrawers([]);
   };
+
+  return pushSider;
 };
 
 export default usePushSider;

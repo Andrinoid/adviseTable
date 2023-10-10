@@ -31,13 +31,14 @@ import usePushDrawer from "./hooks/usePushDrawer";
 import usePopDrawer from "./hooks/usePopDrawer";
 import usePopSider from "./hooks/usePopSider";
 import { uniqueId } from "lodash";
+import usePopAllSiders from "./hooks/usePopAllSiders";
 
 var lastName = "";
 
 export default function Example() {
   const [reverse, setReverse] = useState(false);
   const pushSider = usePushSider();
-  const popSider = usePopDrawer();
+  const popSider = usePopSider();
   const collapsed = useCollapsed();
   const collapse = useCollapse();
   const expand = useExpand();
@@ -46,6 +47,7 @@ export default function Example() {
   const stackPop = useStackPop();
   const pushDrawer = usePushDrawer();
   const popDrawer = usePopDrawer();
+  const popAllSiders = usePopAllSiders();
 
   const [siderIndex, setSiderIndex] = useState(-1);
 
@@ -83,7 +85,7 @@ export default function Example() {
                 </Link>
                 <SiderItem
                   onClick={() => {
-                    pushSider((index) => <ManageCompany index={index} />);
+                    pushSider((index) => <ManageCompany index={index} />, true);
                   }}
                 >
                   <img src={process.env.PUBLIC_URL + "/gear.svg"} />
@@ -91,10 +93,28 @@ export default function Example() {
 
                 <SiderItem
                   onClick={() => {
-                    pushSider((index) => <Monitors index={index} />);
+                    pushSider((index) => <Monitors index={index} />, true);
                   }}
                 >
                   <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+                </SiderItem>
+
+                <Separator />
+
+                <SiderItem
+                  onClick={() => {
+                    pushSider(
+                      (index) => (
+                        <Navbar name={"Monitor Settings"} index={index} />
+                      ),
+                      true
+                    );
+                  }}
+                  style={{ position: "relative" }}
+                >
+                  <Avatar>
+                    <span>M</span>
+                  </Avatar>
                 </SiderItem>
               </Sider>
             </Siders>
@@ -509,6 +529,11 @@ const ManageCompany = ({ index }) => {
   );
 };
 
+const Separator = styled.div`
+  width: "100%";
+  border-bottom: 1px solid rgb(232, 232, 232);
+`;
+
 const CloseBtn = styled.div`
   border: none;
   outline: 0px;
@@ -535,7 +560,32 @@ const CloseBtn = styled.div`
   }
 `;
 
-const SiderItems = ({ children }) => {
+const Avatar = styled.div`
+  position: absolute;
+  background: linear-gradient(
+    to left top,
+    rgba(0, 0, 255, 0.8),
+    rgba(60, 218, 211, 0.5) 80%
+  );
+
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+
+  & > span {
+    color: white;
+    font-weight: bold;
+  }
+`;
+
+const SiderItems = ({ children, ...rest }) => {
   const [active, setActive] = useState(null);
   const { drawers } = useLayout();
 
@@ -546,7 +596,7 @@ const SiderItems = ({ children }) => {
   }, [drawers]);
 
   return (
-    <>
+    <div {...rest}>
       {React.Children.map(children, (child) => {
         const obj = {
           onClick: () => {
@@ -563,6 +613,6 @@ const SiderItems = ({ children }) => {
         }
         return React.cloneElement(child, obj);
       })}
-    </>
+    </div>
   );
 };
