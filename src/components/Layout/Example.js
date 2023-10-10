@@ -30,6 +30,7 @@ import useStackPop from "./hooks/useStackPop";
 import usePushDrawer from "./hooks/usePushDrawer";
 import usePopDrawer from "./hooks/usePopDrawer";
 import usePopSider from "./hooks/usePopSider";
+import { uniqueId } from "lodash";
 
 var lastName = "";
 
@@ -86,6 +87,14 @@ export default function Example() {
                   }}
                 >
                   <img src={process.env.PUBLIC_URL + "/gear.svg"} />
+                </SiderItem>
+
+                <SiderItem
+                  onClick={() => {
+                    pushSider((index) => <Monitors index={index} />);
+                  }}
+                >
+                  <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
                 </SiderItem>
               </Sider>
             </Siders>
@@ -323,6 +332,88 @@ const Navbar = ({ name, index }) => {
   );
 };
 
+const Monitors = ({ index }) => {
+  const popSider = usePopSider();
+
+  return (
+    <Sider width={250} borderLeft={0} resizeable>
+      <SiderTop padding={12}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <b>Monitors</b>
+          <CloseBtn
+            onClick={() => {
+              popSider(index);
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/cross.svg"} />
+          </CloseBtn>
+        </div>
+      </SiderTop>
+
+      <SiderItems>
+        <SiderItem id="Monitor1">
+          <div
+            style={{
+              height: "auto",
+              maxWidth: 60,
+              marginRight: 10,
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+          </div>
+          <p>Monitor 1</p>
+        </SiderItem>
+
+        <SiderItem id="Monitor2">
+          <div
+            style={{
+              height: "auto",
+              maxWidth: 60,
+              marginRight: 10,
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+          </div>
+          <p>Monitor 2</p>
+        </SiderItem>
+
+        <SiderItem id="Monitor3">
+          <div
+            style={{
+              height: "auto",
+              maxWidth: 60,
+              marginRight: 10,
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+          </div>
+          <p>Monitor 3</p>
+        </SiderItem>
+
+        <SiderItem id="Monitor4">
+          <div
+            style={{
+              height: "auto",
+              maxWidth: 60,
+              marginRight: 10,
+            }}
+          >
+            <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+          </div>
+          <p>Monitor 4</p>
+        </SiderItem>
+      </SiderItems>
+    </Sider>
+  );
+};
+
 const Drawer = ({ name }) => {
   const popDrawer = usePopDrawer();
   return (
@@ -450,20 +541,27 @@ const SiderItems = ({ children }) => {
 
   useEffect(() => {
     if (drawers.length == 0) {
-      setActive(null);
+      // setActive(null);
     }
   }, [drawers]);
 
   return (
     <>
       {React.Children.map(children, (child) => {
-        return React.cloneElement(child, {
+        const obj = {
           onClick: () => {
             setActive(child.props.id);
-            child.props.onClick();
+            if (child.props.onClick) {
+              child.props.onClick();
+            }
           },
-          active: child.props.id == active,
-        });
+          active: child.props.id === active,
+        };
+
+        if (!obj.id) {
+          obj.id = uniqueId;
+        }
+        return React.cloneElement(child, obj);
       })}
     </>
   );
