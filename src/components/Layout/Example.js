@@ -29,6 +29,7 @@ import useStackPush from "./hooks/useStackPush";
 import useStackPop from "./hooks/useStackPop";
 import usePushDrawer from "./hooks/usePushDrawer";
 import usePopDrawer from "./hooks/usePopDrawer";
+import usePopSider from "./hooks/usePopSider";
 
 var lastName = "";
 
@@ -287,7 +288,7 @@ export default function Example() {
 }
 
 const Navbar = ({ name, index }) => {
-  const popSider = usePopDrawer();
+  const popSider = usePopSider();
 
   return (
     <Sider width={250} borderLeft={0} resizeable>
