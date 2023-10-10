@@ -9,9 +9,15 @@ const usePushSider = () => {
   return (value) => {
     setSiders(
       produce(siders, (draft) => {
-        draft = [...draft, [value]];
+        const exists = siders.some(
+          (sider) => sider[0] && sider[0](0).type === value(0).type
+        );
 
-        setDrawers([]);
+        if (!exists) {
+          draft = [...draft, [value]];
+
+          setDrawers([]);
+        }
 
         return draft;
       })
