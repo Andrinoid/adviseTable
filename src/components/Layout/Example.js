@@ -359,7 +359,7 @@ const Drawer = ({ name }) => {
 };
 
 const ManageCompany = ({ index }) => {
-  const popSider = usePopDrawer();
+  const popSider = usePopSider();
   const pushDrawer = usePushDrawer();
 
   return (
@@ -386,29 +386,34 @@ const ManageCompany = ({ index }) => {
         </div>
       </SiderTop>
 
-      <SiderItem
-        onClick={() => {
-          pushDrawer(<Drawer name={"Company Profile"} />);
-        }}
-      >
-        <p>Company Profile</p>
-      </SiderItem>
+      <SiderItems>
+        <SiderItem
+          id="CompanyProfile"
+          onClick={() => {
+            pushDrawer(<Drawer name={"Company Profile"} />);
+          }}
+        >
+          <p>Company Profile</p>
+        </SiderItem>
 
-      <SiderItem
-        onClick={() => {
-          pushDrawer(<Drawer name={"User & Permissions"} />);
-        }}
-      >
-        <p>User & Permissions</p>
-      </SiderItem>
+        <SiderItem
+          id={"User&Permissions"}
+          onClick={() => {
+            pushDrawer(<Drawer name={"User & Permissions"} />);
+          }}
+        >
+          <p>User & Permissions</p>
+        </SiderItem>
 
-      <SiderItem
-        onClick={() => {
-          pushDrawer(<Drawer name={"Invitation Center"} />);
-        }}
-      >
-        <p>Invitation Center</p>
-      </SiderItem>
+        <SiderItem
+          id={"InvitationCenter"}
+          onClick={() => {
+            pushDrawer(<Drawer name={"Invitation Center"} />);
+          }}
+        >
+          <p>Invitation Center</p>
+        </SiderItem>
+      </SiderItems>
     </Sider>
   );
 };
@@ -438,3 +443,22 @@ const CloseBtn = styled.div`
     background: rgba(0, 0, 0, 0.04);
   }
 `;
+
+const SiderItems = ({ children }) => {
+  const [active, setActive] = useState(null);
+
+  return (
+    <>
+      {React.Children.map(children, (child) => {
+        console.log(child);
+        return React.cloneElement(child, {
+          onClick: () => {
+            setActive(child.props.id);
+            child.props.onClick();
+          },
+          active: child.props.id == active,
+        });
+      })}
+    </>
+  );
+};
