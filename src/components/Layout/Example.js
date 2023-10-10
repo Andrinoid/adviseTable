@@ -31,7 +31,6 @@ import usePushDrawer from "./hooks/usePushDrawer";
 import usePopDrawer from "./hooks/usePopDrawer";
 import usePopSider from "./hooks/usePopSider";
 import { uniqueId } from "lodash";
-import usePopAllSiders from "./hooks/usePopAllSiders";
 
 var lastName = "";
 
@@ -46,8 +45,6 @@ export default function Example() {
   const stackPush = useStackPush();
   const stackPop = useStackPop();
   const pushDrawer = usePushDrawer();
-  const popDrawer = usePopDrawer();
-  const popAllSiders = usePopAllSiders();
 
   const [siderIndex, setSiderIndex] = useState(-1);
 
