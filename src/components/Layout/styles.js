@@ -45,7 +45,7 @@ SiderTop.defaultProps = {
 export const SiderItem = styled.a`
   border: none;
   background: ${({ active }) =>
-    active ? "rgba(0, 0, 0, 0.08)" : "transparent"};
+    active ? "rgba(0, 0, 0, 0.04)" : "transparent"};
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@ export const SiderItem = styled.a`
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: rgba(0, 0, 0, 0.08);
   }
 
   img {
