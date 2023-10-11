@@ -10,7 +10,14 @@ export const Container = styled.div`
   transition: ${({ isResizing }) =>
     isResizing ? "none" : "width 0.2s ease, opacity 0.1s ease"};
   flex-shrink: 0;
-  width: 100%;
+  width: ${({ width }) => width}px;
+
+  @media (max-width: 700px) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100vw - 60px);
+  }
 `;
 
 export const Handle = styled.div`

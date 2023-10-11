@@ -7,4 +7,8 @@ export const Container = styled.div`
   position: absolute;
   top: 0;
   border-right: 1px solid rgb(232, 234, 237);
+
+  @media (max-width: 700px) {
+    width: calc(100vw - 60px);
+  }
 `;

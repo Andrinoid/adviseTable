@@ -85,11 +85,7 @@ const Resizable = ({
   }, [isResizing]);
 
   return (
-    <Container
-      ref={containerRef}
-      style={{ width: newWidth }}
-      isResizing={isResizing}
-    >
+    <Container ref={containerRef} width={newWidth} isResizing={isResizing}>
       {children}
 
       <Handle
