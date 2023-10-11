@@ -12,15 +12,13 @@ const Sider = ({
   resizeable = false,
   ...rest
 }) => {
-  const { reverse } = useLayout();
-
   if (resizeable) {
     return (
-      <Resizable initialWidth={width} right={reverse}>
+      <Resizable initialWidth={width}>
         <Container
           {...rest}
-          borderLeftWidth={!reverse ? 0 : 1}
-          borderRightWidth={reverse ? 0 : 1}
+          borderLeftWidth={0}
+          borderRightWidth={1}
           width={"100%"}
         >
           {children}

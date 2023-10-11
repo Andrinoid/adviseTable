@@ -16,13 +16,7 @@ export const Container = styled.div`
 export const Handle = styled.div`
   position: absolute;
   top: 0;
-  ${({ right }) => {
-    if (right) {
-      return "left: 0;";
-    } else {
-      return "right: 0;";
-    }
-  }}
+  right: 0;
   width: 4px;
   height: 100%;
   cursor: col-resize;

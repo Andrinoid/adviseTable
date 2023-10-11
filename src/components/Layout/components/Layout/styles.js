@@ -6,17 +6,9 @@ export const Container = styled.div`
   width: 100%;
   overflow-y: hidden;
 
-  ${({ vertical, reverse }) => {
-    if (vertical && reverse) {
-      return "flex-direction: column-reverse;";
-    }
-
+  ${({ vertical }) => {
     if (vertical) {
       return "flex-direction: column;";
-    }
-
-    if (reverse) {
-      return "flex-direction: row-reverse;";
     }
 
     return "flex-direction: row;";

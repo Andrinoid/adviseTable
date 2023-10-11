@@ -8,7 +8,6 @@ const LayoutProvider = ({ children }) => {
   const [backup, setBackup] = useState([]);
   const [siders, setSiders] = useState([]);
   const [drawers, setDrawers] = useState([]);
-  const [reverse, setReverse] = useState([]);
 
   useEffect(() => {
     if (drawers.length == 0 && width != null) {
@@ -21,8 +20,6 @@ const LayoutProvider = ({ children }) => {
       value={{
         siders,
         setSiders,
-        reverse,
-        setReverse,
         backup,
         setBackup,
         drawers,

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Drawer } from "antd";
 
 const Siders = ({ children }) => {
-  const { siders, reverse } = useLayout();
+  const { siders } = useLayout();
 
   const transition = {
     duration: 0.1,
@@ -27,9 +27,9 @@ const Siders = ({ children }) => {
             <motion.div
               key={`${siderIndex}`}
               transition={{ ...transition, ease: "easeIn" }}
-              initial={{ x: reverse ? 50 : -50, opacity: 0 }}
+              initial={{ x: -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: reverse ? 50 : -50, opacity: 0 }}
+              exit={{ x: -50, opacity: 0 }}
               style={{ position: "relative" }}
             >
               {/* These code here ensures that when stacking, the stacked element

@@ -5,6 +5,6 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   position: absolute;
-  left: 0;
   top: 0;
+  border-right: 1px solid rgb(232, 234, 237);
 `;

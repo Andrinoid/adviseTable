@@ -30,7 +30,6 @@ import useControls from "./hooks";
 var lastName = "";
 
 export default function Example() {
-  const [reverse, setReverse] = useState(false);
   const [siderIndex, setSiderIndex] = useState(-1);
 
   const controls = useControls();
@@ -39,7 +38,7 @@ export default function Example() {
     <div className="container">
       <Router>
         <Layout vertical>
-          <Layout reverse={reverse}>
+          <Layout>
             <Siders>
               <Sider>
                 <SiderTop padding={12}>
@@ -110,7 +109,7 @@ export default function Example() {
             </Siders>
 
             <Layout vertical>
-              <Header style={reverse ? { justifyContent: "flex-end" } : {}}>
+              <Header>
                 {controls.siders.length > 0 || controls.backup.length > 0 ? (
                   <MenuButton
                     onClick={() => {
@@ -121,11 +120,7 @@ export default function Example() {
                       }
                     }}
                   >
-                    <MenuIcon
-                      collapsed={
-                        reverse ? !controls.collapsed : controls.collapsed
-                      }
-                    />
+                    <MenuIcon collapsed={controls.collapsed} />
                   </MenuButton>
                 ) : null}
               </Header>
@@ -276,15 +271,6 @@ export default function Example() {
                       }}
                     >
                       Pop all
-                    </ControlButton>
-
-                    <ControlButton
-                      inverted
-                      onClick={() => {
-                        setReverse((value) => !value);
-                      }}
-                    >
-                      Reverse
                     </ControlButton>
                   </Flex>
                 </Flex>

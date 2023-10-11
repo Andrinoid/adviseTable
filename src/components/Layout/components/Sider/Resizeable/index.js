@@ -4,7 +4,6 @@ import { Handle, Container } from "./styles";
 
 const Resizable = ({
   children,
-  right,
   initialWidth = 320,
   minWidth = 0,
   maxWidth = Infinity,
@@ -46,7 +45,7 @@ const Resizable = ({
     }
 
     const dx = e.clientX - x;
-    let newWidth = right ? w - dx : w + dx;
+    let newWidth = w + dx;
 
     prevClientXRef.current = e.clientX;
 
@@ -100,7 +99,6 @@ const Resizable = ({
         onDoubleClick={handleDoubleClick}
         hoverActive={hoverActive}
         ref={handleRef}
-        right={right}
       />
     </Container>
   );
@@ -108,7 +106,6 @@ const Resizable = ({
 
 Resizable.propTypes = {
   children: PropTypes.node.isRequired,
-  right: PropTypes.bool,
   initialWidth: PropTypes.number,
   minWidth: PropTypes.number,
   maxWidth: PropTypes.number,
