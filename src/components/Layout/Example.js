@@ -251,7 +251,10 @@ export default function Example() {
                     <ControlButton
                       inverted
                       onClick={() => {
-                        controls.pushDrawer(<Drawer name="Drawer Settings" />);
+                        controls.pushDrawer(
+                          <Drawer name="Drawer Settings" />,
+                          720
+                        );
                       }}
                     >
                       Add drawer
@@ -586,7 +589,7 @@ const SiderItems = ({ children, ...rest }) => {
 
   useEffect(() => {
     if (drawers.length == 0) {
-      // setActive(null);
+      setActive(null);
     }
   }, [drawers]);
 

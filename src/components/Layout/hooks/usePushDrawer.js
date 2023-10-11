@@ -4,9 +4,13 @@ import produce from "immer";
 import useLayout from "./useLayout";
 
 const usePushDrawer = () => {
-  const { drawers, setDrawers } = useLayout();
+  const { drawers, setDrawers, setWidth } = useLayout();
 
-  return (component) => {
+  return (component, width) => {
+    if (width) {
+      setWidth(width);
+    }
+
     setDrawers(
       produce(drawers, (draft) => {
         draft = [...draft, component];
