@@ -3,7 +3,7 @@ import { produce } from "immer";
 import useLayout from "./useLayout";
 
 const usePushSider = () => {
-  const { siders, setSiders, setDrawers } = useLayout();
+  const { siders, setSiders, setDrawers, drawers } = useLayout();
 
   const pushSider = (value, reset = false) => {
     const updatedSiders = produce(siders, (draft) => {
@@ -26,7 +26,9 @@ const usePushSider = () => {
     });
 
     setSiders(updatedSiders);
-    setDrawers([]);
+    if (drawers.length > 0) {
+      setDrawers([]);
+    }
   };
 
   return pushSider;

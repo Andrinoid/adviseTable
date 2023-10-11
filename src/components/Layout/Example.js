@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -57,6 +57,7 @@ export default function Example() {
 
                 <SiderItems>
                   <SiderItem
+                    id="overview"
                     onClick={() => {
                       // pushSider((index) => (
                       //   <AnotherSider index={index} name="Company Settings" />
@@ -79,6 +80,7 @@ export default function Example() {
                   </SiderItem>
 
                   <SiderItem
+                    id="monitorslist"
                     onClick={() => {
                       controls.pushSider(
                         (index) => <Monitors index={index} />,
@@ -591,14 +593,14 @@ const Avatar = styled.div`
 `;
 
 const SiderItems = ({ children, ...rest }) => {
+  const { drawers, siders } = useLayout();
   const [active, setActive] = useState(null);
-  const { drawers } = useLayout();
 
   useEffect(() => {
-    if (drawers.length == 0) {
+    if (drawers.length == 0 && siders.length == 0) {
       setActive(null);
     }
-  }, [drawers]);
+  }, [siders, drawers]);
 
   return (
     <div {...rest}>

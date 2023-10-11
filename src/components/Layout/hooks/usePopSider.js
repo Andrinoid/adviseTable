@@ -4,7 +4,7 @@ import produce from "immer";
 import useLayout from "./useLayout";
 
 const usePopSider = () => {
-  const { siders, setSiders, setDrawers } = useLayout();
+  const { siders, setSiders, setDrawers, drawers } = useLayout();
 
   return (index) => {
     setSiders(
@@ -17,7 +17,9 @@ const usePopSider = () => {
           }
         }
 
-        setDrawers([]);
+        if (drawers.length > 0) {
+          setDrawers([]);
+        }
 
         return draft;
       })
