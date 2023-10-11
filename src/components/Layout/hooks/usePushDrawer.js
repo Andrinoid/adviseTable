@@ -13,7 +13,7 @@ const usePushDrawer = () => {
 
     setDrawers(
       produce(drawers, (draft) => {
-        draft = [...draft, component];
+        draft = [component];
 
         return draft;
       })

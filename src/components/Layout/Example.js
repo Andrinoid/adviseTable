@@ -55,7 +55,7 @@ export default function Example() {
                   </Link>
                 </SiderTop>
 
-                <Link to={`/overview`}>
+                <SiderItems>
                   <SiderItem
                     onClick={() => {
                       // pushSider((index) => (
@@ -63,48 +63,51 @@ export default function Example() {
                       // ));
                     }}
                   >
-                    <img src={process.env.PUBLIC_URL + "/home.svg"} />
+                    <Link to={`/overview`}>
+                      <img src={process.env.PUBLIC_URL + "/home.svg"} />
+                    </Link>
                   </SiderItem>
-                </Link>
-                <SiderItem
-                  onClick={() => {
-                    controls.pushSider(
-                      (index) => <ManageCompany index={index} />,
-                      true
-                    );
-                  }}
-                >
-                  <img src={process.env.PUBLIC_URL + "/gear.svg"} />
-                </SiderItem>
+                  <SiderItem
+                    onClick={() => {
+                      controls.pushSider(
+                        (index) => <ManageCompany index={index} />,
+                        true
+                      );
+                    }}
+                  >
+                    <img src={process.env.PUBLIC_URL + "/gear.svg"} />
+                  </SiderItem>
 
-                <SiderItem
-                  onClick={() => {
-                    controls.pushSider(
-                      (index) => <Monitors index={index} />,
-                      true
-                    );
-                  }}
-                >
-                  <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
-                </SiderItem>
+                  <SiderItem
+                    onClick={() => {
+                      controls.pushSider(
+                        (index) => <Monitors index={index} />,
+                        true
+                      );
+                    }}
+                  >
+                    <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+                  </SiderItem>
 
-                <Separator />
+                  <Separator />
 
-                <SiderItem
-                  onClick={() => {
-                    controls.pushSider(
-                      (index) => (
-                        <Navbar name={"Monitor Settings"} index={index} />
-                      ),
-                      true
-                    );
-                  }}
-                  style={{ position: "relative" }}
-                >
-                  <Avatar>
-                    <span>M</span>
-                  </Avatar>
-                </SiderItem>
+                  <SiderItem
+                    id="monitorsettings"
+                    onClick={() => {
+                      controls.pushSider(
+                        (index) => (
+                          <Navbar name={"Monitor Settings"} index={index} />
+                        ),
+                        true
+                      );
+                    }}
+                    style={{ position: "relative" }}
+                  >
+                    <Avatar>
+                      <span>M</span>
+                    </Avatar>
+                  </SiderItem>
+                </SiderItems>
               </Sider>
             </Siders>
 
@@ -326,13 +329,20 @@ const Navbar = ({ name, index }) => {
         </div>
       </SiderTop>
 
-      <SiderItem>
-        <p>Home</p>
-      </SiderItem>
+      <SiderItems>
+        <SiderItem id="home">
+          <p>Home</p>
+        </SiderItem>
 
-      <SiderItem>
-        <p>Settings</p>
-      </SiderItem>
+        <SiderItem
+          id="settings"
+          onClick={() => {
+            controls.pushDrawer(<Drawer name={"Company Profile"} />, 720);
+          }}
+        >
+          <p>Settings</p>
+        </SiderItem>
+      </SiderItems>
     </Sider>
   );
 };
@@ -443,13 +453,24 @@ const Drawer = ({ name }) => {
         </div>
       </SiderTop>
 
-      <SiderItem>
-        <p>Home</p>
-      </SiderItem>
-
-      <SiderItem>
-        <p>Settings</p>
-      </SiderItem>
+      <div style={{ padding: 20 }}>
+        <p style={{ lineHeight: 1.6 }}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam
+          mauris, volutpat ut egestas ac, sodales aliquet turpis. Cras libero
+          leo, tempor id porta non, pretium quis velit. Vestibulum vehicula,
+          tortor vel mollis aliquam, sem sem pharetra magna, sed pharetra sem
+          nisl sed metus. Donec commodo, sapien aliquet gravida fermentum, felis
+          lacus dictum ipsum, laoreet consequat dui lorem sit amet massa. Morbi
+          sit amet auctor ligula. Vivamus sollicitudin elit nec ante faucibus,
+          non facilisis enim consequat. Integer ac lobortis elit, vel
+          ullamcorper ligula. Praesent hendrerit nisl aliquet nisi mattis
+          egestas. Integer lacinia porttitor dui non ultrices. Maecenas rhoncus
+          nibh et est porta egestas. Vivamus dolor nisl, facilisis at ex sit
+          amet, ullamcorper congue tellus. Duis congue nulla leo, a faucibus est
+          dapibus eget. Etiam commodo ex sed vehicula pharetra. Sed lacinia
+          massa nec risus feugiat dignissim.
+        </p>
+      </div>
     </div>
   );
 };
