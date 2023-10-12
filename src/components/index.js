@@ -6,5 +6,29 @@ import Grid from "./Grid/Grid";
 import Layout from "./Layout";
 import AddSection from "./Grid/AddSection";
 
+import Layout from "./Layout/components/Layout";
+import Sider from "./Layout/components/Sider";
+import LayoutHeader from "./Layout/components/Header";
+import Content from "./Layout/components/Content";
+import Footer from "./Layout/components/Footer";
+import Drawer from "./Layout/components/Drawer";
+import Siders from "./Layout/components/Siders";
+import useControls from "./Layout/hooks";
+
 // expose the components
-export { Table, Header, Row, Col, Grid, AddSection, Layout };
+export {
+  Table,
+  Header,
+  Row,
+  Col,
+  Grid,
+  AddSection,
+  Layout,
+  Sider,
+  LayoutHeader,
+  Content,
+  Footer,
+  Drawer,
+  Siders,
+  useControls,
+};
