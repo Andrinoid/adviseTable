@@ -37,7 +37,7 @@ export default function Example() {
                 padding={12}
                 onClick={() => {
                   history.push("/");
-                  controls.setLinks([]);
+                  controls.clear();
                 }}
               >
                 <img

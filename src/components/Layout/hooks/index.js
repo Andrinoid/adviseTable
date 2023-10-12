@@ -10,6 +10,7 @@ import usePushSider from "./usePushSider";
 import useStackPop from "./useStackPop";
 import useStackPush from "./useStackPush";
 import useLayout from "./useLayout";
+import useClear from "./useClear";
 
 const useControls = () => {
   const collapse = useCollapse();
@@ -22,6 +23,7 @@ const useControls = () => {
   const stackPop = useStackPop();
   const stackPush = useStackPush();
   const layout = useLayout();
+  const clear = useClear();
 
   return {
     collapse,
@@ -33,6 +35,7 @@ const useControls = () => {
     pushSider,
     stackPop,
     stackPush,
+    clear,
     ...layout,
   };
 };
