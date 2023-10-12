@@ -42,29 +42,6 @@ SiderTop.defaultProps = {
   padding: 20, // Set default padding value to 20
 };
 
-export const SiderItem = styled.a`
-  border: none;
-  background: ${({ active }) =>
-    active ? "rgba(0, 0, 0, 0.04)" : "transparent"};
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  height: 60px;
-  padding: 0 20px;
-  font-size: 15px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    max-width: 60px;
-  }
-`;
-
 export const MenuButton = styled.div`
   display: flex;
   justify-content: center;

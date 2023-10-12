@@ -8,6 +8,7 @@ const LayoutProvider = ({ children }) => {
   const [backup, setBackup] = useState([]);
   const [siders, setSiders] = useState([]);
   const [drawers, setDrawers] = useState([]);
+  const [links, setLinks] = useState([]);
 
   useEffect(() => {
     if (drawers.length == 0 && width != null) {
@@ -26,6 +27,8 @@ const LayoutProvider = ({ children }) => {
         setDrawers,
         width,
         setWidth,
+        links,
+        setLinks,
       }}
     >
       {children}
