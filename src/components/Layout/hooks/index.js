@@ -25,7 +25,7 @@ const useControls = () => {
   const layout = useLayout();
   const clear = useClear();
 
-  return {
+  return new Controls({
     collapse,
     collapsed,
     expand,
@@ -37,7 +37,32 @@ const useControls = () => {
     stackPush,
     clear,
     ...layout,
-  };
+  });
 };
+
+class Controls {
+  constructor(obj) {
+    this.collapse = obj.collapse || (() => {});
+    this.collapsed = obj.collapsed || false;
+    this.expand = obj.expand || (() => {});
+    this.popDrawer = obj.popDrawer || (() => {});
+    this.popSider = obj.popSider || ((index = null) => {});
+    this.pushDrawer = obj.pushDrawer || ((component, width) => {});
+    this.pushSider = obj.pushSider || ((value, reset = null) => {});
+    this.stackPop = obj.stackPop || ((index) => {});
+    this.stackPush = obj.stackPush || ((index, component) => {});
+    this.clear = obj.clear || (() => {});
+    this.siders = obj.siders || [];
+    this.setSiders = obj.setSiders || (() => {});
+    this.backup = obj.backup || [];
+    this.setBackup = obj.setBackup || (() => {});
+    this.drawers = obj.drawers || [];
+    this.setDrawers = obj.setDrawers || (() => {});
+    this.width = obj.width || [];
+    this.setWidth = obj.setWidth || (() => {});
+    this.links = obj.links || [];
+    this.setLinks = obj.setLinks || (() => {});
+  }
+}
 
 export default useControls;

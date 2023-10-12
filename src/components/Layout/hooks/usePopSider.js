@@ -6,7 +6,7 @@ import useLayout from "./useLayout";
 const usePopSider = () => {
   const { siders, setSiders, setDrawers, drawers } = useLayout();
 
-  return (index) => {
+  return (index = null) => {
     setSiders(
       produce(siders, (draft) => {
         if (!index && typeof index != "number") {
