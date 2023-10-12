@@ -576,9 +576,8 @@ const Avatar = styled.div`
   align-items: center;
   top: 50%;
   left: 50%;
-  border-radius: 50%;
+  border-radius: 8px;
   transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
 
   & > span {
     color: white;
