@@ -11,7 +11,7 @@ const Siders = ({ children }) => {
   };
 
   return (
-    <div style={{ height: "100%" }}>
+    <>
       {children}
       <AnimatePresence>
         {siders.map((sider, siderIndex) => {
@@ -59,7 +59,7 @@ const Siders = ({ children }) => {
           );
         })}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 
