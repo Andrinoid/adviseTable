@@ -12,6 +12,8 @@ import Content from "./Layout/components/Content";
 import Footer from "./Layout/components/Footer";
 import Drawer from "./Layout/components/Drawer";
 import Siders from "./Layout/components/Siders";
+import SiderItems from "./Layout/components/SiderItems";
+import SiderItem from "./Layout/components/SiderItem";
 import useControls from "./Layout/hooks";
 import { LayoutProvider } from "./Layout/LayoutContext";
 
@@ -32,4 +34,6 @@ export {
   Siders,
   useControls,
   LayoutProvider,
+  SiderItems,
+  SiderItem,
 };
