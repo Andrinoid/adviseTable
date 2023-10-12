@@ -13,6 +13,7 @@ import Footer from "./Layout/components/Footer";
 import Drawer from "./Layout/components/Drawer";
 import Siders from "./Layout/components/Siders";
 import useControls from "./Layout/hooks";
+import { LayoutProvider } from "./Layout/LayoutContext";
 
 // expose the components
 export {
@@ -30,4 +31,5 @@ export {
   Drawer,
   Siders,
   useControls,
+  LayoutProvider,
 };
