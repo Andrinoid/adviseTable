@@ -59,9 +59,9 @@ export default function Example() {
                   <SiderItem
                     id="overview"
                     onClick={() => {
-                      // pushSider((index) => (
-                      //   <AnotherSider index={index} name="Company Settings" />
-                      // ));
+                      controls.setBackup([]);
+
+                      controls.popSider(0);
                     }}
                   >
                     <Link to={`/overview`}>
@@ -70,6 +70,8 @@ export default function Example() {
                   </SiderItem>
                   <SiderItem
                     onClick={() => {
+                      controls.setBackup([]);
+
                       controls.pushSider(
                         (index) => <ManageCompany index={index} />,
                         true
@@ -82,6 +84,8 @@ export default function Example() {
                   <SiderItem
                     id="monitorslist"
                     onClick={() => {
+                      controls.setBackup([]);
+
                       controls.pushSider(
                         (index) => <Monitors index={index} />,
                         true
@@ -96,6 +100,8 @@ export default function Example() {
                   <SiderItem
                     id="monitorsettings"
                     onClick={() => {
+                      controls.setBackup([]);
+
                       controls.pushSider(
                         (index) => (
                           <Navbar name={"Monitor Settings"} index={index} />
@@ -118,6 +124,7 @@ export default function Example() {
                 {controls.siders.length > 0 || controls.backup.length > 0 ? (
                   <MenuButton
                     onClick={() => {
+                      console.log("collapsed oclick", controls.collapsed);
                       if (controls.collapsed) {
                         controls.expand();
                       } else {
@@ -375,7 +382,12 @@ const Monitors = ({ index }) => {
       </SiderTop>
 
       <SiderItems>
-        <SiderItem id="Monitor1">
+        <SiderItem
+          id="Monitor1"
+          onClick={() => {
+            controls.popSider(0);
+          }}
+        >
           <div
             style={{
               height: "auto",
@@ -388,7 +400,12 @@ const Monitors = ({ index }) => {
           <p>Monitor 1</p>
         </SiderItem>
 
-        <SiderItem id="Monitor2">
+        <SiderItem
+          id="Monitor2"
+          onClick={() => {
+            controls.popSider(0);
+          }}
+        >
           <div
             style={{
               height: "auto",
@@ -401,7 +418,12 @@ const Monitors = ({ index }) => {
           <p>Monitor 2</p>
         </SiderItem>
 
-        <SiderItem id="Monitor3">
+        <SiderItem
+          id="Monitor3"
+          onClick={() => {
+            controls.popSider(0);
+          }}
+        >
           <div
             style={{
               height: "auto",
@@ -414,7 +436,12 @@ const Monitors = ({ index }) => {
           <p>Monitor 3</p>
         </SiderItem>
 
-        <SiderItem id="Monitor4">
+        <SiderItem
+          id="Monitor4"
+          onClick={() => {
+            controls.popSider(0);
+          }}
+        >
           <div
             style={{
               height: "auto",
@@ -593,7 +620,7 @@ const Avatar = styled.div`
 `;
 
 const SiderItems = ({ children, ...rest }) => {
-  const { drawers, siders } = useLayout();
+  const { drawers, siders, setBackup } = useLayout();
   const [active, setActive] = useState(null);
 
   useEffect(() => {
@@ -608,9 +635,11 @@ const SiderItems = ({ children, ...rest }) => {
         const obj = {
           onClick: () => {
             setActive(child.props.id);
+
             if (child.props.onClick) {
               child.props.onClick();
             }
+            // }
           },
           active: child.props.id === active,
         };
