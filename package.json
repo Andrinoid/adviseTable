@@ -17,8 +17,8 @@
     "xlsx": "^0.18.5"
   },
   "peerDependencies": {
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react": ">=16.6.3",
+    "react-dom": ">=16.6.3"
   },
   "scripts": {
     "start": "react-scripts start",
