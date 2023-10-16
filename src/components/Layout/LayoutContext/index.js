@@ -8,12 +8,6 @@ const LayoutProvider = ({ children }) => {
   const [drawers, setDrawers] = useState([]);
   const [links, setLinks] = useState([]);
 
-  useEffect(() => {
-    if (drawers.length == 0 && width != null) {
-      setWidth(null);
-    }
-  }, [drawers]);
-
   return (
     <LayoutContext.Provider
       value={{
