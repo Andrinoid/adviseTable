@@ -10,14 +10,14 @@ const Drawer = () => {
   return (
     <AnimatePresence>
       {drawers.length > 0 ? (
-        <Container style={{ width: "fit-content", zIndex: 2 }}>
+        <Container style={{ width: "fit-content", zIndex: 10 }}>
           <motion.div
             key={`${drawers.length - 1}`}
             transition={{ duration: 0.1 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{ width: "fit-content", zIndex: 2 }}
+            style={{ width: "fit-content", zIndex: 10 }}
           >
             {drawers[drawers.length - 1]}
           </motion.div>
