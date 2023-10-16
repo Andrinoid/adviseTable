@@ -76,10 +76,7 @@ export default function Example() {
                 <SiderItem
                   id="monitorslist"
                   onClick={() => {
-                    controls.pushDrawer(
-                      (index) => <Monitors index={index} />,
-                      250
-                    );
+                    controls.pushDrawer(<Monitors />);
                   }}
                 >
                   <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
@@ -347,7 +344,7 @@ const Monitors = ({ index }) => {
   const controls = useControls();
 
   return (
-    <Sider width={250} borderLeft={0} resizeable>
+    <div style={{ width: "250px", height: "100%" }}>
       <SiderTop padding={12}>
         <div
           style={{
@@ -421,7 +418,7 @@ const Monitors = ({ index }) => {
           <p>Monitor 4</p>
         </SiderItem>
       </SiderItems>
-    </Sider>
+    </div>
   );
 };
 

@@ -5,19 +5,19 @@ import useLayout from "../../hooks/useLayout";
 import PropTypes from "prop-types";
 
 const Drawer = () => {
-  const { drawers, width } = useLayout();
+  const { drawers } = useLayout();
 
-  console.log("width", width);
   return (
     <AnimatePresence>
       {drawers.length > 0 ? (
-        <Container width={width}>
+        <Container style={{ width: "fit-content" }}>
           <motion.div
             key={`${drawers.length - 1}`}
             transition={{ duration: 0.1 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            style={{ width: "fit-content" }}
           >
             {drawers[drawers.length - 1]}
           </motion.div>
