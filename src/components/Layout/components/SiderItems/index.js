@@ -24,7 +24,7 @@ const SiderItems = ({ children, besides, ...rest }) => {
             }
             // }
           },
-          active: child.props.id === active,
+          active: child.props.id && child.props.id === active,
         };
 
         return React.cloneElement(child, obj);
