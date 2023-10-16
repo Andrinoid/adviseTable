@@ -4,9 +4,10 @@ import { Container } from "./styles";
 import useLayout from "../../hooks/useLayout";
 import PropTypes from "prop-types";
 
-const Drawer = ({ width }) => {
-  const { drawers } = useLayout();
+const Drawer = () => {
+  const { drawers, width } = useLayout();
 
+  console.log("width", width);
   return (
     <AnimatePresence>
       {drawers.length > 0 ? (

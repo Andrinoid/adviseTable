@@ -11,7 +11,6 @@ const SiderItems = ({ children, besides, ...rest }) => {
     }
   }, [siders, drawers, links]);
 
-  console.log(active);
   return (
     <div {...rest}>
       {React.Children.map(children, (child) => {

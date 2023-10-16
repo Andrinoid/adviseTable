@@ -11,4 +11,12 @@ export const Container = styled.div`
   @media (max-width: 700px) {
     width: calc(100vw - 60px);
   }
+
+  ${({ width }) => {
+    if (width) {
+      return `width: ${width}px;`;
+    }
+
+    return "";
+  }}
 `;

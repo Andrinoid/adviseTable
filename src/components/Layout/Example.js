@@ -76,9 +76,9 @@ export default function Example() {
                 <SiderItem
                   id="monitorslist"
                   onClick={() => {
-                    controls.pushSider(
+                    controls.pushDrawer(
                       (index) => <Monitors index={index} />,
-                      true
+                      250
                     );
                   }}
                 >

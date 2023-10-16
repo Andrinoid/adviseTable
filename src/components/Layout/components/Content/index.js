@@ -6,7 +6,7 @@ import useLayout from "../../hooks/useLayout";
 const Content = ({ children }) => {
   const { width } = useLayout();
   return (
-    <Container width={width}>
+    <Container>
       <Drawer />
       {children}
     </Container>
