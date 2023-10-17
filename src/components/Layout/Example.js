@@ -425,7 +425,7 @@ const Monitors = ({ index }) => {
 const Drawer = ({ name }) => {
   const controls = useControls();
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <Sider style={{ width: "100%", height: "100%" }}>
       <SiderTop padding={12}>
         <div
           style={{
@@ -446,7 +446,7 @@ const Drawer = ({ name }) => {
         </div>
       </SiderTop>
 
-      <div style={{ padding: 20 }}>
+      <div style={{ padding: 20, height: "100%" }}>
         <p style={{ lineHeight: 1.6 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam
           mauris, volutpat ut egestas ac, sodales aliquet turpis. Cras libero
@@ -464,7 +464,7 @@ const Drawer = ({ name }) => {
           massa nec risus feugiat dignissim.
         </p>
       </div>
-    </div>
+    </Sider>
   );
 };
 

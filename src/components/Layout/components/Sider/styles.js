@@ -23,4 +23,5 @@ export const Container = styled.div`
   z-index: 2;
   border-left-width: ${({ borderLeftWidth }) => borderLeftWidth}px;
   border-right-width: ${({ borderRightWidth }) => borderRightWidth}px;
+  pointer-events: initial;
 `;

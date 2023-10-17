@@ -4,7 +4,6 @@ import Drawer from "../Drawer";
 import useLayout from "../../hooks/useLayout";
 
 const Content = ({ children }) => {
-  const { width } = useLayout();
   return (
     <Container>
       <Drawer />
