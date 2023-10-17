@@ -344,7 +344,7 @@ const Monitors = ({ index }) => {
   const controls = useControls();
 
   return (
-    <div style={{ width: "250px", height: "100%" }}>
+    <Sider width={250} borderLeft={0} resizeable>
       <SiderTop padding={12}>
         <div
           style={{
@@ -418,7 +418,7 @@ const Monitors = ({ index }) => {
           <p>Monitor 4</p>
         </SiderItem>
       </SiderItems>
-    </div>
+    </Sider>
   );
 };
 

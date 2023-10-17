@@ -49,8 +49,14 @@ const Siders = ({ children }) => {
                 exit={{ opacity: 0 }}
                 style={
                   containsPrevious
-                    ? { height: "100%", position: "absolute", left: 0, top: 0 }
-                    : { height: "100%" }
+                    ? {
+                        height: "100%",
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        zIndex: 9,
+                      }
+                    : { height: "100%", zIndex: 9 }
                 }
               >
                 {current}
