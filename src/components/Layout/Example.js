@@ -104,7 +104,7 @@ export default function Example() {
             </Sider>
           </Siders>
 
-          <Layout vertical>
+          <Layout vertical containDrawer>
             <Header>
               {controls.siders.length > 0 || controls.backup.length > 0 ? (
                 <MenuButton

@@ -11,7 +11,12 @@ const Drawer = () => {
     <AnimatePresence>
       {drawers.length > 0 ? (
         <Container
-          style={{ zIndex: 10, height: "100%", pointerEvents: "none" }}
+          style={{
+            zIndex: 10,
+            height: "100%",
+            width: "auto",
+            pointerEvents: "none",
+          }}
         >
           <motion.div
             key={`${drawers.length - 1}`}
@@ -19,7 +24,7 @@ const Drawer = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{ zIndex: 10, height: "100%" }}
+            style={{ zIndex: 10, height: "100%", width: "100%" }}
           >
             {drawers[drawers.length - 1]}
           </motion.div>
