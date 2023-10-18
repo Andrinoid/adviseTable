@@ -345,28 +345,99 @@ const Monitors = ({ index }) => {
 
   return (
     <Sider width={250} borderLeft={0} resizeable>
-      <SiderTop padding={12}>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
-          }}
-        >
-          <b>Monitors</b>
-          <CloseBtn
-            onClick={() => {
-              controls.popSider(index);
+      <div style={{ height: "100%", width: "100%", paddingBottom: 60 }}>
+        <SiderTop padding={12}>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
             }}
           >
-            <img src={process.env.PUBLIC_URL + "/cross.svg"} />
-          </CloseBtn>
+            <b>Monitors</b>
+            <CloseBtn
+              onClick={() => {
+                controls.popSider(index);
+              }}
+            >
+              <img src={process.env.PUBLIC_URL + "/cross.svg"} />
+            </CloseBtn>
+          </div>
+        </SiderTop>
+
+        <div style={{ maxHeight: "calc(100% - 100px)", overflowY: "auto" }}>
+          <SiderItems>
+            {[
+              { name: "1", id: 1 },
+              {
+                name: "2",
+                id: 2,
+              },
+              { name: "3", id: 3 },
+              { name: "4", id: 4 },
+              { name: "5", id: 5 },
+              { name: "6", id: 6 },
+              { name: "7", id: 7 },
+              { name: "8", id: 8 },
+              { name: "9", id: 9 },
+              { name: "10", id: 10 },
+              { name: "11", id: 11 },
+              { name: "12", id: 12 },
+              { name: "13", id: 13 },
+              { name: "14", id: 14 },
+              { name: "15", id: 15 },
+              { name: "16", id: 16 },
+              { name: "17", id: 17 },
+              { name: "18", id: 18 },
+              { name: "19", id: 19 },
+              { name: "20", id: 20 },
+            ].map((m, i) => {
+              return (
+                <SiderItem id={"Monitor" + i} link>
+                  <div
+                    style={{
+                      height: "auto",
+                      maxWidth: 60,
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+                  </div>
+                  <p>{m.name}</p>
+                </SiderItem>
+              );
+            })}
+
+            <SiderItem id="Monitor2" link>
+              <div
+                style={{
+                  height: "auto",
+                  maxWidth: 60,
+                  marginRight: 10,
+                }}
+              >
+                <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+              </div>
+              <p>Monitor 2</p>
+            </SiderItem>
+
+            <SiderItem id="Monitor3" link>
+              <div
+                style={{
+                  height: "auto",
+                  maxWidth: 60,
+                  marginRight: 10,
+                }}
+              >
+                <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+              </div>
+              <p>Monitor 3</p>
+            </SiderItem>
+          </SiderItems>
         </div>
-      </SiderTop>
 
-      <SiderItems>
-        <SiderItem id="Monitor1" link>
+        <SiderItem onClick={() => {}}>
           <div
             style={{
               height: "auto",
@@ -376,48 +447,9 @@ const Monitors = ({ index }) => {
           >
             <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
           </div>
-          <p>Monitor 1</p>
+          <p>Add Business Monitor</p>
         </SiderItem>
-
-        <SiderItem id="Monitor2" link>
-          <div
-            style={{
-              height: "auto",
-              maxWidth: 60,
-              marginRight: 10,
-            }}
-          >
-            <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
-          </div>
-          <p>Monitor 2</p>
-        </SiderItem>
-
-        <SiderItem id="Monitor3" link>
-          <div
-            style={{
-              height: "auto",
-              maxWidth: 60,
-              marginRight: 10,
-            }}
-          >
-            <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
-          </div>
-          <p>Monitor 3</p>
-        </SiderItem>
-
-        <SiderItem id="Monitor4" link>
-          <div
-            style={{
-              height: "auto",
-              maxWidth: 60,
-              marginRight: 10,
-            }}
-          >
-            <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
-          </div>
-          <p>Monitor 4</p>
-        </SiderItem>
-      </SiderItems>
+      </div>
     </Sider>
   );
 };
