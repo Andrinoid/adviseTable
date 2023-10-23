@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Container } from "./styles";
 import useControls from "../../hooks";
 
-const SiderItem = ({ id, active, link, children, onClick }) => {
+const SiderItem = ({ id, active, link, children, onClick, ...rest }) => {
   const { backup, setBackup, popSider, setLinks, links } = useControls();
   return (
     <Container
@@ -24,6 +24,7 @@ const SiderItem = ({ id, active, link, children, onClick }) => {
         }
         onClick();
       }}
+      {...rest}
     >
       {children}
     </Container>
