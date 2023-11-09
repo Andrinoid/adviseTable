@@ -24,6 +24,8 @@ import {
     HeartRateMonitor,
     Presentation,
     Plus,
+    DeviceDesktopAnalytics,
+    DeviceDesktop,
 } from "tabler-icons-react";
 
 var lastName = "";
@@ -107,7 +109,7 @@ export default function Example() {
                                         controls.pushDrawer(<Monitors />);
                                     }}
                                     icon={
-                                        <HeartRateMonitor
+                                        <DeviceDesktopAnalytics
                                             size={26}
                                             strokeWidth={1}
                                             color={"black"}
