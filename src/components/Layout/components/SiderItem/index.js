@@ -1,41 +1,59 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Container } from "./styles";
+import { Container, SmallTile, Tile } from "./styles";
 import useControls from "../../hooks";
 
-const SiderItem = ({ id, active, link, children, onClick, ...rest }) => {
-  const { backup, setBackup, popSider, setLinks, links } = useControls();
-  return (
-    <Container
-      id={id}
-      active={active}
-      onClick={() => {
-        if (link) {
-          popSider(0);
-          setLinks([id]);
-        } else {
-          if (links.length > 0) {
-            setLinks([]);
-          }
-        }
-        if (backup.length > 0) {
-          setBackup([]);
-        }
-        onClick();
-      }}
-      {...rest}
-    >
-      {children}
-    </Container>
-  );
+const SiderItem = ({
+    id,
+    active,
+    link,
+    children,
+    onClick,
+    icon,
+    size,
+    ...rest
+}) => {
+    const { backup, setBackup, popSider, setLinks, links } = useControls();
+    return (
+        <Container
+            id={id}
+            onClick={() => {
+                if (link) {
+                    popSider(0);
+                    setLinks([id]);
+                } else {
+                    if (links.length > 0) {
+                        setLinks([]);
+                    }
+                }
+                if (backup.length > 0) {
+                    setBackup([]);
+                }
+                onClick();
+            }}
+            {...rest}
+        >
+            {size == "small" ? (
+                <SmallTile active={active}>
+                    {icon && <span className="icon">{icon}</span>}
+                    {children}
+                </SmallTile>
+            ) : (
+                <Tile active={active}>
+                    {icon && <span className="icon">{icon}</span>}
+                    {children}
+                </Tile>
+            )}
+        </Container>
+    );
 };
 
 SiderItem.propTypes = {
-  onClick: PropTypes.func,
-  id: PropTypes.oneOf(PropTypes.string, PropTypes.number),
-  active: PropTypes.bool,
-  link: PropTypes.bool,
+    onClick: PropTypes.func,
+    id: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+    active: PropTypes.bool,
+    link: PropTypes.bool,
 };
 
 export default SiderItem;

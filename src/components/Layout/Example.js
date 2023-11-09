@@ -18,8 +18,18 @@ import useControls from "./hooks";
 import SiderItem from "./components/SiderItem";
 import SiderItems from "./components/SiderItems";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {
+    Home2,
+    User,
+    HeartRateMonitor,
+    Presentation,
+    Plus,
+} from "tabler-icons-react";
 
 var lastName = "";
+const siderItemStyle = {
+    justifyContent: "center",
+};
 
 export default function Example() {
     const [siderIndex, setSiderIndex] = useState(-1);
@@ -46,26 +56,32 @@ export default function Example() {
                                     style={{
                                         width: "100%",
                                         height: "auto",
-                                        maxWidth: 60,
+                                        maxWidth: 34,
                                     }}
                                 />
                             </SiderTop>
 
-                            <SiderItems>
+                            <SiderItems style={{ marginTop: 20 }}>
                                 <SiderItem
+                                    size={"small"}
+                                    style={siderItemStyle}
+                                    width={45}
                                     id="overview"
                                     link
                                     onClick={() => {
                                         history.push("/overview");
                                     }}
-                                >
-                                    <img
-                                        src={
-                                            process.env.PUBLIC_URL + "/home.svg"
-                                        }
-                                    />
-                                </SiderItem>
+                                    icon={
+                                        <Home2
+                                            size={26}
+                                            strokeWidth={1}
+                                            color={"black"}
+                                        />
+                                    }
+                                />
                                 <SiderItem
+                                    style={siderItemStyle}
+                                    size={"small"}
                                     onClick={() => {
                                         controls.pushSider(
                                             (index) => (
@@ -74,28 +90,30 @@ export default function Example() {
                                             true
                                         );
                                     }}
+                                    icon={
+                                        <User
+                                            size={26}
+                                            strokeWidth={1}
+                                            color={"black"}
+                                        />
+                                    }
                                     id={"settings"}
-                                >
-                                    <img
-                                        src={
-                                            process.env.PUBLIC_URL + "/gear.svg"
-                                        }
-                                    />
-                                </SiderItem>
-
+                                />
                                 <SiderItem
+                                    style={siderItemStyle}
+                                    size={"small"}
                                     id="monitorslist"
                                     onClick={() => {
                                         controls.pushDrawer(<Monitors />);
                                     }}
-                                >
-                                    <img
-                                        src={
-                                            process.env.PUBLIC_URL +
-                                            "/telescope.svg"
-                                        }
-                                    />
-                                </SiderItem>
+                                    icon={
+                                        <HeartRateMonitor
+                                            size={26}
+                                            strokeWidth={1}
+                                            color={"black"}
+                                        />
+                                    }
+                                />
 
                                 <Separator />
 
@@ -438,15 +456,12 @@ const Monitors = ({ index }) => {
                 >
                     <SiderItems>
                         {[
-                            { name: "1", id: 1 },
-                            {
-                                name: "2",
-                                id: 2,
-                            },
-                            { name: "3", id: 3 },
-                            { name: "4", id: 4 },
-                            { name: "5", id: 5 },
-                            { name: "6", id: 6 },
+                            { name: "Samstæða", id: 1 },
+                            { name: "Samanburður", id: 2 },
+                            { name: "Rekstur", id: 3 },
+                            { name: "Efbahagur", id: 4 },
+                            { name: "Sala", id: 5 },
+                            { name: "Marketing", id: 6 },
                             { name: "7", id: 7 },
                             { name: "8", id: 8 },
                             { name: "9", id: 9 },
@@ -463,61 +478,28 @@ const Monitors = ({ index }) => {
                             { name: "20", id: 20 },
                         ].map((m, i) => {
                             return (
-                                <SiderItem id={"Monitor" + i} link>
+                                <SiderItem
+                                    id={"Monitor" + i}
+                                    icon={
+                                        <Presentation
+                                            size={26}
+                                            strokeWidth={1}
+                                            color={"black"}
+                                        />
+                                    }
+                                    link
+                                >
                                     <div
                                         style={{
                                             height: "auto",
                                             maxWidth: 60,
                                             marginRight: 10,
                                         }}
-                                    >
-                                        <img
-                                            src={
-                                                process.env.PUBLIC_URL +
-                                                "/telescope.svg"
-                                            }
-                                        />
-                                    </div>
+                                    ></div>
                                     <p>{m.name}</p>
                                 </SiderItem>
                             );
                         })}
-
-                        <SiderItem id="Monitor2" link>
-                            <div
-                                style={{
-                                    height: "auto",
-                                    maxWidth: 60,
-                                    marginRight: 10,
-                                }}
-                            >
-                                <img
-                                    src={
-                                        process.env.PUBLIC_URL +
-                                        "/telescope.svg"
-                                    }
-                                />
-                            </div>
-                            <p>Monitor 2</p>
-                        </SiderItem>
-
-                        <SiderItem id="Monitor3" link>
-                            <div
-                                style={{
-                                    height: "auto",
-                                    maxWidth: 60,
-                                    marginRight: 10,
-                                }}
-                            >
-                                <img
-                                    src={
-                                        process.env.PUBLIC_URL +
-                                        "/telescope.svg"
-                                    }
-                                />
-                            </div>
-                            <p>Monitor 3</p>
-                        </SiderItem>
                     </SiderItems>
                 </div>
 
@@ -529,7 +511,7 @@ const Monitors = ({ index }) => {
                             marginRight: 10,
                         }}
                     >
-                        <img src={process.env.PUBLIC_URL + "/telescope.svg"} />
+                        <Plus size={26} strokeWidth={1} color={"black"} />
                     </div>
                     <p>Add Business Monitor</p>
                 </SiderItem>
@@ -653,6 +635,7 @@ const ManageCompany = ({ index }) => {
 
 const Separator = styled.div`
     width: "100%";
+    margin: 8px 0px;
     border-bottom: 1px solid rgb(232, 232, 232);
 `;
 

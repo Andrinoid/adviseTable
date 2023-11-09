@@ -2,23 +2,57 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     border: none;
-    background: ${({ active }) => (active ? "#f5f5f5" : "transparent")};
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    height: 60px;
-    padding: 0 20px;
     font-size: 15px;
     cursor: pointer;
     position: relative;
-
-    &:hover {
-        background-color: #f5f5f5;
-    }
-
+    padding: 2px 4px;
     img {
         width: 100%;
         height: auto;
         max-width: 60px;
+    }
+`;
+
+export const SmallTile = styled.div`
+    background-color: ${(props) =>
+        props.active ? "#228be61a" : "transparent"};
+    border-radius: 5px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+        stroke-width: 1.4;
+        stroke: ${(props) => (props.active ? "#1677ff" : "#4a5058")};
+    }
+
+    &:hover {
+        background-color: ${(props) =>
+            props.active ? "#228be61a" : "#f8f9fa"};
+    }
+`;
+
+export const Tile = styled.div`
+    background-color: ${(props) =>
+        props.active ? "#228be61a" : "transparent"};
+    border-radius: 5px;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 20px;
+    svg {
+        stroke-width: 1.4;
+        stroke: ${(props) => (props.active ? "#1677ff" : "#4a5058")};
+    }
+    color: ${(props) => (props.active ? "#1677ff" : "inherit")};
+    &:hover {
+        background-color: ${(props) =>
+            props.active ? "#228be61a" : "#f8f9fa"};
     }
 `;

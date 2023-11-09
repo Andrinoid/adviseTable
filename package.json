@@ -16,9 +16,9 @@
     "xlsx": "^0.18.5"
   },
   "peerDependencies": {
+    "framer-motion": "^4.0.0",
     "react": ">=16.6.3",
-    "react-dom": ">=16.6.3",
-    "framer-motion": "^4.0.0"
+    "react-dom": ">=16.6.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,7 +33,6 @@
     ]
   },
   "devDependencies": {
-    "react-router-dom": "^5.3.4",
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
@@ -46,13 +45,15 @@
     "babel": "^6.23.0",
     "jest": "^27.5.1",
     "react-beautiful-dnd": "^13.0.0",
+    "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "react-virtualized-auto-sizer": "^1.0.7",
     "react-window": "^1.8.8",
     "react-window-infinite-loader": "^1.0.8",
     "rollup": "^3.9.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2"
+    "rollup-plugin-postcss": "^4.0.2",
+    "tabler-icons-react": "^1.56.0"
   },
   "browserslist": {
     "production": [

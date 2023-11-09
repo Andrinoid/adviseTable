@@ -12,8 +12,6 @@ export const Container = styled.div`
         if (width && typeof width == "string" && width.includes("%")) {
             return width;
         }
-
-        return "60px";
     }};
     border-right: 1px solid #e8eaed;
     border-left: 1px solid #e8eaed;
