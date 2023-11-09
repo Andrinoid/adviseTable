@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     border: none;
-    background: ${({ active }) =>
-        active ? "rgba(0, 0, 0, 0.04)" : "transparent"};
+    background: ${({ active }) => (active ? "#f5f5f5" : "transparent")};
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -14,7 +13,7 @@ export const Container = styled.div`
     position: relative;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.08);
+        background-color: #f5f5f5;
     }
 
     img {
