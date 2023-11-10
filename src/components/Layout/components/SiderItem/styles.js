@@ -56,3 +56,7 @@ export const Tile = styled.div`
             props.active ? "#228be61a" : "#f8f9fa"};
     }
 `;
+
+export const Icon = styled.span`
+    line-height: 0;
+`;

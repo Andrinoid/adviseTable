@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Container, SmallTile, Tile } from "./styles";
+import { Container, SmallTile, Tile, Icon } from "./styles";
 import useControls from "../../hooks";
 
 const SiderItem = ({
@@ -36,12 +36,12 @@ const SiderItem = ({
         >
             {size == "small" ? (
                 <SmallTile active={active}>
-                    {icon && <span className="icon">{icon}</span>}
+                    {icon && <Icon>{icon}</Icon>}
                     {children}
                 </SmallTile>
             ) : (
                 <Tile active={active}>
-                    {icon && <span className="icon">{icon}</span>}
+                    {icon && <Icon>{icon}</Icon>}
                     {children}
                 </Tile>
             )}
