@@ -21,11 +21,9 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
     Home2,
     User,
-    HeartRateMonitor,
     Presentation,
     Plus,
     DeviceDesktopAnalytics,
-    DeviceDesktop,
 } from "tabler-icons-react";
 
 var lastName = "";
