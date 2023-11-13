@@ -18,17 +18,28 @@ import useControls from "./hooks";
 import SiderItem from "./components/SiderItem";
 import SiderItems from "./components/SiderItems";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Logo from "./components/Logo";
 import {
     Home2,
     User,
     Presentation,
     Plus,
     DeviceDesktopAnalytics,
+    ArrowsLeftRight,
 } from "tabler-icons-react";
 
 var lastName = "";
-const siderItemStyle = {
-    justifyContent: "center",
+
+const siderItemStyleSmall = {
+    justifyContent: "flex-start",
+    marginLeft: 10,
+    marginRight: 10,
+};
+
+const siderItemStyleFull = {
+    justifyContent: "flex-start",
+    marginLeft: 10,
+    marginRight: 10,
 };
 
 export default function Example() {
@@ -37,106 +48,204 @@ export default function Example() {
     const controls = useControls();
     const history = useHistory();
 
+    const [isMainSiderCollapsed, setIsMainSiderCollapsed] = useState(true);
+
+    const toggleSider = () => {
+        setIsMainSiderCollapsed((prevState) => !prevState);
+    };
+
     return (
         <div className="container">
             <Layout vertical>
                 <Layout>
                     <Siders>
-                        <Sider>
+                        <Sider className="mainSider">
                             <SiderTop
-                                padding={12}
+                                padding={isMainSiderCollapsed ? 12 : 12}
                                 onClick={() => {
                                     history.push("/");
                                     controls.clear();
                                 }}
                             >
-                                <img
-                                    src={process.env.PUBLIC_URL + "/advise.png"}
-                                    alt="Logo"
-                                    style={{
-                                        width: "100%",
-                                        height: "auto",
-                                        maxWidth: 34,
-                                    }}
+                                <Logo
+                                    size={
+                                        isMainSiderCollapsed ? "small" : "full"
+                                    }
                                 />
                             </SiderTop>
+                            <div
+                                style={{
+                                    height: "100%",
+                                    paddingBottom: 44,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                    alightItems: "center",
+                                }}
+                            >
+                                <SiderItems style={{ marginTop: 10 }}>
+                                    <SiderItem
+                                        id="overview"
+                                        shouldAnimateChildren={true}
+                                        size={
+                                            isMainSiderCollapsed
+                                                ? "small"
+                                                : "full"
+                                        }
+                                        style={
+                                            isMainSiderCollapsed
+                                                ? siderItemStyleSmall
+                                                : siderItemStyleFull
+                                        }
+                                        link
+                                        onClick={() => {
+                                            history.push("/overview");
+                                        }}
+                                        icon={
+                                            <Home2
+                                                size={26}
+                                                strokeWidth={1}
+                                                color={"black"}
+                                            />
+                                        }
+                                    >
+                                        {isMainSiderCollapsed ? null : (
+                                            <p style={{ marginLeft: 10 }}>
+                                                Overview
+                                            </p>
+                                        )}
+                                    </SiderItem>
+                                    <SiderItem
+                                        id={"settings"}
+                                        shouldAnimateChildren={true}
+                                        style={
+                                            isMainSiderCollapsed
+                                                ? siderItemStyleSmall
+                                                : siderItemStyleFull
+                                        }
+                                        size={
+                                            isMainSiderCollapsed
+                                                ? "small"
+                                                : "full"
+                                        }
+                                        onClick={() => {
+                                            controls.pushSider(
+                                                (index) => (
+                                                    <ManageCompany
+                                                        index={index}
+                                                    />
+                                                ),
+                                                true
+                                            );
+                                        }}
+                                        icon={
+                                            <User
+                                                size={26}
+                                                strokeWidth={1}
+                                                color={"black"}
+                                            />
+                                        }
+                                    >
+                                        {isMainSiderCollapsed ? null : (
+                                            <p style={{ marginLeft: 10 }}>
+                                                Account
+                                            </p>
+                                        )}
+                                    </SiderItem>
+                                    <SiderItem
+                                        id="monitorslist"
+                                        shouldAnimateChildren={true}
+                                        style={
+                                            isMainSiderCollapsed
+                                                ? siderItemStyleSmall
+                                                : siderItemStyleFull
+                                        }
+                                        size={
+                                            isMainSiderCollapsed
+                                                ? "small"
+                                                : "full"
+                                        }
+                                        onClick={() => {
+                                            controls.pushDrawer(<Monitors />);
+                                        }}
+                                        icon={
+                                            <DeviceDesktopAnalytics
+                                                size={26}
+                                                strokeWidth={1}
+                                                color={"black"}
+                                            />
+                                        }
+                                    >
+                                        {isMainSiderCollapsed ? null : (
+                                            <p style={{ marginLeft: 10 }}>
+                                                Monitors
+                                            </p>
+                                        )}
+                                    </SiderItem>
 
-                            <SiderItems style={{ marginTop: 20 }}>
-                                <SiderItem
-                                    size={"small"}
-                                    style={siderItemStyle}
-                                    width={45}
-                                    id="overview"
-                                    link
-                                    onClick={() => {
-                                        history.push("/overview");
-                                    }}
-                                    icon={
-                                        <Home2
-                                            size={26}
-                                            strokeWidth={1}
-                                            color={"black"}
-                                        />
-                                    }
-                                />
-                                <SiderItem
-                                    style={siderItemStyle}
-                                    size={"small"}
-                                    onClick={() => {
-                                        controls.pushSider(
-                                            (index) => (
-                                                <ManageCompany index={index} />
-                                            ),
-                                            true
-                                        );
-                                    }}
-                                    icon={
-                                        <User
-                                            size={26}
-                                            strokeWidth={1}
-                                            color={"black"}
-                                        />
-                                    }
-                                    id={"settings"}
-                                />
-                                <SiderItem
-                                    style={siderItemStyle}
-                                    size={"small"}
-                                    id="monitorslist"
-                                    onClick={() => {
-                                        controls.pushDrawer(<Monitors />);
-                                    }}
-                                    icon={
-                                        <DeviceDesktopAnalytics
-                                            size={26}
-                                            strokeWidth={1}
-                                            color={"black"}
-                                        />
-                                    }
-                                />
+                                    <Separator />
 
-                                <Separator />
-
-                                <SiderItem
-                                    id="monitorsettings"
-                                    onClick={() => {
-                                        controls.pushSider(
-                                            (index) => (
-                                                <Navbar
-                                                    name={"Monitor Settings"}
-                                                    index={index}
-                                                />
-                                            ),
-                                            true
-                                        );
-                                    }}
-                                    style={{ position: "relative" }}
-                                >
-                                    <Avatar>
-                                        <span>M</span>
-                                    </Avatar>
-                                </SiderItem>
-                            </SiderItems>
+                                    <SiderItem
+                                        id="monitorsettings"
+                                        shouldAnimateChildren={true}
+                                        style={
+                                            isMainSiderCollapsed
+                                                ? siderItemStyleSmall
+                                                : siderItemStyleFull
+                                        }
+                                        size={
+                                            isMainSiderCollapsed
+                                                ? "small"
+                                                : "full"
+                                        }
+                                        icon={
+                                            <DeviceDesktopAnalytics
+                                                size={26}
+                                                strokeWidth={1}
+                                                color={"white"}
+                                            />
+                                        }
+                                        onClick={() => {
+                                            controls.pushSider(
+                                                (index) => (
+                                                    <Navbar
+                                                        name={
+                                                            "Monitor Settings"
+                                                        }
+                                                        index={index}
+                                                    />
+                                                ),
+                                                true
+                                            );
+                                        }}
+                                    >
+                                        {isMainSiderCollapsed ? null : (
+                                            <p style={{ marginLeft: 10 }}>
+                                                Active Monitor
+                                            </p>
+                                        )}
+                                    </SiderItem>
+                                </SiderItems>
+                                <SiderItems>
+                                    <SiderItem
+                                        shouldAnimateChildren={true}
+                                        style={
+                                            isMainSiderCollapsed
+                                                ? siderItemStyleSmall
+                                                : { justifyContent: "flex-end" }
+                                        }
+                                        size={"small"}
+                                        icon={
+                                            <ArrowsLeftRight
+                                                size={26}
+                                                strokeWidth={1}
+                                                color={"black"}
+                                            />
+                                        }
+                                        onClick={toggleSider}
+                                    />
+                                </SiderItems>
+                            </div>
                         </Sider>
                     </Siders>
 
@@ -666,7 +775,6 @@ const CloseBtn = styled.div`
 `;
 
 const Avatar = styled.div`
-    position: absolute;
     background: linear-gradient(
         to left top,
         rgba(0, 0, 255, 0.8),
@@ -678,11 +786,7 @@ const Avatar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 50%;
-    left: 50%;
     border-radius: 8px;
-    transform: translate(-50%, -50%);
-
     & > span {
         color: white;
         font-weight: bold;

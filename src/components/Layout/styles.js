@@ -31,12 +31,6 @@ export const SiderTop = styled.div`
     padding: 0 ${(props) => props.padding}px;
     font-size: 15px;
     cursor: pointer;
-
-    & > img {
-        width: 100%;
-        height: auto;
-        max-width: 60px;
-    }
 `;
 
 SiderTop.defaultProps = {

@@ -24,7 +24,8 @@ export const SmallTile = styled.div`
     height: 45px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    padding: 0 10px;
     svg {
         stroke-width: 1.4;
         stroke: ${(props) => (props.active ? "#1677ff" : "#4a5058")};
@@ -45,7 +46,7 @@ export const Tile = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 20px;
+    padding: 0 10px;
     svg {
         stroke-width: 1.4;
         stroke: ${(props) => (props.active ? "#1677ff" : "#4a5058")};

@@ -1,8 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { motion } from "framer-motion";
 import { Container, SmallTile, Tile, Icon } from "./styles";
 import useControls from "../../hooks";
+
+const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.8 } },
+};
 
 const SiderItem = ({
     id,
@@ -12,6 +17,7 @@ const SiderItem = ({
     onClick,
     icon,
     size,
+    shouldAnimateChildren = false,
     ...rest
 }) => {
     const { backup, setBackup, popSider, setLinks, links } = useControls();
@@ -42,7 +48,16 @@ const SiderItem = ({
             ) : (
                 <Tile active={active}>
                     {icon && <Icon>{icon}</Icon>}
-                    {children}
+                    {shouldAnimateChildren && (
+                        <motion.div
+                            initial="hidden"
+                            animate="visible"
+                            variants={fadeIn}
+                        >
+                            {children}
+                        </motion.div>
+                    )}
+                    {!shouldAnimateChildren && children}
                 </Tile>
             )}
         </Container>
