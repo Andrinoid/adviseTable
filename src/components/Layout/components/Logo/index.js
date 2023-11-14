@@ -28,7 +28,7 @@ function Logo({ size = "small" }) {
         >
             <defs>
                 <linearGradient
-                    id="a"
+                    id="companyLogo-a"
                     x1="1"
                     x2="0"
                     y1="0.5"
@@ -39,7 +39,7 @@ function Logo({ size = "small" }) {
                     <stop offset="1" stopColor="#5bf7a7"></stop>
                 </linearGradient>
                 <linearGradient
-                    id="b"
+                    id="companyLogo-b"
                     x1="0.9"
                     x2="0.4"
                     y1="0.8"
@@ -50,23 +50,23 @@ function Logo({ size = "small" }) {
                     <stop offset="1" stopColor="#0ab8e7"></stop>
                 </linearGradient>
                 <linearGradient
-                    id="c"
+                    id="companyLogo-c"
                     x1="0.5"
                     x2="0.5"
                     y1="0.9"
                     y2="0"
-                    xlinkHref="#a"
+                    xlinkHref="#companyLogo-a"
                 ></linearGradient>
                 <linearGradient
-                    id="d"
+                    id="companyLogo-d"
                     x1="0.7"
                     x2="0.1"
                     y1="0.9"
                     y2="0.3"
-                    xlinkHref="#b"
+                    xlinkHref="#companyLogo-b"
                 ></linearGradient>
                 <linearGradient
-                    id="e"
+                    id="companyLogo-e"
                     x1="1"
                     x2="0"
                     y1="1"
@@ -77,7 +77,7 @@ function Logo({ size = "small" }) {
                     <stop offset="1" stopColor="#0ab8e7"></stop>
                 </linearGradient>
                 <linearGradient
-                    id="f"
+                    id="companyLogo-f"
                     x1="0.9"
                     x2="0.1"
                     y1="1"
@@ -89,14 +89,14 @@ function Logo({ size = "small" }) {
                 </linearGradient>
             </defs>
             <path
-                fill="url(#a)"
+                fill="url(#companyLogo-a)"
                 fillRule="evenodd"
                 d="M1046 663c13-38-7-57-40-60H875a10 10 0 00-10 10v40a10 10 0 0010 10h171z"
                 data-name="Path 1"
                 transform="translate(-724 -550)"
             ></path>
             <path
-                fill="url(#b)"
+                fill="url(#companyLogo-b)"
                 fillRule="evenodd"
                 d="M1310 658a55 55 0 00-56-55h-45q41 6 40 60c34 7 56 14 61 40z"
                 data-name="Path 2"
@@ -121,14 +121,14 @@ function Logo({ size = "small" }) {
                 data-name="Path 5"
             ></path>
             <path
-                fill="url(#c)"
+                fill="url(#companyLogo-c)"
                 fillRule="evenodd"
                 d="M778 793v-33a10 10 0 00-11-10h-40a10 10 0 00-10 10v131c4 34 23 52 61 40z"
                 data-name="Path 6"
                 transform="translate(-636 -637)"
             ></path>
             <path
-                fill="url(#d)"
+                fill="url(#companyLogo-d)"
                 fillRule="evenodd"
                 d="M818 1195c-26-5-36-27-40-60q-54 0-61-41v46a55 55 0 0055 55h46z"
                 data-name="Path 7"
@@ -141,7 +141,7 @@ function Logo({ size = "small" }) {
                 data-name="Path 8"
             ></path>
             <path
-                fill="url(#e)"
+                fill="url(#companyLogo-e)"
                 fillRule="evenodd"
                 d="M1022 958h40a10 10 0 0010-10v-41a10 10 0 00-10-10h-40a10 10 0 00-10 10v41a10 10 0 0010 10z"
                 data-name="Path 9"
@@ -194,7 +194,7 @@ function Logo({ size = "small" }) {
                         data-name="Path 16"
                     ></path>
                     <path
-                        fill="url(#f)"
+                        fill="url(#companyLogo-f)"
                         fillRule="evenodd"
                         d="M4360 1032h35a9 9 0 009-9v-35a9 9 0 00-9-9h-35a9 9 0 00-9 9v35a9 9 0 009 9z"
                         data-name="Path 17"

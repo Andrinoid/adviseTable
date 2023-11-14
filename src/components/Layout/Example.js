@@ -61,7 +61,7 @@ export default function Example() {
                     <Siders>
                         <Sider className="mainSider">
                             <SiderTop
-                                padding={isMainSiderCollapsed ? 12 : 12}
+                                padding={12}
                                 onClick={() => {
                                     history.push("/");
                                     controls.clear();
