@@ -14,26 +14,28 @@ import Drawer from "./Layout/components/Drawer";
 import Siders from "./Layout/components/Siders";
 import SiderItems from "./Layout/components/SiderItems";
 import SiderItem from "./Layout/components/SiderItem";
+import Logo from "./Layout/components/Logo";
 import useControls from "./Layout/hooks";
 import { LayoutProvider } from "./Layout/LayoutContext";
 
 // expose the components
 export {
-  Table,
-  Header,
-  Row,
-  Col,
-  Grid,
-  AddSection,
-  Layout,
-  Sider,
-  LayoutHeader,
-  Content,
-  Footer,
-  Drawer,
-  Siders,
-  useControls,
-  LayoutProvider,
-  SiderItems,
-  SiderItem,
+    Table,
+    Header,
+    Row,
+    Col,
+    Grid,
+    AddSection,
+    Layout,
+    Sider,
+    LayoutHeader,
+    Content,
+    Footer,
+    Drawer,
+    Siders,
+    useControls,
+    LayoutProvider,
+    SiderItems,
+    SiderItem,
+    Logo,
 };

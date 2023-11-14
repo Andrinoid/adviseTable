@@ -83,7 +83,7 @@ export default function Example() {
                                     alightItems: "center",
                                 }}
                             >
-                                <SiderItems style={{ marginTop: 10 }}>
+                                <SiderItems>
                                     <SiderItem
                                         id="overview"
                                         shouldAnimateChildren={true}
@@ -110,8 +110,8 @@ export default function Example() {
                                         }
                                     >
                                         {isMainSiderCollapsed ? null : (
-                                            <p style={{ marginLeft: 10 }}>
-                                                Overview
+                                            <p style={{ marginLeft: 12 }}>
+                                                Company Overview
                                             </p>
                                         )}
                                     </SiderItem>
@@ -147,7 +147,7 @@ export default function Example() {
                                         }
                                     >
                                         {isMainSiderCollapsed ? null : (
-                                            <p style={{ marginLeft: 10 }}>
+                                            <p style={{ marginLeft: 12 }}>
                                                 Account
                                             </p>
                                         )}
@@ -177,7 +177,7 @@ export default function Example() {
                                         }
                                     >
                                         {isMainSiderCollapsed ? null : (
-                                            <p style={{ marginLeft: 10 }}>
+                                            <p style={{ marginLeft: 12 }}>
                                                 Monitors
                                             </p>
                                         )}
@@ -220,7 +220,7 @@ export default function Example() {
                                         }}
                                     >
                                         {isMainSiderCollapsed ? null : (
-                                            <p style={{ marginLeft: 10 }}>
+                                            <p style={{ marginLeft: 12 }}>
                                                 Active Monitor
                                             </p>
                                         )}
@@ -571,7 +571,7 @@ const Monitors = ({ index }) => {
                             { name: "Efbahagur", id: 4 },
                             { name: "Sala", id: 5 },
                             { name: "Marketing", id: 6 },
-                            { name: "7", id: 7 },
+                            { name: "Gólfsamband Íslands rekstur", id: 7 },
                             { name: "8", id: 8 },
                             { name: "9", id: 9 },
                             { name: "10", id: 10 },
@@ -736,6 +736,9 @@ const ManageCompany = ({ index }) => {
                     }}
                 >
                     <p>Invitation Center</p>
+                </SiderItem>
+                <SiderItem onClick={() => {}}>
+                    <p>Sign out</p>
                 </SiderItem>
             </SiderItems>
         </Sider>
