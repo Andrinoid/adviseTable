@@ -17,8 +17,12 @@ export const Container = styled.div`
 `;
 
 export const SmallTile = styled.div`
-    background-color: ${(props) =>
-        props.active ? "#228be61a" : "transparent"};
+    background: ${(props) =>
+        props.outstanding
+            ? "linear-gradient(133deg, rgb(91 247 167 / 80%), rgb(43 94 235 / 80%));"
+            : props.active
+            ? "#228be61a"
+            : "transparent"};
     border-radius: 5px;
     width: 45px;
     height: 45px;
@@ -28,12 +32,17 @@ export const SmallTile = styled.div`
     padding: 0 10px;
     svg {
         stroke-width: 1.4;
-        stroke: ${(props) => (props.active ? "#1677ff" : "#4a5058")};
+        stroke: ${(props) =>
+            props.outstanding ? "#fff" : props.active ? "#1677ff" : "#4a5058"};
     }
 
     &:hover {
-        background-color: ${(props) =>
-            props.active ? "#228be61a" : "#f8f9fa"};
+        background: ${(props) =>
+            props.outstanding
+                ? "linear-gradient(133deg, rgb(91 247 167 / 90%), rgb(43 94 235 / 90%));"
+                : props.active
+                ? "linear-gradient(133deg, rgb(91 247 167 / 80%), rgb(43 94 235 / 80%));"
+                : "#f8f9fa"};
     }
 `;
 

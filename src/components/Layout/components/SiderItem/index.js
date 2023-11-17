@@ -18,6 +18,7 @@ const SiderItem = ({
     icon,
     size,
     shouldAnimateChildren = false,
+    outstanding = false,
     ...rest
 }) => {
     const { backup, setBackup, popSider, setLinks, links } = useControls();
@@ -41,7 +42,7 @@ const SiderItem = ({
             {...rest}
         >
             {size == "small" ? (
-                <SmallTile active={active}>
+                <SmallTile active={active} outstanding={outstanding}>
                     {icon && <Icon>{icon}</Icon>}
                     {children}
                 </SmallTile>
