@@ -5,37 +5,37 @@ import useLayout from "../../hooks/useLayout";
 import PropTypes from "prop-types";
 
 const Drawer = () => {
-  const { drawers } = useLayout();
+    const { drawers } = useLayout();
 
-  return (
-    <AnimatePresence>
-      {drawers.length > 0 ? (
-        <Container
-          style={{
-            zIndex: 10,
-            height: "100%",
-            width: "auto",
-            pointerEvents: "none",
-          }}
-        >
-          <motion.div
-            key={`${drawers.length - 1}`}
-            transition={{ duration: 0.1 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{ zIndex: 10, height: "100%", width: "100%" }}
-          >
-            {drawers[drawers.length - 1]}
-          </motion.div>
-        </Container>
-      ) : null}
-    </AnimatePresence>
-  );
+    return (
+        <AnimatePresence>
+            {drawers.length > 0 ? (
+                <Container
+                    style={{
+                        zIndex: 10,
+                        height: "100%",
+                        width: "100%",
+                        pointerEvents: "none",
+                    }}
+                >
+                    <motion.div
+                        key={`${drawers.length - 1}`}
+                        transition={{ duration: 0.1 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{ zIndex: 10, height: "100%", width: "100%" }}
+                    >
+                        {drawers[drawers.length - 1]}
+                    </motion.div>
+                </Container>
+            ) : null}
+        </AnimatePresence>
+    );
 };
 
 Drawer.propTypes = {
-  width: PropTypes.number,
+    width: PropTypes.number,
 };
 
 export default Drawer;

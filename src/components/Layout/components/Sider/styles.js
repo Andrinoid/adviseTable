@@ -14,7 +14,6 @@ export const Container = styled.div`
         }
     }};
     border-right: 1px solid #e8eaed;
-    border-left: 1px solid #e8eaed;
     background: #ffffff;
     flex-shrink: 0;
     z-index: 2;
