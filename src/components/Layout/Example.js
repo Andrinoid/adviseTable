@@ -632,7 +632,7 @@ const Monitors = ({ index }) => {
 const Drawer = ({ name }) => {
     const controls = useControls();
     return (
-        <Sider style={{ width: "100%", height: "100%" }}>
+        <Sider style={{ maxWidth: 700, width: "100%", height: "100%" }}>
             <SiderTop padding={12}>
                 <div
                     style={{

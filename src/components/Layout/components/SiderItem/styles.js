@@ -37,12 +37,8 @@ export const SmallTile = styled.div`
     }
 
     &:hover {
-        background: ${(props) =>
-            props.outstanding
-                ? "linear-gradient(133deg, rgb(91 247 167 / 90%), rgb(43 94 235 / 90%));"
-                : props.active
-                ? "linear-gradient(133deg, rgb(91 247 167 / 80%), rgb(43 94 235 / 80%));"
-                : "#f8f9fa"};
+        background-color: ${(props) =>
+            props.active ? "#228be61a" : "#f8f9fa"};
     }
 `;
 
