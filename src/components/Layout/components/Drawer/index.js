@@ -3,11 +3,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Container, Mask } from "./styles";
 import useLayout from "../../hooks/useLayout";
 import PropTypes from "prop-types";
+import useControls from "../../hooks";
 
 const MotionMask = motion(Mask);
 
 const Drawer = () => {
     const { drawers } = useLayout();
+    const controls = useControls();
 
     const slideInAnimation = {
         initial: { x: "-50px" }, // Start off-screen to the left
@@ -46,7 +48,10 @@ const Drawer = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         //exit={{ opacity: 0 }}
-                        transition={{ type: "easeIn", duration: 0.4 }}
+                        transition={{ type: "linear", duration: 0.2 }}
+                        onClick={() => {
+                            controls.popDrawer();
+                        }}
                     />
                 </>
             ) : null}
