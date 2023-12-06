@@ -17,6 +17,8 @@ const SiderItem = ({
     onClick,
     icon,
     size,
+    smallTileStyle,
+    bigTileStyle,
     shouldAnimateChildren = false,
     outstanding = false,
     ...rest
@@ -42,12 +44,16 @@ const SiderItem = ({
             {...rest}
         >
             {size == "small" ? (
-                <SmallTile active={active} outstanding={outstanding}>
+                <SmallTile
+                    active={active}
+                    outstanding={outstanding}
+                    style={smallTileStyle}
+                >
                     {icon && <Icon>{icon}</Icon>}
                     {children}
                 </SmallTile>
             ) : (
-                <Tile active={active}>
+                <Tile active={active} style={bigTileStyle}>
                     {icon && <Icon>{icon}</Icon>}
                     {shouldAnimateChildren && (
                         <motion.div
@@ -70,6 +76,8 @@ SiderItem.propTypes = {
     id: PropTypes.oneOf(PropTypes.string, PropTypes.number),
     active: PropTypes.bool,
     link: PropTypes.bool,
+    smallTileStyle: PropTypes.object,
+    bigTileStyle: PropTypes.object,
 };
 
 export default SiderItem;
