@@ -56,6 +56,11 @@ function Grid(
 
   useImperativeHandle(ref, () => ({
     addRow,
+    calculateTotalWidth: () => {
+      if (containerRef.current) {
+        setTotalWidth(containerRef.current.offsetWidth);
+      }
+    },
   }));
 
   useEffect(() => {
@@ -218,87 +223,85 @@ function Grid(
     }
   }, 500);
   return (
-      <Container
-          ref={containerRef}
-          resizing={resizing}
-          className="advise-ui-grid"
+    <Container
+      ref={containerRef}
+      resizing={resizing}
+      className="advise-ui-grid"
+    >
+      {rulers[0] &&
+        rulers[0].map((r) => (
+          <Ruler
+            style={{ opacity: resizing ? 1 : 0, zIndex: 3 }}
+            key={r}
+            x={r || 0}
+          />
+        ))}
+      <DataContext.Provider
+        value={{
+          data: data,
+          setData,
+          sectionId,
+          colId,
+          maxCols,
+          minWidth,
+          setColId,
+          colOver,
+          isResizing: resizing,
+          setResizing,
+          cell: children,
+          editing,
+          totalWidth,
+          leftGap,
+          snapPoints: rulers[0],
+        }}
       >
-          {rulers[0] &&
-              rulers[0].map((r) => (
-                  <Ruler
-                      style={{ opacity: resizing ? 1 : 0, zIndex: 3 }}
-                      key={r}
-                      x={r || 0}
-                  />
-              ))}
-          <DataContext.Provider
-              value={{
-                  data: data,
-                  setData,
-                  sectionId,
-                  colId,
-                  maxCols,
-                  minWidth,
-                  setColId,
-                  colOver,
-                  isResizing: resizing,
-                  setResizing,
-                  cell: children,
-                  editing,
-                  totalWidth,
-                  leftGap,
-                  snapPoints: rulers[0],
-              }}
-          >
-              <DragDropContext
-                  onDragStart={(e) => {
-                      setSectionId(e.draggableId);
+        <DragDropContext
+          onDragStart={(e) => {
+            setSectionId(e.draggableId);
 
-                      if (e.type === "col") {
-                          // const id = e.draggableId.split("_")[0];
-                          // setDroppableRowId(e.draggableId);
-                          setColId(e.draggableId);
-                      }
-                  }}
-                  onBeforeDragStart={(e) => {
-                      setColId(e.draggableId);
-                  }}
-                  onDragUpdate={debouncedOnDragUpdate}
-                  onDragEnd={handleOnDragEnd}
+            if (e.type === "col") {
+              // const id = e.draggableId.split("_")[0];
+              // setDroppableRowId(e.draggableId);
+              setColId(e.draggableId);
+            }
+          }}
+          onBeforeDragStart={(e) => {
+            setColId(e.draggableId);
+          }}
+          onDragUpdate={debouncedOnDragUpdate}
+          onDragEnd={handleOnDragEnd}
+        >
+          <Droppable droppableId={"advise-grid"} type="advise-grid">
+            {(droppableProvided) => (
+              <div
+                {...droppableProvided.droppableProps}
+                ref={droppableProvided.innerRef}
               >
-                  <Droppable droppableId={"advise-grid"} type="advise-grid">
-                      {(droppableProvided) => (
-                          <div
-                              {...droppableProvided.droppableProps}
-                              ref={droppableProvided.innerRef}
-                          >
-                              {data.map((row, rowIndex) => {
-                                  return (
-                                      <div
-                                          style={{ position: "relative" }}
-                                          key={"sectioncontainer_" + row.rowId}
-                                      >
-                                          <Section
-                                              row={row}
-                                              isBeforeDragging={colId !== null}
-                                              widths={row.columns.map(
-                                                  (col) => col.width
-                                              )}
-                                              index={rowIndex}
-                                              breakpoint={breakpoint}
-                                              mobile={mobile}
-                                              rulers={rulers[0]}
-                                          />
-                                      </div>
-                                  );
-                              })}
-                              {droppableProvided.placeholder}
-                          </div>
-                      )}
-                  </Droppable>
-              </DragDropContext>
-          </DataContext.Provider>
-      </Container>
+                {data.map((row, rowIndex) => {
+                  return (
+                    <div
+                      style={{ position: "relative" }}
+                      key={"sectioncontainer_" + row.rowId}
+                    >
+                      <Section
+                        row={row}
+                        isBeforeDragging={colId !== null}
+                        widths={row.columns.map((col) => col.width)}
+                        index={rowIndex}
+                        breakpoint={breakpoint}
+                        mobile={mobile}
+                        rulers={rulers[0]}
+                      />
+                    </div>
+                  );
+                })}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </DataContext.Provider>
+    </Container>
   );
 }
 
