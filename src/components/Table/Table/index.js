@@ -283,6 +283,7 @@ const Table = (
     leftBrickWidth,
     numberOfDataCols,
     hasTotalColumn,
+    tableContainerRef?.current?.offsetWidth,
   ]);
 
   const cleartSelectionTable = () => {
@@ -359,10 +360,10 @@ const Table = (
   const containerWidthRef = useRef(0);
   const resizing = useRef(false);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     const size = getAdjustedSize();
     setTotalWidth(size);
-  };
+  }, [getAdjustedSize]);
 
   /**
    * Messure the viewport width and height.
