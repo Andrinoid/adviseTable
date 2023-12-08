@@ -378,11 +378,9 @@ const Table = (
 
           if (timeout) clearTimeout(timeout);
 
-          timeout = setTimeout(() => {
-            handleResize();
-            containerWidthRef.current = currentWidth;
-            resizing.current = false;
-          }, 400);
+          handleResize();
+          containerWidthRef.current = currentWidth;
+          resizing.current = false;
         }
       }
     });
@@ -648,150 +646,150 @@ const Table = (
   ];
 
   return (
-      <>
-          <div
-              id={`${tableId}-container`}
-              ref={tableContainerRef}
-              style={{ position: "relative" }}
+    <>
+      <div
+        id={`${tableId}-container`}
+        ref={tableContainerRef}
+        style={{ position: "relative" }}
+      >
+        <Wrapper
+          id={tableId}
+          version="1.10"
+          scrollStatus={scrollStatus}
+          style={{ opacity: !initialLoaded ? 0 : 1 }}
+        >
+          {headerData ? (
+            <Header
+              deselectAll={deselectAll}
+              selectAll={selectAll}
+              ref={headerScrollRef}
+              className="scrollable"
+              width={viewportWidth}
+              colHeight={headerHeight}
+              colWidth={colWidth}
+              firstColWidth={firstColWidth}
+              leftBrickWidth={leftBrickWidth}
+              lastColWidth={lastColWidth}
+              totalWidth={totalWidth}
+              onFirstColResize={onFirstColResize}
+              onLastColResize={onLastColResize}
+              totalCols={totalCols}
+              theTheme={theTheme}
+              themeKey={theme}
+              data={headerData}
+              hasTotalColumn={hasTotalColumn}
+              stickyTopOffset={headerStickyTopOffset}
+              showGrid={showGrid}
+              autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+              autoAdjustLastColWidth={autoAdjustLastColWidth}
+              lasColumnRisizeable={lasColumnRisizeable}
+              isTableSelected={isTableSelected}
+              printLayout={printLayout}
+            />
+          ) : null}
+
+          <ViewPort
+            id={tableId + "-viewport"}
+            className={`viewPort${tableId} scrollable`}
+            printLayout={printLayout}
+            style={theTheme.secondary}
+            ref={(el) => {
+              viewportRef.current = el;
+              viewportScrollRef.current = el;
+            }}
           >
-              <Wrapper
-                  id={tableId}
-                  version="1.10"
+            <div
+              style={{ width: totalWidth, zIndex: 1 }}
+              className={`${tableId}container`}
+            >
+              {childrenRows}
+              <LeftBrickSpace
+                className="leftBrickSpace"
+                width={leftBrickWidth}
+              />
+            </div>
+
+            <SelectedArea
+              numberOfCols={totalCols}
+              selectionMode={selectionMode}
+              tableId={tableId}
+              setSelectColDraging={setSelectColDraging}
+              setSelectedCount={setSelectedCount}
+              setSelectedAreas={setSelectedAreas}
+              tableMatrix={tableMatrix}
+            />
+
+            <Scroller active={selectColDraging} tableId={tableId} />
+            {!printLayout && (
+              <>
+                <LeftEdge
                   scrollStatus={scrollStatus}
-                  style={{ opacity: !initialLoaded ? 0 : 1 }}
-              >
-                  {headerData ? (
-                      <Header
-                          deselectAll={deselectAll}
-                          selectAll={selectAll}
-                          ref={headerScrollRef}
-                          className="scrollable"
-                          width={viewportWidth}
-                          colHeight={headerHeight}
-                          colWidth={colWidth}
-                          firstColWidth={firstColWidth}
-                          leftBrickWidth={leftBrickWidth}
-                          lastColWidth={lastColWidth}
-                          totalWidth={totalWidth}
-                          onFirstColResize={onFirstColResize}
-                          onLastColResize={onLastColResize}
-                          totalCols={totalCols}
-                          theTheme={theTheme}
-                          themeKey={theme}
-                          data={headerData}
-                          hasTotalColumn={hasTotalColumn}
-                          stickyTopOffset={headerStickyTopOffset}
-                          showGrid={showGrid}
-                          autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-                          autoAdjustLastColWidth={autoAdjustLastColWidth}
-                          lasColumnRisizeable={lasColumnRisizeable}
-                          isTableSelected={isTableSelected}
-                          printLayout={printLayout}
-                      />
-                  ) : null}
+                  offsetLeft={leftBrickWidth}
+                />
 
-                  <ViewPort
-                      id={tableId + "-viewport"}
-                      className={`viewPort${tableId} scrollable`}
-                      printLayout={printLayout}
-                      style={theTheme.secondary}
-                      ref={(el) => {
-                          viewportRef.current = el;
-                          viewportScrollRef.current = el;
-                      }}
-                  >
-                      <div
-                          style={{ width: totalWidth, zIndex: 1 }}
-                          className={`${tableId}container`}
-                      >
-                          {childrenRows}
-                          <LeftBrickSpace
-                              className="leftBrickSpace"
-                              width={leftBrickWidth}
-                          />
-                      </div>
+                <Edge
+                  isViewPortOverflow={isViewPortOverflow}
+                  scrollStatus={scrollStatus}
+                />
+              </>
+            )}
+          </ViewPort>
+          <div className="table-end"></div>
+          <Footer
+            numberFormat={numberFormat}
+            maxWidth={totalWidth}
+            count={selectedCount}
+            sum={selectedSum}
+            min={selectedMin}
+            max={selectedMax}
+            avg={selectedAvg}
+            vissible={footer}
+          />
 
-                      <SelectedArea
-                          numberOfCols={totalCols}
-                          selectionMode={selectionMode}
-                          tableId={tableId}
-                          setSelectColDraging={setSelectColDraging}
-                          setSelectedCount={setSelectedCount}
-                          setSelectedAreas={setSelectedAreas}
-                          tableMatrix={tableMatrix}
-                      />
-
-                      <Scroller active={selectColDraging} tableId={tableId} />
-                      {!printLayout && (
-                          <>
-                              <LeftEdge
-                                  scrollStatus={scrollStatus}
-                                  offsetLeft={leftBrickWidth}
-                              />
-
-                              <Edge
-                                  isViewPortOverflow={isViewPortOverflow}
-                                  scrollStatus={scrollStatus}
-                              />
-                          </>
-                      )}
-                  </ViewPort>
-                  <div className="table-end"></div>
-                  <Footer
-                      numberFormat={numberFormat}
-                      maxWidth={totalWidth}
-                      count={selectedCount}
-                      sum={selectedSum}
-                      min={selectedMin}
-                      max={selectedMax}
-                      avg={selectedAvg}
-                      vissible={footer}
-                  />
-
-                  {/* Refactor to make it pretty */}
-                  <div
-                      ref={tableLayerScrollRef}
-                      className="scrollable"
-                      style={{
-                          position: "absolute",
-                          inset: 0,
-                          width: viewportWidth,
-                          overflow: "hidden",
-                          pointerEvents: "none",
-                      }}
-                  >
-                      <div
-                          style={{
-                              position: "absolute",
-                              width: totalWidth,
-                              height: "100%",
-                          }}
-                      >
-                          {!printLayout && (
-                              <Selection
-                                  // selectionString={JSON.stringify(selectedAreas)}
-                                  selectedAreas={selectedAreas}
-                                  colWidth={colWidth}
-                                  colHeight={colHeight}
-                                  leftOffset={leftBrickWidth}
-                                  firstColWidth={firstColWidth}
-                                  lastColWidth={lastColWidth}
-                                  numberOfCols={totalCols}
-                                  selectionMode={selectionMode}
-                                  totalWidth={totalWidth}
-                                  lasColumnRisizeable={lasColumnRisizeable}
-                                  theTheme={theTheme}
-                                  headerHeight={headerHeight}
-                                  tableMatrix={tableMatrix}
-                                  tableTopOffset={tableTopOffset}
-                                  tableContainerRef={tableContainerRef}
-                              />
-                          )}
-                      </div>
-                  </div>
-              </Wrapper>
+          {/* Refactor to make it pretty */}
+          <div
+            ref={tableLayerScrollRef}
+            className="scrollable"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: viewportWidth,
+              overflow: "hidden",
+              pointerEvents: "none",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                width: totalWidth,
+                height: "100%",
+              }}
+            >
+              {!printLayout && (
+                <Selection
+                  // selectionString={JSON.stringify(selectedAreas)}
+                  selectedAreas={selectedAreas}
+                  colWidth={colWidth}
+                  colHeight={colHeight}
+                  leftOffset={leftBrickWidth}
+                  firstColWidth={firstColWidth}
+                  lastColWidth={lastColWidth}
+                  numberOfCols={totalCols}
+                  selectionMode={selectionMode}
+                  totalWidth={totalWidth}
+                  lasColumnRisizeable={lasColumnRisizeable}
+                  theTheme={theTheme}
+                  headerHeight={headerHeight}
+                  tableMatrix={tableMatrix}
+                  tableTopOffset={tableTopOffset}
+                  tableContainerRef={tableContainerRef}
+                />
+              )}
+            </div>
           </div>
-      </>
+        </Wrapper>
+      </div>
+    </>
   );
 };
 
