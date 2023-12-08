@@ -348,8 +348,11 @@ const Table = (
 
     element.addEventListener("scroll", handleScroll);
 
+    window.addEventListener("resize", handleResize);
+
     return () => {
       element.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
