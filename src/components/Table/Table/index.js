@@ -253,7 +253,6 @@ const Table = (
     export() {
       handleExporting(tableMatrix, headerData);
     },
-    handleResize,
   }));
 
   /**
@@ -283,7 +282,6 @@ const Table = (
     leftBrickWidth,
     numberOfDataCols,
     hasTotalColumn,
-    tableContainerRef?.current?.offsetWidth,
   ]);
 
   const cleartSelectionTable = () => {
@@ -349,21 +347,40 @@ const Table = (
 
     element.addEventListener("scroll", handleScroll);
 
-    window.addEventListener("resize", handleResize);
-
     return () => {
       element.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   const containerWidthRef = useRef(0);
   const resizing = useRef(false);
 
-  const handleResize = useCallback(() => {
+  const handleResize = () => {
     const size = getAdjustedSize();
     setTotalWidth(size);
-  }, [getAdjustedSize]);
+  };
+
+  useEffect(() => {
+    const container = document.querySelector(`#${tableId}-container`);
+
+    containerWidthRef.current = container.clientWidth;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const computedStyle = window.getComputedStyle(container);
+
+      const currentWidth = parseFloat(computedStyle.width);
+
+      if (currentWidth !== containerWidthRef.current) {
+        if (!resizing.current) {
+          resizing.current = true;
+
+          resizing.current = false;
+        }
+      }
+    });
+
+    resizeObserver.observe(container);
+  }, []);
 
   /**
    * Messure the viewport width and height.
