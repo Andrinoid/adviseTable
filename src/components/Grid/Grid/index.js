@@ -90,10 +90,8 @@ function Grid(
   }
 
   useEffect(() => {
-    if (containerRef.current) {
-      updateRulers(containerRef.current.offsetWidth);
-    }
-  }, [containerRef.current]);
+    updateRulers(totalWidth);
+  }, [totalWidth]);
 
   function recomputeWidths(draft) {
     draft.forEach((row) => {
