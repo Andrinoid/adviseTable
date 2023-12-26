@@ -15,7 +15,7 @@ const usePushSider = () => {
         (sider) =>
           sider[0] &&
           sider[0](0).type === value(0).type &&
-          JSON.stringify(sider[0](0).props) === JSON.stringify(value(0).props)
+          sider[0](0).props.name === value(0).props.name
       );
 
       if (!exists) {
