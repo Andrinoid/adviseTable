@@ -8,8 +8,8 @@ const usePushDrawer = () => {
   const { drawers, setDrawers, siders } = useLayout();
   const clear = useClear();
 
-  return (component) => {
-    if (siders.length > 0) {
+  return (component, root = false) => {
+    if (siders.length > 0 && root) {
       clear();
       setTimeout(() => {
         setDrawers(
