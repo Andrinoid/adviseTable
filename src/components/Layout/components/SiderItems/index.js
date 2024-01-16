@@ -1,18 +1,7 @@
-import React, { useEffect, useState } from "react";
-import useControls from "../../hooks";
+import React, { useState } from "react";
 
 const SiderItems = ({ children, besides, ...rest }) => {
-  const { drawers, siders, links } = useControls();
   const [active, setActive] = useState(null);
-
-  useEffect(() => {
-    if (
-      (drawers.length === 0 && links.length === 0) ||
-      (siders.length === 0 && links.length === 0)
-    ) {
-      setActive(null);
-    }
-  }, [siders, drawers, links]);
 
   return (
     <div {...rest} style={{ marginTop: 8 }}>
