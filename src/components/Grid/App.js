@@ -278,7 +278,6 @@ function App() {
   const ref = useRef(null);
   const [editing, setEditing] = useState(true);
 
-  console.log("layout", layout);
   return (
     <div style={{ paddingTop: 20 }}>
       <button
@@ -296,9 +295,9 @@ function App() {
           setLayout(data);
         }}
       >
-        {(item, style) => {
+        {(item) => {
           return (
-            <DummyWidget initialHeight={100} style={style}>
+            <DummyWidget initialHeight={100}>
               {item && item.widget && item.widget.title
                 ? item.widget.title
                 : ""}
