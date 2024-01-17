@@ -186,7 +186,7 @@ const App = () => {
                         height: "100%",
                     }}
                 >
-                    <ExampleSimple
+                    <Example
                         theme={tableTheme}
                         draggable={draggable}
                         showGrid={showGrid}

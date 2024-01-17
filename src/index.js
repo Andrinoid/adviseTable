@@ -15,4 +15,4 @@ const Application = () => (
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<ExampleSimple />);
+root.render(<Application />);
