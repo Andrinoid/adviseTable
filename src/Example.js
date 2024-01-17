@@ -1,11 +1,11 @@
 import React, {
-  useState,
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-  useMemo,
-  memo,
+    useState,
+    useRef,
+    useEffect,
+    useLayoutEffect,
+    useCallback,
+    useMemo,
+    memo,
 } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FixedSizeList as List, VariableSizeList } from "react-window";
@@ -13,9 +13,9 @@ import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { Virtuoso } from "react-virtuoso";
 import {
-  EditOutlined,
-  VerticalAlignBottomOutlined,
-  ClearOutlined,
+    EditOutlined,
+    VerticalAlignBottomOutlined,
+    ClearOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
 import DragHandle from "./icons/DragHandle";
@@ -26,36 +26,36 @@ import { default as mo } from "./data/months";
 import Plus from "./icons/Plus";
 
 const Flex = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  cursor: ${({ cursor }) => cursor || "default"};
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    cursor: ${({ cursor }) => cursor || "default"};
 `;
 const MenuItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  cursor: pointer;
-  ${({ hover }) => {
-    if (hover) {
-      return `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    cursor: pointer;
+    ${({ hover }) => {
+        if (hover) {
+            return `
       &:hover {
         background-color: #e6f4ff;
       }
     `;
-    }
-  }}
+        }
+    }}
 `;
 
 function getTotal(index) {
-  let result = "";
+    let result = "";
 
-  for (let i = 0; i <= index; i++) {
-    result += `${i}`;
-  }
+    for (let i = 0; i <= index; i++) {
+        result += `${i}`;
+    }
 
-  return result;
+    return result;
 }
 
 function Example({
@@ -210,6 +210,7 @@ function Example({
 
     const table1Ref = useRef(null);
     const table2Ref = useRef(null);
+    const parentDivRef = useRef(null);
 
     useEffect(() => {
         function handleContextMenu(e) {
@@ -228,7 +229,7 @@ function Example({
     }, [table1Ref, table2Ref]);
 
     return (
-        <div className="App" style={{ paddingBottom: 500 }}>
+        <div className="App" style={{ height: "100%", overflow: "hidden" }}>
             <button
                 onClick={() => {
                     const result = {
@@ -261,26 +262,32 @@ function Example({
             >
                 Update table columns amount
             </button>
-            <Table
-                printLayout={printMode}
-                ref={table1Ref}
-                headerData={header}
-                theme={theme}
-                showGrid={true}
-                selectionMode={selectionMode}
-                tableId={"bigTable"}
-                footer={footerVissible}
-                headerStickyTopOffset={headerOffset}
-                lasColumnRisizeable={true}
-                hasTotalColumn={true}
-                onSelection={(selectedReport) => {
-                    // console.log("selectedReport", selectedReport);
-                }}
+            <div
+                style={{ height: "100%", overflow: "auto" }}
+                className="scrollContainer"
+                ref={parentDivRef}
             >
-                {(tableProvided) => {
-                    return (
-                        <>
-                            {/* <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
+                <Table
+                    parentScrollRef={parentDivRef}
+                    printLayout={printMode}
+                    ref={table1Ref}
+                    headerData={header}
+                    theme={theme}
+                    showGrid={true}
+                    selectionMode={selectionMode}
+                    tableId={"bigTable"}
+                    footer={footerVissible}
+                    headerStickyTopOffset={headerOffset}
+                    lasColumnRisizeable={true}
+                    hasTotalColumn={true}
+                    onSelection={(selectedReport) => {
+                        // console.log("selectedReport", selectedReport);
+                    }}
+                >
+                    {(tableProvided) => {
+                        return (
+                            <>
+                                {/* <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
                 <Col colspan={"fullwidth"}>Some text</Col>
               </Row>
               <Row
@@ -353,137 +360,141 @@ function Example({
                 })}
                 <Col allowEdition={allowEdition}>123</Col>
               </Row> */}
-                            <DragDropContext onDragEnd={handleOnDragEnd}>
-                                <Droppable droppableId="characters">
-                                    {(provided) => (
-                                        <div
-                                            {...provided.droppableProps}
-                                            ref={provided.innerRef}
-                                        >
-                                            <Row
-                                                style={{ minHeight: 40 }}
-                                                {...tableProvided.rowProps}
-                                                menuContent={rowMenuContent(
-                                                    provided.dragHandleProps
-                                                )}
+                                <DragDropContext onDragEnd={handleOnDragEnd}>
+                                    <Droppable droppableId="characters">
+                                        {(provided) => (
+                                            <div
+                                                {...provided.droppableProps}
+                                                ref={provided.innerRef}
                                             >
-                                                <Col
-                                                    colspan={"fullwidth"}
-                                                    spanSelection={false}
-                                                    horizontalAlign={"left"}
+                                                <Row
                                                     style={{ minHeight: 40 }}
+                                                    {...tableProvided.rowProps}
+                                                    menuContent={rowMenuContent(
+                                                        provided.dragHandleProps
+                                                    )}
                                                 >
-                                                    <span
+                                                    <Col
+                                                        colspan={"fullwidth"}
+                                                        spanSelection={false}
+                                                        horizontalAlign={"left"}
                                                         style={{
-                                                            fontSize: "inherit",
+                                                            minHeight: 40,
                                                         }}
                                                     >
-                                                        Label
-                                                    </span>
-                                                </Col>
-                                            </Row>
-                                            {viewData.map((row, i) => {
-                                                return (
-                                                    <Draggable
-                                                        isDragDisabled={
-                                                            !draggable
-                                                        }
-                                                        draggableId={
-                                                            "id-" + row.id
-                                                        }
-                                                        key={"id-" + row.id}
-                                                        index={i}
-                                                    >
-                                                        {(provided) => (
-                                                            <div
-                                                                ref={
-                                                                    provided.innerRef
-                                                                }
-                                                                {...provided.draggableProps}
-                                                            >
-                                                                <Row
-                                                                    key={i}
-                                                                    style={{
-                                                                        minHeight: 40,
-                                                                    }}
-                                                                    leftBrickContent={leftBrickContent(
-                                                                        provided.dragHandleProps,
-                                                                        row.id
-                                                                    )}
-                                                                    {...tableProvided.rowProps}
-                                                                    menuContent={rowMenuContent(
-                                                                        provided.dragHandleProps
-                                                                    )}
+                                                        <span
+                                                            style={{
+                                                                fontSize:
+                                                                    "inherit",
+                                                            }}
+                                                        >
+                                                            Label
+                                                        </span>
+                                                    </Col>
+                                                </Row>
+                                                {viewData.map((row, i) => {
+                                                    return (
+                                                        <Draggable
+                                                            isDragDisabled={
+                                                                !draggable
+                                                            }
+                                                            draggableId={
+                                                                "id-" + row.id
+                                                            }
+                                                            key={"id-" + row.id}
+                                                            index={i}
+                                                        >
+                                                            {(provided) => (
+                                                                <div
+                                                                    ref={
+                                                                        provided.innerRef
+                                                                    }
+                                                                    {...provided.draggableProps}
                                                                 >
-                                                                    <Col horizontalAlign="left">
-                                                                        {
-                                                                            row.name
-                                                                        }
-                                                                    </Col>
-
-                                                                    {monthRange.map(
-                                                                        (
-                                                                            month,
-                                                                            i
-                                                                        ) => (
-                                                                            <Col
-                                                                                key={
-                                                                                    i
-                                                                                }
-                                                                                allowEdition={
-                                                                                    allowEdition
-                                                                                }
-                                                                                onSubmitCallback={() => {}}
-                                                                                inputType={
-                                                                                    "number"
-                                                                                }
-                                                                            >
-                                                                                {
-                                                                                    row[
-                                                                                        month
-                                                                                    ]
-                                                                                }
-                                                                            </Col>
-                                                                        )
-                                                                    )}
-
-                                                                    <Col
-                                                                        allowEdition={
-                                                                            allowEdition
-                                                                        }
-                                                                    >
-                                                                        {getTotal(
-                                                                            i
+                                                                    <Row
+                                                                        key={i}
+                                                                        style={{
+                                                                            minHeight: 40,
+                                                                        }}
+                                                                        leftBrickContent={leftBrickContent(
+                                                                            provided.dragHandleProps,
+                                                                            row.id
                                                                         )}
-                                                                    </Col>
-                                                                </Row>
+                                                                        {...tableProvided.rowProps}
+                                                                        menuContent={rowMenuContent(
+                                                                            provided.dragHandleProps
+                                                                        )}
+                                                                    >
+                                                                        <Col horizontalAlign="left">
+                                                                            {
+                                                                                row.name
+                                                                            }
+                                                                        </Col>
 
-                                                                {expandedIds.includes(
-                                                                    row.id
-                                                                ) && (
-                                                                    <SubRowList
-                                                                        monthRange={
-                                                                            monthRange
-                                                                        }
-                                                                        tableProvided={
-                                                                            tableProvided
-                                                                        }
-                                                                    />
-                                                                )}
-                                                            </div>
-                                                        )}
-                                                    </Draggable>
-                                                );
-                                            })}
-                                            {provided.placeholder}
-                                        </div>
-                                    )}
-                                </Droppable>
-                            </DragDropContext>
-                        </>
-                    );
-                }}
-            </Table>
+                                                                        {monthRange.map(
+                                                                            (
+                                                                                month,
+                                                                                i
+                                                                            ) => (
+                                                                                <Col
+                                                                                    key={
+                                                                                        i
+                                                                                    }
+                                                                                    allowEdition={
+                                                                                        allowEdition
+                                                                                    }
+                                                                                    onSubmitCallback={() => {}}
+                                                                                    inputType={
+                                                                                        "number"
+                                                                                    }
+                                                                                >
+                                                                                    {
+                                                                                        row[
+                                                                                            month
+                                                                                        ]
+                                                                                    }
+                                                                                </Col>
+                                                                            )
+                                                                        )}
+
+                                                                        <Col
+                                                                            allowEdition={
+                                                                                allowEdition
+                                                                            }
+                                                                        >
+                                                                            {getTotal(
+                                                                                i
+                                                                            )}
+                                                                        </Col>
+                                                                    </Row>
+
+                                                                    {expandedIds.includes(
+                                                                        row.id
+                                                                    ) && (
+                                                                        <SubRowList
+                                                                            monthRange={
+                                                                                monthRange
+                                                                            }
+                                                                            tableProvided={
+                                                                                tableProvided
+                                                                            }
+                                                                        />
+                                                                    )}
+                                                                </div>
+                                                            )}
+                                                        </Draggable>
+                                                    );
+                                                })}
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                    </Droppable>
+                                </DragDropContext>
+                            </>
+                        );
+                    }}
+                </Table>
+            </div>
         </div>
     );
 }

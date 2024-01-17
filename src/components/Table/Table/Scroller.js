@@ -7,15 +7,20 @@ let timer = null;
 let tableTimer = null;
 
 const Scroller = ({ active = false, tableId }) => {
-
     useEffect(() => {
         window.addEventListener("mousemove", handleMousemove, false);
-        let tableMouseMove = delegate(document.body, `.viewPort${tableId}`, 'mousemove', onTableMouseMove, false);
+        let tableMouseMove = delegate(
+            document.body,
+            `.viewPort${tableId}`,
+            "mousemove",
+            onTableMouseMove,
+            false
+        );
 
         return () => {
             window.removeEventListener("mousemove", handleMousemove, false);
             tableMouseMove.destroy();
-        }
+        };
     }, [active]);
 
     const onTableMouseMove = (event) => {
@@ -31,8 +36,8 @@ const Scroller = ({ active = false, tableId }) => {
         let edgeLeft = edgeSize;
         let edgeRight = viewportWidth - edgeSize;
 
-        let isInLeftEdge = (viewportX < edgeLeft);
-        let isInRightEdge = (viewportX > edgeRight);
+        let isInLeftEdge = viewportX < edgeLeft;
+        let isInRightEdge = viewportX > edgeRight;
 
         if (!(isInLeftEdge || isInRightEdge)) {
             clearTimeout(tableTimer);
@@ -51,33 +56,36 @@ const Scroller = ({ active = false, tableId }) => {
 
         function adjustViewportScroll() {
             if (!active) return;
-            
+
             let currentScrollX = viewport.scrollLeft;
             // Determine if the viewport can be scrolled in any particular direction.
-            let canScrollLeft = (currentScrollX > 0);
-            let canScrollRight = (currentScrollX < maxScrollX);
+            let canScrollLeft = currentScrollX > 0;
+            let canScrollRight = currentScrollX < maxScrollX;
 
             let nextScrollX = currentScrollX;
             let maxStep = 50;
 
-            if(isInLeftEdge && canScrollLeft){
+            if (isInLeftEdge && canScrollLeft) {
                 var intensity = (edgeLeft - viewportX) / edgeSize;
-                nextScrollX = Math.max(0, currentScrollX - (maxStep * intensity));
+                nextScrollX = Math.max(0, currentScrollX - maxStep * intensity);
             }
-            if(isInRightEdge && canScrollRight){
+            if (isInRightEdge && canScrollRight) {
                 var intensity = (viewportX - edgeRight) / edgeSize;
-                nextScrollX = Math.min(maxScrollX, currentScrollX + (maxStep * intensity));
+                nextScrollX = Math.min(
+                    maxScrollX,
+                    currentScrollX + maxStep * intensity
+                );
             }
 
             // nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
 
-            if(nextScrollX !== currentScrollX) {
+            if (nextScrollX !== currentScrollX) {
                 viewport.scrollLeft = nextScrollX;
                 return true;
             } else {
                 return false;
             }
-        } 
+        }
     };
 
     const handleMousemove = (event) => {
@@ -90,9 +98,9 @@ const Scroller = ({ active = false, tableId }) => {
         // calculate the boundaries of the edge in the viewport (these coordinates
         // are relative to the viewport grid system).
         let edgeTop = edgeSize;
-        let edgeBottom = (pageViewportHeight - edgeSize);
-        let isInTopEdge = (viewportY < edgeTop);
-        let isInBottomEdge = (viewportY > edgeBottom);
+        let edgeBottom = pageViewportHeight - edgeSize;
+        let isInTopEdge = viewportY < edgeTop;
+        let isInBottomEdge = viewportY > edgeBottom;
 
         // If the mouse is not in the viewport edge, there's no need to calculate
         // anything else.
@@ -113,7 +121,7 @@ const Scroller = ({ active = false, tableId }) => {
         // Calculate the maximum scroll offset in each direction. Since you can only
         // scroll the overflow portion of the document, the maximum represents the
         // length of the document that is NOT in the viewport.
-        let maxScrollY = (documentHeight - pageViewportHeight);
+        let maxScrollY = documentHeight - pageViewportHeight;
 
         // As we examine the mousemove event, we want to adjust the window scroll in
         // immediate response to the event; but, we also want to continue adjusting
@@ -130,19 +138,14 @@ const Scroller = ({ active = false, tableId }) => {
             if (adjustWindowScroll()) {
                 timer = setTimeout(checkForWindowScroll, 30);
             }
-
         })();
-
-       
-
-        
 
         // Adjust the window scroll based on the user's mouse position. Returns True
         // or False depending on whether or not the window scroll was changed.
         function adjustWindowScroll() {
             let currentScrollY = window.pageYOffset;
-            let canScrollUp = (currentScrollY > 0);
-            let canScrollDown = (currentScrollY < maxScrollY);
+            let canScrollUp = currentScrollY > 0;
+            let canScrollDown = currentScrollY < maxScrollY;
             let nextScrollY = currentScrollY;
 
             // As we examine the mouse position within the edge, we want to make the
@@ -154,49 +157,39 @@ const Scroller = ({ active = false, tableId }) => {
 
             // Should we scroll up?
             if (isInTopEdge && canScrollUp) {
+                let intensity = (edgeTop - viewportY) / edgeSize;
 
-                let intensity = ((edgeTop - viewportY) / edgeSize);
+                nextScrollY = nextScrollY - maxStep * intensity;
 
-                nextScrollY = (nextScrollY - (maxStep * intensity));
-
-            // Should we scroll down?
+                // Should we scroll down?
             } else if (isInBottomEdge && canScrollDown) {
-
                 // .table-end is the last element in the table. it has no height it is just a marker
-                let isTableInViewport = isElementInViewport(document.querySelector(".table-end"), {bottom: 30})
+                let isTableInViewport = isElementInViewport(
+                    document.querySelector(".table-end"),
+                    { bottom: 30 }
+                );
 
                 // cancel the scroll if the table is in the viewport.This is how we know that the bottom of the table is in the viewport
                 if (isTableInViewport) {
                     clearTimeout(timer);
                     return;
                 }
-                let intensity = ((viewportY - edgeBottom) / edgeSize);
-                nextScrollY = (nextScrollY + (maxStep * intensity));
+                let intensity = (viewportY - edgeBottom) / edgeSize;
+                nextScrollY = nextScrollY + maxStep * intensity;
             }
 
             nextScrollY = Math.max(0, Math.min(maxScrollY, nextScrollY));
 
-            if (
-                (nextScrollY !== currentScrollY)
-            ) {
-
+            if (nextScrollY !== currentScrollY) {
                 window.scrollTo(window.scrollX, nextScrollY);
-                return (true);
-
+                return true;
             } else {
-
-                return (false);
-
+                return false;
             }
-
         }
+    };
 
-    }
+    return <></>;
+};
 
-
-    return (
-        <></>
-    )
-}
-
-export default memo(Scroller)
+export default memo(Scroller);
