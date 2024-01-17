@@ -2,11 +2,11 @@ import React, { useEffect, memo } from "react";
 import { isElementInViewport } from "../utils";
 import delegate from "delegate";
 
-let edgeSize = 110;
+let edgeSize = 80;
 let timer = null;
 let tableTimer = null;
 
-const Scroller = ({ active = false, tableId, parentScrollRef }) => {
+const Scroller = ({ active = false, tableId }) => {
     useEffect(() => {
         window.addEventListener("mousemove", handleMousemove, false);
         let tableMouseMove = delegate(
@@ -91,12 +91,7 @@ const Scroller = ({ active = false, tableId, parentScrollRef }) => {
     const handleMousemove = (event) => {
         if (!active) return;
         let viewportY = event.clientY;
-        let pageViewportHeight;
-        if (parentScrollRef.current) {
-            pageViewportHeight = parentScrollRef.current.clientHeight;
-        } else {
-            pageViewportHeight = document.documentElement.clientHeight;
-        }
+        let pageViewportHeight = document.documentElement.clientHeight;
 
         // Next, we need to determine if the mouse is within the "edge" of the
         // viewport, which may require scrolling the window. To do this, we need to
@@ -126,9 +121,7 @@ const Scroller = ({ active = false, tableId, parentScrollRef }) => {
         // Calculate the maximum scroll offset in each direction. Since you can only
         // scroll the overflow portion of the document, the maximum represents the
         // length of the document that is NOT in the viewport.
-        // let maxScrollY = documentHeight - pageViewportHeight;
-        let maxScrollY =
-            parentScrollRef.current.scrollHeight - pageViewportHeight;
+        let maxScrollY = documentHeight - pageViewportHeight;
 
         // As we examine the mousemove event, we want to adjust the window scroll in
         // immediate response to the event; but, we also want to continue adjusting
@@ -150,14 +143,7 @@ const Scroller = ({ active = false, tableId, parentScrollRef }) => {
         // Adjust the window scroll based on the user's mouse position. Returns True
         // or False depending on whether or not the window scroll was changed.
         function adjustWindowScroll() {
-            // let currentScrollY = window.pageYOffset;
-            let currentScrollY;
-            if (parentScrollRef.current) {
-                currentScrollY = parentScrollRef.current.scrollTop;
-            } else {
-                currentScrollY = window.pageYOffset;
-            }
-
+            let currentScrollY = window.pageYOffset;
             let canScrollUp = currentScrollY > 0;
             let canScrollDown = currentScrollY < maxScrollY;
             let nextScrollY = currentScrollY;
@@ -167,7 +153,7 @@ const Scroller = ({ active = false, tableId, parentScrollRef }) => {
             // gets the viewport edge. As such, we'll calculate the percentage that
             // the user has made it "through the edge" when calculating the delta.
             // Then, that use that percentage to back-off from the "max" step value.
-            let maxStep = 10;
+            let maxStep = 50;
 
             // Should we scroll up?
             if (isInTopEdge && canScrollUp) {
@@ -195,11 +181,7 @@ const Scroller = ({ active = false, tableId, parentScrollRef }) => {
             nextScrollY = Math.max(0, Math.min(maxScrollY, nextScrollY));
 
             if (nextScrollY !== currentScrollY) {
-                if (parentScrollRef.current) {
-                    parentScrollRef.current.scrollTo(0, nextScrollY);
-                } else {
-                    window.scrollTo(window.scrollX, nextScrollY);
-                }
+                window.scrollTo(window.scrollX, nextScrollY);
                 return true;
             } else {
                 return false;

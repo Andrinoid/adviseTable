@@ -649,7 +649,7 @@ const Table = (
             <div
                 id={`${tableId}-container`}
                 ref={tableContainerRef}
-                style={{ position: "relative" }}
+                style={{ position: "relative", overflow: "hidden" }}
             >
                 <Wrapper
                     id={tableId}
