@@ -157,11 +157,18 @@ const Table = (
 
     const [isTableSelected, setIsTableSelected] = useState(false);
     const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
-    const getEdgeScrollingProps = useScrollOnEdges({
+    const getEdgeScrollingPropsX = useScrollOnEdges({
         canAnimate: isSelecting,
         edgeSize: 100,
+        scrollOnX: true,
+        scrollOnY: false,
     });
-
+    const getEdgeScrollingPropsY = useScrollOnEdges({
+        canAnimate: isSelecting,
+        edgeSize: 100,
+        scrollOnX: false,
+        scrollOnY: true,
+    });
     const handleExporting = HandleExporting();
 
     useEffect(() => {
@@ -647,7 +654,7 @@ const Table = (
     return (
         <>
             <div
-                {...getEdgeScrollingProps()}
+                {...getEdgeScrollingPropsY()}
                 id={`${tableId}`}
                 className="foobar"
                 ref={tableContainerRef}
@@ -693,7 +700,7 @@ const Table = (
                     ref={tableBodyLayersRef}
                 >
                     <ViewPort
-                        {...getEdgeScrollingProps()}
+                        {...getEdgeScrollingPropsX()}
                         id={tableId + "-viewport"}
                         className={`viewPort${tableId} scrollable`}
                         printLayout={printLayout}
@@ -795,6 +802,7 @@ const Table = (
                                     tableMatrix={tableMatrix}
                                     tableTopOffset={tableTopOffset}
                                     tableContainerRef={tableBodyLayersRef}
+                                    tableId={tableId}
                                 />
                             )}
                         </div>

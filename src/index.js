@@ -10,7 +10,7 @@ import { RootStyle } from "./global.style";
 const Application = () => (
     <>
         <RootStyle />
-        <App />
+        <ExampleSimple />
     </>
 );
 

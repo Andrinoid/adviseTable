@@ -27,6 +27,7 @@ const Selection = ({
     theTheme,
     tableMatrix,
     tableContainerRef,
+    tableId,
 }) => {
     const [dimensions, setDimensions] = useState([]);
 
@@ -49,17 +50,45 @@ const Selection = ({
         }
         const firstElement =
             tableMatrix[selection.fromY][selection.fromX].current;
-        const lastElement = tableMatrix[selection.toY][selection.toX].current;
-        const rowType = lastElement.dataset.rowtype;
 
         const tableContainerDimensions =
             tableContainerRef.current.getBoundingClientRect();
+
+        // Find the first element row and get its top position
+        const firstElementRow = document.querySelector(
+            `.${tableId}-tableRow[y="${selection.fromY}"]`
+        );
+        const firstElementRowDimensions =
+            firstElementRow.getBoundingClientRect();
+        const firstElementRowTop =
+            firstElementRowDimensions.top - tableContainerDimensions.top;
+
+        //Find The last element row and get its top position
+        const lastElementRow = document.querySelector(
+            `.${tableId}-tableRow[y="${selection.toY}"]`
+        );
+        const lastElementRowDimensions = lastElementRow.getBoundingClientRect();
+        const lastElementRowTop =
+            lastElementRowDimensions.top - tableContainerDimensions.top;
+
+        console.log("firstElementRow", firstElementRow);
+        console.log("fristElementRowTop", firstElementRowTop);
+
+        const lastElement = tableMatrix[selection.toY][selection.toX].current;
+        const rowType = lastElement.dataset.rowtype;
+
         const firstElmDimentions = firstElement.getBoundingClientRect();
 
-        let top = firstElmDimentions.top - tableContainerDimensions.top;
+        // let top = firstElmDimentions.top - tableContainerDimensions.top;
+        // let left = firstElement.offsetLeft;
+        // let width = lastElement.offsetLeft + lastElement.offsetWidth - left;
+        // let height = lastElement.offsetTop + lastElement.offsetHeight - top;
+
+        let top = firstElementRowTop;
         let left = firstElement.offsetLeft;
         let width = lastElement.offsetLeft + lastElement.offsetWidth - left;
-        let height = lastElement.offsetTop + lastElement.offsetHeight - top;
+        let height = lastElementRowTop + lastElement.offsetHeight - top;
+
         console.log("lastElement", lastElement);
         console.log("lastElement.offsetHeight", lastElement.offsetHeight);
         console.log("lastElement.offsetTop", lastElement.offsetTop);

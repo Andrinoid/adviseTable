@@ -1,7 +1,13 @@
 import React from "react";
 
 const useScrollOnEdges = (props = undefined) => {
-    const { canAnimate = true, edgeSize = 25, scrollSpeed = 12 } = props || {};
+    const {
+        canAnimate = true,
+        edgeSize = 25,
+        scrollSpeed = 12,
+        scrollOnX = true,
+        scrollOnY = true,
+    } = props || {};
     const frameID = React.useRef();
 
     function handleMousemove(event) {
@@ -115,7 +121,13 @@ const useScrollOnEdges = (props = undefined) => {
                 nextScrollX !== currentScrollX ||
                 nextScrollY !== currentScrollY
             ) {
-                el.scrollTo(nextScrollX, nextScrollY);
+                if (scrollOnX) {
+                    el.scrollLeft = nextScrollX;
+                }
+                if (scrollOnY) {
+                    el.scrollTop = nextScrollY;
+                }
+                // el.scrollTo(nextScrollX, nextScrollY);
                 nextScrollY = 0;
                 return true;
             } else {
