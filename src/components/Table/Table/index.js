@@ -55,8 +55,8 @@ const LeftEdge = styled.div`
     ${({ scrollStatus }) => {
         if (scrollStatus === "middle" || scrollStatus === "end") {
             return `
-        box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
-      `;
+      box-shadow: inset 10px 0 8px -8px rgb(5 5 5 / 6%);
+    `;
         }
     }}
 `;
@@ -74,8 +74,8 @@ const Edge = styled.div`
     ${({ isViewPortOverflow, scrollStatus }) => {
         if (isViewPortOverflow && scrollStatus !== "end") {
             return `
-        box-shadow: inset -10px 0 8px -8px rgb(5 5 5 / 6%);
-      `;
+      box-shadow: inset -10px 0 8px -8px rgb(5 5 5 / 6%);
+    `;
         }
     }}
 `;
@@ -732,11 +732,11 @@ const Table = (
                         />
 
                         {/* <Scroller
-              parentScrollRef={parentScrollRef}
-              active={selectColDraging}
-              tableId={tableId}
-              onScroll={(x, y) => console.log({ x: x, y: y })}
-            /> */}
+            parentScrollRef={parentScrollRef}
+            active={selectColDraging}
+            tableId={tableId}
+            onScroll={(x, y) => console.log({ x: x, y: y })}
+          /> */}
                         {!printLayout && (
                             <>
                                 <LeftEdge
