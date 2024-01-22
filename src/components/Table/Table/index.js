@@ -82,28 +82,27 @@ const Edge = styled.div`
   }}
 `;
 
-const Scroller = styled.div`
-  ::-webkit-scrollbar {
+const Root = styled.div`
+  height: 100%;
+  * {
+    box-sizing: border-box;
+  }
+
+  *::-webkit-scrollbar {
     width: 10px;
   }
 
-  ::-webkit-scrollbar:horizontal {
+  *::-webkit-scrollbar:horizontal {
     height: 10px;
   }
 
-  ::-webkit-scrollbar-thumb {
+  *::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 50px;
   }
 
-  ::-webkit-scrollbar-track {
+  *::-webkit-scrollbar-track {
     background-color: #f1f1f1;
-  }
-`;
-
-const RootStyle = styled.div`
-  * {
-    box-sizing: border-box;
   }
 `;
 const Table = (
@@ -674,7 +673,7 @@ const Table = (
   ];
 
   return (
-    <RootStyle>
+    <Root>
       <div
         version="2.1"
         id={`${tableId}`}
@@ -686,155 +685,157 @@ const Table = (
           opacity: !initialLoaded ? 0 : 1,
         }}
       >
-        {headerData ? (
-          <Header
-            deselectAll={deselectAll}
-            selectAll={selectAll}
-            ref={headerScrollRef}
-            className="scrollable"
-            width={viewportWidth}
-            colHeight={headerHeight}
-            colWidth={colWidth}
-            firstColWidth={firstColWidth}
-            leftBrickWidth={leftBrickWidth}
-            lastColWidth={lastColWidth}
-            totalWidth={totalWidth}
-            onFirstColResize={onFirstColResize}
-            onLastColResize={onLastColResize}
-            totalCols={totalCols}
-            theTheme={theTheme}
-            themeKey={theme}
-            data={headerData}
-            hasTotalColumn={hasTotalColumn}
-            stickyTopOffset={headerStickyTopOffset}
-            showGrid={showGrid}
-            autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-            autoAdjustLastColWidth={autoAdjustLastColWidth}
-            lasColumnRisizeable={lasColumnRisizeable}
-            isTableSelected={isTableSelected}
-            printLayout={printLayout}
-          />
-        ) : null}
-
-        <Scroller
-          {...getEdgeScrollingPropsY()}
-          style={{
-            overflow: "hidden",
-            overflowY: "scroll",
-            height: "100%",
-          }}
-        >
-          <div
-            style={{ height: "fit-content", position: "relative" }}
-            ref={tableBodyLayersRef}
-          >
-            <ViewPort
-              {...getEdgeScrollingPropsX()}
-              id={tableId + "-viewport"}
-              className={`viewPort${tableId} scrollable`}
-              printLayout={printLayout}
-              style={theTheme.secondary}
-              ref={(el) => {
-                viewportRef.current = el;
-                viewportScrollRef.current = el;
-              }}
-            >
-              <div
-                style={{ width: totalWidth, zIndex: 1 }}
-                className={`${tableId}container`}
-              >
-                {childrenRows}
-                <LeftBrickSpace
-                  className="leftBrickSpace"
-                  width={leftBrickWidth}
-                />
-              </div>
-
-              <SelectedArea
-                numberOfCols={totalCols}
-                selectionMode={selectionMode}
-                tableId={tableId}
-                setSelectColDraging={setIsSelecting}
-                setSelectedCount={setSelectedCount}
-                setSelectedAreas={setSelectedAreas}
-                tableMatrix={tableMatrix}
-              />
-
-              {!printLayout && (
-                <>
-                  <LeftEdge
-                    scrollStatus={scrollStatus}
-                    offsetLeft={leftBrickWidth}
-                  />
-
-                  <Edge
-                    isViewPortOverflow={isViewPortOverflow}
-                    scrollStatus={scrollStatus}
-                  />
-                </>
-              )}
-            </ViewPort>
-
-            <div className="table-end"></div>
-            {footer && (
-              <Footer
-                numberFormat={numberFormat}
-                maxWidth={totalWidth}
-                count={selectedCount}
-                sum={selectedSum}
-                min={selectedMin}
-                max={selectedMax}
-                avg={selectedAvg}
-                vissible={footer}
-              />
-            )}
-
-            {/* Refactor to make it pretty */}
-            <div
-              ref={tableLayerScrollRef}
+        <div style={{ height: "100%", paddingBottom: 35 }}>
+          {headerData ? (
+            <Header
+              deselectAll={deselectAll}
+              selectAll={selectAll}
+              ref={headerScrollRef}
               className="scrollable"
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: viewportWidth,
-                overflow: "hidden",
-                pointerEvents: "none",
-                height: "100%",
-              }}
+              width={viewportWidth}
+              colHeight={headerHeight}
+              colWidth={colWidth}
+              firstColWidth={firstColWidth}
+              leftBrickWidth={leftBrickWidth}
+              lastColWidth={lastColWidth}
+              totalWidth={totalWidth}
+              onFirstColResize={onFirstColResize}
+              onLastColResize={onLastColResize}
+              totalCols={totalCols}
+              theTheme={theTheme}
+              themeKey={theme}
+              data={headerData}
+              hasTotalColumn={hasTotalColumn}
+              stickyTopOffset={headerStickyTopOffset}
+              showGrid={showGrid}
+              autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+              autoAdjustLastColWidth={autoAdjustLastColWidth}
+              lasColumnRisizeable={lasColumnRisizeable}
+              isTableSelected={isTableSelected}
+              printLayout={printLayout}
+            />
+          ) : null}
+
+          <div
+            {...getEdgeScrollingPropsY()}
+            style={{
+              overflow: "hidden",
+              overflowY: "scroll",
+              height: "100%",
+            }}
+          >
+            <div
+              style={{ height: "fit-content", position: "relative" }}
+              ref={tableBodyLayersRef}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  width: totalWidth,
+              <ViewPort
+                {...getEdgeScrollingPropsX()}
+                id={tableId + "-viewport"}
+                className={`viewPort${tableId} scrollable`}
+                printLayout={printLayout}
+                style={theTheme.secondary}
+                ref={(el) => {
+                  viewportRef.current = el;
+                  viewportScrollRef.current = el;
                 }}
               >
-                {!printLayout && (
-                  <Selection
-                    // selectionString={JSON.stringify(selectedAreas)}
-                    selectedAreas={selectedAreas}
-                    colWidth={colWidth}
-                    colHeight={colHeight}
-                    leftOffset={leftBrickWidth}
-                    firstColWidth={firstColWidth}
-                    lastColWidth={lastColWidth}
-                    numberOfCols={totalCols}
-                    selectionMode={selectionMode}
-                    totalWidth={totalWidth}
-                    lasColumnRisizeable={lasColumnRisizeable}
-                    theTheme={theTheme}
-                    headerHeight={headerHeight}
-                    tableMatrix={tableMatrix}
-                    tableTopOffset={tableTopOffset}
-                    tableContainerRef={tableBodyLayersRef}
-                    tableId={tableId}
+                <div
+                  style={{ width: totalWidth, zIndex: 1 }}
+                  className={`${tableId}container`}
+                >
+                  {childrenRows}
+                  <LeftBrickSpace
+                    className="leftBrickSpace"
+                    width={leftBrickWidth}
                   />
+                </div>
+
+                <SelectedArea
+                  numberOfCols={totalCols}
+                  selectionMode={selectionMode}
+                  tableId={tableId}
+                  setSelectColDraging={setIsSelecting}
+                  setSelectedCount={setSelectedCount}
+                  setSelectedAreas={setSelectedAreas}
+                  tableMatrix={tableMatrix}
+                />
+
+                {!printLayout && (
+                  <>
+                    <LeftEdge
+                      scrollStatus={scrollStatus}
+                      offsetLeft={leftBrickWidth}
+                    />
+
+                    <Edge
+                      isViewPortOverflow={isViewPortOverflow}
+                      scrollStatus={scrollStatus}
+                    />
+                  </>
                 )}
+              </ViewPort>
+
+              <div className="table-end"></div>
+              {footer && (
+                <Footer
+                  numberFormat={numberFormat}
+                  maxWidth={totalWidth}
+                  count={selectedCount}
+                  sum={selectedSum}
+                  min={selectedMin}
+                  max={selectedMax}
+                  avg={selectedAvg}
+                  vissible={footer}
+                />
+              )}
+
+              {/* Refactor to make it pretty */}
+              <div
+                ref={tableLayerScrollRef}
+                className="scrollable"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: viewportWidth,
+                  overflow: "hidden",
+                  pointerEvents: "none",
+                  height: "100%",
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    width: totalWidth,
+                  }}
+                >
+                  {!printLayout && (
+                    <Selection
+                      // selectionString={JSON.stringify(selectedAreas)}
+                      selectedAreas={selectedAreas}
+                      colWidth={colWidth}
+                      colHeight={colHeight}
+                      leftOffset={leftBrickWidth}
+                      firstColWidth={firstColWidth}
+                      lastColWidth={lastColWidth}
+                      numberOfCols={totalCols}
+                      selectionMode={selectionMode}
+                      totalWidth={totalWidth}
+                      lasColumnRisizeable={lasColumnRisizeable}
+                      theTheme={theTheme}
+                      headerHeight={headerHeight}
+                      tableMatrix={tableMatrix}
+                      tableTopOffset={tableTopOffset}
+                      tableContainerRef={tableBodyLayersRef}
+                      tableId={tableId}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </Scroller>
+        </div>
       </div>
-    </RootStyle>
+    </Root>
   );
 };
 
