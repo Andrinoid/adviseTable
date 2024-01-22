@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { debounce, set } from "lodash";
 import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
@@ -101,6 +101,11 @@ const Scroller = styled.div`
   }
 `;
 
+const RootStyle = styled.div`
+  * {
+    box-sizing: border-box;
+  }
+`;
 const Table = (
   {
     onFirstColumnResize = () => {},
@@ -669,7 +674,7 @@ const Table = (
   ];
 
   return (
-    <>
+    <RootStyle>
       <div
         version="2.1"
         id={`${tableId}`}
@@ -829,7 +834,7 @@ const Table = (
           </div>
         </Scroller>
       </div>
-    </>
+    </RootStyle>
   );
 };
 

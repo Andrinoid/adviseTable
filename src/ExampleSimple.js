@@ -35,7 +35,7 @@ const BrickTools = () => {
 
 function ExampleSimple() {
   return (
-    <div style={{ background: "gray" }}>
+    <div style={{ height: "100vh", background: "gray" }}>
       <Table
         theme={"light"}
         showGrid={true}
