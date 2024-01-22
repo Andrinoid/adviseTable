@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import App from "./App";
 import ExampleSimple from "./ExampleSimple";
 import { RootStyle } from "./global.style";
@@ -8,11 +8,10 @@ import { RootStyle } from "./global.style";
 // import App from "./components/Layout/App";
 
 const Application = () => (
-    <>
-        <RootStyle />
-        <ExampleSimple />
-    </>
+  <>
+    <RootStyle />
+    <ExampleSimple />
+  </>
 );
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Application />);
+ReactDOM.render(<Application />, document.getElementById("root"));
