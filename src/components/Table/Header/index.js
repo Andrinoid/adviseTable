@@ -6,16 +6,16 @@ import Brick from "../Col/Brick";
 import themes from "../Table/themes";
 
 const headerTheme = {
-  light: {
-    background: "rgb(74, 76, 80)",
-    color: "#fafafa",
-    hightlight: "#E6e8e8",
-  },
-  dark: {
-    background: "#fafafa",
-    color: "rgb(74, 76, 80)",
-    hightlight: "#1F1F1F",
-  },
+    light: {
+        background: "rgb(74, 76, 80)",
+        color: "#fafafa",
+        hightlight: "#E6e8e8",
+    },
+    dark: {
+        background: "#fafafa",
+        color: "rgb(74, 76, 80)",
+        hightlight: "#1F1F1F",
+    },
 };
 
 const BACKGROUND_TRANSITION = "background-color 0.03s";
@@ -31,8 +31,8 @@ const RowElm = styled.div`
 `;
 
 const Label = styled.div`
-  padding: 5px;
-  font-weight: bold;
+    padding: 5px;
+    font-weight: bold;
 `;
 
 const PressableBrick = styled.button`
@@ -120,6 +120,7 @@ const Header = React.forwardRef(
                         width: totalWidth,
                         boxSizing: "border-box",
                         display: "flex",
+                        paddingRight: 10,
                     }}
                 >
                     <PressableBrick

@@ -31,6 +31,7 @@ const ViewPort = styled.div`
     flex-direction: row;
     display: flex;
     flex: 1 1 auto;
+    padding-right: 10px;
 `;
 
 const LeftBrickSpace = styled.div`
@@ -695,7 +696,7 @@ const Table = (
                     />
                 ) : null}
 
-                <Scrollbars
+                <div
                     {...getEdgeScrollingPropsY()}
                     style={{
                         overflow: "hidden",
@@ -813,7 +814,7 @@ const Table = (
                             </div>
                         </div>
                     </div>
-                </Scrollbars>
+                </div>
             </div>
         </>
     );
