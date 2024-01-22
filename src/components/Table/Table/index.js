@@ -12,7 +12,6 @@ import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
 import Footer from "../Footer";
 import SelectedArea, { getContainedArea } from "./SelectedAreas";
-import Scroller from "./Scroller";
 import themes from "./themes";
 import Selection from "./Selection";
 import useCopier from "./Copier";
@@ -21,6 +20,8 @@ import useKeyboardControler from "./KeyboardControler";
 import { HandleExporting } from "./HandleExporting";
 import { Copier } from "./Copier";
 import useScrollOnEdges from "./hooks/useScrollOnEdges";
+// import { Scrollbar } from "react-scrollbars-custom";
+import { Scrollbars } from "rc-scrollbars";
 
 const ViewPort = styled.div`
     width: 100%;
@@ -654,7 +655,7 @@ const Table = (
     return (
         <>
             <div
-                version="2.0"
+                version="2.1"
                 id={`${tableId}`}
                 ref={tableContainerRef}
                 style={{
@@ -694,11 +695,11 @@ const Table = (
                     />
                 ) : null}
 
-                <div
+                <Scrollbars
                     {...getEdgeScrollingPropsY()}
                     style={{
                         overflow: "hidden",
-                        overflowY: "auto",
+                        overflowY: "scroll",
                         height: "100%",
                     }}
                 >
@@ -738,12 +739,6 @@ const Table = (
                                 tableMatrix={tableMatrix}
                             />
 
-                            {/* <Scroller
-            parentScrollRef={parentScrollRef}
-            active={selectColDraging}
-            tableId={tableId}
-            onScroll={(x, y) => console.log({ x: x, y: y })}
-          /> */}
                             {!printLayout && (
                                 <>
                                     <LeftEdge
@@ -818,7 +813,7 @@ const Table = (
                             </div>
                         </div>
                     </div>
-                </div>
+                </Scrollbars>
             </div>
         </>
     );
