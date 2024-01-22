@@ -84,11 +84,11 @@ const Edge = styled.div`
 
 const Scroller = styled.div`
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
   }
 
   ::-webkit-scrollbar:horizontal {
-    height: 12px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
