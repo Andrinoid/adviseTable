@@ -482,7 +482,8 @@ const Table = (
       (firstColWidth ? firstColWidth : biggestLabelCellWidth) -
       biggestDataCellWidth * numberOfDataCols -
       biggestTotalCellWidth -
-      leftBrickWidth
+      leftBrickWidth -
+      10
     );
   }, [
     totalCols,
