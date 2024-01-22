@@ -654,7 +654,7 @@ const Table = (
     return (
         <>
             <div
-                // {...getEdgeScrollingPropsY()}
+                version="2.0"
                 id={`${tableId}`}
                 ref={tableContainerRef}
                 style={{
