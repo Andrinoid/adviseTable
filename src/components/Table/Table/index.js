@@ -31,7 +31,6 @@ const ViewPort = styled.div`
   flex-direction: row;
   display: flex;
   flex: 1 1 auto;
-  padding-right: 10px;
 `;
 
 const LeftBrickSpace = styled.div`
