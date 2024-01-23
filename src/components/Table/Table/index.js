@@ -108,7 +108,6 @@ const Table = (
     {
         onFirstColumnResize = () => {},
         onSelection = () => {},
-        parentScrollRef,
         firstColumnWidth,
         editOnType = true,
         printLayout = false,
@@ -486,8 +485,7 @@ const Table = (
             (firstColWidth ? firstColWidth : biggestLabelCellWidth) -
             biggestDataCellWidth * numberOfDataCols -
             biggestTotalCellWidth -
-            leftBrickWidth -
-            10
+            leftBrickWidth
         );
     }, [
         totalCols,
