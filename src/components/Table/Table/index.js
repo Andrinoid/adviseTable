@@ -111,7 +111,6 @@ const Table = (
         firstColumnWidth,
         editOnType = true,
         printLayout = false,
-        headerStickyTopOffset = 0,
         selectionMode = "cell",
         leftBrickWidth = 30,
         theme = "light",
@@ -708,7 +707,6 @@ const Table = (
                             themeKey={theme}
                             data={headerData}
                             hasTotalColumn={hasTotalColumn}
-                            stickyTopOffset={headerStickyTopOffset}
                             showGrid={showGrid}
                             autoAdjustFirstColWidth={autoAdjustFirstColWidth}
                             autoAdjustLastColWidth={autoAdjustLastColWidth}

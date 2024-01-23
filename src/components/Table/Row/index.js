@@ -11,7 +11,6 @@ import Brick from "../Col/Brick";
 import RowMenu from "./Menu";
 
 const RowElm = styled.div`
-    position: relative;
     display: flex;
     ${({ theTheme }) => {
         return theTheme.row;
