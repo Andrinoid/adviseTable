@@ -818,7 +818,6 @@ const Table = (
                                         height: "100%",
                                     }}
                                 >
-                                    sdfsdf
                                     {!printLayout && (
                                         <Selection
                                             // selectionString={JSON.stringify(selectedAreas)}
