@@ -386,10 +386,10 @@ const Table = (
     };
   }, []);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     const size = getAdjustedSize();
     setTotalWidth(size);
-  };
+  }, [getAdjustedSize]);
 
   /**
    * Messure the viewport width and height.
