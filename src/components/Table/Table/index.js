@@ -383,34 +383,10 @@ const Table = (
     };
   }, []);
 
-  const containerWidthRef = useRef(0);
-  const resizing = useRef(false);
-
   const handleResize = () => {
     const size = getAdjustedSize();
     setTotalWidth(size);
   };
-
-  useEffect(() => {
-    const container = tableContainerRef.current;
-    containerWidthRef.current = container.clientWidth;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      const computedStyle = window.getComputedStyle(container);
-
-      const currentWidth = parseFloat(computedStyle.width);
-
-      if (currentWidth !== containerWidthRef.current) {
-        if (!resizing.current) {
-          resizing.current = true;
-
-          resizing.current = false;
-        }
-      }
-    });
-
-    resizeObserver.observe(container);
-  }, []);
 
   /**
    * Messure the viewport width and height.
