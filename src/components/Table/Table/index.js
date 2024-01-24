@@ -250,6 +250,9 @@ const Table = (
    * usage in app: tableRef.current.autoAdjust()
    */
   useImperativeHandle(ref, () => ({
+    handleResize() {
+      handleResize();
+    },
     cleartSelection() {
       cleartSelectionTable();
     },
