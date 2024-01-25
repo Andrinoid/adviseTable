@@ -8,8 +8,4 @@ export const Container = styled.div`
   @media (min-width: 700px) {
     position: relative;
   }
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
