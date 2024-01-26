@@ -64,6 +64,7 @@ const Col = ({
   inputType = "text",
   onSubmitCallback,
   lastColPaddingLeft,
+  onDoubleClick,
 }) => {
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
@@ -71,8 +72,8 @@ const Col = ({
   const [initialValue, setInitialValue] = useState(dataValue || "");
 
   useEffect(() => {
-    if (!dataValue && !initialValue && inputValue)  {
-      setInputValue('')
+    if (!dataValue && !initialValue && inputValue) {
+      setInputValue("");
     }
 
     if (dataValue) {
@@ -174,6 +175,7 @@ const Col = ({
 
   const handleDoubleClick = (e) => {
     setEditionState(true);
+    onDoubleClick();
   };
 
   const onValueUpdate = (resetValue = false) => {
