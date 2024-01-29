@@ -35,7 +35,7 @@ const BrickTools = () => {
 
 function ExampleSimple() {
     return (
-        <div style={{ background: "gray", paddingTop: 50 }}>
+        <div style={{ height: "100vh", background: "gray", paddingTop: 50 }}>
             {/* <div style={{ background: "gray", paddingTop: 50 }}></div> */}
             <Table
                 stickyTopOffset={50}
