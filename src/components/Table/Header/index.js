@@ -21,6 +21,9 @@ const headerTheme = {
 const BACKGROUND_TRANSITION = "background-color 0.03s";
 
 const RowElm = styled.div`
+    position: ${({ printLayout }) => (printLayout ? "static" : "sticky")};
+    top: ${({ stickyTopOffset }) => stickyTopOffset}px;
+
     z-index: 2;
     white-space: normal;
     line-height: 1;
@@ -97,6 +100,7 @@ const Header = React.forwardRef(
             deselectAll,
             isTableSelected,
             printLayout,
+            stickyTopOffset = 0,
         },
         ref
     ) => {
@@ -109,7 +113,11 @@ const Header = React.forwardRef(
             color: isTableSelected ? headerTheme[themeKey].color : "inherit",
         };
         return (
-            <RowElm ref={ref} printLayout={printLayout}>
+            <RowElm
+                ref={ref}
+                printLayout={printLayout}
+                stickyTopOffset={stickyTopOffset}
+            >
                 <div
                     style={{
                         ...theTheme.header,
