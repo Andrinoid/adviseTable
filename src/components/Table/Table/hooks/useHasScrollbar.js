@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useLayoutEffect } from "react";
 
 const useHasScrollbar = (ref) => {
     const [hasScrollbar, setHasScrollbar] = useState(false);
@@ -13,8 +13,9 @@ const useHasScrollbar = (ref) => {
         }
     }, [ref]);
 
-    useEffect(() => {
-        checkScrollbars();
+    useLayoutEffect(() => {
+        setTimeout(checkScrollbars, 0);
+        // checkScrollbars();
 
         window.addEventListener("resize", checkScrollbars);
         return () => window.removeEventListener("resize", checkScrollbars);
