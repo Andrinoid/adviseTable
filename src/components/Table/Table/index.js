@@ -7,7 +7,7 @@ import React, {
     useImperativeHandle,
 } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import { debounce, set } from "lodash";
+import { debounce, has, set } from "lodash";
 import { useSyncScroller } from "../utils/useSyncScroller";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -20,8 +20,7 @@ import useKeyboardControler from "./KeyboardControler";
 import { HandleExporting } from "./HandleExporting";
 import { Copier } from "./Copier";
 import useScrollOnEdges from "./hooks/useScrollOnEdges";
-// import { Scrollbar } from "react-scrollbars-custom";
-import { Scrollbars } from "rc-scrollbars";
+import useHasScrollbar from "./hooks/useHasScrollbar";
 
 const ViewPort = styled.div`
     width: 100%;
@@ -88,7 +87,7 @@ const Root = styled.div`
     }
 
     *::-webkit-scrollbar {
-        width: 10px;
+        width: ${({ hasScrollbar }) => (hasScrollbar ? "10px" : "0px")};
     }
 
     *::-webkit-scrollbar:horizontal {
@@ -136,6 +135,12 @@ const Table = (
 
     // ======= refs =======
     const viewportRef = useRef(null);
+    const hasScrollbar = useHasScrollbar(viewportRef);
+
+    useEffect(() => {
+        console.log("hasScrollbar", hasScrollbar);
+    }, [hasScrollbar]);
+
     const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
     const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
     const tableLayerScrollRef = useSyncScroller(
@@ -654,7 +659,7 @@ const Table = (
     ];
 
     return (
-        <Root>
+        <Root hasScrollbar={hasScrollbar}>
             <div
                 version="2.1"
                 id={`${tableId}`}

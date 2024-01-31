@@ -8,10 +8,10 @@ import { RootStyle } from "./global.style";
 // import App from "./components/Layout/App";
 
 const Application = () => (
-  <>
-    <RootStyle />
-    <ExampleSimple />
-  </>
+    <>
+        <RootStyle />
+        <ExampleSimple />
+    </>
 );
 
 ReactDOM.render(<Application />, document.getElementById("root"));
