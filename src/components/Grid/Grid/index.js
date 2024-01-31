@@ -15,6 +15,7 @@ import { useController } from "../hooks";
 import styled from "styled-components";
 import { produce } from "immer";
 import { debounce } from "lodash";
+import useAutoResize from "../../shared/useAutoResize";
 
 export const DataContext = createContext(null);
 
@@ -53,6 +54,8 @@ function Grid(
       }
     });
   }, [containerRef.current]);
+
+  useAutoResize(containerRef, setTotalWidth);
 
   useImperativeHandle(ref, () => ({
     addRow,
