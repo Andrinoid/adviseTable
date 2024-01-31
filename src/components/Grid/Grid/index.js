@@ -308,6 +308,7 @@ function Grid(
 
 const Container = styled.div`
   position: relative;
+  width: 100%;
   cursor: ${({ resizing }) => (resizing ? "col-resize" : "default")};
   /* overflow-x: hidden; */
 `;
