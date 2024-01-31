@@ -289,11 +289,6 @@ const Table = (
   }));
 
   /**
-   * Resize the table when the lib container resizes
-   */
-  useAutoResize(tableContainerRef, handleResize);
-
-  /**
    * When the selection mode changes, clear the selected areas
    */
   useEffect(() => {
@@ -397,6 +392,11 @@ const Table = (
     const size = getAdjustedSize();
     setTotalWidth(size);
   }, [getAdjustedSize]);
+
+  /**
+   * Resize the table when the lib container resizes
+   */
+  useAutoResize(tableContainerRef, handleResize);
 
   /**
    * Messure the viewport width and height.
