@@ -21,6 +21,7 @@ import { HandleExporting } from "./HandleExporting";
 import { Copier } from "./Copier";
 import useScrollOnEdges from "./hooks/useScrollOnEdges";
 import useHasScrollbar from "./hooks/useHasScrollbar";
+import useAutoResize from "./hooks/useAutoResize";
 
 const ViewPort = styled.div`
     width: 100%;
@@ -135,12 +136,11 @@ const Table = (
 
     // ======= refs =======
     const viewportRef = useRef(null);
-    const hasScrollbar = useHasScrollbar(viewportRef);
-
+    const ScrollYContainerRef = useRef(null);
+    const hasScrollbar = useHasScrollbar(ScrollYContainerRef);
     useEffect(() => {
         console.log("hasScrollbar", hasScrollbar);
     }, [hasScrollbar]);
-
     const headerScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
     const viewportScrollRef = useSyncScroller("hScrollingContainer-" + tableId);
     const tableLayerScrollRef = useSyncScroller(
@@ -312,7 +312,9 @@ const Table = (
             biggestTotalCellWidth +
             biggestDataCellWidth * numberOfDataCols;
         const tableContainerSize = tableContainerRef?.current?.offsetWidth;
-        return tableContainerSize > minSize ? tableContainerSize - 10 : minSize;
+        return tableContainerSize > minSize
+            ? tableContainerSize + (hasScrollbar ? -10 : 0)
+            : minSize;
     }, [
         biggestLabelCellWidth,
         biggestTotalCellWidth,
@@ -321,6 +323,7 @@ const Table = (
         leftBrickWidth,
         numberOfDataCols,
         hasTotalColumn,
+        hasScrollbar,
     ]);
 
     const cleartSelectionTable = () => {
@@ -386,11 +389,8 @@ const Table = (
 
         element.addEventListener("scroll", handleScroll);
 
-        window.addEventListener("resize", handleResize);
-
         return () => {
             element.removeEventListener("scroll", handleScroll);
-            window.removeEventListener("resize", handleResize);
         };
     }, []);
 
@@ -398,6 +398,11 @@ const Table = (
         const size = getAdjustedSize();
         setTotalWidth(size);
     }, [getAdjustedSize]);
+
+    /**
+     * Resize the table when the lib container resizes
+     */
+    useAutoResize(tableContainerRef, handleResize);
 
     /**
      * Messure the viewport width and height.
@@ -666,6 +671,7 @@ const Table = (
                 ref={tableContainerRef}
                 style={{
                     height: "100%",
+                    width: "100%",
                     // position: "relative",
                     // overflow: "hidden",
                     opacity: !initialLoaded ? 0 : 1,
@@ -704,6 +710,7 @@ const Table = (
 
                     <div
                         {...getEdgeScrollingPropsY()}
+                        ref={ScrollYContainerRef}
                         style={{
                             overflow: "hidden",
                             overflowY: "scroll",

@@ -11,6 +11,16 @@ export const Container = styled.div`
     isResizing ? "none" : "width 0.2s ease, opacity 0.1s ease"};
   flex-shrink: 0;
   width: ${({ width }) => width}px;
+
+  ${({ maxWidth }) => {
+    if (maxWidth) {
+      return `
+        max-width: ${maxWidth}px;
+      `;
+    }
+
+    return "";
+  }}
 `;
 
 export const Handle = styled.div`
