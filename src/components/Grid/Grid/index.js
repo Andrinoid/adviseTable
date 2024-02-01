@@ -150,7 +150,7 @@ function Grid(
       const { left } = el.getBoundingClientRect();
       setLeftGap(left);
     }
-  }, []);
+  }, [totalWidth]);
 
   useEffect(() => {
     if (containerRef.current) {
