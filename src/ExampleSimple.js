@@ -35,13 +35,14 @@ const BrickTools = () => {
 
 function ExampleSimple() {
     return (
-        <div style={{ background: "gray", paddingTop: 50 }}>
+        <div style={{ height: "100vh", background: "gray" }}>
             {/* <div style={{ background: "gray", paddingTop: 50 }}></div> */}
             <Table
                 stickyTopOffset={50}
                 theme={"light"}
                 showGrid={true}
                 selectionMode={"cell"}
+                isScrollOnEdges={true}
                 tableId={"simpeTable"}
                 leftBrickWidth={leftBrickWidth}
                 headerData={[
