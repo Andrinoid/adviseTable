@@ -29,7 +29,7 @@ const Inner = styled.div`
   border: 2px dashed #d8d8d8;
 `;
 
-const AddSection = ({ onClick, style }) => {
+const AddSection = ({ onClick, children, style }) => {
   return (
     <EmptySection>
       <Inner style={style}>
@@ -37,6 +37,7 @@ const AddSection = ({ onClick, style }) => {
           <PlusCircle onClick={onClick} size={40} color={"#1b90ff"} />
         </div>
         <p>Drag and drop widgets here</p>
+        {children}
       </Inner>
     </EmptySection>
   );
