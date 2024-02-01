@@ -22,7 +22,8 @@ const EmptySection = styled.div`
 
 const Inner = styled.div`
   display: flex;
-  height: 130px;
+  height: fit-content;
+  padding: 10px 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
