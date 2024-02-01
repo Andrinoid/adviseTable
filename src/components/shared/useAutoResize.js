@@ -1,32 +1,19 @@
-import { debounce } from "lodash";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 export default function useAutoResize(ref, resizeCallback) {
-  const containerWidth = useRef(0);
-
+  let containerWidth = ref && ref.current ? ref.current.offsetWidth : 0;
   useEffect(() => {
     if (ref && ref.current) {
-      const resizeObserver = new ResizeObserver(
-        debounce((entries) => {
-          for (const entry of entries) {
-            const width = entry.borderBoxSize?.[0].inlineSize;
-            if (
-              typeof width === "number" &&
-              Math.abs(width - containerWidth.current) > 10
-            ) {
-              containerWidth.current = width;
-              console.log(width, "width");
-              resizeCallback(ref.current.offsetWidth);
-            }
-          }
-        }, 500)
-      );
-
+      const resizeObserver = new ResizeObserver(() => {
+        if (containerWidth !== ref.current.offsetWidth) {
+          resizeCallback(ref.current.offsetWidth);
+          containerWidth = ref.current.offsetWidth;
+        }
+      });
       resizeObserver.observe(ref.current);
-
       return () => {
         resizeObserver.disconnect();
       };
     }
-  }, [ref, resizeCallback]);
+  }, []);
 }
