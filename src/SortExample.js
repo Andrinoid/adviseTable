@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SortableView } from "./components/Sortable";
+import SortableView from "./components/Sortable";
 
 function SortExample() {
   const [list, setList] = useState(["Item 1", "Item 2", "Item 3", "Item 4"]);
