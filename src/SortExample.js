@@ -1,20 +1,19 @@
 import React from "react";
 import { SortableView, SortableItem } from "./components/Sortable";
 
+const list = ["Item 1", "Item 2", "Item 3", "Item 4"];
+
 function SortExample() {
-    return (
-        // Your JSX code goes here
-        <div>
-            <SortableView draggable={true}>
-                <div>Item 1</div>
-                <div>Item 2</div>
-                <div>Item 3</div>
-                <div>Item 4</div>
-                <div>Item 5</div>
-                <div>Item 6</div>
-            </SortableView>
-        </div>
-    );
+  return (
+    // Your JSX code goes here
+    <div>
+      <SortableView draggable={true}>
+        {list.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+      </SortableView>
+    </div>
+  );
 }
 
 export default SortExample;
