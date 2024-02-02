@@ -11,8 +11,9 @@ function SortableView({ draggable, children, onOrderChange }) {
   const onDrop = (e) => {
     cancelDefault(e);
     // alert(`Moved from ${fromIndex} to ${e.currentTarget.dataset.draggablekey}`);
+    const toIndex = e.currentTarget.dataset.draggablekey;
     if (onOrderChange) {
-      onOrderChange(fromIndex, e.currentTarget.dataset.draggablekey);
+      onOrderChange(fromIndex, toIndex);
     }
   };
 
