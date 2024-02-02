@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 function SortableView({ draggable, children, onOrderChange }) {
-  const [fromIndex, setFromIndex] = React.useState(null);
+  const [fromIndex, setFromIndex] = useState(null);
 
   const onDragstart = (e) => {
     const key = e.target.getAttribute('data-draggablekey');
@@ -10,7 +10,6 @@ function SortableView({ draggable, children, onOrderChange }) {
 
   const onDrop = (e) => {
     cancelDefault(e);
-    // alert(`Moved from ${fromIndex} to ${e.currentTarget.dataset.draggablekey}`);
     const toIndex = e.currentTarget.dataset.draggablekey;
     if (onOrderChange) {
       onOrderChange(fromIndex, toIndex);
