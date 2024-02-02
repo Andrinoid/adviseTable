@@ -1,45 +1,18 @@
-import { element } from "prop-types";
 import React from "react";
 
-function SortableView({ draggable, children }) {
-  const [childElements, setChildElements] = React.useState([]);
+function SortableView({ draggable, children, onDropCallback }) {
   const [fromIndex, setFromIndex] = React.useState(null);
 
   const onDragstart = (e) => {
-    // console.log("dragstart", e.target);
-    // const key = e.target.getAttribute("data-draggablekey");
-    // console.log("key", key);
-    childElements.findIndex((element, index) => {
-      if (element.current === e.target) {
-        setFromIndex(index);
-      }
-    });
+    const key = e.target.getAttribute("data-draggablekey");
+    setFromIndex(key);
   };
 
   const onDrop = (e) => {
-    // e.preventDefault();
-    // const data = e.dataTransfer.getData("text/plain");
-    // const movedElement = childElements[data].current;
-    // const target = e.target;
-    // target.after(movedElement);
-
     cancelDefault(e);
-
-    // get new and old index
-    const dragged = childElements[fromIndex].current;
-    const parent = dragged.parentNode;
-    const toIndex = Array.from(parent.children).indexOf(dragged);
-
-    // // remove dropped items at old place
-    // let dropped = $(this).parent().children().eq(oldIndex).remove();
-    let dropped = parent.children[fromIndex];
-    parent.removeChild(dropped);
-
-    // // insert the dropped items at new place
-    if (toIndex < fromIndex) {
-      dragged.before(dropped);
-    } else {
-      dragged.after(dropped);
+    // alert(`Moved from ${fromIndex} to ${e.currentTarget.dataset.draggablekey}`);
+    if (onDropCallback) {
+      onDropCallback(fromIndex, e.currentTarget.dataset.draggablekey);
     }
   };
 
@@ -60,10 +33,8 @@ function SortableView({ draggable, children }) {
   return (
     <div>
       {React.Children.map(children, (child, index) => {
-        const elementRef = React.createRef();
-        const element = (
+        return (
           <div
-            ref={elementRef}
             draggable={draggable}
             onDragStart={onDragstart}
             onDrop={onDrop}
@@ -75,8 +46,6 @@ function SortableView({ draggable, children }) {
             {child}
           </div>
         );
-        childElements.push(elementRef);
-        return element;
       })}
     </div>
   );
