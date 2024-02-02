@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 function SortableView({ draggable, children, onDropCallback }) {
   const [fromIndex, setFromIndex] = React.useState(null);
 
   const onDragstart = (e) => {
-    const key = e.target.getAttribute("data-draggablekey");
+    const key = e.target.getAttribute('data-draggablekey');
     setFromIndex(key);
   };
 
