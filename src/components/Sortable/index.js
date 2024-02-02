@@ -1,10 +1,18 @@
 import React, { useState, useCallback } from 'react';
 
-function SortableView({ draggable, children, onOrderChange }) {
+function SortableView({
+  draggable,
+  children,
+  onOrderChange,
+  onBeforeDragStart,
+}) {
   const [fromIndex, setFromIndex] = useState(null);
   const [hoverIndex, setHoverIndex] = useState(null);
 
   const onDragStart = useCallback((e) => {
+    if (onBeforeDragStart) {
+      onBeforeDragStart();
+    }
     const key = parseInt(e.target.getAttribute('data-draggablekey'), 10);
     setFromIndex(key);
   }, []);
