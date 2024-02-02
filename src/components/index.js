@@ -4,7 +4,7 @@ import Row from './Table/Row';
 import Col from './Table/Col';
 import Grid from './Grid/Grid';
 import AddSection from './Grid/AddSection';
-import SortableView from './SortableView/SortableView';
+import SortableView from './Sortable/SortableView';
 
 import Layout from './Layout/components/Layout';
 import Sider from './Layout/components/Sider';
