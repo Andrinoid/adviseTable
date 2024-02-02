@@ -38,16 +38,14 @@ function SortableView({ draggable, children, onOrderChange }) {
   const indicatorStyle = { 
     height: '2px', 
     backgroundColor: 'blue', 
-    margin: '4px 0' // Adjust as needed for visual spacing
+    margin: '4px 0',
   };
 
   return (
     <div>
       {React.Children.map(children, (child, index) => (
         <>
-        {hoverIndex === index && (
-          <div style={indicatorStyle} data-draggablekey={`indicator-${index}`}></div>
-        )}
+        
         <div
           draggable={draggable}
           onDragStart={onDragStart}
@@ -58,7 +56,9 @@ function SortableView({ draggable, children, onOrderChange }) {
         >
           {child}
         </div>
-        
+        {hoverIndex === index && (
+          <div style={indicatorStyle} data-draggablekey={`indicator-${index}`}></div>
+        )}
         </>
       ))}
     </div>
