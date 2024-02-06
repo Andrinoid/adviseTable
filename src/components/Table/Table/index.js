@@ -683,7 +683,7 @@ const Table = (
                     opacity: !initialLoaded ? 0 : 1,
                 }}
             >
-                <div style={{ height: "100%", paddingBottom: 35 }}>
+                <div style={{ height: "100%" }}>
                     {headerData ? (
                         <Header
                             deselectAll={deselectAll}
