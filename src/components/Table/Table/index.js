@@ -710,7 +710,7 @@ const Table = (
                             lasColumnRisizeable={lasColumnRisizeable}
                             isTableSelected={isTableSelected}
                             printLayout={printLayout}
-                            headerStickyTopOffset={headerStickyTopOffset}
+                            stickyTopOffset={headerStickyTopOffset}
                         />
                     ) : null}
 

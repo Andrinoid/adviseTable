@@ -8,6 +8,7 @@ function SortableView({
 }) {
   const [fromIndex, setFromIndex] = useState(null);
   const [hoverIndex, setHoverIndex] = useState(null);
+  const [dragDirection, setDragDirection] = useState(null);
 
   const onDragStart = useCallback((e) => {
     if (onBeforeDragStart) {
@@ -19,14 +20,17 @@ function SortableView({
 
   const onDragEndCapture = useCallback(() => {
     setHoverIndex(null);
+    setDragDirection(null);
   });
 
   const onDragOver = useCallback(
     (e) => {
       cancelDefault(e);
       const overIndex = parseInt(e.currentTarget.dataset.draggablekey, 10);
+
       if (overIndex !== hoverIndex) {
         setHoverIndex(overIndex);
+        setDragDirection(overIndex > hoverIndex ? 'down' : 'up');
       }
     },
     [hoverIndex],
@@ -44,6 +48,7 @@ function SortableView({
       //Reset states after drop
       setFromIndex(null);
       setHoverIndex(null);
+      setDragDirection(null);
     },
     [fromIndex, onOrderChange],
   );
@@ -63,6 +68,12 @@ function SortableView({
     <div>
       {React.Children.map(children, (child, index) => (
         <>
+        {hoverIndex === index && dragDirection === 'up' && (
+            <div
+              style={indicatorStyle}
+              data-draggablekey={`indicator-${index}`}
+            ></div>
+          )}
           <div
             draggable={draggable}
             onDragStart={onDragStart}
@@ -74,7 +85,7 @@ function SortableView({
           >
             {child}
           </div>
-          {hoverIndex === index && (
+            {hoverIndex === index && dragDirection === 'down' && (
             <div
               style={indicatorStyle}
               data-draggablekey={`indicator-${index}`}
@@ -82,6 +93,7 @@ function SortableView({
           )}
         </>
       ))}
+      {dragDirection && <p>dragDirection: {dragDirection}</p>}
     </div>
   );
 }
