@@ -113,6 +113,7 @@ const Header = React.forwardRef(
     const selectedColor = {
       color: isTableSelected ? headerTheme[themeKey].color : 'inherit',
     };
+
     return (
       <RowElm
         ref={ref}
@@ -148,7 +149,9 @@ const Header = React.forwardRef(
               position: 'sticky',
               top: 0,
               left: 0,
-              background: 'inherit',
+              background: isTableSelected
+                ? selectedBackground.background
+                : headerColor || 'inherit',
             }}
           >
             <Triangle />
