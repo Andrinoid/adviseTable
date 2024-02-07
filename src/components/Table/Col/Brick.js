@@ -4,6 +4,12 @@ import HoverIndicator from "./HoverIndicator";
 
 const BrickElm = styled.div`
   flex-shrink: 0;
+  
+  ${({ location }) => {
+    if (location === "top") {
+      return "border-bottom: solid 1px #ebebeb;";
+    }
+  }}
   display: inline-flex;
   align-items: center;
   background-color: inherit;
