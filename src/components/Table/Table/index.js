@@ -117,7 +117,7 @@ const Table = (
     leftBrickWidth = 30,
     theme = 'light',
     headerData,
-    headerColor,
+    headerColor={ background: '#ffffff', text: '#354052' },
     showGrid, // Boolean
     children,
     tableId, // make required
