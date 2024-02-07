@@ -127,7 +127,8 @@ const Header = React.forwardRef(
             width: totalWidth,
             boxSizing: 'border-box',
             display: 'flex',
-            background: headerColor || theTheme.header.background,
+            color: headerColor.text || theTheme.header.color,
+            background: headerColor.background || theTheme.header.background,
           }}
         >
           <PressableBrick
@@ -149,9 +150,12 @@ const Header = React.forwardRef(
               position: 'sticky',
               top: 0,
               left: 0,
+              color: isTableSelected
+                ? selectedColor.color
+                : headerColor.text || 'inherit',
               background: isTableSelected
                 ? selectedBackground.background
-                : headerColor || 'inherit',
+                : headerColor.background || 'inherit',
             }}
           >
             <Triangle />

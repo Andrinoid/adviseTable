@@ -41,7 +41,7 @@ function ExampleSimple() {
         stickyTopOffset={50}
         theme={'light'}
         showGrid={true}
-        headerColor={'green'}
+        headerColor={{ background: 'green', text: 'white' }}
         selectionMode={'cell'}
         isScrollOnEdges={true}
         tableId={'simpeTable'}
