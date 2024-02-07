@@ -41,6 +41,7 @@ const Label = styled.div`
 `;
 
 const PressableBrick = styled.button`
+overflow: hidden;
 visibility: ${({ printLayout }) => (printLayout ? 'hidden' : 'visible')};
 background: ${({ selected, themeKey }) =>
 selected
