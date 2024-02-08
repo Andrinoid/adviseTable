@@ -57,18 +57,19 @@ class TableMatrixHandler {
       .map((r) =>
         r.map((c, i) => {
           let value = c.current.getAttribute('data-value');
+          // console.log(JSON.stringify(value), 'value', typeof value);
 
-          if (
-            value == null &&
-            c.current.innerText &&
-            c.current.innerText !== '--'
-          ) {
+          if (!value) {
             value = c.current.innerText;
+          }
+
+          if (value === '--') {
+            value = '';
           }
 
           return {
             v: value,
-            t: Number.isNaN(+value) ? 'z' : 'n',
+            t: Number.isNaN(+value) ? 's' : 'n',
           };
         }),
       );
