@@ -1,9 +1,32 @@
 //react component
 import { clone, cloneDeep } from 'lodash';
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  useLayoutEffect,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
+import styled from 'styled-components';
 import Cell from './Cell';
 import HoverIndicator from './HoverIndicator';
-import Column from './Column';
+
+const Column = styled.div`
+  display: inline-flex;
+  flex-shrink: 0;
+  position: relative;
+  align-items: center;
+  justify-content: ${(props) => props.horizontalAlign};
+  text-align: ${(props) => props.horizontalAlign};
+  overflow: ${(props) => (props.type === 'first' ? 'hidden' : 'visible')};
+  user-select: none;
+  box-sizing: border-box;
+  ${({ showGrid, theme }) => {
+    if (showGrid) {
+      return theme.grid;
+    }
+  }}
+`;
 
 const Col = ({
   // internal props from Row
