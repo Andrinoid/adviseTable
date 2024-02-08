@@ -22,6 +22,7 @@ import { Copier } from './Copier';
 import useScrollOnEdges from './hooks/useScrollOnEdges';
 import useHasScrollbar from './hooks/useHasScrollbar';
 import useAutoResize from '../../shared/useAutoResize';
+import useTableContext from './hooks/useTableContext';
 
 const ViewPort = styled.div`
   width: 100%;
@@ -93,6 +94,7 @@ const Root = styled.div`
 
   *::-webkit-scrollbar:horizontal {
     height: 10px;
+    ${({ hideScrollbarX }) => (hideScrollbarX ? 'display: none;' : '')}
   }
 
   *::-webkit-scrollbar-thumb {
@@ -117,7 +119,7 @@ const Table = (
     leftBrickWidth = 30,
     theme = 'light',
     headerData,
-    headerColor={ background: '#ffffff', text: '#354052' },
+    headerColor = { background: '#ffffff', text: '#354052' },
     showGrid, // Boolean
     children,
     tableId, // make required
@@ -128,6 +130,7 @@ const Table = (
       decimalPoints: 2,
       display: '',
     },
+    hideScrollbarX = false,
   },
   ref,
 ) => {
@@ -135,17 +138,14 @@ const Table = (
   useEffect(() => {
     setTheTheme(themes[theme]);
   }, [theme]);
-
   // ======= refs =======
   const viewportRef = useRef(null);
   const ScrollYContainerRef = useRef(null);
   const hasScrollbar = useHasScrollbar(ScrollYContainerRef);
-  useEffect(() => {
-    console.log('hasScrollbar', hasScrollbar);
-  }, [hasScrollbar]);
   const headerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
   const viewportScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
   const tableLayerScrollRef = useSyncScroller('hScrollingContainer-' + tableId);
+  //   const scrollBarRef = useSyncScroller('hScrollingContainer-' + tableId);
   const tableContainerRef = useRef(null);
   const tableBodyLayersRef = useRef(null);
   // ======= states =======
@@ -186,6 +186,11 @@ const Table = (
 
   const [isTableSelected, setIsTableSelected] = useState(false);
   const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
+  // Context
+  const { setTableViewPortWidth, setTableTotalWidth, setTableId } =
+    useTableContext();
+  setTableId(tableId);
+
   const getEdgeScrollingPropsX = useScrollOnEdges({
     canAnimate: scrollOnEdges,
     edgeSize: 100,
@@ -337,9 +342,14 @@ const Table = (
 
   const autoAdjustTable = () => {
     const adjustedSize = getAdjustedSize();
-    if (adjustedSize !== totalWidth) setTotalWidth(getAdjustedSize());
+    if (adjustedSize !== totalWidth) {
+      // setTotalWidth(getAdjustedSize());
+      setTotalWidth(adjustedSize);
+    }
 
-    if (!firstColWidth) autoAdjustFirstColWidth();
+    if (!firstColWidth) {
+      autoAdjustFirstColWidth();
+    }
     autoAdjustLastColWidth();
     autoAdjustDataColWidth();
 
@@ -399,6 +409,10 @@ const Table = (
     };
   }, []);
 
+  useLayoutEffect(() => {
+    setTableTotalWidth(totalWidth);
+  }, [totalWidth]);
+
   const handleResize = useCallback(() => {
     const size = getAdjustedSize();
     setTotalWidth(size);
@@ -419,6 +433,7 @@ const Table = (
 
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
+      setTableViewPortWidth(viewportRef.current.offsetWidth);
       if (viewportRef.current.offsetWidth < totalWidth) {
         setIsViewPortOverflow(true);
       } else {
@@ -496,12 +511,14 @@ const Table = (
    */
   const onFirstColResize = useCallback((width) => {
     const extraColSpace = getExtraColSpace();
+    const adjustedSize = getAdjustedSize();
+
     if (extraColSpace - (width - firstColWidth) > 0) {
       setfirstColWidth(width);
-      setTotalWidth(getAdjustedSize());
+      setTotalWidth(adjustedSize);
     } else {
       setfirstColWidth(width);
-      setTotalWidth(getAdjustedSize());
+      setTotalWidth(adjustedSize);
     }
   });
 
@@ -667,7 +684,7 @@ const Table = (
   ];
 
   return (
-    <Root hasScrollbar={hasScrollbar}>
+    <Root hasScrollbar={hasScrollbar} hideScrollbarX={hideScrollbarX}>
       <div
         version="2.1"
         id={`${tableId}`}
@@ -776,6 +793,7 @@ const Table = (
               </ViewPort>
 
               <div className="table-end"></div>
+
               {footer && (
                 <Footer
                   numberFormat={numberFormat}
@@ -788,6 +806,17 @@ const Table = (
                   vissible={footer}
                 />
               )}
+
+              {/* <div className="scrollable" ref={scrollBarRef} style={{overflowX: 'auto', height: 30, width: viewportWidth}}>
+
+              <div
+                  style={{
+                    width: totalWidth,
+                    height: '100%',
+                  }}
+                >
+                </div>
+              </div> */}
 
               {/* Refactor to make it pretty */}
               <div
