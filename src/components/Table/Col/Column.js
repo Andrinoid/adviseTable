@@ -33,7 +33,7 @@ const Column = ({ children, onClick, onDoubleClick, ...rest }, ref) => {
   }, [firstClickTime, count, onClick, onDoubleClick]);
 
   return (
-    <Wrapper {...rest} ref={ref} onClick={handleClick}>
+    <Wrapper ref={ref} {...rest} onClick={handleClick}>
       {children}
     </Wrapper>
   );
