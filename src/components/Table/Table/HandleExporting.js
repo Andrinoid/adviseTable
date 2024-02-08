@@ -55,9 +55,14 @@ class TableMatrixHandler {
       .map((r) => (r.length == length ? r : this.labelRow(length, r)))
       .filter((r) => r[0].current != null)
       .map((r) =>
-        r.map(
-          (c) => c.current.getAttribute('data-value') || c.current.innerText,
-        ),
+        r.map((c, i) => {
+          const value =
+            c.current.getAttribute('data-value') || c.current.innerText;
+          return {
+            v: value,
+            t: Number.isNaN(+value) ? 's' : 'n',
+          };
+        }),
       );
   }
 
