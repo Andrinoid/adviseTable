@@ -63,7 +63,7 @@ class TableMatrixHandler {
             value = c.current.innerText;
           }
 
-          if (value === '--') {
+          if (value === '- -') {
             value = '';
           }
 
