@@ -259,6 +259,7 @@ function Example({
             // console.log("selectedReport", selectedReport);
           }}
           hideScrollbarX={true}
+          style={{ paddingBottom: 50, background: 'green' }}
         >
           {(tableProvided) => {
             return (
