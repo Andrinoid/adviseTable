@@ -57,7 +57,8 @@ class TableMatrixHandler {
       .map((r) =>
         r.map((c, i) => {
           const value =
-            c.current.getAttribute('data-value') || c.current.innerText;
+            c.current.getAttribute('data-value') ||
+            (c.current.innerText === '--' ? '' : c.current.innerText);
           return {
             v: value,
             t: Number.isNaN(+value) ? 'z' : 'n',
