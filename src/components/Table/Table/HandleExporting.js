@@ -1,24 +1,24 @@
-import React, { useCallback } from "react";
-import { utils, writeFile } from "xlsx";
+import React, { useCallback } from 'react';
+import { utils, writeFile } from 'xlsx';
 
 export function HandleExporting() {
   const downloadExcelFile = useCallback((tableMatrix, headerData) => {
     const textHeader = headerData.map((col) => {
       return {
         v: col.title,
-        t: "s",
+        t: 's',
         s: {
           font: {
             bold: true,
-            color: { rgb: "000000" },
+            color: { rgb: '000000' },
           },
           fill: {
-            fgColor: { rgb: "fafafa" },
+            fgColor: { rgb: 'fafafa' },
           },
           alignment: {
             wrapText: true,
-            horizontal: "right",
-            vertical: "center",
+            horizontal: 'right',
+            vertical: 'center',
           },
         },
       };
@@ -30,10 +30,10 @@ export function HandleExporting() {
     textMatrix.unshift(textHeader);
     const workbook = utils.book_new();
     const sheet = utils.aoa_to_sheet(textMatrix);
-    utils.book_append_sheet(workbook, sheet, "Sheet1");
+    utils.book_append_sheet(workbook, sheet, 'Sheet1');
 
     // Save the file
-    writeFile(workbook, "advise.xlsx");
+    writeFile(workbook, 'advise.xlsx');
   }, []);
 
   return function (tableMatrix, headerData) {
@@ -54,7 +54,11 @@ class TableMatrixHandler {
     return this.uniqueElementsMatrix()
       .map((r) => (r.length == length ? r : this.labelRow(length, r)))
       .filter((r) => r[0].current != null)
-      .map((r) => r.map((c) => c.current.innerText));
+      .map((r) =>
+        r.map(
+          (c) => c.current.getAttribute('data-value') || c.current.innerText,
+        ),
+      );
   }
 
   labelRow(length, row) {
@@ -74,24 +78,24 @@ class TableMatrixHandler {
 
   makeElementFrom(previous, position) {
     const VALID_ATTRIBUTES = [
-      "data-rowtype",
-      "data-spanselection",
-      "type",
-      "data-selectable",
-      "class",
-      "style",
+      'data-rowtype',
+      'data-spanselection',
+      'type',
+      'data-selectable',
+      'class',
+      'style',
     ];
 
     const newElement = document.createElement(previous.tagName);
-    newElement.setAttribute("x", position);
-    newElement.setAttribute("data-x", position);
+    newElement.setAttribute('x', position);
+    newElement.setAttribute('data-x', position);
     newElement.setAttribute(
-      "id",
-      "x" + position + "y" + previous.getAttribute("y")
+      'id',
+      'x' + position + 'y' + previous.getAttribute('y'),
     );
-    newElement.setAttribute("y", previous.getAttribute("y"));
-    newElement.setAttribute("data-y", previous.getAttribute("data-y"));
-    newElement.setAttribute("innerText", "");
+    newElement.setAttribute('y', previous.getAttribute('y'));
+    newElement.setAttribute('data-y', previous.getAttribute('data-y'));
+    newElement.setAttribute('innerText', '');
 
     VALID_ATTRIBUTES.forEach((attribute) => {
       newElement.setAttribute(attribute, previous.getAttribute(attribute));
