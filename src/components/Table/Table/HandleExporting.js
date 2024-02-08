@@ -60,7 +60,7 @@ class TableMatrixHandler {
             c.current.getAttribute('data-value') || c.current.innerText;
           return {
             v: value,
-            t: Number.isNaN(+value) ? 's' : 'n',
+            t: Number.isNaN(+value) ? 'z' : 'n',
           };
         }),
       );
