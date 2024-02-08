@@ -131,6 +131,7 @@ const Table = (
       display: '',
     },
     hideScrollbarX = false,
+    style,
   },
   ref,
 ) => {
@@ -684,7 +685,11 @@ const Table = (
   ];
 
   return (
-    <Root hasScrollbar={hasScrollbar} hideScrollbarX={hideScrollbarX}>
+    <Root
+      hasScrollbar={hasScrollbar}
+      hideScrollbarX={hideScrollbarX}
+      style={style}
+    >
       <div
         version="2.1"
         id={`${tableId}`}
