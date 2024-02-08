@@ -2,6 +2,7 @@ import Table from './Table/Table';
 import Header from './Table/Header';
 import Row from './Table/Row';
 import Col from './Table/Col';
+import TableScrollbarX from './Table/TableScrollbarX';
 import Grid from './Grid/Grid';
 import AddSection from './Grid/AddSection';
 import SortableView from './Sortable';
@@ -18,6 +19,7 @@ import SiderItem from './Layout/components/SiderItem';
 import Logo from './Layout/components/Logo';
 import useControls from './Layout/hooks';
 import { LayoutProvider } from './Layout/LayoutContext';
+import { TableProvider } from './Table/TableContext';
 
 // expose the components
 export {
@@ -25,6 +27,7 @@ export {
   Header,
   Row,
   Col,
+  TableProvider,
   Grid,
   AddSection,
   Layout,
@@ -40,4 +43,5 @@ export {
   SiderItem,
   Logo,
   SortableView,
+  TableScrollbarX,
 };

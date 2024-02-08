@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import App from "./App";
+import App from "./App";
 import ExampleSimple from './ExampleSimple';
 import { RootStyle } from './global.style';
 import SortExample from './SortExample';
@@ -11,7 +11,7 @@ import SortExample from './SortExample';
 const Application = () => (
   <>
     <RootStyle />
-    <ExampleSimple />
+    <App />
   </>
 );
 

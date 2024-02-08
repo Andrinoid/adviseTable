@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Example from "./Example";
-import ExampleSimple from "./ExampleSimple";
 import { Layout, theme, Radio, Typography, Switch, Button, Slider } from "antd";
 const { Header, Sider, Content } = Layout;
 const { Text, Title } = Typography;
