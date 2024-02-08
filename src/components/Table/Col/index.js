@@ -1,15 +1,15 @@
 //react component
-import { clone, cloneDeep } from "lodash";
+import { clone, cloneDeep } from 'lodash';
 import React, {
   useState,
   useRef,
   useLayoutEffect,
   useImperativeHandle,
   useEffect,
-} from "react";
-import styled from "styled-components";
-import Cell from "./Cell";
-import HoverIndicator from "./HoverIndicator";
+} from 'react';
+import styled from 'styled-components';
+import Cell from './Cell';
+import HoverIndicator from './HoverIndicator';
 
 const Column = styled.div`
   display: inline-flex;
@@ -18,7 +18,7 @@ const Column = styled.div`
   align-items: center;
   justify-content: ${(props) => props.horizontalAlign};
   text-align: ${(props) => props.horizontalAlign};
-  overflow: ${(props) => (props.type === "first" ? "hidden" : "visible")};
+  overflow: ${(props) => (props.type === 'first' ? 'hidden' : 'visible')};
   user-select: none;
   box-sizing: border-box;
   ${({ showGrid, theme }) => {
@@ -30,7 +30,7 @@ const Column = styled.div`
 
 const Col = ({
   // internal props from Row
-  children = "",
+  children = '',
   id,
   y,
   x,
@@ -57,23 +57,23 @@ const Col = ({
   dataValue,
   spanSelection = true,
   empty = false,
-  horizontalAlign = "right",
+  horizontalAlign = 'right',
   style,
   onClick,
   allowEdition = false,
-  inputType = "text",
+  inputType = 'text',
   onSubmitCallback,
   lastColPaddingLeft,
   onDoubleClick,
 }) => {
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
-  const [inputValue, setInputValue] = useState(dataValue || "");
-  const [initialValue, setInitialValue] = useState(dataValue || "");
+  const [inputValue, setInputValue] = useState(dataValue || '');
+  const [initialValue, setInitialValue] = useState(dataValue || '');
 
   useEffect(() => {
     if (!dataValue && !initialValue && inputValue) {
-      setInputValue("");
+      setInputValue('');
     }
 
     if (dataValue) {
@@ -85,7 +85,7 @@ const Col = ({
     if (editable && !allowEdition) return;
 
     if (editable) {
-      setInitialValue(dataValue || "");
+      setInitialValue(dataValue || '');
     }
     setIsEditable(editable);
   };
@@ -119,7 +119,7 @@ const Col = ({
         let { colspan } = currentColRef.current?.dataset
           ? currentColRef.current?.dataset
           : { colspan: null };
-        if (colspan === "fullwidth") {
+        if (colspan === 'fullwidth') {
           colspan = totalCols;
         }
         let nextValue = prev;
@@ -175,7 +175,7 @@ const Col = ({
 
   const handleDoubleClick = (e) => {
     setEditionState(true);
-    onDoubleClick();
+    // onDoubleClick();
   };
 
   const onValueUpdate = (resetValue = false) => {
@@ -201,13 +201,13 @@ const Col = ({
       setEditionState(false);
     }).then(({ shouldRunCallback, inputValue }) => {
       if (shouldRunCallback)
-        onSubmitCallback(inputValue != null ? inputValue : "");
+        onSubmitCallback(inputValue != null ? inputValue : '');
     });
   };
 
   useEffect(() => {
     currentColRef.current.performUpdateValue = (value, force = false) => {
-      if (!allowEdition) throw new Error("This column is not editable");
+      if (!allowEdition) throw new Error('This column is not editable');
 
       if (initialValue != inputValue || force) {
         setEditionState(true);
