@@ -175,7 +175,9 @@ const Col = ({
 
   const handleDoubleClick = (e) => {
     setEditionState(true);
-    onDoubleClick();
+    if (onDoubleClick) {
+      onDoubleClick();
+    }
   };
 
   const onValueUpdate = (resetValue = false) => {
