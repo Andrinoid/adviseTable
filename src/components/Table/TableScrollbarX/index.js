@@ -25,7 +25,10 @@ const Styles = styled.div`
 `;
 
 function TableScrollbarX({ style, tableId }) {
-  const { tableViewportWidth, tableTotalWidth } = useTableContext();
+  const { getTableViewPortWidth, getTableTotalWidth } = useTableContext();
+  const viewportWidth = getTableViewPortWidth(tableId);
+  const totalWidth = getTableTotalWidth(tableId);
+
   const scrollBarRef = useSyncScroller('hScrollingContainer-' + tableId);
   return (
     <div style={style}>
@@ -35,12 +38,12 @@ function TableScrollbarX({ style, tableId }) {
         style={{
           overflowX: 'auto',
           height: 11,
-          width: tableViewportWidth,
+          width: viewportWidth,
         }}
       >
         <div
           style={{
-            width: tableTotalWidth,
+            width: totalWidth,
           }}
         ></div>
       </Styles>
