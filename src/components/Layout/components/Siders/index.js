@@ -1,7 +1,6 @@
-import React from "react";
-import useLayout from "../../hooks/useLayout";
-import { AnimatePresence, motion } from "framer-motion";
-import { Drawer } from "antd";
+import React from 'react';
+import useLayout from '../../hooks/useLayout';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Siders = ({ children }) => {
   const { siders } = useLayout();
@@ -11,7 +10,7 @@ const Siders = ({ children }) => {
   };
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       {children}
       <AnimatePresence>
         {siders.map((sider, siderIndex) => {
@@ -26,11 +25,11 @@ const Siders = ({ children }) => {
           return (
             <motion.div
               key={`${siderIndex}`}
-              transition={{ ...transition, ease: "easeIn" }}
+              transition={{ ...transition, ease: 'easeIn' }}
               initial={{ x: -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -50, opacity: 0 }}
-              style={{ position: "relative" }}
+              style={{ position: 'relative' }}
             >
               {/* These code here ensures that when stacking, the stacked element
             kindof fadein overlaying the previous element. But these doesnt happens
@@ -50,13 +49,13 @@ const Siders = ({ children }) => {
                 style={
                   containsPrevious
                     ? {
-                        height: "100%",
-                        position: "absolute",
+                        height: '100%',
+                        position: 'absolute',
                         left: 0,
                         top: 0,
                         zIndex: 9,
                       }
-                    : { height: "100%", zIndex: 9 }
+                    : { height: '100%', zIndex: 9 }
                 }
               >
                 {current}
@@ -65,7 +64,7 @@ const Siders = ({ children }) => {
           );
         })}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 
