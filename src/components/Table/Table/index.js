@@ -23,7 +23,6 @@ import useScrollOnEdges from './hooks/useScrollOnEdges';
 import useHasScrollbar from './hooks/useHasScrollbar';
 import useAutoResize from '../../shared/useAutoResize';
 import useTableContext from './hooks/useTableContext';
-import TableScrollbarX from '../TableScrollbarX';
 
 const ViewPort = styled.div`
   width: 100%;
