@@ -113,7 +113,6 @@ const Table = (
     isScrollOnEdges = false,
     headerStickyTopOffset = 0,
     firstColumnWidth,
-    editOnType = true,
     printLayout = false,
     selectionMode = 'cell',
     leftBrickWidth = 30,
@@ -188,9 +187,8 @@ const Table = (
   const [isTableSelected, setIsTableSelected] = useState(false);
   const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
   // Context
-  const { setTableViewPortWidth, setTableTotalWidth, setTableId } =
+  const { registerTable, setTableViewPortWidth, setTableTotalWidth } =
     useTableContext();
-  setTableId(tableId);
 
   const getEdgeScrollingPropsX = useScrollOnEdges({
     canAnimate: scrollOnEdges,
@@ -410,8 +408,19 @@ const Table = (
     };
   }, []);
 
+  useEffect(() => {
+    // Register this table with the TableContext. This will allow us to track multiple instances of the table
+    // And store the width of the table viewport and the total width of the table, used by the TableScrollbarX component
+    const initialState = {
+      tableViewportWidth: 0,
+      tableTotalWidth: 0,
+    };
+
+    registerTable(tableId, initialState);
+  }, []);
+
   useLayoutEffect(() => {
-    setTableTotalWidth(totalWidth);
+    setTableTotalWidth(tableId, totalWidth);
   }, [totalWidth]);
 
   const handleResize = useCallback(() => {
@@ -434,7 +443,7 @@ const Table = (
 
     if (viewportRef?.current?.offsetWidth) {
       setViewportWidth(viewportRef.current.offsetWidth);
-      setTableViewPortWidth(viewportRef.current.offsetWidth);
+      setTableViewPortWidth(tableId, viewportRef.current.offsetWidth);
       if (viewportRef.current.offsetWidth < totalWidth) {
         setIsViewPortOverflow(true);
       } else {

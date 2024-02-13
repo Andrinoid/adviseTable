@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSyncScroller } from '../utils/useSyncScroller';
 import useTableContext from '../Table/hooks/useTableContext';
@@ -25,7 +25,16 @@ const Styles = styled.div`
 `;
 
 function TableScrollbarX({ style, tableId }) {
-  const { tableViewportWidth, tableTotalWidth } = useTableContext();
+  const { getTableViewPortWidth, getTableTotalWidth } = useTableContext();
+  const viewportWidth = getTableViewPortWidth(tableId);
+  const totalWidth = getTableTotalWidth(tableId);
+
+  // useEffect(() => {
+  //   console.log('viewportWidth', viewportWidth);
+  //   console.log('totalWidth', totalWidth);
+  //   console.log('tableId', tableId);
+  // }, [viewportWidth, totalWidth]);
+
   const scrollBarRef = useSyncScroller('hScrollingContainer-' + tableId);
   return (
     <div style={style}>
@@ -35,12 +44,13 @@ function TableScrollbarX({ style, tableId }) {
         style={{
           overflowX: 'auto',
           height: 11,
-          width: tableViewportWidth,
+          width: viewportWidth,
+          background: 'white',
         }}
       >
         <div
           style={{
-            width: tableTotalWidth,
+            width: totalWidth,
           }}
         ></div>
       </Styles>
