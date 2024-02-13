@@ -1,25 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Container } from "./styles";
-import Resizable from "./Resizeable";
+import { Container } from './styles';
+import Resizable from './Resizeable';
 
 const Sider = ({
   children,
   width,
   maxWidth,
   borderLeft,
-  resizeable = false,
+  resizeable = true,
   ...rest
 }) => {
-  if (resizeable) {
+  if (resizeable && !Number.isNaN(width)) {
     return (
       <Resizable initialWidth={width} maxWidth={maxWidth || Infinity}>
         <Container
           {...rest}
           borderLeftWidth={0}
           borderRightWidth={1}
-          width={"100%"}
+          width={'100%'}
         >
           {children}
         </Container>
@@ -27,7 +27,14 @@ const Sider = ({
     );
   }
 
-  return <Container {...rest}>{children}</Container>;
+  return (
+    <Container
+      {...rest}
+      style={{ width: !Number.isNaN(width) ? width : '100%' }}
+    >
+      {children}
+    </Container>
+  );
 };
 
 Sider.propTypes = {
