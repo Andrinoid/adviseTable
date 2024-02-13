@@ -9,7 +9,7 @@ const Sider = ({
   width,
   maxWidth,
   borderLeft,
-  resizeable = true,
+  resizeable = false,
   ...rest
 }) => {
   if (resizeable) {
