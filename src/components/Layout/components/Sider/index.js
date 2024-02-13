@@ -27,14 +27,7 @@ const Sider = ({
     );
   }
 
-  return (
-    <Container
-      {...rest}
-      style={{ width: !Number.isNaN(width) ? width : '100%' }}
-    >
-      {children}
-    </Container>
-  );
+  return <Container {...rest}>{children}</Container>;
 };
 
 Sider.propTypes = {
