@@ -12,9 +12,12 @@ const Sider = ({
   resizeable = true,
   ...rest
 }) => {
-  if (resizeable && !Number.isNaN(width)) {
+  if (resizeable) {
     return (
-      <Resizable initialWidth={width} maxWidth={maxWidth || Infinity}>
+      <Resizable
+        initialWidth={!Number.isNaN(width) ? width : 'initial'}
+        maxWidth={maxWidth || Infinity}
+      >
         <Container
           {...rest}
           borderLeftWidth={0}
