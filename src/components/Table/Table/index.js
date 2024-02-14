@@ -19,7 +19,7 @@ import { useLayoutEffect } from 'react';
 import useKeyboardControler from './KeyboardControler';
 import { HandleExporting } from './HandleExporting';
 import { Copier } from './Copier';
-import useScrollOnEdges from './hooks/useScrollOnEdges';
+// import useScrollOnEdges from './hooks/useScrollOnEdges';
 import useHasScrollbar from './hooks/useHasScrollbar';
 import useAutoResize from '../../shared/useAutoResize';
 import useTableContext from './hooks/useTableContext';
@@ -190,12 +190,12 @@ const Table = (
   const { registerTable, setTableViewPortWidth, setTableTotalWidth } =
     useTableContext();
 
-  const getEdgeScrollingPropsX = useScrollOnEdges({
-    canAnimate: scrollOnEdges,
-    edgeSize: 100,
-    scrollOnX: true,
-    scrollOnY: false,
-  });
+  // const getEdgeScrollingPropsX = useScrollOnEdges({
+  //   canAnimate: scrollOnEdges,
+  //   edgeSize: 100,
+  //   scrollOnX: true,
+  //   scrollOnY: false,
+  // });
   // const getEdgeScrollingPropsY = useScrollOnEdges({
   //   canAnimate: scrollOnEdges,
   //   edgeSize: 100,
@@ -760,7 +760,7 @@ const Table = (
             ref={tableBodyLayersRef}
           >
             <ViewPort
-              {...getEdgeScrollingPropsX()}
+              // {...getEdgeScrollingPropsX()}
               id={tableId + '-viewport'}
               className={`viewPort${tableId} scrollable`}
               printLayout={printLayout}

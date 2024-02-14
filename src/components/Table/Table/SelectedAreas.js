@@ -1,8 +1,40 @@
-import React, { useEffect, useState } from "react";
-import delegate from "delegate";
-import { cloneDeep, flatten } from "lodash";
+import React, { useCallback, useEffect, useState } from 'react';
+import delegate from 'delegate';
+import { cloneDeep, flatten } from 'lodash';
 
 let trackMouseMove = false;
+
+const checkVisible = (elm, threshold = 20) => {
+  var rect = elm.getBoundingClientRect();
+  var viewHeight = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight,
+  );
+  var viewWidth = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth,
+  );
+
+  // console.log(
+  //   rect.bottom > threshold, //bottom is minimal visible
+  // );
+  // console.log(
+  //   rect.top + threshold < viewHeight, //top is minimal visible
+  // );
+  // console.log(
+  //   rect.right - threshold < viewWidth, //right is minimal visible;
+  // );
+  // console.log(
+  //   rect.left > threshold, //left is minimal visible
+  // );
+
+  return (
+    rect.bottom > threshold && //bottom is minimal visible
+    rect.top + threshold < viewHeight && //top is minimal visible
+    rect.right - threshold < viewWidth && //right is minimal visible;
+    rect.left > threshold //left is minimal visible
+  );
+};
 
 const SelectedAreas = ({
   selectionMode,
@@ -13,6 +45,27 @@ const SelectedAreas = ({
   tableMatrix,
   numberOfCols,
 }) => {
+  const scrollIfNeed = useCallback(
+    (x, y, { block = 'center', inline = 'center' } = {}) => {
+      if (
+        tableMatrix[y] &&
+        tableMatrix[y][x] &&
+        tableMatrix[y][x].current &&
+        !checkVisible(tableMatrix[y][x].current)
+      ) {
+        setTimeout(() => {
+          // console.log(tableMatrix[y][x].current);
+          tableMatrix[y][x].current.scrollIntoView({
+            // behavior: 'smooth',
+            block: block,
+            inline: inline,
+          });
+        }, 100);
+      }
+    },
+    [tableMatrix],
+  );
+
   /**
    * Add event listeners to all the cells in the table
    * As this can be a large number of cells, we use delegate the event listeners to the body for performance
@@ -21,32 +74,32 @@ const SelectedAreas = ({
     let mouseDownClear = delegate(
       document.body,
       `#${tableId} .brick`, //it would be nice to find a selector that applies this to all cells but not .tableCol
-      "mousedown",
+      'mousedown',
       () => {
         clearSelectedAreas();
       },
-      false
+      false,
     );
     let mouseDown = delegate(
       document.body,
       `#${tableId} .tableCol`,
-      "mousedown",
+      'mousedown',
       onMouseDown,
-      false
+      false,
     );
     let mouseMove = delegate(
       document.body,
       `#${tableId} .tableCol`,
-      "mouseover",
+      'mouseover',
       onMouseMove,
-      false
+      false,
     );
     let mouseUp = delegate(
       document.body,
       `#${tableId} .tableCol`,
-      "mouseup",
+      'mouseup',
       onMouseUp,
-      false
+      false,
     );
 
     return () => {
@@ -60,10 +113,10 @@ const SelectedAreas = ({
   React.useLayoutEffect(() => {
     const viewport = document.getElementById(`${tableId}-viewport`);
 
-    viewport?.addEventListener("mouseleave", onMouseLeave);
+    viewport?.addEventListener('mouseleave', onMouseLeave);
 
     return () => {
-      viewport?.removeEventListener("mouseleave", onMouseLeave);
+      viewport?.removeEventListener('mouseleave', onMouseLeave);
     };
   }, [tableId, tableMatrix]);
 
@@ -73,7 +126,7 @@ const SelectedAreas = ({
   const onMouseDown = (e) => {
     let { x, y, selectable, colspan } = e.delegateTarget.dataset;
 
-    if (selectable == "false" || e.button == 2) {
+    if (selectable == 'false' || e.button == 2) {
       return;
     }
 
@@ -142,7 +195,7 @@ const SelectedAreas = ({
             tableMatrix[i][j].current.dataset;
           if (
             colspan &&
-            (spanselection === "true" || currentSelectedArea.fromY == y)
+            (spanselection === 'true' || currentSelectedArea.fromY == y)
           ) {
             const currentForceMinX = forceMinX;
             const currentForceMaxX = forceMaxX;
@@ -180,9 +233,9 @@ const SelectedAreas = ({
   let updateCurrentSelectedArea = ({ fromX, fromY, toX, toY } = {}) => {
     if (toX)
       toX =
-        selectionMode === "cell" ? parseInt(toX) : tableMatrix[0].length - 1;
+        selectionMode === 'cell' ? parseInt(toX) : tableMatrix[0].length - 1;
     if (toY) toY = parseInt(toY);
-    if (fromX) fromX = selectionMode === "cell" ? parseInt(fromX) : 0;
+    if (fromX) fromX = selectionMode === 'cell' ? parseInt(fromX) : 0;
     if (fromY) fromY = parseInt(fromY);
 
     setSelectedAreas((selectedAreas) => {
@@ -199,8 +252,8 @@ const SelectedAreas = ({
           currentSelectedArea.oldMouseMoveTo.toX != null &&
           currentSelectedArea.oldMouseMoveTo.toX - toX > 0
         ) {
-          // console.log("moving to left");
-          // console.log(toX, currentSelectedArea.fromX);
+          // console.log('moving to left');
+          scrollIfNeed(toX - 1, toY, { inline: 'start' });
           if (toX < currentSelectedArea.fromX) {
             currentSelectedArea.fromX = toX;
           } else if (toX === currentSelectedArea.toX - 1) {
@@ -211,8 +264,8 @@ const SelectedAreas = ({
           currentSelectedArea.oldMouseMoveTo.toX != null &&
           currentSelectedArea.oldMouseMoveTo.toX - toX < 0
         ) {
-          // console.log("moving to right");
-          // console.log(toX, currentSelectedArea.toX);
+          // console.log('moving to right');
+          scrollIfNeed(toX + 1, toY, { inline: 'end' });
           if (toX > currentSelectedArea.toX) {
             currentSelectedArea.toX = toX;
           } else if (toX === currentSelectedArea.fromX + 1) {
@@ -231,7 +284,8 @@ const SelectedAreas = ({
           currentSelectedArea.oldMouseMoveTo.toY != null &&
           currentSelectedArea.oldMouseMoveTo.toY - toY > 0
         ) {
-          // console.log("moving up");
+          // console.log('moving up');
+          scrollIfNeed(toX, toY - 1, { block: 'start' });
           if (toY < currentSelectedArea.fromY) {
             currentSelectedArea.fromY = toY;
           } else {
@@ -242,7 +296,8 @@ const SelectedAreas = ({
           currentSelectedArea.oldMouseMoveTo.toY != null &&
           currentSelectedArea.oldMouseMoveTo.toY - toY < 0
         ) {
-          // console.log("moving down");
+          // console.log('moving down');
+          scrollIfNeed(toX, toY + 1, { block: 'end' });
           if (toY > currentSelectedArea.toY) {
             currentSelectedArea.toY = toY;
           } else {
@@ -323,7 +378,7 @@ const SelectedAreas = ({
               //is not affected
               return area;
             }
-          })
+          }),
         );
       });
 
@@ -372,12 +427,12 @@ const SelectedAreas = ({
   const onMouseMove = (e) => {
     let { x, y, selectable, colspan, spanselection } = e.delegateTarget.dataset;
 
-    if (selectable == "false") {
+    if (selectable == 'false') {
       trackMouseMove = false;
       return;
     }
     if (trackMouseMove) {
-      if (colspan != null && spanselection == "false") {
+      if (colspan != null && spanselection == 'false') {
         return;
       }
 
@@ -410,7 +465,7 @@ const SelectedAreas = ({
     let { x, y, selectable } = e.delegateTarget.dataset;
     // console.log(selectable, e.delegateTarget);
     applySelectionExclusion();
-    if (selectable == "false") {
+    if (selectable == 'false') {
       // console.log("Uai...");
       return;
     }
