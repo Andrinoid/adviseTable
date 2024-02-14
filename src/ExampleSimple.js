@@ -36,7 +36,7 @@ const BrickTools = () => {
 function ExampleSimple() {
   return (
     <TableProvider>
-      <div style={{ width: '500px', background: 'gray' }}>
+      <div style={{ height: '500px', background: 'gray' }}>
         {/* <div style={{ background: "gray", paddingTop: 50 }}></div> */}
         <Table
           stickyTopOffset={50}
@@ -46,7 +46,7 @@ function ExampleSimple() {
           selectionMode={'cell'}
           isScrollOnEdges={true}
           tableId={'simpeTable'}
-          hideScrollbarX={true}
+          // hideScrollbarX={true}
           leftBrickWidth={leftBrickWidth}
           headerData={[
             { title: 'A' },

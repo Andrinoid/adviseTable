@@ -6,8 +6,8 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { debounce, has, set } from 'lodash';
+import styled from 'styled-components';
+import { debounce } from 'lodash';
 import { useSyncScroller } from '../utils/useSyncScroller';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -196,12 +196,12 @@ const Table = (
     scrollOnX: true,
     scrollOnY: false,
   });
-  const getEdgeScrollingPropsY = useScrollOnEdges({
-    canAnimate: scrollOnEdges,
-    edgeSize: 100,
-    scrollOnX: false,
-    scrollOnY: true,
-  });
+  // const getEdgeScrollingPropsY = useScrollOnEdges({
+  //   canAnimate: scrollOnEdges,
+  //   edgeSize: 100,
+  //   scrollOnX: false,
+  //   scrollOnY: true,
+  // });
   const handleExporting = HandleExporting();
 
   useEffect(() => {
@@ -743,7 +743,7 @@ const Table = (
             />
           ) : null}
 
-          <div
+          {/* <div
             {...getEdgeScrollingPropsY()}
             ref={ScrollYContainerRef}
             style={{
@@ -751,77 +751,77 @@ const Table = (
               overflowY: 'scroll',
               height: '100%',
             }}
+          > */}
+          <div
+            style={{
+              height: 'fit-content',
+              position: 'relative',
+            }}
+            ref={tableBodyLayersRef}
           >
-            <div
-              style={{
-                height: 'fit-content',
-                position: 'relative',
+            <ViewPort
+              {...getEdgeScrollingPropsX()}
+              id={tableId + '-viewport'}
+              className={`viewPort${tableId} scrollable`}
+              printLayout={printLayout}
+              style={theTheme.secondary}
+              ref={(el) => {
+                viewportRef.current = el;
+                viewportScrollRef.current = el;
               }}
-              ref={tableBodyLayersRef}
             >
-              <ViewPort
-                {...getEdgeScrollingPropsX()}
-                id={tableId + '-viewport'}
-                className={`viewPort${tableId} scrollable`}
-                printLayout={printLayout}
-                style={theTheme.secondary}
-                ref={(el) => {
-                  viewportRef.current = el;
-                  viewportScrollRef.current = el;
-                }}
+              <div
+                style={{ width: totalWidth, zIndex: 1 }}
+                className={`${tableId}container`}
               >
-                <div
-                  style={{ width: totalWidth, zIndex: 1 }}
-                  className={`${tableId}container`}
-                >
-                  {childrenRows}
-                  <LeftBrickSpace
-                    className="leftBrickSpace"
-                    width={leftBrickWidth}
+                {childrenRows}
+                <LeftBrickSpace
+                  className="leftBrickSpace"
+                  width={leftBrickWidth}
+                />
+              </div>
+
+              <SelectedArea
+                numberOfCols={totalCols}
+                selectionMode={selectionMode}
+                tableId={tableId}
+                setSelectColDraging={setScrollOnEdges}
+                setSelectedCount={setSelectedCount}
+                setSelectedAreas={setSelectedAreas}
+                tableMatrix={tableMatrix}
+              />
+
+              {!printLayout && (
+                <>
+                  <LeftEdge
+                    scrollStatus={scrollStatus}
+                    offsetLeft={leftBrickWidth}
                   />
-                </div>
 
-                <SelectedArea
-                  numberOfCols={totalCols}
-                  selectionMode={selectionMode}
-                  tableId={tableId}
-                  setSelectColDraging={setScrollOnEdges}
-                  setSelectedCount={setSelectedCount}
-                  setSelectedAreas={setSelectedAreas}
-                  tableMatrix={tableMatrix}
-                />
-
-                {!printLayout && (
-                  <>
-                    <LeftEdge
-                      scrollStatus={scrollStatus}
-                      offsetLeft={leftBrickWidth}
-                    />
-
-                    <Edge
-                      isViewPortOverflow={isViewPortOverflow}
-                      scrollStatus={scrollStatus}
-                    />
-                  </>
-                )}
-              </ViewPort>
-
-              <div className="table-end"></div>
-
-              {footer && (
-                <Footer
-                  numberFormat={numberFormat}
-                  maxWidth={totalWidth}
-                  count={selectedCount}
-                  sum={selectedSum}
-                  min={selectedMin}
-                  max={selectedMax}
-                  avg={selectedAvg}
-                  vissible={footer}
-                />
+                  <Edge
+                    isViewPortOverflow={isViewPortOverflow}
+                    scrollStatus={scrollStatus}
+                  />
+                </>
               )}
+            </ViewPort>
 
-              {/* <div className="scrollable" ref={scrollBarRef} style={{overflowX: 'auto', height: 30, width: viewportWidth}}>
+            <div className="table-end"></div>
+
+            {footer && (
+              <Footer
+                numberFormat={numberFormat}
+                maxWidth={totalWidth}
+                count={selectedCount}
+                sum={selectedSum}
+                min={selectedMin}
+                max={selectedMax}
+                avg={selectedAvg}
+                vissible={footer}
+              />
+            )}
+
+            {/* <div className="scrollable" ref={scrollBarRef} style={{overflowX: 'auto', height: 30, width: viewportWidth}}>
 
               <div
                   style={{
@@ -832,51 +832,51 @@ const Table = (
                 </div>
               </div> */}
 
-              {/* Refactor to make it pretty */}
+            {/* Refactor to make it pretty */}
+            <div
+              ref={tableLayerScrollRef}
+              className="scrollable"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: viewportWidth,
+                overflow: 'hidden',
+                pointerEvents: 'none',
+                height: '100%',
+              }}
+            >
               <div
-                ref={tableLayerScrollRef}
-                className="scrollable"
                 style={{
                   position: 'absolute',
-                  inset: 0,
-                  width: viewportWidth,
-                  overflow: 'hidden',
-                  pointerEvents: 'none',
+                  width: totalWidth,
                   height: '100%',
                 }}
               >
-                <div
-                  style={{
-                    position: 'absolute',
-                    width: totalWidth,
-                    height: '100%',
-                  }}
-                >
-                  {!printLayout && (
-                    <Selection
-                      // selectionString={JSON.stringify(selectedAreas)}
-                      selectedAreas={selectedAreas}
-                      colWidth={colWidth}
-                      colHeight={colHeight}
-                      leftOffset={leftBrickWidth}
-                      firstColWidth={firstColWidth}
-                      lastColWidth={lastColWidth}
-                      numberOfCols={totalCols}
-                      selectionMode={selectionMode}
-                      totalWidth={totalWidth}
-                      lasColumnRisizeable={lasColumnRisizeable}
-                      theTheme={theTheme}
-                      headerHeight={headerHeight}
-                      tableMatrix={tableMatrix}
-                      tableTopOffset={tableTopOffset}
-                      tableContainerRef={tableBodyLayersRef}
-                      tableId={tableId}
-                    />
-                  )}
-                </div>
+                {!printLayout && (
+                  <Selection
+                    // selectionString={JSON.stringify(selectedAreas)}
+                    selectedAreas={selectedAreas}
+                    colWidth={colWidth}
+                    colHeight={colHeight}
+                    leftOffset={leftBrickWidth}
+                    firstColWidth={firstColWidth}
+                    lastColWidth={lastColWidth}
+                    numberOfCols={totalCols}
+                    selectionMode={selectionMode}
+                    totalWidth={totalWidth}
+                    lasColumnRisizeable={lasColumnRisizeable}
+                    theTheme={theTheme}
+                    headerHeight={headerHeight}
+                    tableMatrix={tableMatrix}
+                    tableTopOffset={tableTopOffset}
+                    tableContainerRef={tableBodyLayersRef}
+                    tableId={tableId}
+                  />
+                )}
               </div>
             </div>
           </div>
+          {/* </div> */}
         </div>
       </div>
     </Root>

@@ -15,4 +15,4 @@ const Application = () => (
   </>
 );
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Application />, document.getElementById('root'));
