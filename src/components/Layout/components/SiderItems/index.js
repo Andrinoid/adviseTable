@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const SiderItems = ({ children, besides, ...rest }) => {
   const [active, setActive] = useState(null);
@@ -7,14 +7,16 @@ const SiderItems = ({ children, besides, ...rest }) => {
     <div {...rest} style={{ marginTop: 8 }}>
       {React.Children.map(children, (child) => {
         if (child && child.props && child.props.id) {
-          const obj = {
-            onClick: () => {
-              setActive(child.props.id);
+          const handleOnClick = () => {
+            setActive(child.props.id);
 
-              if (child.props.onClick) {
-                child.props.onClick();
-              }
-            },
+            if (child.props.onClick) {
+              child.props.onClick();
+            }
+          };
+          const obj = {
+            onClick: handleOnClick,
+            onTouchStart: handleOnClick,
             active: child.props.id && child.props.id === active,
           };
 
