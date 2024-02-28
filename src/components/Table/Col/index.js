@@ -62,6 +62,7 @@ const Col = ({
   onPasteCallback,
   setPastedCols,
   child,
+  entryId,
 }) => {
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
@@ -202,7 +203,7 @@ const Col = ({
       if (onPasteCallback && amountOfPastedCols && amountOfPastedCols > 0) {
         setPastedCols((cols) => [
           ...cols,
-          { value: inputValue != null ? inputValue : '', x, y, child },
+          { value: inputValue != null ? inputValue : '', x, y, child, entryId },
         ]);
       } else {
         if (shouldRunCallback) {
