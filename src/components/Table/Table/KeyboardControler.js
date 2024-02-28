@@ -1,10 +1,10 @@
-import { cloneDeep } from "lodash";
-import React, { useEffect, useRef } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 export function nextValidRow(index, type, matrix) {
   for (let i = index; i < matrix.length; i++) {
-    if (matrix[i][0].current.getAttribute("data-rowtype") != type) {
+    if (matrix[i][0].current.getAttribute('data-rowtype') != type) {
       return matrix.length;
     }
     return i;
@@ -16,21 +16,19 @@ export function nextValidRow(index, type, matrix) {
 export default function useKeyboardControler(
   selectedAreas,
   tableMatrix,
-  setSelectedAreas
+  setSelectedAreas,
+  setAmountOfPastedCols,
 ) {
   let isNegative = useRef(false);
 
   const pasteData = (e) => {
     if (selectedAreas.length === 1) {
-      let pasteData = e.clipboardData.getData("text");
+      let pasteData = e.clipboardData.getData('text');
 
-      // let hasTabs = pasteData.includes("\t");
-      // let hasNewLines = pasteData.includes("\n");
-
-      let pasteDataRows = pasteData.split("\n");
+      let pasteDataRows = pasteData.split('\n');
 
       let pasteDataRowsSplitted = pasteDataRows.map((row) => {
-        return row.split("\t");
+        return row.split('\t');
       });
 
       let startRowIndex = selectedAreas[0].fromY;
@@ -38,7 +36,14 @@ export default function useKeyboardControler(
       const type =
         tableMatrix[selectedAreas[0].fromY][
           selectedAreas[0].fromX
-        ].current.getAttribute("data-rowtype");
+        ].current.getAttribute('data-rowtype');
+
+      const amountOfCells = pasteDataRowsSplitted.reduce(
+        (acc, row) => acc + row.length,
+        0,
+      );
+
+      setAmountOfPastedCols(amountOfCells);
 
       pasteDataRowsSplitted.forEach((pastedRow) => {
         let startColumnIndex = selectedAreas[0].fromX;
@@ -48,13 +53,9 @@ export default function useKeyboardControler(
 
           pastedRow.forEach((pastedCell) => {
             try {
-              console.log(
-                `update with value [${startRowIndex}, ${startColumnIndex}]`,
-                pastedCell
-              );
               tableMatrix[startRowIndex][
                 startColumnIndex
-              ].current.performUpdateValue(pastedCell, true);
+              ].current.performUpdateValue(pastedCell, amountOfCells, true);
             } catch (error) {
               console.error(error);
             }
@@ -63,22 +64,13 @@ export default function useKeyboardControler(
           startRowIndex++;
         }
       });
-
-      console.log(pasteDataRowsSplitted);
-      console.log("matrix", tableMatrix);
-      console.log("selectedAreas", selectedAreas);
-      console.log("-----");
-      console.log(
-        "starting point",
-        tableMatrix[selectedAreas[0].fromY][selectedAreas[0].fromX]
-      );
     }
   };
 
   useEffect(() => {
-    document.addEventListener("paste", pasteData);
+    document.addEventListener('paste', pasteData);
     return () => {
-      document.removeEventListener("paste", pasteData);
+      document.removeEventListener('paste', pasteData);
     };
   }, [selectedAreas, tableMatrix]);
 
@@ -89,35 +81,35 @@ export default function useKeyboardControler(
     };
   };
 
-  useHotkeys("up", () => arrowMoveSelection("up"), getDefaultOptions());
-  useHotkeys("down", () => arrowMoveSelection("down"), getDefaultOptions());
-  useHotkeys("left", () => arrowMoveSelection("left"), getDefaultOptions());
-  useHotkeys("right", () => arrowMoveSelection("right"), getDefaultOptions());
-  useHotkeys("shift+up", () => arrowShiftSelection("up"), getDefaultOptions());
+  useHotkeys('up', () => arrowMoveSelection('up'), getDefaultOptions());
+  useHotkeys('down', () => arrowMoveSelection('down'), getDefaultOptions());
+  useHotkeys('left', () => arrowMoveSelection('left'), getDefaultOptions());
+  useHotkeys('right', () => arrowMoveSelection('right'), getDefaultOptions());
+  useHotkeys('shift+up', () => arrowShiftSelection('up'), getDefaultOptions());
   useHotkeys(
-    "shift+down",
-    () => arrowShiftSelection("down"),
-    getDefaultOptions()
+    'shift+down',
+    () => arrowShiftSelection('down'),
+    getDefaultOptions(),
   );
   useHotkeys(
-    "shift+left",
-    () => arrowShiftSelection("left"),
-    getDefaultOptions()
+    'shift+left',
+    () => arrowShiftSelection('left'),
+    getDefaultOptions(),
   );
   useHotkeys(
-    "shift+right",
-    () => arrowShiftSelection("right"),
-    getDefaultOptions()
+    'shift+right',
+    () => arrowShiftSelection('right'),
+    getDefaultOptions(),
   );
-  useHotkeys("tab", () => setNextFocus(), {
+  useHotkeys('tab', () => setNextFocus(), {
     ...getDefaultOptions(),
     enableOnFormTags: true,
   });
-  useHotkeys("enter", () => editCurrentCell("toggle"), {
+  useHotkeys('enter', () => editCurrentCell('toggle'), {
     ...getDefaultOptions(),
     enableOnFormTags: true,
   });
-  useHotkeys("esc", () => editCurrentCell(false), {
+  useHotkeys('esc', () => editCurrentCell(false), {
     ...getDefaultOptions(),
     enableOnFormTags: true,
   });
@@ -156,7 +148,7 @@ export default function useKeyboardControler(
     ) {
       const cell =
         tableMatrix[selectedAreas[0].toY][selectedAreas[0].toX].current;
-      if (editState === "toggle") {
+      if (editState === 'toggle') {
         if (cell.isEditable()) {
           cell.blur();
         } else {
@@ -208,23 +200,23 @@ export default function useKeyboardControler(
   const arrowMoveSelection = (keyName) => {
     const area = cloneDeep(selectedAreas[selectedAreas.length - 1]);
 
-    if (keyName === "right") {
+    if (keyName === 'right') {
       // move selected up to the next row but not past the last row
       area.toX = Math.min(tableMatrix[area.toY].length - 1, area.toX + 1);
       area.fromX = area.toX;
       area.fromY = area.toY;
     }
-    if (keyName === "left") {
+    if (keyName === 'left') {
       area.toX = Math.max(0, area.toX - 1);
       area.fromX = area.toX;
       area.fromY = area.toY;
     }
-    if (keyName === "up") {
+    if (keyName === 'up') {
       area.toY = Math.max(0, area.toY - 1);
       area.fromX = area.toX;
       area.fromY = area.toY;
     }
-    if (keyName === "down") {
+    if (keyName === 'down') {
       // increace area.toY by 1 but not past the last row
       area.toY = Math.min(tableMatrix.length - 1, area.toY + 1);
       area.fromX = area.toX;
@@ -246,7 +238,7 @@ export default function useKeyboardControler(
     const lastCol = tableMatrix[selectedAreas.length - 1].length - 1;
     const lastRow = tableMatrix.length - 1;
 
-    if (keyName === "down") {
+    if (keyName === 'down') {
       if (area.toY < lastRow) {
         updateLabelArea(area, area.fromY + 1, area.fromX, tableMatrix);
       }
@@ -262,7 +254,7 @@ export default function useKeyboardControler(
       }
     }
 
-    if (keyName === "up") {
+    if (keyName === 'up') {
       if (area.fromY > 0) {
         updateLabelArea(area, area.fromY - 1, area.fromX, tableMatrix);
       }
@@ -277,7 +269,7 @@ export default function useKeyboardControler(
       }
     }
 
-    if (keyName === "left") {
+    if (keyName === 'left') {
       if (area.toX === area.fromX) {
         isNegative.current = true;
       }
@@ -287,7 +279,7 @@ export default function useKeyboardControler(
       }
     }
 
-    if (keyName === "right") {
+    if (keyName === 'right') {
       if (area.toX === area.fromX) {
         isNegative.current = false;
       }
@@ -305,8 +297,8 @@ export default function useKeyboardControler(
 
 function updateLabelArea(area, row, col, tableMatrix) {
   const element = tableMatrix[row][col].current;
-  const colspan = element.getAttribute("data-colspan");
-  const dataX = element.getAttribute("data-x");
+  const colspan = element.getAttribute('data-colspan');
+  const dataX = element.getAttribute('data-x');
   if (colspan && dataX) {
     area.fromX = parseInt(dataX);
     area.toX = parseInt(dataX) + parseInt(colspan) - 1;

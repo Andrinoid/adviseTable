@@ -1,12 +1,6 @@
 //react component
 import { clone, cloneDeep } from 'lodash';
-import React, {
-  useState,
-  useRef,
-  useLayoutEffect,
-  useImperativeHandle,
-  useEffect,
-} from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import styled from 'styled-components';
 import Cell from './Cell';
 import HoverIndicator from './HoverIndicator';
@@ -65,6 +59,8 @@ const Col = ({
   onSubmitCallback,
   lastColPaddingLeft,
   onDoubleClick,
+  onPasteCallback,
+  setPastedCols,
 }) => {
   const currentColRef = useRef(null);
   const [isEditable, setIsEditable] = useState(false);
@@ -180,7 +176,7 @@ const Col = ({
     }
   };
 
-  const onValueUpdate = (resetValue = false) => {
+  const onValueUpdate = (amountOfPastedCols, resetValue = false) => {
     return new Promise((resolve, reject) => {
       let shouldRunCallback = false;
       setInitialValue((value) => {
@@ -202,19 +198,31 @@ const Col = ({
       });
       setEditionState(false);
     }).then(({ shouldRunCallback, inputValue }) => {
-      if (shouldRunCallback)
-        onSubmitCallback(inputValue != null ? inputValue : '');
+      if (onPasteCallback && amountOfPastedCols && amountOfPastedCols > 0) {
+        setPastedCols((cols) => [
+          ...cols,
+          { value: inputValue != null ? inputValue : '', x, y },
+        ]);
+      } else {
+        if (shouldRunCallback) {
+          onSubmitCallback(inputValue != null ? inputValue : '');
+        }
+      }
     });
   };
 
   useEffect(() => {
-    currentColRef.current.performUpdateValue = (value, force = false) => {
+    currentColRef.current.performUpdateValue = (
+      value,
+      amountOfPastedCells,
+      force = false,
+    ) => {
       if (!allowEdition) throw new Error('This column is not editable');
 
       if (initialValue != inputValue || force) {
         setEditionState(true);
         setInputValue(value);
-        onValueUpdate();
+        onValueUpdate(amountOfPastedCells);
       }
     };
     currentColRef.current.focus = () => {

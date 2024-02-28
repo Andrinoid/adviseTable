@@ -260,6 +260,9 @@ function Example({
           }}
           hideScrollbarX={true}
           style={{ paddingBottom: 50, background: 'green' }}
+          onPaste={(rows) => {
+            console.log('onPaste data', rows);
+          }}
         >
           {(tableProvided) => {
             return (

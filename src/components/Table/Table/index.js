@@ -23,6 +23,7 @@ import useScrollOnEdges from './hooks/useScrollOnEdges';
 import useHasScrollbar from './hooks/useHasScrollbar';
 import useAutoResize from '../../shared/useAutoResize';
 import useTableContext from './hooks/useTableContext';
+import PropTypes from 'prop-types';
 
 const ViewPort = styled.div`
   width: 100%;
@@ -131,6 +132,7 @@ const Table = (
     },
     hideScrollbarX = false,
     style,
+    onPaste = null,
   },
   ref,
 ) => {
@@ -186,6 +188,9 @@ const Table = (
 
   const [isTableSelected, setIsTableSelected] = useState(false);
   const [isHeaderIncluded, setIsHeaderIncluded] = useState(false);
+
+  const [amountOfPastedCols, setAmountOfPastedCols] = useState(0);
+  const [pastedCols, setPastedCols] = useState([]);
   // Context
   const { registerTable, setTableViewPortWidth, setTableTotalWidth } =
     useTableContext();
@@ -203,6 +208,14 @@ const Table = (
   //   scrollOnY: true,
   // });
   const handleExporting = HandleExporting();
+
+  useEffect(() => {
+    if (amountOfPastedCols > 0 && pastedCols.length === amountOfPastedCols) {
+      onPaste(pastedCols);
+      setPastedCols([]);
+      setAmountOfPastedCols(0);
+    }
+  }, [pastedCols, amountOfPastedCols, onPaste]);
 
   useEffect(() => {
     onFirstColumnResize(firstColWidth);
@@ -258,7 +271,12 @@ const Table = (
 
   useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
 
-  useKeyboardControler(selectedAreas, tableMatrix, setSelectedAreas);
+  useKeyboardControler(
+    selectedAreas,
+    tableMatrix,
+    setSelectedAreas,
+    setAmountOfPastedCols,
+  );
 
   /**
    * expose method to parent component
@@ -652,6 +670,9 @@ const Table = (
           showGrid,
           totalCols,
           lasColumnRisizeable,
+          onPasteCallback: onPaste,
+          setPastedCols,
+          amountOfPastedCols,
         },
       }),
     );
@@ -676,6 +697,9 @@ const Table = (
     theTheme,
     showGrid,
     headerData,
+    onPaste,
+    setPastedCols,
+    amountOfPastedCols,
   ]);
 
   const toY = tableMatrix ? tableMatrix.length - 1 : 0;
@@ -881,6 +905,14 @@ const Table = (
       </div>
     </Root>
   );
+};
+
+Table.defaultProps = {
+  onPaste: null,
+};
+
+Table.propTypes = {
+  onPaste: PropTypes.func,
 };
 
 export default React.forwardRef(Table);
