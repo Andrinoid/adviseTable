@@ -202,7 +202,13 @@ const Col = ({
       if (onPasteCallback && amountOfPastedCols && amountOfPastedCols > 0) {
         setPastedCols((cols) => [
           ...cols,
-          { value: inputValue != null ? inputValue : '', x, y, ...rest },
+          {
+            value: inputValue != null ? inputValue : '',
+            x,
+            y,
+            allowEdition,
+            ...rest,
+          },
         ]);
       } else {
         if (shouldRunCallback) {
