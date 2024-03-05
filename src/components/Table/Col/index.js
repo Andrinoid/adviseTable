@@ -61,6 +61,7 @@ const Col = ({
   onDoubleClick,
   onPasteCallback,
   setPastedCols,
+  editable,
   ...rest
 }) => {
   const currentColRef = useRef(null);
@@ -224,10 +225,9 @@ const Col = ({
       amountOfPastedCells,
       force = false,
     ) => {
-      if (!allowEdition) {
+      if (!allowEdition && !editable) {
         setPastedCols((cols) => [...cols, null]);
-        return;
-        // throw new Error('This column is not editable');
+        throw new Error('This column is not editable');
       }
 
       if (initialValue != inputValue || force) {
