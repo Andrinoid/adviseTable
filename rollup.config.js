@@ -25,10 +25,10 @@ module.exports = {
     postcss({
       extract: true,
     }),
-    // terser({
-    //   compress: {
-    //     drop_console: true, // Remove console.log statements
-    //   },
-    // }),
+    terser({
+      compress: {
+        drop_console: true, // Remove console.log statements
+      },
+    }),
   ],
 };
