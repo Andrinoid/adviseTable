@@ -34,22 +34,19 @@ export default function useKeyboardControler(
         let startColumnIndex = selectedAreas[0].fromX;
 
         pastedRow.forEach((pastedCell) => {
-          try {
-            if (
-              tableMatrix[startRowIndex][startColumnIndex] &&
-              tableMatrix[startRowIndex][startColumnIndex].current
-            ) {
-              tableMatrix[startRowIndex][
-                startColumnIndex
-              ].current.performUpdateValue(pastedCell, amountOfCells, true);
-            } else {
-              setPastedCols((cols) => {
-                return [...cols, null];
-              });
-            }
-          } finally {
-            startColumnIndex++;
+          if (
+            tableMatrix[startRowIndex][startColumnIndex] &&
+            tableMatrix[startRowIndex][startColumnIndex].current
+          ) {
+            tableMatrix[startRowIndex][
+              startColumnIndex
+            ].current.performUpdateValue(pastedCell, amountOfCells, true);
+          } else {
+            setPastedCols((cols) => {
+              return [...cols, null];
+            });
           }
+          startColumnIndex++;
         });
         startRowIndex++;
       });

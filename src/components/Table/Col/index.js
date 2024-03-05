@@ -227,7 +227,7 @@ const Col = ({
     ) => {
       if (!allowEdition && !editable) {
         setPastedCols((cols) => [...cols, null]);
-        throw new Error('This column is not editable');
+        return;
       }
 
       if (initialValue != inputValue || force) {
