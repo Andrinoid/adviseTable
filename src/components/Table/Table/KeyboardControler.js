@@ -2,17 +2,6 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-export function nextValidRow(index, type, matrix) {
-  for (let i = index; i < matrix.length; i++) {
-    if (matrix[i][0].current.getAttribute('data-rowtype') != type) {
-      return matrix.length;
-    }
-    return i;
-  }
-
-  return matrix.length;
-}
-
 export default function useKeyboardControler(
   selectedAreas,
   tableMatrix,
@@ -39,17 +28,22 @@ export default function useKeyboardControler(
 
       setAmountOfPastedCols(amountOfCells);
 
+      console.log('copied rows ', pasteDataRowsSplitted);
       let startRowIndex = selectedAreas[0].fromY;
 
       pasteDataRowsSplitted.forEach((pastedRow) => {
         let startColumnIndex = selectedAreas[0].fromX;
 
+        console.log('startRowIndex ', startRowIndex);
         pastedRow.forEach((pastedCell) => {
+          console.log('startColumnIndex ', startColumnIndex);
+
           try {
             if (
               tableMatrix[startRowIndex][startColumnIndex] &&
               tableMatrix[startRowIndex][startColumnIndex].current
             ) {
+              console.log('entrou no if ', startRowIndex, startColumnIndex);
               tableMatrix[startRowIndex][
                 startColumnIndex
               ].current.performUpdateValue(pastedCell, amountOfCells, true);
