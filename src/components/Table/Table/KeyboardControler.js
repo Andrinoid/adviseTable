@@ -40,9 +40,10 @@ export default function useKeyboardControler(
       setAmountOfPastedCols(amountOfCells);
 
       let startRowIndex = selectedAreas[0].fromY;
-      let startColumnIndex = selectedAreas[0].fromX;
 
       pasteDataRowsSplitted.forEach((pastedRow) => {
+        let startColumnIndex = selectedAreas[0].fromX;
+
         pastedRow.forEach((pastedCell) => {
           try {
             if (
