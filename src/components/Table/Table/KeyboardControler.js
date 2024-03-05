@@ -23,8 +23,6 @@ export default function useKeyboardControler(
   let isNegative = useRef(false);
 
   const pasteData = (e) => {
-    setPastedCols([]);
-
     if (selectedAreas.length === 1) {
       let pasteData = e.clipboardData.getData('text');
 

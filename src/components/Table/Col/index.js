@@ -224,7 +224,10 @@ const Col = ({
       amountOfPastedCells,
       force = false,
     ) => {
-      if (!allowEdition) throw new Error('This column is not editable');
+      if (!allowEdition) {
+        setPastedCols((cols) => [...cols, null]);
+        throw new Error('This column is not editable');
+      }
 
       if (initialValue != inputValue || force) {
         setEditionState(true);
