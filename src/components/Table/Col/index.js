@@ -208,6 +208,7 @@ const Col = ({
             x,
             y,
             allowEdition,
+            editable,
             ...rest,
           },
         ]);
