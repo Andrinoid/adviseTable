@@ -276,6 +276,7 @@ const Table = (
     tableMatrix,
     setSelectedAreas,
     setAmountOfPastedCols,
+    setPastedCols,
   );
 
   /**

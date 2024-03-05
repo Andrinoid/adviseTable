@@ -18,10 +18,13 @@ export default function useKeyboardControler(
   tableMatrix,
   setSelectedAreas,
   setAmountOfPastedCols,
+  setPastedCols,
 ) {
   let isNegative = useRef(false);
 
   const pasteData = (e) => {
+    setPastedCols([]);
+
     if (selectedAreas.length === 1) {
       let pasteData = e.clipboardData.getData('text');
 
@@ -31,13 +34,6 @@ export default function useKeyboardControler(
         return row.split('\t');
       });
 
-      let startRowIndex = selectedAreas[0].fromY;
-
-      const type =
-        tableMatrix[selectedAreas[0].fromY][
-          selectedAreas[0].fromX
-        ].current.getAttribute('data-rowtype');
-
       const amountOfCells = pasteDataRowsSplitted.reduce(
         (acc, row) => acc + row.length,
         0,
@@ -45,24 +41,25 @@ export default function useKeyboardControler(
 
       setAmountOfPastedCols(amountOfCells);
 
+      let startRowIndex = selectedAreas[0].fromY;
+      let startColumnIndex = selectedAreas[0].fromX;
+
       pasteDataRowsSplitted.forEach((pastedRow) => {
-        let startColumnIndex = selectedAreas[0].fromX;
-
-        if (startRowIndex < tableMatrix.length) {
-          startRowIndex = nextValidRow(startRowIndex, type, tableMatrix);
-
-          pastedRow.forEach((pastedCell) => {
-            try {
+        pastedRow.forEach((pastedCell) => {
+          try {
+            if (
+              tableMatrix[startRowIndex][startColumnIndex] &&
+              tableMatrix[startRowIndex][startColumnIndex].current
+            ) {
               tableMatrix[startRowIndex][
                 startColumnIndex
               ].current.performUpdateValue(pastedCell, amountOfCells, true);
-            } catch (error) {
-              console.error(error);
             }
+          } finally {
             startColumnIndex++;
-          });
-          startRowIndex++;
-        }
+          }
+        });
+        startRowIndex++;
       });
     }
   };
