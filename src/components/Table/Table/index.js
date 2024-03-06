@@ -211,7 +211,7 @@ const Table = (
 
   useEffect(() => {
     if (amountOfPastedCols > 0 && pastedCols.length === amountOfPastedCols) {
-      onPaste(pastedCols.filter((c) => !!c));
+      onPaste(pastedCols);
       setPastedCols([]);
       setAmountOfPastedCols(0);
     }

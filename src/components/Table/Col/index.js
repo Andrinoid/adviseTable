@@ -178,7 +178,7 @@ const Col = ({
     }
   };
 
-  const onValueUpdate = (amountOfPastedCols, resetValue = false) => {
+  const onValueUpdate = (isPasteUpdate, resetValue = false) => {
     return new Promise((resolve, reject) => {
       let shouldRunCallback = false;
       setInitialValue((value) => {
@@ -200,7 +200,27 @@ const Col = ({
       });
       setEditionState(false);
     }).then(({ shouldRunCallback, inputValue }) => {
-      if (onPasteCallback && amountOfPastedCols && amountOfPastedCols > 0) {
+      if (shouldRunCallback && !isPasteUpdate) {
+        onSubmitCallback(inputValue != null ? inputValue : '');
+      }
+    });
+  };
+
+  useEffect(() => {
+    currentColRef.current.performUpdateValue = (
+      value,
+      amountOfPastedCells,
+      force = false,
+    ) => {
+      const isPasteUpdate =
+        onPasteCallback && amountOfPastedCells && amountOfPastedCells > 0;
+      if ((allowEdition && editable && initialValue != inputValue) || force) {
+        setEditionState(true);
+        setInputValue(value);
+        onValueUpdate(isPasteUpdate);
+      }
+
+      if (isPasteUpdate) {
         setPastedCols((cols) => [
           ...cols,
           {
@@ -212,29 +232,6 @@ const Col = ({
             ...rest,
           },
         ]);
-      } else {
-        if (shouldRunCallback) {
-          onSubmitCallback(inputValue != null ? inputValue : '');
-        }
-      }
-    });
-  };
-
-  useEffect(() => {
-    currentColRef.current.performUpdateValue = (
-      value,
-      amountOfPastedCells,
-      force = false,
-    ) => {
-      if (!allowEdition && !editable) {
-        setPastedCols((cols) => [...cols, null]);
-        return;
-      }
-
-      if (initialValue != inputValue || force) {
-        setEditionState(true);
-        setInputValue(value);
-        onValueUpdate(amountOfPastedCells);
       }
     };
     currentColRef.current.focus = () => {
