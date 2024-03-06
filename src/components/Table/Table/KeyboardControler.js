@@ -35,6 +35,7 @@ export default function useKeyboardControler(
 
         pastedRow.forEach((pastedCell) => {
           if (
+            tableMatrix[startRowIndex] &&
             tableMatrix[startRowIndex][startColumnIndex] &&
             tableMatrix[startRowIndex][startColumnIndex].current
           ) {
