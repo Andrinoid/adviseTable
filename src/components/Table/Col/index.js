@@ -203,11 +203,12 @@ const Col = ({
       if (shouldRunCallback && !isPasteUpdate) {
         onSubmitCallback(inputValue != null ? inputValue : '');
       }
+      return inputValue;
     });
   };
 
   useEffect(() => {
-    currentColRef.current.performUpdateValue = (
+    currentColRef.current.performUpdateValue = async (
       value,
       amountOfPastedCells,
       force = false,
@@ -217,14 +218,14 @@ const Col = ({
       if ((allowEdition && editable && initialValue != inputValue) || force) {
         setEditionState(true);
         setInputValue(value);
-        onValueUpdate(isPasteUpdate);
+        value = await onValueUpdate(isPasteUpdate);
       }
 
       if (isPasteUpdate) {
         setPastedCols((cols) => [
           ...cols,
           {
-            value: inputValue != null ? inputValue : '',
+            value: value != null ? value : '',
             x,
             y,
             allowEdition,
