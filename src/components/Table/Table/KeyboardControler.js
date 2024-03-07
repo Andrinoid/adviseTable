@@ -15,6 +15,10 @@ export default function useKeyboardControler(
     if (selectedAreas.length === 1) {
       let pasteData = e.clipboardData.getData('text');
 
+      if (pasteData[pasteData.length - 1] === '\n') {
+        pasteData = pasteData.slice(0, pasteData.length - 1);
+      }
+
       let pasteDataRows = pasteData.split('\n');
 
       let pasteDataRowsSplitted = pasteDataRows.map((row) => {
