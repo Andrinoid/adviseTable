@@ -20,7 +20,7 @@ const Drawer = () => {
 
   return (
     <AnimatePresence>
-      {drawers.length > 0 ? (
+      {drawers ? (
         <>
           <Container
             className="layout-drawer"
@@ -32,7 +32,6 @@ const Drawer = () => {
             }}
           >
             <motion.div
-              key={`${drawers.length - 1}`}
               {...slideInAnimation}
               //exit={{ opacity: 0 }}
               style={{
@@ -41,7 +40,7 @@ const Drawer = () => {
                 width: '100%',
               }}
             >
-              {drawers[drawers.length - 1]}
+              {drawers}
             </motion.div>
           </Container>
           <MotionMask

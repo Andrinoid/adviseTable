@@ -1,5 +1,5 @@
-import React from "react";
-import useLayout from "./useLayout";
+import React from 'react';
+import useLayout from './useLayout';
 
 const useClear = () => {
   const { setLinks, links, setDrawers, drawers, setSiders, siders } =
@@ -10,7 +10,7 @@ const useClear = () => {
 
     if (siders.length > 0) setSiders([]);
 
-    if (drawers.length > 0) setDrawers([]);
+    if (drawers) setDrawers(null);
   };
 };
 

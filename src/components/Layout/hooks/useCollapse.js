@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import useLayout from "./useLayout";
+import useLayout from './useLayout';
 
 const useCollapse = () => {
   const { setBackup, setSiders, siders, setDrawers } = useLayout();
 
   return () => {
-    setDrawers([]);
+    setDrawers(null);
     setBackup(siders);
     setSiders([]);
   };

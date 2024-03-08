@@ -1,8 +1,8 @@
-import React from "react";
-import produce from "immer";
+import React from 'react';
+import produce from 'immer';
 
-import useLayout from "./useLayout";
-import useClear from "./useClear";
+import useLayout from './useLayout';
+import useClear from './useClear';
 
 const usePushDrawer = () => {
   const { drawers, setDrawers, siders } = useLayout();
@@ -14,19 +14,19 @@ const usePushDrawer = () => {
       setTimeout(() => {
         setDrawers(
           produce(drawers, (draft) => {
-            draft = [component];
+            draft = component;
 
             return draft;
-          })
+          }),
         );
       }, 200);
     } else {
       setDrawers(
         produce(drawers, (draft) => {
-          draft = [component];
+          draft = component;
 
           return draft;
-        })
+        }),
       );
     }
   };

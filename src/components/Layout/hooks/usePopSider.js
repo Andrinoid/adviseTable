@@ -1,7 +1,7 @@
-import React from "react";
-import produce from "immer";
+import React from 'react';
+import produce from 'immer';
 
-import useLayout from "./useLayout";
+import useLayout from './useLayout';
 
 const usePopSider = () => {
   const { siders, setSiders, setDrawers, drawers } = useLayout();
@@ -9,7 +9,7 @@ const usePopSider = () => {
   return (index = null) => {
     setSiders(
       produce(siders, (draft) => {
-        if (!index && typeof index != "number") {
+        if (!index && typeof index != 'number') {
           draft.pop();
         } else {
           if (Array.isArray(draft)) {
@@ -17,12 +17,12 @@ const usePopSider = () => {
           }
         }
 
-        if (drawers.length > 0) {
-          setDrawers([]);
+        if (drawers) {
+          setDrawers(null);
         }
 
         return draft;
-      })
+      }),
     );
   };
 };

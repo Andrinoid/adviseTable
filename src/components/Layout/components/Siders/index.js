@@ -1,69 +1,53 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 import useLayout from '../../hooks/useLayout';
-import { AnimatePresence, motion } from 'framer-motion';
+import 'swiper/css';
 
 const Siders = ({ children }) => {
-  const { siders } = useLayout();
+  let { siders, mobile } = useLayout();
 
-  const transition = {
-    duration: 0.1,
-  };
+  const SwiperDecorator = mobile ? Swiper : React.Fragment;
 
+  const SwiperSlideDecorator = mobile ? SwiperSlide : React.Fragment;
+
+  const Container = mobile
+    ? ({ children }) => (
+        <div style={{ height: '100%', width: '100%' }}>{children}</div>
+      )
+    : React.Fragment;
   return (
     <>
       {children}
-      <AnimatePresence>
-        {siders.map((sider, siderIndex) => {
-          const containsPrevious = sider.length > 1;
 
-          const previous = containsPrevious
-            ? sider[sider.length - 2](siderIndex)
-            : null;
+      <Container>
+        <SwiperDecorator>
+          {/* <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide> */}
+          {siders.map((sider, siderIndex) => {
+            let current = null;
 
-          const current = sider[sider.length - 1](siderIndex);
+            if (sider instanceof Function) {
+              current = sider(siderIndex);
+            } else {
+              current = sider;
+            }
 
-          return (
-            <motion.div
-              key={`${siderIndex}`}
-              transition={{ ...transition, ease: 'easeIn' }}
-              initial={{ x: -50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -50, opacity: 0 }}
-              style={{ position: 'relative' }}
-            >
-              {/* These code here ensures that when stacking, the stacked element
-            kindof fadein overlaying the previous element. But these doesnt happens
-            when adding a siderbar, only when stacking on the sidebar */}
-              {previous}
-
-              <motion.div
-                key={`${sider.length - 1}`}
-                transition={
-                  containsPrevious
-                    ? { ...transition, duration: 0.1 }
-                    : transition
-                }
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                style={
-                  containsPrevious
-                    ? {
-                        height: '100%',
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                        zIndex: 9,
-                      }
-                    : { height: '100%', zIndex: 9 }
-                }
-              >
-                {current}
-              </motion.div>
-            </motion.div>
-          );
-        })}
-      </AnimatePresence>
+            return (
+              <SwiperSlideDecorator>
+                <div
+                  style={{
+                    height: '100%',
+                    zIndex: 9,
+                  }}
+                >
+                  {current}
+                </div>
+              </SwiperSlideDecorator>
+            );
+          })}
+        </SwiperDecorator>
+      </Container>
     </>
   );
 };

@@ -1,7 +1,7 @@
-import React from "react";
-import { produce } from "immer";
+import React from 'react';
+import { produce } from 'immer';
 
-import useLayout from "./useLayout";
+import useLayout from './useLayout';
 
 const useStackPop = () => {
   const { siders, setSiders, setDrawers, drawers } = useLayout();
@@ -13,11 +13,11 @@ const useStackPop = () => {
           draft[index].pop();
 
           if (drawers.length > 0) {
-            setDrawers([]);
+            setDrawers(null);
           }
 
           return draft;
-        })
+        }),
       );
     }
   };
