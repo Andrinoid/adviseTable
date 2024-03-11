@@ -418,7 +418,7 @@ const Navbar = ({ name, index }) => {
     <Sider
       width={250}
       style={{
-        width: controls.mobile ? 'calc(100vw - 73px)' : 250,
+        width: 250,
       }}
       borderLeft={0}
       resizeable
@@ -468,7 +468,7 @@ const Monitors = ({ index }) => {
     <Sider
       width={250}
       style={{
-        width: controls.mobile ? 'calc(100vw - 73px)' : 250,
+        width: 250,
       }}
       borderLeft={0}
       resizeable
@@ -567,7 +567,7 @@ const Drawer = ({ name }) => {
   return (
     <Sider
       style={{
-        maxWidth: controls.mobile ? 'calc(100vw - 73px)' : 700,
+        maxWidth: 700,
         width: '100vw',
         height: '100%',
       }}
@@ -622,7 +622,7 @@ const ManageCompany = ({ index }) => {
       id={'ManageCompany'}
       width={250}
       style={{
-        width: controls.mobile ? 'calc(100vw - 73px)' : 250,
+        width: 250,
       }}
       borderLeft={0}
       resizeable

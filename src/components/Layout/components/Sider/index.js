@@ -11,6 +11,8 @@ const Sider = ({
   maxWidth,
   borderLeft,
   resizeable = false,
+  style,
+  main,
   ...rest
 }) => {
   const { mobile } = useControls();
@@ -20,6 +22,7 @@ const Sider = ({
       <Resizable initialWidth={width} maxWidth={maxWidth || Infinity}>
         <Container
           {...rest}
+          style={style}
           borderLeftWidth={0}
           borderRightWidth={1}
           width={'100%'}
@@ -29,9 +32,25 @@ const Sider = ({
       </Resizable>
     );
   }
-
   return (
-    <Container mobile={mobile} {...rest}>
+    <Container
+      style={{
+        ...style,
+        width:
+          mobile && !main
+            ? 'calc(100vw - 73px)'
+            : style && style.width
+            ? style.width
+            : 'initial',
+        maxWidth:
+          mobile && !main
+            ? 'calc(100vw - 73px)'
+            : style && style.maxWidth
+            ? style.maxWidth
+            : 'initial',
+      }}
+      {...rest}
+    >
       {children}
     </Container>
   );
