@@ -14,17 +14,18 @@ const Siders = ({ children }) => {
   const Container =
     mobile && siders.length > 1
       ? ({ children }) => (
-          <div style={{ height: '100%', width: '100%' }}>{children}</div>
+          <div style={{ height: '100%', width: '100%', display: 'flex' }}>
+            {children}
+          </div>
         )
       : React.Fragment;
+
   return (
     <>
       {children}
 
       <Container>
         <SwiperDecorator>
-          {/* <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide> */}
           {siders.map((sider, siderIndex) => {
             let current = null;
 
@@ -38,7 +39,7 @@ const Siders = ({ children }) => {
               <SwiperSlideDecorator>
                 <div
                   style={{
-                    height: '100%',
+                    height: '100vh',
                     zIndex: 9,
                   }}
                 >
