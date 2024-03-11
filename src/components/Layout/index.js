@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Content from './components/Content';
 import Footer from './components/Footer';
 import Siders from './components/Siders';
+import Drawer from './components/Drawer';
 import useControls from './hooks';
 
 export default {
@@ -13,5 +14,6 @@ export default {
   Content,
   Footer,
   Siders,
+  Drawer,
   useControls,
 };
