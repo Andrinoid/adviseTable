@@ -11,11 +11,12 @@ const Siders = ({ children }) => {
 
   const SwiperSlideDecorator = mobile ? SwiperSlide : React.Fragment;
 
-  const Container = mobile
-    ? ({ children }) => (
-        <div style={{ height: '100%', width: '100%' }}>{children}</div>
-      )
-    : React.Fragment;
+  const Container =
+    mobile && siders.length > 1
+      ? ({ children }) => (
+          <div style={{ height: '100%', width: '100%' }}>{children}</div>
+        )
+      : React.Fragment;
   return (
     <>
       {children}
