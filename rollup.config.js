@@ -4,7 +4,7 @@ const babel = require('@rollup/plugin-babel');
 const commonjs = require('@rollup/plugin-commonjs');
 const externalPeer = require('rollup-plugin-peer-deps-external');
 const postcss = require('rollup-plugin-postcss');
-import terser from '@rollup/plugin-terser';
+const terser = require('@rollup/plugin-terser');
 
 module.exports = {
   input: 'src/components/index.js',
@@ -25,10 +25,10 @@ module.exports = {
     postcss({
       extract: true,
     }),
-    terser({
-      compress: {
-        drop_console: true, // Remove console.log statements
-      },
-    }),
+    // terser({
+    //   compress: {
+    //     drop_console: true, // Remove console.log statements
+    //   },
+    // }),
   ],
 };
