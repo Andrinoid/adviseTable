@@ -12,11 +12,9 @@ const Siders = ({ children }) => {
   const SwiperSlideDecorator = mobile ? SwiperSlide : React.Fragment;
 
   const Container =
-    mobile && siders.length > 1
+    mobile && siders.length >= 1
       ? ({ children }) => (
-          <div style={{ height: '100%', width: '100%', display: 'flex' }}>
-            {children}
-          </div>
+          <div style={{ height: '100%', width: '100%' }}>{children}</div>
         )
       : React.Fragment;
 
@@ -24,7 +22,7 @@ const Siders = ({ children }) => {
     <>
       {children}
 
-      <Container>
+      <Container id="swiper-container">
         <SwiperDecorator>
           {siders.map((sider, siderIndex) => {
             let current = null;
