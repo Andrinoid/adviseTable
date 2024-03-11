@@ -19,10 +19,10 @@ const Siders = ({ children }) => {
       : React.Fragment;
 
   return (
-    <>
+    <div style={{ display: 'flex' }}>
       {children}
 
-      <Container id="swiper-container">
+      <Container>
         <SwiperDecorator>
           {siders.map((sider, siderIndex) => {
             let current = null;
@@ -48,7 +48,7 @@ const Siders = ({ children }) => {
           })}
         </SwiperDecorator>
       </Container>
-    </>
+    </div>
   );
 };
 
