@@ -14,7 +14,14 @@ const Siders = ({ children }) => {
   const Container =
     mobile && siders.length >= 1
       ? ({ children }) => (
-          <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+          <div
+            style={{
+              height: '100%',
+              width: '100%',
+              position: 'relative',
+              display: 'flex',
+            }}
+          >
             {children}
           </div>
         )
