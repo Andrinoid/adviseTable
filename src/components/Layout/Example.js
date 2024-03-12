@@ -397,15 +397,6 @@ export default function Example() {
             </Content>
           </Layout>
         </Layout>
-
-        <Footer>
-          <Tabs>
-            <Tab>Actual</Tab>
-            <Tab>Budget</Tab>
-            <Tab>Comparison</Tab>
-            <Tab>Dashboard</Tab>
-          </Tabs>
-        </Footer>
       </Layout>
     </div>
   );
@@ -713,24 +704,5 @@ const CloseBtn = styled.div`
   background: transparent;
   &:hover {
     background: rgba(0, 0, 0, 0.04);
-  }
-`;
-
-const Avatar = styled.div`
-  background: linear-gradient(
-    to left top,
-    rgba(0, 0, 255, 0.8),
-    rgba(60, 218, 211, 0.5) 80%
-  );
-
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  & > span {
-    color: white;
-    font-weight: bold;
   }
 `;

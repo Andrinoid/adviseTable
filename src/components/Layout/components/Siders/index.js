@@ -14,7 +14,9 @@ const Siders = ({ children }) => {
   const Container =
     mobile && siders.length >= 1
       ? ({ children }) => (
-          <div style={{ height: '100%', width: '100%' }}>{children}</div>
+          <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+            {children}
+          </div>
         )
       : React.Fragment;
 
