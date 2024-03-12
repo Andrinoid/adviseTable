@@ -28,7 +28,11 @@ const Siders = ({ children }) => {
               current = sider;
             }
 
-            return <swiper-slide>{current}</swiper-slide>;
+            return (
+              <swiper-slide>
+                <div>{current}</div>
+              </swiper-slide>
+            );
           })}
         </swiper-container>
       </div>
