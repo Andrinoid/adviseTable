@@ -725,7 +725,7 @@ const Table = (
       style={style}
     >
       <div
-        version="2.1"
+        version="2.2"
         id={`${tableId}`}
         ref={tableContainerRef}
         style={{
