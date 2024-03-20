@@ -7,7 +7,7 @@ import useControls from '../../hooks';
 
 const MotionMask = motion(Mask);
 
-const Drawer = () => {
+const Drawer = ({ onDrawerMaskClick }) => {
   const { drawers } = useLayout();
   const controls = useControls();
 
@@ -49,12 +49,8 @@ const Drawer = () => {
             animate={{ opacity: 1 }}
             //exit={{ opacity: 0 }}
             transition={{ type: 'linear', duration: 0.2 }}
-            onClick={() => {
-              controls.popDrawer();
-            }}
-            onTouchStart={() => {
-              controls.popDrawer();
-            }}
+            onClick={onDrawerMaskClick}
+            onTouchStart={onDrawerMaskClick}
           />
         </>
       ) : null}
