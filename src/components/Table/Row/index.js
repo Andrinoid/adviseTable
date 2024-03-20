@@ -63,6 +63,7 @@ const Row = memo(
     onPasteCallback,
     setPastedCols,
     selectable = true,
+    setIsEditing,
   }) => {
     const currentRowRef = useRef(null);
     const [rowNumber, setRowNumber] = useState(null);
@@ -239,6 +240,7 @@ const Row = memo(
           lastColPaddingLeft,
           onPasteCallback,
           setPastedCols,
+          setIsEditing,
           // biggestDataCellWidth,
           // biggestLabelCellWidth,
           // biggestTotalCellWidth,

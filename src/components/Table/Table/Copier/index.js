@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { getContainedArea } from "../SelectedAreas";
-import { replaceEmptyCellValue } from "../../utils";
+import React, { useEffect } from 'react';
+import { getContainedArea } from '../SelectedAreas';
+import { replaceEmptyCellValue } from '../../utils';
 
 let _table;
 let _selections;
@@ -16,7 +16,7 @@ export class Copier {
   copy() {
     const table = replaceEmptyCellValue(this.stringifyTable());
 
-    if (table !== "") navigator.clipboard.writeText(table);
+    if (table !== '') navigator.clipboard.writeText(table);
   }
 
   stringifyTable() {
@@ -26,7 +26,7 @@ export class Copier {
   }
 
   stringifyHeader() {
-    let result = "";
+    let result = '';
 
     if (_header == null) return result;
 
@@ -34,17 +34,17 @@ export class Copier {
       result += _header[i].title;
 
       if (i < _header.length - 1) {
-        result += "\t";
+        result += '\t';
       }
     }
 
-    if (result !== "") result += "\n";
+    if (result !== '') result += '\n';
 
     return result;
   }
 
   stringifyBody() {
-    let result = "",
+    let result = '',
       minY,
       minX,
       maxY,
@@ -80,9 +80,9 @@ export class Copier {
       for (let j = minX; j <= maxX; j++) {
         if (getContainedArea(_selections, { x: j, y: i }) != null) {
           const element = _table[i][j].current;
-          const colspan = element.getAttribute("data-colspan");
+          const colspan = element.getAttribute('data-colspan');
           const previousColspan =
-            _table[i][j - 1]?.current?.getAttribute("data-colspan");
+            _table[i][j - 1]?.current?.getAttribute('data-colspan');
 
           if (colspan != null) {
             let originalColspan = colspan;
@@ -94,7 +94,7 @@ export class Copier {
             result += element.innerText;
 
             for (let k = 0; k < originalColspan; k++) {
-              result += "\t";
+              result += '\t';
             }
 
             j += colspan - 1;
@@ -102,39 +102,48 @@ export class Copier {
           }
 
           if (previousColspan != null) {
-            result += "\t";
+            result += '\t';
           }
 
           result += element.innerText;
         } else {
-          result += " ";
+          result += ' ';
         }
 
         if (j < maxX) {
-          result += "\t";
+          result += '\t';
         }
       }
 
-      result += "\n";
+      result += '\n';
     }
 
     return result;
   }
 }
 
-export default function useCopier(tableMatrix, selectedAreas, header) {
+export default function useCopier(
+  tableMatrix,
+  selectedAreas,
+  header,
+  isEditing,
+) {
   useEffect(() => {
+    if (isEditing) {
+      return;
+    }
+
     function handleCopy(event) {
       // event.preventDefault();
-      if ((event.ctrlKey || event.metaKey) && event.key === "c") {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
         new Copier(tableMatrix, selectedAreas, header).copy();
       }
     }
 
-    window.addEventListener("keydown", handleCopy);
+    window.addEventListener('keydown', handleCopy);
 
     return () => {
-      window.removeEventListener("keydown", handleCopy);
+      window.removeEventListener('keydown', handleCopy);
     };
-  }, [tableMatrix, selectedAreas, header]);
+  }, [tableMatrix, selectedAreas, header, isEditing]);
 }

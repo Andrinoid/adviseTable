@@ -191,6 +191,8 @@ const Table = (
 
   const [amountOfPastedCols, setAmountOfPastedCols] = useState(0);
   const [pastedCols, setPastedCols] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+
   // Context
   const { registerTable, setTableViewPortWidth, setTableTotalWidth } =
     useTableContext();
@@ -269,7 +271,12 @@ const Table = (
     setSelectedAreas([]);
   }, []);
 
-  useCopier(tableMatrix, selectedAreas, isTableSelected ? headerData : null);
+  useCopier(
+    tableMatrix,
+    selectedAreas,
+    isTableSelected ? headerData : null,
+    isEditing,
+  );
 
   useKeyboardControler(
     selectedAreas,
@@ -674,6 +681,7 @@ const Table = (
           onPasteCallback: onPaste,
           setPastedCols,
           amountOfPastedCols,
+          setIsEditing,
         },
       }),
     );

@@ -62,6 +62,7 @@ const Col = ({
   onPasteCallback,
   setPastedCols,
   editable,
+  setIsEditing,
   ...rest
 }) => {
   const currentColRef = useRef(null);
@@ -78,6 +79,10 @@ const Col = ({
       setInputValue(dataValue);
     }
   }, [dataValue, initialValue]);
+
+  useEffect(() => {
+    setIsEditing(isEditable);
+  }, [isEditable]);
 
   const setEditionState = (editable) => {
     if (editable && !allowEdition) return;
