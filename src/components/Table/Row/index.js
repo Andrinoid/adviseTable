@@ -28,6 +28,8 @@ const RowElm = styled.div`
       display: block;
     }
   }
+
+  page-break-inside: avoid;
 `;
 
 const Row = memo(
