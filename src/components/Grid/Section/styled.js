@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SectionHandle = styled.div`
   height: 25px;
@@ -14,7 +14,7 @@ export const SectionHandle = styled.div`
   display: none;
   &:before,
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     width: 0;
@@ -44,7 +44,7 @@ export const SectionHandle = styled.div`
       `;
     }
 
-    return "";
+    return '';
   }}
 `;
 
@@ -85,10 +85,19 @@ export const SectionElm = styled.div`
     }
   }}
 
-  @media (max-width: ${({ breakpoint }) => breakpoint}px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
+  ${({ breakpoint, stacked }) => {
+    if (stacked) {
+      return `
+        flex-direction: column;
+        flex-wrap: wrap;
+      `;
+    }
+    return `
+      @media (max-width: ${breakpoint}px) {
+        flex-direction: row;
+      }
+    `;
+  }}
 `;
 
 export const Cursor = styled.div`
@@ -101,6 +110,6 @@ export const Line = styled.div`
   height: 100%;
   background: #37a1f6;
   position: absolute;
-  ${(props) => (props.right ? "right: 0;" : "left: 0;")}
+  ${(props) => (props.right ? 'right: 0;' : 'left: 0;')}
   top: 0;
 `;

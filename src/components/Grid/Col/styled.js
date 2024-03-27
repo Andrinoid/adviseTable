@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Column = styled.div`
   position: relative;
@@ -14,7 +14,7 @@ export const Column = styled.div`
       `;
     }
 
-    return "";
+    return '';
   }}
   ${({ active }) => {
     if (active) {
@@ -39,13 +39,21 @@ export const Column = styled.div`
     z-index: 1;
   }
 
-  @media (max-width: ${({ breakpoint }) => breakpoint}px) {
-    width: 100% !important;
-  }
+  ${({ breakpoint, stacked }) => {
+    if (stacked) {
+      return 'width: 100% !important;';
+    }
+
+    return `
+      @media (max-width: ${breakpoint}px) {
+        width: 100% !important;
+      }
+    `;
+  }}
 `;
 
 export const Inner = styled.div`
-  border: dashed 1px ${({ active }) => (active ? "#d3d7db" : "transparent")};
+  border: dashed 1px ${({ active }) => (active ? '#d3d7db' : 'transparent')};
   box-sizing: border-box;
   /* height: 100%; */
 `;

@@ -5,7 +5,7 @@ import React, {
   useContext,
   useLayoutEffect,
   useCallback,
-} from "react";
+} from 'react';
 import {
   Cursor,
   Line,
@@ -13,16 +13,16 @@ import {
   SectionElm,
   SectionHandle,
   SectionHandleItem,
-} from "./styled";
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import { DataContext } from "../Grid";
-import Col from "../Col";
-import Plus from "../../../icons/Plus";
-import DragHandle from "../../../icons/DragHandle";
-import { Dimensions, compute, getRowId, useController } from "../hooks";
-import Resizable from "../Resizable";
-import { cloneDeep } from "lodash";
-import produce from "immer";
+} from './styled';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { DataContext } from '../Grid';
+import Col from '../Col';
+import Plus from '../../../icons/Plus';
+import DragHandle from '../../../icons/DragHandle';
+import { Dimensions, compute, getRowId, useController } from '../hooks';
+import Resizable from '../Resizable';
+import { cloneDeep } from 'lodash';
+import produce from 'immer';
 
 function Section({
   widths,
@@ -35,7 +35,7 @@ function Section({
 }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
-  const [height, setHeight] = useState("initial");
+  const [height, setHeight] = useState('initial');
   const columnHeight = useRef(null);
   const resizing = useRef(false);
   const {
@@ -53,6 +53,7 @@ function Section({
   } = useContext(DataContext);
   const [factors, setFactors] = useState(widths);
   const { addRow, removeRow } = useController(data, setData, maxCols);
+  const { stacked } = useContext(DataContext);
 
   useEffect(() => {
     setFactors(widths);
@@ -68,7 +69,7 @@ function Section({
         setHeight(initialHeight);
       }
     } else {
-      setHeight("initial");
+      setHeight('initial');
       if (sectionRef.current) {
         setInitialHeight(sectionRef.current.offsetHeight);
       }
@@ -108,7 +109,7 @@ function Section({
     }
   }, []);
 
-  const draggableId = "draggable_" + row.rowId;
+  const draggableId = 'draggable_' + row.rowId;
 
   function snap(changedX) {
     const range = 25;
@@ -132,9 +133,9 @@ function Section({
             {...draggableProvided.draggableProps}
           >
             <Droppable
-              droppableId={"section_" + row.rowId}
+              droppableId={'section_' + row.rowId}
               type="col"
-              direction={"horizontal"}
+              direction={'horizontal'}
             >
               {(droppableProvided) => {
                 return (
@@ -144,15 +145,16 @@ function Section({
                     style={{ height: height }}
                   >
                     <SectionElm
-                      id={"section_" + row.rowId}
+                      id={'section_' + row.rowId}
                       ref={sectionRef}
-                      style={{ position: "relative" }}
+                      style={{ position: 'relative' }}
                       breakpoint={breakpoint}
                       beingDragged={
                         sectionId === draggableId || sectionId === null
                       }
                       editing={editing}
                       className="advise-ui-grid-section"
+                      stacked={stacked}
                     >
                       {row.columns.map((column, colIndex) => {
                         return (
@@ -180,8 +182,8 @@ function Section({
                                   colIndex,
                                   { width: width - diff },
                                   minWidth,
-                                  totalWidth
-                                )
+                                  totalWidth,
+                                ),
                               );
 
                               setData((data) => {
@@ -203,8 +205,8 @@ function Section({
                                   colIndex,
                                   { width: width },
                                   minWidth,
-                                  totalWidth
-                                )
+                                  totalWidth,
+                                ),
                               );
 
                               setFactors([...result]);
@@ -217,12 +219,12 @@ function Section({
                           >
                             {row.rowId != getRowId(sectionId) &&
                               colOver &&
-                              colOver.droppableId == "section_" + row.rowId &&
+                              colOver.droppableId == 'section_' + row.rowId &&
                               colOver.index == colIndex && <Line />}
 
                             {row.rowId != getRowId(sectionId) &&
                               colOver &&
-                              colOver.droppableId == "section_" + row.rowId &&
+                              colOver.droppableId == 'section_' + row.rowId &&
                               colOver.index == row.columns.length &&
                               colIndex + 1 == row.columns.length && (
                                 <Line right />
@@ -234,8 +236,8 @@ function Section({
                                   key={cellIndex}
                                   className={
                                     cellIndex == column.data.length - 1
-                                      ? "advise-ui-grid-cell advise-ui-grid-last-cell"
-                                      : "advise-ui-grid-cell"
+                                      ? 'advise-ui-grid-cell advise-ui-grid-last-cell'
+                                      : 'advise-ui-grid-cell'
                                   }
                                 >
                                   {cell(data, index, colIndex, cellIndex)}
@@ -268,7 +270,7 @@ function Section({
                           >
                             <Plus
                               style={{
-                                transform: "rotate(45deg)",
+                                transform: 'rotate(45deg)',
                               }}
                             />
                           </SectionHandleItem>

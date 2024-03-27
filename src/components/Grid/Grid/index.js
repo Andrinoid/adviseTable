@@ -8,14 +8,14 @@ import React, {
   useLayoutEffect,
   useMemo,
   useCallback,
-} from "react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import Section from "../Section";
-import { useController } from "../hooks";
-import styled from "styled-components";
-import { produce } from "immer";
-import { debounce } from "lodash";
-import useAutoResize from "../../shared/useAutoResize";
+} from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import Section from '../Section';
+import { useController } from '../hooks';
+import styled from 'styled-components';
+import { produce } from 'immer';
+import { debounce } from 'lodash';
+import useAutoResize from '../../shared/useAutoResize';
 
 export const DataContext = createContext(null);
 
@@ -28,8 +28,9 @@ function Grid(
     minWidth = 100,
     breakpoint = 768,
     editing = false,
+    stack: isStacked = false,
   },
-  ref
+  ref,
 ) {
   const [data, setData] = useState(layout);
 
@@ -42,13 +43,18 @@ function Grid(
   const [rulers, setRulers] = useState([]);
   const [totalWidth, setTotalWidth] = useState(0);
   const { addRow } = useController(data, setData, maxCols);
+  const [stacked, setStacked] = useState(isStacked);
+
+  useEffect(() => {
+    setStacked(isStacked);
+  }, [isStacked]);
 
   useEffect(() => {
     if (containerRef.current) {
       setTotalWidth(containerRef.current.offsetWidth);
     }
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       if (containerRef.current) {
         setTotalWidth(containerRef.current.offsetWidth);
       }
@@ -106,7 +112,7 @@ function Grid(
 
   const reorder = (data, source, destination, type) => {
     return produce(data, (draft) => {
-      if (type !== "col") {
+      if (type !== 'col') {
         // exchanging section position
         const temp = draft[destination.index];
 
@@ -114,25 +120,25 @@ function Grid(
         draft[source.index] = temp;
       } else {
         // moving column to another section
-        const sourceSectionId = source.droppableId.split("_")[1];
+        const sourceSectionId = source.droppableId.split('_')[1];
         const sourceSectionIndex = draft.findIndex(
-          (s) => s.rowId == sourceSectionId
+          (s) => s.rowId == sourceSectionId,
         );
 
-        const destinationSectionId = destination.droppableId.split("_")[1];
+        const destinationSectionId = destination.droppableId.split('_')[1];
         const destinationSectionIndex = draft.findIndex(
-          (s) => s.rowId == destinationSectionId
+          (s) => s.rowId == destinationSectionId,
         );
 
         const [removed] = draft[sourceSectionIndex].columns.splice(
           source.index,
-          1
+          1,
         );
 
         draft[destinationSectionIndex].columns.splice(
           destination.index,
           0,
-          removed
+          removed,
         );
 
         if (draft[destinationSectionIndex].columns.length === 0) {
@@ -203,9 +209,9 @@ function Grid(
         return;
       }
 
-      if (type === "col") {
+      if (type === 'col') {
         setData((data) => {
-          return reorder(data, source, destination, "col");
+          return reorder(data, source, destination, 'col');
         });
 
         return;
@@ -215,11 +221,11 @@ function Grid(
         return reorder(data, source, destination);
       });
     },
-    [setData]
+    [setData],
   );
 
   const debouncedOnDragUpdate = debounce((e) => {
-    if (e.type === "col" && e.destination) {
+    if (e.type === 'col' && e.destination) {
       setColOver(e.destination);
     }
   }, 500);
@@ -254,13 +260,14 @@ function Grid(
           totalWidth,
           leftGap,
           snapPoints: rulers[0],
+          stacked,
         }}
       >
         <DragDropContext
           onDragStart={(e) => {
             setSectionId(e.draggableId);
 
-            if (e.type === "col") {
+            if (e.type === 'col') {
               // const id = e.draggableId.split("_")[0];
               // setDroppableRowId(e.draggableId);
               setColId(e.draggableId);
@@ -272,7 +279,7 @@ function Grid(
           onDragUpdate={debouncedOnDragUpdate}
           onDragEnd={handleOnDragEnd}
         >
-          <Droppable droppableId={"advise-grid"} type="advise-grid">
+          <Droppable droppableId={'advise-grid'} type="advise-grid">
             {(droppableProvided) => (
               <div
                 {...droppableProvided.droppableProps}
@@ -281,8 +288,8 @@ function Grid(
                 {data.map((row, rowIndex) => {
                   return (
                     <div
-                      style={{ position: "relative" }}
-                      key={"sectioncontainer_" + row.rowId}
+                      style={{ position: 'relative' }}
+                      key={'sectioncontainer_' + row.rowId}
                     >
                       <Section
                         row={row}
@@ -309,7 +316,7 @@ function Grid(
 const Container = styled.div`
   position: relative;
   width: 100%;
-  cursor: ${({ resizing }) => (resizing ? "col-resize" : "default")};
+  cursor: ${({ resizing }) => (resizing ? 'col-resize' : 'default')};
   /* overflow-x: hidden; */
 `;
 
