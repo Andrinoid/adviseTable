@@ -184,7 +184,7 @@ const Table = (
     hideScrollbarX = false,
     style,
     onPaste = null,
-    width,
+    width: tableWidth,
   },
   ref,
 ) => {
@@ -215,7 +215,7 @@ const Table = (
   // mesurements states
 
   const [tableTopOffset, setTableTopOffset] = useState(0);
-  const [totalWidth, setTotalWidth] = useState(width || 1350);
+  const [totalWidth, setTotalWidth] = useState(1350);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colHeight, setColHeight] = useState(40);
   const [colWidth, setColWidth] = useState(0);
@@ -252,12 +252,18 @@ const Table = (
     firstColWidth,
     setfirstColWidth,
   } = useSizes({
-    width,
+    width: tableWidth,
     numberOfDataCols,
     labelWidth: firstColumnWidth,
     hasTotalColumn,
     leftBrickWidth,
   });
+
+  useEffect(() => {
+    if (tableWidth) {
+      setTotalWidth(tableWidth);
+    }
+  }, [tableWidth]);
 
   // Context
   const { registerTable, setTableViewPortWidth, setTableTotalWidth } =
@@ -434,8 +440,8 @@ const Table = (
   const autoAdjustTable = () => {
     let adjustedSize = getAdjustedSize();
 
-    if (width) {
-      adjustedSize = width;
+    if (tableWidth) {
+      adjustedSize = tableWidth;
     }
 
     if (adjustedSize !== totalWidth) {
