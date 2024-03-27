@@ -107,6 +107,57 @@ const Root = styled.div`
     background-color: #f1f1f1;
   }
 `;
+
+const useSizes = ({
+  width,
+  numberOfDataCols,
+  labelWidth,
+  hasTotalColumn,
+  leftBrickWidth,
+}) => {
+  const [firstColWidth, setfirstColWidth] = useState(labelWidth || 150);
+
+  let colWidth = null;
+
+  if (width) {
+    colWidth =
+      (width - firstColWidth - leftBrickWidth) /
+      (numberOfDataCols + (hasTotalColumn ? 1 : 0));
+  }
+
+  const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(
+    colWidth || 0,
+  );
+  const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(
+    colWidth || 0,
+  );
+
+  const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(
+    colWidth || 0,
+  );
+
+  const getSetter = (callback) => {
+    return (value) => {
+      if (width) {
+        callback(colWidth);
+      } else {
+        callback(value);
+      }
+    };
+  };
+
+  return {
+    firstColWidth,
+    biggestDataCellWidth,
+    biggestLabelCellWidth,
+    biggestTotalCellWidth,
+    setBiggestTotalCellWidth: getSetter(setBiggestTotalCellWidth),
+    setBiggestDataCellWidth: getSetter(setBiggestDataCellWidth),
+    setBiggestLabelCellWidth: getSetter(setBiggestLabelCellWidth),
+    setfirstColWidth,
+  };
+};
+
 const Table = (
   {
     onFirstColumnResize = () => {},
@@ -133,6 +184,7 @@ const Table = (
     hideScrollbarX = false,
     style,
     onPaste = null,
+    width,
   },
   ref,
 ) => {
@@ -161,15 +213,12 @@ const Table = (
   const [scrollStatus, setScrollStatus] = useState('');
   const [isViewPortOverflow, setIsViewPortOverflow] = useState(false);
   // mesurements states
-  const [firstColWidth, setfirstColWidth] = useState(firstColumnWidth || 150);
+
   const [tableTopOffset, setTableTopOffset] = useState(0);
-  const [totalWidth, setTotalWidth] = useState(1350);
+  const [totalWidth, setTotalWidth] = useState(width || 1350);
   const [lastColWidth, setLastColWidth] = useState(100);
   const [colHeight, setColHeight] = useState(40);
   const [colWidth, setColWidth] = useState(0);
-  const [biggestLabelCellWidth, setBiggestLabelCellWidth] = useState(0);
-  const [biggestDataCellWidth, setBiggestDataCellWidth] = useState(0);
-  const [biggestTotalCellWidth, setBiggestTotalCellWidth] = useState(0);
   // selection states
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
@@ -192,6 +241,23 @@ const Table = (
   const [amountOfPastedCols, setAmountOfPastedCols] = useState(0);
   const [pastedCols, setPastedCols] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+
+  const {
+    biggestDataCellWidth,
+    biggestLabelCellWidth,
+    setBiggestDataCellWidth,
+    setBiggestLabelCellWidth,
+    biggestTotalCellWidth,
+    setBiggestTotalCellWidth,
+    firstColWidth,
+    setfirstColWidth,
+  } = useSizes({
+    width,
+    numberOfDataCols,
+    labelWidth: firstColumnWidth,
+    hasTotalColumn,
+    leftBrickWidth,
+  });
 
   // Context
   const { registerTable, setTableViewPortWidth, setTableTotalWidth } =
@@ -366,7 +432,12 @@ const Table = (
   };
 
   const autoAdjustTable = () => {
-    const adjustedSize = getAdjustedSize();
+    let adjustedSize = getAdjustedSize();
+
+    if (width) {
+      adjustedSize = width;
+    }
+
     if (adjustedSize !== totalWidth) {
       // setTotalWidth(getAdjustedSize());
       setTotalWidth(adjustedSize);

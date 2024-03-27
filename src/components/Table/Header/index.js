@@ -41,16 +41,16 @@ const Label = styled.div`
 `;
 
 const PressableBrick = styled.button`
-overflow: hidden;
-visibility: ${({ printLayout }) => (printLayout ? 'hidden' : 'visible')};
-background: ${({ selected, themeKey }) =>
-selected
-? headerTheme[themeKey].background
-: themeKey == 'light'
-? '#Eff1f1'
-: '#0A0A0A'};
-border: none;
-border-bottom: solid 1px #ebebeb;
+  overflow: hidden;
+  visibility: ${({ printLayout }) => (printLayout ? 'hidden' : 'visible')};
+  background: ${({ selected, themeKey }) =>
+    selected
+      ? headerTheme[themeKey].background
+      : themeKey == 'light'
+      ? '#Eff1f1'
+      : '#0A0A0A'};
+  border: none;
+  border-bottom: solid 1px #ebebeb;
   box-shadow: inset 0px 0px 0 0.5px #ebebeb;
   cursor: pointer;
 
@@ -146,6 +146,7 @@ const Header = React.forwardRef(
             selected={isTableSelected}
             style={{
               width: leftBrickWidth,
+              minWidth: leftBrickWidth,
               height: colHeight,
               theTheme,
               zIndex: 5,
