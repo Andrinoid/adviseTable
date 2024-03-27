@@ -260,14 +260,20 @@ const Table = (
   });
 
   useEffect(() => {
+    setFixedSize(tableWidth != null);
+
     if (tableWidth) {
       setTotalWidth(tableWidth);
     }
   }, [tableWidth]);
 
   // Context
-  const { registerTable, setTableViewPortWidth, setTableTotalWidth } =
-    useTableContext();
+  const {
+    registerTable,
+    setTableViewPortWidth,
+    setTableTotalWidth,
+    setFixedSize,
+  } = useTableContext();
 
   const getEdgeScrollingPropsX = useScrollOnEdges({
     canAnimate: scrollOnEdges,

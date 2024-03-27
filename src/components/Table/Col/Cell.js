@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, memo } from "react";
-import { useLayoutEffect } from "react";
-import styled from "styled-components";
+import React, { useRef, useState, useEffect, memo } from 'react';
+import { useLayoutEffect } from 'react';
+import styled from 'styled-components';
 
 const cellPaddingLeftRight = 5;
 
@@ -12,7 +12,7 @@ const StaticCell = styled.div`
   display: flex;
   align-items: center;
   ${({ parentType }) => {
-    if (parentType === "first") {
+    if (parentType === 'first') {
       return `
       overflow: hidden;
       text-overflow: ellipsis;
@@ -20,6 +20,8 @@ const StaticCell = styled.div`
       `;
     }
   }}
+
+  word-break: ${({ fixedSize }) => (!fixedSize ? 'unset' : 'break-all')};
 `;
 
 const EditableCell = styled.input`
@@ -69,7 +71,8 @@ const Cell = ({
   setInputValue,
   inputType,
   allowEdition,
-  lastColPaddingLeft
+  lastColPaddingLeft,
+  fixedSize,
 }) => {
   const ref = useRef(null);
   const inputRef = useRef(null);
@@ -95,12 +98,12 @@ const Cell = ({
   useLayoutEffect(() => {
     const width = getElementWidth(ref.current);
 
-    if (parentType === "middle") {
+    if (parentType === 'middle') {
       setBiggestDataCellWidth((value) => {
         return width > value ? width : value;
       });
     }
-    if (parentType === "first") {
+    if (parentType === 'first') {
       setBiggestLabelCellWidth((value) => {
         if (width > value) {
           return width;
@@ -109,7 +112,7 @@ const Cell = ({
         }
       });
     }
-    if (parentType === "last") {
+    if (parentType === 'last') {
       setBiggestTotalCellWidth((value) => {
         if (width > value) {
           return width + lastColPaddingLeft;
@@ -152,13 +155,14 @@ const Cell = ({
         ref={ref}
         isOverflowing={isOverflowing}
         parentType={parentType}
-        style={{ display: editable ? "none" : "flex" }}
+        fixedSize={fixedSize}
+        style={{ display: editable ? 'none' : 'flex' }}
       >
         {children}
       </StaticCell>
       <EditableCell
         type={inputType}
-        style={{ display: editable ? "block" : "none" }}
+        style={{ display: editable ? 'block' : 'none' }}
         onChange={handleOnInput}
         onBlur={handleOnBlur}
         ref={inputRef}

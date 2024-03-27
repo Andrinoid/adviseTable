@@ -4,6 +4,7 @@ import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import styled from 'styled-components';
 import Cell from './Cell';
 import HoverIndicator from './HoverIndicator';
+import useTableContext from '../Table/hooks/useTableContext';
 
 const Column = styled.div`
   display: inline-flex;
@@ -69,6 +70,7 @@ const Col = ({
   const [isEditable, setIsEditable] = useState(false);
   const [inputValue, setInputValue] = useState(dataValue || '');
   const [initialValue, setInitialValue] = useState(dataValue || '');
+  const { fixedSize } = useTableContext();
 
   useEffect(() => {
     if (!dataValue && !initialValue && inputValue) {
@@ -302,6 +304,7 @@ const Col = ({
           inputType={inputType}
           onBlur={currentColRef.current ? currentColRef.current.blur : () => {}}
           allowEdition={allowEdition}
+          fixedSize={fixedSize}
         >
           {children}
         </Cell>

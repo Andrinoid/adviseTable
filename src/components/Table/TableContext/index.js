@@ -5,6 +5,7 @@ const TableContext = createContext();
 const TableProvider = ({ children }) => {
   // Use an object to track each table's state separately
   const [tables, setTables] = useState({});
+  const [fixedSize, setFixedSize] = useState(false);
 
   const registerTable = (tableId, initialState) => {
     setTables((prev) => ({ ...prev, [tableId]: initialState }));
@@ -39,6 +40,8 @@ const TableProvider = ({ children }) => {
     setTableTotalWidth,
     getTableViewPortWidth,
     getTableTotalWidth,
+    fixedSize,
+    setFixedSize,
   };
 
   return (
