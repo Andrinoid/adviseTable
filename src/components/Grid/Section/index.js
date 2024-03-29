@@ -32,6 +32,7 @@ function Section({
   breakpoint,
   mobile,
   rulers,
+  allowBreak = false,
 }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
@@ -50,7 +51,6 @@ function Section({
     minWidth,
     totalWidth,
     isResizing,
-    allowBreak = false,
   } = useContext(DataContext);
   const [factors, setFactors] = useState(widths);
   const { addRow, removeRow } = useController(data, setData, maxCols);

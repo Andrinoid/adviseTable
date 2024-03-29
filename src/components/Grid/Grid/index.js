@@ -299,6 +299,7 @@ function Grid(
                         breakpoint={breakpoint}
                         mobile={mobile}
                         rulers={rulers[0]}
+                        allowBreak={row.columns.some((c) => c.allowBreak)}
                       />
                     </div>
                   );
