@@ -296,13 +296,11 @@ function Grid(
 
                   let breakStyle = {
                     pageBreakInside: 'avoid',
-                    pageBreakBefore: 'unset',
                   };
 
                   if (breakInside) {
                     breakStyle = {
                       pageBreakInside: 'auto',
-                      pageBreakAfter: 'always',
                     };
                   }
                   return (
