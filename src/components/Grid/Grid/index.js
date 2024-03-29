@@ -29,6 +29,7 @@ function Grid(
     breakpoint = 768,
     editing = false,
     stack: isStacked = false,
+    breakableTypes = [],
   },
   ref,
 ) {
@@ -286,6 +287,11 @@ function Grid(
                 ref={droppableProvided.innerRef}
               >
                 {data.map((row, rowIndex) => {
+                  const allowBreak = row.columns.some((c) =>
+                    c.data.some((w) =>
+                      breakableTypes.some((t) => t === w.widget.type),
+                    ),
+                  );
                   return (
                     <div
                       style={{ position: 'relative' }}
@@ -299,7 +305,7 @@ function Grid(
                         breakpoint={breakpoint}
                         mobile={mobile}
                         rulers={rulers[0]}
-                        allowBreak={row.columns.some((c) => c.allowBreak)}
+                        allowBreak={allowBreak}
                       />
                     </div>
                   );
