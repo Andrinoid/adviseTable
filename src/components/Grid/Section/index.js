@@ -50,6 +50,7 @@ function Section({
     minWidth,
     totalWidth,
     isResizing,
+    allowBreak = false,
   } = useContext(DataContext);
   const [factors, setFactors] = useState(widths);
   const { addRow, removeRow } = useController(data, setData, maxCols);
@@ -131,6 +132,7 @@ function Section({
           <SectionContainer
             ref={draggableProvided.innerRef}
             {...draggableProvided.draggableProps}
+            allowBreak={allowBreak}
           >
             <Droppable
               droppableId={'section_' + row.rowId}
