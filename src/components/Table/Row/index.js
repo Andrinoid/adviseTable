@@ -29,7 +29,7 @@ const RowElm = styled.div`
     }
   }
 
-  page-break-before: always;
+  page-break-inside: avoid;
 `;
 
 const Row = memo(

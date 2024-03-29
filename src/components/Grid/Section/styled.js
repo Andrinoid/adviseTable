@@ -59,7 +59,7 @@ export const SectionHandleItem = styled.div`
 export const SectionContainer = styled.div`
   transition: background-color 0.2s ease-in-out;
   background-color: transparent;
-  page-break-before: always;
+  page-break-inside: avoid;
 `;
 
 export const SectionElm = styled.div`
