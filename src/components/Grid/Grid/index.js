@@ -230,6 +230,7 @@ function Grid(
       setColOver(e.destination);
     }
   }, 500);
+
   return (
     <Container
       ref={containerRef}
@@ -287,11 +288,23 @@ function Grid(
                 ref={droppableProvided.innerRef}
               >
                 {data.map((row, rowIndex) => {
-                  const allowBreak = row.columns.some((c) =>
+                  const breakInside = row.columns.some((c) =>
                     c.data.some((w) =>
                       breakableTypes.some((t) => t === w.widget.type),
                     ),
                   );
+
+                  let breakStyle = {
+                    pageBreakInside: 'avoid',
+                    pageBreakBefore: 'unset',
+                  };
+
+                  if (breakInside) {
+                    breakStyle = {
+                      pageBreakInside: 'auto',
+                      pageBreakAfter: 'always',
+                    };
+                  }
                   return (
                     <div
                       style={{ position: 'relative' }}
@@ -305,7 +318,7 @@ function Grid(
                         breakpoint={breakpoint}
                         mobile={mobile}
                         rulers={rulers[0]}
-                        allowBreak={allowBreak}
+                        breakStyle={breakStyle}
                       />
                     </div>
                   );
