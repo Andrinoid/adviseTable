@@ -288,11 +288,17 @@ function Grid(
                 ref={droppableProvided.innerRef}
               >
                 {data.map((row, rowIndex) => {
-                  const breakInside = row.columns.some((c) =>
-                    c.data.some((w) =>
-                      breakableTypes.some((t) => t === w.widget.type),
-                    ),
-                  );
+                  const breakInside = row.columns.some((c) => {
+                    if (!c.data) return false;
+
+                    return c.data.some((w) => {
+                      if (!w || !w.widget) {
+                        return false;
+                      }
+
+                      return breakableTypes.some((t) => t === w.widget.type);
+                    });
+                  });
 
                   let breakStyle = {
                     pageBreakInside: 'avoid',
