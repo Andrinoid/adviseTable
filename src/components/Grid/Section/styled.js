@@ -59,6 +59,7 @@ export const SectionHandleItem = styled.div`
 export const SectionContainer = styled.div`
   transition: background-color 0.2s ease-in-out;
   background-color: transparent;
+  page-break-inside: ${(props) => props.breakInside};
 `;
 
 export const SectionElm = styled.div`

@@ -32,7 +32,7 @@ function Section({
   breakpoint,
   mobile,
   rulers,
-  breakStyle,
+  breakInside,
 }) {
   const sectionRef = useRef(null);
   const [initialHeight, setInitialHeight] = useState(null);
@@ -130,9 +130,9 @@ function Section({
       {(draggableProvided) => {
         return (
           <SectionContainer
+            breakInside={breakInside}
             ref={draggableProvided.innerRef}
             {...draggableProvided.draggableProps}
-            style={breakStyle}
           >
             <Droppable
               droppableId={'section_' + row.rowId}

@@ -300,15 +300,6 @@ function Grid(
                     });
                   });
 
-                  let breakStyle = {
-                    pageBreakInside: 'avoid',
-                  };
-
-                  if (breakInside) {
-                    breakStyle = {
-                      pageBreakInside: 'auto',
-                    };
-                  }
                   return (
                     <div
                       style={{ position: 'relative' }}
@@ -322,7 +313,7 @@ function Grid(
                         breakpoint={breakpoint}
                         mobile={mobile}
                         rulers={rulers[0]}
-                        breakStyle={breakStyle}
+                        breakInside={breakInside ? 'auto' : 'avoid'}
                       />
                     </div>
                   );
