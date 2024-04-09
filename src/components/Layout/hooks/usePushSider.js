@@ -1,6 +1,6 @@
-import React from 'react';
-import { produce } from 'immer';
-import useLayout from './useLayout';
+import React from "react";
+import { produce } from "immer";
+import useLayout from "./useLayout";
 
 const usePushSider = () => {
   const { siders, setSiders, setDrawers, drawers } = useLayout();
@@ -11,14 +11,11 @@ const usePushSider = () => {
         return [[value]];
       }
 
-      console.log('type', value(0).type);
-      console.log('name', value(0).props.name);
-
       const exists = siders.some(
         (sider) =>
           sider[0] &&
           sider[0](0).type === value(0).type &&
-          sider[0](0).props.name === value(0).props.name,
+          sider[0](0).props.name === value(0).props.name
       );
 
       if (!exists) {

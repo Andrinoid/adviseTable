@@ -27,7 +27,7 @@ module.exports = {
     }),
     terser({
       compress: {
-        // drop_console: true, // Remove console.log statements
+        drop_console: true, // Remove console.log statements
       },
     }),
   ],
