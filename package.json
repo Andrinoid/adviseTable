@@ -15,7 +15,7 @@
     "react-resizable": "^3.0.5",
     "react-virtuoso": "^4.1.0",
     "styled-components": "^5.3.6",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   },
   "peerDependencies": {
     "framer-motion": "^4.0.0",
