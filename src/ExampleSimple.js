@@ -39,7 +39,7 @@ function ExampleSimple() {
       <div style={{ height: '500px', background: 'gray' }}>
         {/* <div style={{ background: "gray", paddingTop: 50 }}></div> */}
         <Table
-          width={1000}
+          // width={1000}
           stickyTopOffset={50}
           theme={'light'}
           showGrid={true}
@@ -74,307 +74,307 @@ function ExampleSimple() {
                   leftBrickContent={<BrickTools />}
                 >
                   <Col allowEdition>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row
                   type="secondary"
                   style={{ minHeight: 40 }}
                   {...tableProvided.rowProps}
                 >
-                  <Col>834567</Col>
-                  <Col>834567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>834567</Col>
+                  <Col allowEdition>834567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
-                  <Col>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
+                  <Col allowEdition>234567</Col>
                 </Row>
                 <Row style={{ minHeight: 40 }} {...tableProvided.rowProps}>
                   <Col>234567</Col>
