@@ -4,6 +4,7 @@ import { Container, Mask } from './styles';
 import useLayout from '../../hooks/useLayout';
 import PropTypes from 'prop-types';
 import useControls from '../../hooks';
+import useMobile from '../../hooks/useMobile';
 
 const MotionMask = motion(Mask);
 
@@ -18,19 +19,13 @@ const Drawer = ({ onDrawerMaskClick }) => {
     transition: { type: 'linear', duration: 0.2 }, // Customizable transition
   };
 
+  const mobile = useMobile();
+
   return (
     <AnimatePresence>
       {drawers.length > 0 ? (
         <>
-          <Container
-            className="layout-drawer"
-            style={{
-              zIndex: 1001,
-              height: '100%',
-              width: '100%',
-              pointerEvents: 'none',
-            }}
-          >
+          <Container mobile={mobile} className="layout-drawer">
             <motion.div
               key={`${drawers.length - 1}`}
               {...slideInAnimation}
@@ -44,14 +39,16 @@ const Drawer = ({ onDrawerMaskClick }) => {
               {drawers[drawers.length - 1]}
             </motion.div>
           </Container>
-          <MotionMask
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            //exit={{ opacity: 0 }}
-            transition={{ type: 'linear', duration: 0.2 }}
-            onClick={onDrawerMaskClick}
-            onTouchStart={onDrawerMaskClick}
-          />
+          {!mobile ? (
+            <MotionMask
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              //exit={{ opacity: 0 }}
+              transition={{ type: 'linear', duration: 0.2 }}
+              onClick={onDrawerMaskClick}
+              onTouchStart={onDrawerMaskClick}
+            />
+          ) : null}
         </>
       ) : null}
     </AnimatePresence>
