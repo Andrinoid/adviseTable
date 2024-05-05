@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container } from './styles';
+import { Container, MobileContainer } from './styles';
 import Resizable from './Resizeable';
+import useMobile from '../../hooks/useMobile';
 
 const Sider = ({
   children,
@@ -10,9 +11,12 @@ const Sider = ({
   maxWidth,
   borderLeft,
   resizeable = false,
+  main = false,
   ...rest
 }) => {
-  if (resizeable) {
+  const mobile = useMobile();
+
+  if (resizeable && !mobile) {
     return (
       <Resizable initialWidth={width} maxWidth={maxWidth || Infinity}>
         <Container
@@ -25,6 +29,11 @@ const Sider = ({
         </Container>
       </Resizable>
     );
+  }
+
+  console.log('mobile ', mobile, main);
+  if (mobile && !main) {
+    return <MobileContainer {...rest}>{children}</MobileContainer>;
   }
 
   return <Container {...rest}>{children}</Container>;

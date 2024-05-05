@@ -59,7 +59,7 @@ export default function Example() {
             <Layout vertical>
                 <Layout>
                     <Siders>
-                        <Sider className="mainSider">
+                        <Sider main className="mainSider">
                             <SiderTop
                                 padding={12}
                                 onClick={() => {
