@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 100%;
   position: absolute;
   top: 0;
-  z-index: 1001;
+  z-index: 11;
 
   ${({ mobile }) => {
     if (!mobile) {
