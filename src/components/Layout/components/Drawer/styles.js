@@ -6,7 +6,6 @@ export const Container = styled.div`
   position: absolute;
   top: 0;
   z-index: 1001;
-  pointer-events: none;
 
   ${({ mobile }) => {
     if (!mobile) {
