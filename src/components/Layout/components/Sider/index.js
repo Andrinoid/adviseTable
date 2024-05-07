@@ -31,7 +31,6 @@ const Sider = ({
     );
   }
 
-  console.log('mobile ', mobile, main);
   if (mobile && !main) {
     return <MobileContainer {...rest}>{children}</MobileContainer>;
   }

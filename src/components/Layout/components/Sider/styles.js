@@ -10,10 +10,10 @@ export const Container = styled.div`
   border-left-width: ${({ borderLeftWidth }) => borderLeftWidth || 1}px;
   border-right-width: ${({ borderRightWidth }) => borderRightWidth || 1}px;
   pointer-events: initial;
+  z-index: 11;
 `;
 
 export const MobileContainer = styled(Container)`
   width: calc(100vw - 74px);
-  z-index: 10;
   position: absolute;
 `;
