@@ -23,7 +23,7 @@ export const Container = styled.div`
 export const Mask = styled.div`
   position: absolute;
   inset: 0;
-  z-index: 1000;
   background: rgba(0, 0, 0, 0.45);
   pointer-events: auto;
+  z-index: 10;
 `;
