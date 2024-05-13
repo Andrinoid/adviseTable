@@ -5,15 +5,15 @@ import useLayout from './useLayout';
 import useClear from './useClear';
 
 const usePushDrawer = () => {
-  const { drawers, setDrawers, siders } = useLayout();
+  const { setDrawers, siders } = useLayout();
   const clear = useClear();
 
   return (component, root = false) => {
     if (siders.length > 0 && root) {
       clear();
       setTimeout(() => {
-        setDrawers(
-          produce(drawers, (draft) => {
+        setDrawers((previous) =>
+          produce(previous, (draft) => {
             draft.push(component);
 
             return draft;
@@ -21,8 +21,8 @@ const usePushDrawer = () => {
         );
       }, 200);
     } else {
-      setDrawers(
-        produce(drawers, (draft) => {
+      setDrawers((previous) =>
+        produce(previous, (draft) => {
           draft.push(component);
 
           return draft;
