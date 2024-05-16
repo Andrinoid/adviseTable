@@ -13,7 +13,12 @@ export const Container = styled.div`
   z-index: 11;
 `;
 
-export const MobileContainer = styled(Container)`
+export const SmallScreenContainer = styled(Container)`
   width: calc(100vw - 74px);
+  position: absolute;
+`;
+
+export const MobileContainer = styled(Container)`
+  width: 100vw;
   position: absolute;
 `;

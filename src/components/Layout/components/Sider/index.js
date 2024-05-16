@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, MobileContainer } from './styles';
+import { Container, MobileContainer, SmallScreenContainer } from './styles';
 import Resizable from './Resizeable';
-import useMobile from '../../hooks/useMobile';
+import useSmallScreen from '../../hooks/useSmallScreen';
+import usePlatform from '../../hooks/usePlatform';
 
 const Sider = ({
   children,
@@ -14,9 +15,10 @@ const Sider = ({
   main = false,
   ...rest
 }) => {
-  const mobile = useMobile();
+  const smallScreen = useSmallScreen();
+  const platform = usePlatform();
 
-  if (resizeable && !mobile) {
+  if (resizeable && !smallScreen) {
     return (
       <Resizable initialWidth={width} maxWidth={maxWidth || Infinity}>
         <Container
@@ -31,8 +33,12 @@ const Sider = ({
     );
   }
 
-  if (mobile && !main) {
+  if (platform === 'mobile' && !main) {
     return <MobileContainer {...rest}>{children}</MobileContainer>;
+  }
+
+  if (smallScreen && !main) {
+    return <SmallScreenContainer {...rest}>{children}</SmallScreenContainer>;
   }
 
   return <Container {...rest}>{children}</Container>;

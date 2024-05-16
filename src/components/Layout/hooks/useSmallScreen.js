@@ -1,6 +1,6 @@
 import { useViewportSize } from '@mantine/hooks';
 
-export default function useMobile() {
+export default function useSmallScreen() {
   const { width } = useViewportSize();
 
   return width < 600;

@@ -7,16 +7,24 @@ export const Container = styled.div`
   top: 0;
   z-index: 11;
 
-  ${({ mobile }) => {
-    if (!mobile) {
-      return '';
+  ${({ smallScreen, platform }) => {
+    if (platform === 'mobile') {
+      return `
+      left: 0;
+      width: 100vw;
+      z-index: 1000 !important;
+  `;
     }
 
-    return `
-        left: 0;
-        width: calc(100vw - 74px);
-        z-index: 1000 !important;
-    `;
+    if (smallScreen) {
+      return `
+      left: 0;
+      z-index: 1000 !important;
+      width: calc(100vw - 74px);
+  `;
+    }
+
+    return ``;
   }}
 `;
 
