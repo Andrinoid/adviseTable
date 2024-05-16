@@ -6,6 +6,7 @@ export const Container = styled.div`
   position: absolute;
   top: 0;
   z-index: 11;
+  pointer-events: none;
 
   ${({ smallScreen, platform }) => {
     if (platform === 'mobile') {
