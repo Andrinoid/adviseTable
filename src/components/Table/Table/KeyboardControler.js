@@ -45,7 +45,7 @@ export default function useKeyboardControler(
           ) {
             tableMatrix[startRowIndex][
               startColumnIndex
-            ].current.performUpdateValue(pastedCell, amountOfCells, true);
+            ].current.performPasteUpdate(pastedCell, true);
           } else {
             setPastedCols((cols) => {
               return [...cols, null];

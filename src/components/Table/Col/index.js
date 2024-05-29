@@ -215,32 +215,24 @@ const Col = ({
   };
 
   useEffect(() => {
-    currentColRef.current.performUpdateValue = async (
-      value,
-      amountOfPastedCells,
-      force = false,
-    ) => {
-      const isPasteUpdate =
-        onPasteCallback && amountOfPastedCells && amountOfPastedCells > 0;
-      if ((allowEdition && editable && initialValue != inputValue) || force) {
+    currentColRef.current.performPasteUpdate = async (value) => {
+      if (allowEdition && editable && initialValue != inputValue) {
         setEditionState(true);
         setInputValue(value);
-        value = await onValueUpdate(isPasteUpdate);
+        value = await onValueUpdate(true);
       }
 
-      if (isPasteUpdate) {
-        setPastedCols((cols) => [
-          ...cols,
-          {
-            value: value != null ? value : '',
-            x,
-            y,
-            allowEdition,
-            editable,
-            ...rest,
-          },
-        ]);
-      }
+      setPastedCols((cols) => [
+        ...cols,
+        {
+          value: value != null ? value : '',
+          x,
+          y,
+          allowEdition,
+          editable,
+          ...rest,
+        },
+      ]);
     };
     currentColRef.current.focus = () => {
       setEditionState(true);
