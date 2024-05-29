@@ -18,10 +18,10 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   },
   "peerDependencies": {
-    "framer-motion": "^4.1.17",
+    "@mantine/hooks": "^7.8.1",
+    "framer-motion": "^11.2.6",
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "@mantine/hooks": "^7.8.1"
+    "react-dom": ">=18.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
