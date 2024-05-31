@@ -339,6 +339,21 @@ export default function Example() {
                   <ControlButton
                     inverted
                     onClick={() => {
+                      controls.pushSider(
+                        (index) => (
+                          <Navbar index={index} name={'Company Settings'} />
+                        ),
+                        false,
+                        { sheet: true },
+                      );
+                    }}
+                  >
+                    Add Sheet
+                  </ControlButton>
+
+                  <ControlButton
+                    inverted
+                    onClick={() => {
                       controls.pushDrawer(
                         <Drawer name="Drawer Settings" />,
                         720,
