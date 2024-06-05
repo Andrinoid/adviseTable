@@ -42,7 +42,7 @@ const Sider = ({
     console.log('smallScreenContainer rendered');
     return <SmallScreenContainer {...rest}>{children}</SmallScreenContainer>;
   }
-
+  console.log('Container rendered');
   return (
     <Container width={{ width }} {...rest}>
       {children}
