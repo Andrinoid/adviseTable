@@ -41,7 +41,11 @@ const Sider = ({
     return <SmallScreenContainer {...rest}>{children}</SmallScreenContainer>;
   }
 
-  return <Container {...rest}>{children}</Container>;
+  return (
+    <Container width={{ width }} {...rest}>
+      {children}
+    </Container>
+  );
 };
 
 Sider.propTypes = {
