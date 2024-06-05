@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import useCollapse from "./useCollapse";
-import useCollapsed from "./useCollapsed";
-import useExpand from "./useExpand";
-import usePopDrawer from "./usePopDrawer";
-import usePopSider from "./usePopSider";
-import usePushDrawer from "./usePushDrawer";
-import usePushSider from "./usePushSider";
-import useStackPop from "./useStackPop";
-import useStackPush from "./useStackPush";
-import useLayout from "./useLayout";
-import useClear from "./useClear";
+import useCollapse from './useCollapse';
+import useCollapsed from './useCollapsed';
+import useExpand from './useExpand';
+import usePopDrawer from './usePopDrawer';
+import usePopSider from './usePopSider';
+import usePushDrawer from './usePushDrawer';
+import usePushSider from './usePushSider';
+import useStackPop from './useStackPop';
+import useStackPush from './useStackPush';
+import useLayout from './useLayout';
+import useClear from './useClear';
 
 const useControls = () => {
   const collapse = useCollapse();
@@ -48,7 +48,7 @@ class Controls {
     this.popDrawer = obj.popDrawer || (() => {});
     this.popSider = obj.popSider || ((index = null) => {});
     this.pushDrawer = obj.pushDrawer || ((component, width) => {});
-    this.pushSider = obj.pushSider || ((value, reset = null) => {});
+    this.pushSider = obj.pushSider || ((value, reset = null, options) => {});
     this.stackPop = obj.stackPop || ((index) => {});
     this.stackPush = obj.stackPush || ((index, component) => {});
     this.clear = obj.clear || (() => {});

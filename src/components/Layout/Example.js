@@ -345,7 +345,13 @@ export default function Example() {
                           <Navbar index={index} name={'Company Settings'} />
                         ),
                         false,
-                        { sheet: true, openAt: 'top' }, //bottom, middle, top
+                        {
+                          sheet: true,
+                          openAt: 'bottom',
+                          onClose: () => {
+                            alert('exit');
+                          },
+                        }, //bottom, middle, top
                       );
                     }}
                   >

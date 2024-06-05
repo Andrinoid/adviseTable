@@ -6,12 +6,10 @@ import useControls from '../../hooks';
 
 const snapPoints = [-80, 0.45, 80];
 
-function ModelSheetContainer({ sheet, openAt = 'middle', children }) {
+function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
   const { siders, popSider } = useControls();
   const [open, setOpen] = useState(false);
   const [initialSnap, setInitialSnap] = useState(0);
-
-  console.log('sheet', sheet, openAt);
 
   useEffect(() => {
     if (siders.length > 0) {
@@ -42,6 +40,7 @@ function ModelSheetContainer({ sheet, openAt = 'middle', children }) {
         isOpen={open}
         onClose={() => {
           popSider(0);
+          onClose && onClose();
         }}
         snapPoints={snapPoints}
         initialSnap={initialSnap}
@@ -82,6 +81,7 @@ const Siders = ({ children }) => {
             <ModelSheetContainer
               sheet={currentOptions.sheet}
               openAt={currentOptions.openAt}
+              onClose={currentOptions.onClose}
               initialSnap={currentOptions?.initialSnap}
             >
               <motion.div
