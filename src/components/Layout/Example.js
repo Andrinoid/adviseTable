@@ -27,6 +27,7 @@ import {
   DeviceDesktopAnalytics,
   ArrowsLeftRight,
 } from 'tabler-icons-react';
+import { initial } from 'lodash';
 
 var lastName = '';
 
@@ -344,7 +345,7 @@ export default function Example() {
                           <Navbar index={index} name={'Company Settings'} />
                         ),
                         false,
-                        { sheet: true },
+                        { sheet: true, openAt: 'top' }, //bottom, middle, top
                       );
                     }}
                   >

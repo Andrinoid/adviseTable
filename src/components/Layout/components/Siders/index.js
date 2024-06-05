@@ -4,12 +4,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Sheet } from 'react-modal-sheet';
 import useControls from '../../hooks';
 
-const snapPoints = [-50, 0.5, 200, 0];
-const initialSnap = 2;
+const snapPoints = [-80, 0.45, 80];
 
-function ModelSheetContainer({ sheet, children }) {
+function ModelSheetContainer({ sheet, openAt = 'middle', children }) {
   const { siders, popSider } = useControls();
   const [open, setOpen] = useState(false);
+  const [initialSnap, setInitialSnap] = useState(0);
+
+  console.log('sheet', sheet, openAt);
 
   useEffect(() => {
     if (siders.length > 0) {
@@ -18,6 +20,17 @@ function ModelSheetContainer({ sheet, children }) {
       setOpen(false);
     }
   }, [siders]);
+
+  useEffect(() => {
+    console.log('openAt', openAt);
+    if (openAt === 'top') {
+      setInitialSnap(0);
+    } else if (openAt === 'middle') {
+      setInitialSnap(1);
+    } else if (openAt === 'bottom') {
+      setInitialSnap(2);
+    }
+  }, [openAt]);
 
   if (!sheet) {
     return children;
@@ -63,8 +76,14 @@ const Siders = ({ children }) => {
           const currentOptions = sider[sider.length - 1].options;
           const current = sider[sider.length - 1].value(siderIndex);
 
+          console.log('currentOptions', currentOptions);
+
           return (
-            <ModelSheetContainer sheet={currentOptions.sheet}>
+            <ModelSheetContainer
+              sheet={currentOptions.sheet}
+              openAt={currentOptions.openAt}
+              initialSnap={currentOptions?.initialSnap}
+            >
               <motion.div
                 key={`${siderIndex}`}
                 transition={{ ...transition, ease: 'easeIn' }}
