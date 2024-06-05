@@ -11,6 +11,10 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
   const [open, setOpen] = useState(false);
   const [initialSnap, setInitialSnap] = useState(0);
 
+  if (!sheet) {
+    return children;
+  }
+
   useEffect(() => {
     if (siders.length > 0) {
       setOpen(true);
@@ -20,7 +24,6 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
   }, [siders]);
 
   useEffect(() => {
-    console.log('openAt', openAt);
     if (openAt === 'top') {
       setInitialSnap(0);
     } else if (openAt === 'middle') {
@@ -30,27 +33,21 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
     }
   }, [openAt]);
 
-  if (!sheet) {
-    return children;
-  }
-
   return (
-    <>
-      <Sheet
-        isOpen={open}
-        onClose={() => {
-          popSider(0);
-          onClose && onClose();
-        }}
-        snapPoints={snapPoints}
-        initialSnap={initialSnap}
-      >
-        <Sheet.Container>
-          <Sheet.Header />
-          <Sheet.Content>{children}</Sheet.Content>
-        </Sheet.Container>
-      </Sheet>
-    </>
+    <Sheet
+      isOpen={open}
+      onClose={() => {
+        popSider(0);
+        onClose && onClose();
+      }}
+      snapPoints={snapPoints}
+      initialSnap={initialSnap}
+    >
+      <Sheet.Container>
+        <Sheet.Header />
+        <Sheet.Content>{children}</Sheet.Content>
+      </Sheet.Container>
+    </Sheet>
   );
 }
 
