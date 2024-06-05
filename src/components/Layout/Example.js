@@ -347,9 +347,11 @@ export default function Example() {
                         false,
                         {
                           sheet: true,
-                          openAt: 'bottom',
+                          openAt: 'middle',
                           onClose: () => {
-                            alert('exit');
+                            setTimeout(() => {
+                              console.log('closed');
+                            }, 1000);
                           },
                         }, //bottom, middle, top
                       );
