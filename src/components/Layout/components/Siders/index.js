@@ -38,7 +38,7 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
     <>
       <Sheet
         isOpen={open}
-        onClose={() => {
+        onCloseEnd={() => {
           popSider(0);
           onClose && onClose();
         }}
