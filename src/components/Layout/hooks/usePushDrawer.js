@@ -16,12 +16,6 @@ const usePushDrawer = () => {
           }),
         );
       }, 200);
-      setTimeout(() => {
-        setDrawers((previous) => {
-          if (previous.length == 0 || previous.length == 1) return previous;
-          return previous.filter((_, i) => i != 0);
-        });
-      }, 200);
     } else {
       setDrawers((previous) =>
         produce(previous, (draft) => {
@@ -31,6 +25,13 @@ const usePushDrawer = () => {
         }),
       );
     }
+
+    setTimeout(() => {
+      setDrawers((previous) => {
+        if (previous.length == 0 || previous.length == 1) return previous;
+        return previous.filter((_, i) => i != 0);
+      });
+    }, 300);
   };
 };
 
