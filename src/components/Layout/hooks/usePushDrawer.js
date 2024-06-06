@@ -16,10 +16,12 @@ const usePushDrawer = () => {
           }),
         );
       }, 200);
-      setDrawers((prev) => {
-        if (prev.length == 0 || prev.length == 1) return prev;
-        return prev.filter((_, i) => i != 0);
-      });
+      setTimeout(() => {
+        setDrawers((previous) => {
+          if (previous.length == 0 || previous.length == 1) return previous;
+          return previous.filter((_, i) => i != 0);
+        });
+      }, 200);
     } else {
       setDrawers((previous) =>
         produce(previous, (draft) => {
