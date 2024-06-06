@@ -11,10 +11,6 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
   const [open, setOpen] = useState(false);
   const [initialSnap, setInitialSnap] = useState(0);
 
-  if (!sheet) {
-    return children;
-  }
-
   useEffect(() => {
     if (siders.length > 0) {
       setOpen(true);
@@ -32,6 +28,10 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
       setInitialSnap(2);
     }
   }, [openAt]);
+
+  if (!sheet) {
+    return children;
+  }
 
   return (
     <Sheet
@@ -72,14 +72,13 @@ const Siders = ({ children }) => {
           const currentOptions = sider[sider.length - 1].options;
           const current = sider[sider.length - 1].value(siderIndex);
 
-          console.log('currentOptions', currentOptions);
-
           return (
             <ModelSheetContainer
               sheet={currentOptions.sheet}
               openAt={currentOptions.openAt}
               onClose={currentOptions.onClose}
               initialSnap={currentOptions?.initialSnap}
+              key={siderIndex}
             >
               <motion.div
                 key={`${siderIndex}`}
