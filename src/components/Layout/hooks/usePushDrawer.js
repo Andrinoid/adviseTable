@@ -16,9 +16,9 @@ const usePushDrawer = () => {
             return draft;
           }),
         );
-        setTimeout(() => {
-          setDrawers((prev) => prev.filter((_, i) => i != prev.length - 1));
-        }, 200);
+        // setTimeout(() => {
+        //   setDrawers((prev) => prev.filter((_, i) => i != prev.length - 1));
+        // }, 200);
       }, 200);
     } else {
       setDrawers((previous) =>
