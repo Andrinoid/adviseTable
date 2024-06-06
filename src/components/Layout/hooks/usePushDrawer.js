@@ -31,7 +31,7 @@ const usePushDrawer = () => {
         if (previous.length == 0 || previous.length == 1) return previous;
         return previous.filter((_, i) => i != 0);
       });
-    }, 300);
+    }, 210);
   };
 };
 
