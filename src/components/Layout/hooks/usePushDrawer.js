@@ -4,10 +4,10 @@ import produce from 'immer';
 import useLayout from './useLayout';
 
 const usePushDrawer = () => {
-  const { setDrawers, siders } = useLayout();
-
+  const { setDrawers, siders, clear } = useLayout();
   return (component, root = false) => {
     if (siders.length > 0 && root) {
+      clear();
       setTimeout(() => {
         setDrawers((previous) =>
           produce(previous, (draft) => {
@@ -16,9 +16,6 @@ const usePushDrawer = () => {
             return draft;
           }),
         );
-        // setTimeout(() => {
-        //   setDrawers((prev) => prev.filter((_, i) => i != prev.length - 1));
-        // }, 200);
       }, 200);
     } else {
       setDrawers((previous) =>
