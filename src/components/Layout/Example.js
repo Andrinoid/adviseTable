@@ -131,7 +131,7 @@ export default function Example() {
                     }
                     size={isMainSiderCollapsed ? 'small' : 'full'}
                     onClick={() => {
-                      controls.pushDrawer(<Monitors />);
+                      controls.pushDrawer(<Monitors />, true);
                     }}
                     icon={
                       <DeviceDesktopAnalytics
