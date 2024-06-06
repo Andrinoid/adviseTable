@@ -8,7 +8,6 @@ const usePushDrawer = () => {
 
   return (component, root = false) => {
     if (siders.length > 0 && root) {
-      setDrawers([]);
       setTimeout(() => {
         setDrawers((previous) =>
           produce(previous, (draft) => {
@@ -17,6 +16,9 @@ const usePushDrawer = () => {
             return draft;
           }),
         );
+        setTimeout(() => {
+          setDrawers((prev) => prev.filter((_, i) => i != prev.length - 1));
+        }, 200);
       }, 200);
     } else {
       setDrawers((previous) =>
