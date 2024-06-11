@@ -6,7 +6,14 @@ import useControls from '../../hooks';
 
 const snapPoints = [-80, 0.45, 80];
 
-function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
+function ModelSheetContainer({
+  sheet,
+  openAt = 'middle',
+  onClose,
+  siderIndex,
+  transition,
+  children,
+}) {
   const { siders, popSider } = useControls();
   const [open, setOpen] = useState(false);
   const [initialSnap, setInitialSnap] = useState(0);
@@ -30,7 +37,18 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
   }, [openAt]);
 
   if (!sheet) {
-    return children;
+    return (
+      <motion.div
+        key={`${siderIndex}`}
+        transition={{ ...transition, ease: 'easeIn' }}
+        initial={{ x: -50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -50, opacity: 0 }}
+        style={{ position: 'relative' }}
+      >
+        {children}
+      </motion.div>
+    );
   }
 
   return (
@@ -80,45 +98,38 @@ const Siders = ({ children }) => {
               openAt={currentOptions.openAt}
               onClose={currentOptions.onClose}
               initialSnap={currentOptions?.initialSnap}
+              siderIndex={siderIndex}
+              transition={transition}
               key={siderIndex}
             >
-              <motion.div
-                key={`${siderIndex}`}
-                transition={{ ...transition, ease: 'easeIn' }}
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -50, opacity: 0 }}
-                style={{ position: 'relative' }}
-              >
-                {/* These code here ensures that when stacking, the stacked element
+              {/* These code here ensures that when stacking, the stacked element
             kindof fadein overlaying the previous element. But these doesnt happens
             when adding a siderbar, only when stacking on the sidebar */}
-                {previous}
+              {previous}
 
-                <motion.div
-                  key={`${sider.length - 1}`}
-                  transition={
-                    containsPrevious
-                      ? { ...transition, duration: 0.1 }
-                      : transition
-                  }
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  style={
-                    containsPrevious
-                      ? {
-                          height: '100%',
-                          position: 'absolute',
-                          left: 0,
-                          top: 0,
-                          zIndex: 9,
-                        }
-                      : { height: '100%', zIndex: 9 }
-                  }
-                >
-                  {current}
-                </motion.div>
+              <motion.div
+                key={`${sider.length - 1}`}
+                transition={
+                  containsPrevious
+                    ? { ...transition, duration: 0.1 }
+                    : transition
+                }
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={
+                  containsPrevious
+                    ? {
+                        height: '100%',
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        zIndex: 9,
+                      }
+                    : { height: '100%', zIndex: 9 }
+                }
+              >
+                {current}
               </motion.div>
             </ModelSheetContainer>
           );
