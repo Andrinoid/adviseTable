@@ -45,7 +45,9 @@ function ModelSheetContainer({ sheet, openAt = 'middle', onClose, children }) {
     >
       <Sheet.Container>
         <Sheet.Header />
-        <Sheet.Content>{children}</Sheet.Content>
+        <Sheet.Content>
+          <Sheet.Scroller>{children}</Sheet.Scroller>
+        </Sheet.Content>
       </Sheet.Container>
     </Sheet>
   );
