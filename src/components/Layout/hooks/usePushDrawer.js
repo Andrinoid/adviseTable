@@ -2,15 +2,11 @@ import React from 'react';
 import produce from 'immer';
 
 import useLayout from './useLayout';
-import useClear from './useClear';
 
 const usePushDrawer = () => {
-  const { setDrawers, siders } = useLayout();
-  const clear = useClear();
-
+  const { setDrawers, siders, clear } = useLayout();
   return (component, root = false) => {
     if (siders.length > 0 && root) {
-      clear();
       setTimeout(() => {
         setDrawers((previous) =>
           produce(previous, (draft) => {
@@ -29,6 +25,11 @@ const usePushDrawer = () => {
         }),
       );
     }
+
+    setDrawers((previous) => {
+      if (previous.length == 0 || previous.length == 1) return previous;
+      return previous.filter((_, i) => i != 0);
+    });
   };
 };
 
