@@ -26,10 +26,12 @@ const usePushDrawer = () => {
       );
     }
 
-    setDrawers((previous) => {
-      if (previous.length == 0 || previous.length == 1) return previous;
-      return previous.filter((_, i) => i != 0);
-    });
+    if (root) {
+      setDrawers((previous) => {
+        if (previous.length == 0 || previous.length == 1) return previous;
+        return previous.filter((_, i) => i != 0);
+      });
+    }
   };
 };
 
