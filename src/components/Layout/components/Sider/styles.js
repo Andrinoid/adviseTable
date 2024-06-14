@@ -20,6 +20,6 @@ export const SmallScreenContainer = styled(Container)`
 `;
 
 export const MobileContainer = styled(Container)`
-  width: 100vw;
-  position: absolute;
+  width: 100%;
+  // position: absolute;
 `;
