@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import useLayout from '../../hooks/useLayout';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sheet } from 'react-modal-sheet';
@@ -17,6 +17,7 @@ function ModelSheetContainer({
   const { siders, popSider } = useControls();
   const [open, setOpen] = useState(false);
   const [initialSnap, setInitialSnap] = useState(0);
+  const sheetRef = useRef();
 
   useEffect(() => {
     if (siders.length > 0) {
@@ -53,6 +54,7 @@ function ModelSheetContainer({
 
   return (
     <Sheet
+      ref={sheetRef}
       isOpen={open}
       onClose={() => {
         popSider(0);
@@ -63,8 +65,8 @@ function ModelSheetContainer({
     >
       <Sheet.Container>
         <Sheet.Header />
-        <Sheet.Content>
-          <Sheet.Scroller>{children}</Sheet.Scroller>
+        <Sheet.Content style={{ paddingBottom: sheetRef.current?.y }}>
+          <Sheet.Scroller draggableAt="both">{children}</Sheet.Scroller>
         </Sheet.Content>
       </Sheet.Container>
     </Sheet>
