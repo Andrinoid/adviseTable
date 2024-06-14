@@ -6,7 +6,7 @@ import useLayout from './useLayout';
 const usePushDrawer = () => {
   const { setDrawers, siders, clear } = useLayout();
   return (component, root = false) => {
-    if (siders.length > 0 && root) {
+    if (root) {
       setTimeout(() => {
         setDrawers((previous) =>
           produce(previous, (draft) => {
@@ -15,6 +15,11 @@ const usePushDrawer = () => {
             return draft;
           }),
         );
+
+        setDrawers((previous) => {
+          if (previous.length == 0 || previous.length == 1) return previous;
+          return previous.filter((_, i) => previous.length - 1 == i);
+        });
       }, 200);
     } else {
       setDrawers((previous) =>
@@ -24,13 +29,6 @@ const usePushDrawer = () => {
           return draft;
         }),
       );
-    }
-
-    if (root) {
-      setDrawers((previous) => {
-        if (previous.length == 0 || previous.length == 1) return previous;
-        return previous.filter((_, i) => i != 0);
-      });
     }
   };
 };

@@ -363,10 +363,7 @@ export default function Example() {
                   <ControlButton
                     inverted
                     onClick={() => {
-                      controls.pushDrawer(
-                        <Drawer name="Drawer Settings" />,
-                        720,
-                      );
+                      controls.pushDrawer(<Drawer name="Drawer Settings" />);
                     }}
                   >
                     Add drawer
