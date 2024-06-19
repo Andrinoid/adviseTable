@@ -519,43 +519,97 @@ const Table = (
     };
   }, []);
 
+  // useEffect(() => {
+  //   const element = viewportRef.current;
+  //   if (!element) return;
+
+  //   let lastX = 0;
+
+  //   const onTouchStart = (e) => {
+  //     console.log('touchstart', e);
+  //     const touch = e.touches[0] || e.changedTouches[0];
+  //     lastX = touch.pageX;
+  //   };
+
+  //   const onTouchMove = (e) => {
+  //     console.log('touchmove', e);
+  //     const touch = e.touches[0] || e.changedTouches[0];
+  //     const currentX = touch.pageX;
+
+  //     if (
+  //       currentX < lastX &&
+  //       element.scrollLeft >= element.scrollWidth - element.clientWidth
+  //     ) {
+  //       // User is trying to scroll right past the end
+  //       e.preventDefault();
+  //     } else if (currentX > lastX && element.scrollLeft <= 0) {
+  //       // User is trying to scroll left past the start
+  //       e.preventDefault();
+  //     }
+  //   };
+
+  //   element.addEventListener('touchstart', onTouchStart, { passive: false });
+  //   element.addEventListener('touchmove', onTouchMove, { passive: false });
+
+  //   return () => {
+  //     element.removeEventListener('touchstart', onTouchStart);
+  //     element.removeEventListener('touchmove', onTouchMove);
+  //   };
+  // }, []);
   useEffect(() => {
     const element = viewportRef.current;
     if (!element) return;
 
     let lastX = 0;
+    let startX = 0;
+    let isTouching = false;
 
     const onTouchStart = (e) => {
-      console.log('touchstart', e);
       const touch = e.touches[0] || e.changedTouches[0];
       lastX = touch.pageX;
+      startX = touch.pageX;
+      isTouching = true;
     };
 
     const onTouchMove = (e) => {
-      console.log('touchmove', e);
+      if (!isTouching) return;
+
       const touch = e.touches[0] || e.changedTouches[0];
       const currentX = touch.pageX;
+      const deltaX = currentX - lastX;
 
-      if (
-        currentX < lastX &&
-        element.scrollLeft >= element.scrollWidth - element.clientWidth
+      if (element.scrollLeft <= 0 && deltaX > 0) {
+        // Trying to scroll left past the start
+        e.preventDefault();
+        element.scrollLeft = 0;
+      } else if (
+        element.scrollLeft >= element.scrollWidth - element.clientWidth &&
+        deltaX < 0
       ) {
-        // User is trying to scroll right past the end
+        // Trying to scroll right past the end
         e.preventDefault();
-      } else if (currentX > lastX && element.scrollLeft <= 0) {
-        // User is trying to scroll left past the start
-        e.preventDefault();
+        element.scrollLeft = element.scrollWidth - element.clientWidth;
+      } else {
+        lastX = currentX;
       }
+    };
+
+    const onTouchEnd = () => {
+      isTouching = false;
     };
 
     element.addEventListener('touchstart', onTouchStart, { passive: false });
     element.addEventListener('touchmove', onTouchMove, { passive: false });
+    element.addEventListener('touchend', onTouchEnd, { passive: true });
+    element.addEventListener('touchcancel', onTouchEnd, { passive: true });
 
     return () => {
       element.removeEventListener('touchstart', onTouchStart);
       element.removeEventListener('touchmove', onTouchMove);
+      element.removeEventListener('touchend', onTouchEnd);
+      element.removeEventListener('touchcancel', onTouchEnd);
     };
-  }, []);
+  }, [viewportRef]);
 
   useEffect(() => {
     // Register this table with the TableContext. This will allow us to track multiple instances of the table
