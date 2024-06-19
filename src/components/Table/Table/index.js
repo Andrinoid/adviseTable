@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import styled from 'styled-components';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 import { useSyncScroller } from '../utils/useSyncScroller';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -498,7 +498,7 @@ const Table = (
     const element = viewportRef.current;
     if (!element) return;
 
-    const handleScroll = debounce(() => {
+    const handleScroll = throttle(() => {
       if (element.scrollLeft === 0) {
         setScrollStatus('start');
       } else if (
@@ -509,7 +509,7 @@ const Table = (
       } else {
         setScrollStatus('middle');
       }
-    }, 100);
+    }, 50);
 
     element.addEventListener('scroll', handleScroll);
 
