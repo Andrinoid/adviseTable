@@ -498,7 +498,7 @@ const Table = (
     const element = viewportRef.current;
     if (!element) return;
 
-    const handleScroll = throttle(() => {
+    const handleScroll = () => {
       if (element.scrollLeft === 0) {
         setScrollStatus('start');
       } else if (
@@ -509,7 +509,7 @@ const Table = (
       } else {
         setScrollStatus('middle');
       }
-    }, 50);
+    };
 
     element.addEventListener('scroll', handleScroll);
 
