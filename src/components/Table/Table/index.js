@@ -29,7 +29,10 @@ const ViewPort = styled.div`
   width: 100%;
   overflow: ${(props) => (props.printLayout ? 'visible' : 'hidden')};
   overflow-x: ${(props) => (props.printLayout ? 'visible' : 'auto')};
+  // Tackle ios scroll bounce issues
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  //
   min-width: 0;
   flex-direction: row;
   display: flex;
