@@ -16,8 +16,7 @@ import styled from 'styled-components';
 import { produce } from 'immer';
 import { debounce } from 'lodash';
 import useAutoResize from '../../shared/useAutoResize';
-
-export const DataContext = createContext(null);
+import DataContext from './Context';
 
 function Grid(
   {

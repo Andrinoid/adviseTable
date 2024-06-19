@@ -1,7 +1,7 @@
-import React, { forwardRef, useContext, useRef, useState } from "react";
-import { Container, Handler } from "./styled";
-import { Resizing, ResizingMouseEvents } from "./hooks";
-import { DataContext } from "../Grid";
+import React, { forwardRef, useContext, useRef, useState } from 'react';
+import { Container, Handler } from './styled';
+import { Resizing, ResizingMouseEvents } from './hooks';
+import DataContext from '../Grid/Context';
 
 export default forwardRef(function Resizable(
   {
@@ -11,7 +11,7 @@ export default forwardRef(function Resizable(
     onResize = () => {},
     enabled = true,
   },
-  resizableRef
+  resizableRef,
 ) {
   const {
     totalWidth,
@@ -61,7 +61,7 @@ export default forwardRef(function Resizable(
         active={resizing}
         ref={handlerRef}
         x={x}
-        style={!enabled ? { display: "none" } : {}}
+        style={!enabled ? { display: 'none' } : {}}
       />
     </Container>
   );

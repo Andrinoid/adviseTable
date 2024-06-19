@@ -8,7 +8,6 @@ import React, {
 import styled from 'styled-components';
 import Col from '../Col';
 import Brick from '../Col/Brick';
-import RowMenu from './Menu';
 
 const RowElm = styled.div`
   display: flex;
@@ -38,7 +37,7 @@ const Row = memo(
     style,
     type = 'primary',
     leftBrickContent,
-    menuContent,
+
     setRowRenderVersion,
     setBiggestDataCellWidth,
     setBiggestLabelCellWidth,
@@ -264,8 +263,6 @@ const Row = memo(
           theTheme={theTheme}
           onClick={onClick}
         >
-          {menuContent && <RowMenu tableId={tableId}>{menuContent}</RowMenu>}
-
           {leftBrickContent && (
             <Brick
               theTheme={theTheme}

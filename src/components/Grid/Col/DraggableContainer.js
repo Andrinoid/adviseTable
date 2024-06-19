@@ -1,8 +1,8 @@
-import React, { forwardRef, useContext } from "react";
-import { DraggableElm } from "./styled";
-import { Draggable } from "react-beautiful-dnd";
-import { DataContext } from "../Grid";
-import { getRowId } from "../hooks";
+import React, { forwardRef, useContext } from 'react';
+import { DraggableElm } from './styled';
+import { Draggable } from 'react-beautiful-dnd';
+import DataContext from '../Grid/Context';
+import { getRowId } from '../hooks';
 
 export default function DraggableContainer({
   draggableId,
@@ -18,7 +18,7 @@ export default function DraggableContainer({
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided) => (
         <DraggableElement
-          style={{ height: "100%" }}
+          style={{ height: '100%' }}
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}
           $isDragging={draggableId == colId} //Only for styling. This is not part of dnd
@@ -49,5 +49,5 @@ const DraggableElement = forwardRef(
         {children}
       </DraggableElm>
     );
-  }
+  },
 );

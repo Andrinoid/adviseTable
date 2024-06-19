@@ -79,7 +79,7 @@ const SiderItem = ({
 
 SiderItem.propTypes = {
   onClick: PropTypes.func,
-  id: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+  id: PropTypes.any,
   active: PropTypes.bool,
   link: PropTypes.bool,
   smallTileStyle: PropTypes.object,

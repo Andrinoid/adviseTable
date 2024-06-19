@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import { Toolbar, ToolbarItem } from "./styled";
-import DragHandle from "../../../icons/DragHandle";
-import Plus from "../../../icons/Plus";
-import { Cursor } from "../Section/styled";
-import { copyColumn, useController } from "../hooks";
-import Copy from "../../../icons/Copy";
-import { DataContext } from "../Grid";
+import React, { useContext } from 'react';
+import { Toolbar, ToolbarItem } from './styled';
+import DragHandle from '../../../icons/DragHandle';
+import Plus from '../../../icons/Plus';
+import { Cursor } from '../Section/styled';
+import { copyColumn, useController } from '../hooks';
+import Copy from '../../../icons/Copy';
+import DataContext from '../Grid/Context';
 
 export default function Tools({ rowId, columnId, hidden, dragHandleProps }) {
   const { data, setData, maxCols } = useContext(DataContext);
@@ -13,9 +13,9 @@ export default function Tools({ rowId, columnId, hidden, dragHandleProps }) {
   const { addColumn, removeColumn } = useController(data, setData, maxCols);
 
   return (
-    <Toolbar className={hidden ? "" : "grid-toolbar"}>
+    <Toolbar className={hidden ? '' : 'grid-toolbar'}>
       <ToolbarItem {...dragHandleProps}>
-        {" "}
+        {' '}
         <DragHandle />
       </ToolbarItem>
       <Cursor type="pointer">
@@ -33,7 +33,7 @@ export default function Tools({ rowId, columnId, hidden, dragHandleProps }) {
             removeColumn(rowId, columnId);
           }}
         >
-          <Plus style={{ transform: "rotate(45deg)" }} />
+          <Plus style={{ transform: 'rotate(45deg)' }} />
         </ToolbarItem>
       </Cursor>
       <Cursor type="pointer">
@@ -42,7 +42,7 @@ export default function Tools({ rowId, columnId, hidden, dragHandleProps }) {
             setData(copyColumn(data, columnId));
           }}
         >
-          <Copy style={{ fontSize: "0.7em" }} />
+          <Copy style={{ fontSize: '0.7em' }} />
         </ToolbarItem>
       </Cursor>
     </Toolbar>

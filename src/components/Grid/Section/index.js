@@ -14,7 +14,7 @@ import {
   SectionHandleItem,
 } from './styled';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { DataContext } from '../Grid';
+import DataContext from '../Grid/Context';
 import Col from '../Col';
 import Plus from '../../../icons/Plus';
 import DragHandle from '../../../icons/DragHandle';

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Column, Inner } from './styled';
 import 'react-resizable/css/styles.css';
-import { DataContext } from '../Grid';
+import DataContext from '../Grid/Context';
 import { useContext } from 'react';
 import Resizable from '../Resizable';
 import Toolbar from './Toolbar';
