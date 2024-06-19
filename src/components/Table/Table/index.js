@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import styled from 'styled-components';
-import { debounce, throttle } from 'lodash';
+import { debounce } from 'lodash';
 import { useSyncScroller } from '../utils/useSyncScroller';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -29,10 +29,6 @@ const ViewPort = styled.div`
   width: 100%;
   overflow: ${(props) => (props.printLayout ? 'visible' : 'hidden')};
   overflow-x: ${(props) => (props.printLayout ? 'visible' : 'auto')};
-  // Tackle ios scroll bounce issues
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  //
   min-width: 0;
   flex-direction: row;
   display: flex;
@@ -501,7 +497,7 @@ const Table = (
     const element = viewportRef.current;
     if (!element) return;
 
-    const handleScroll = () => {
+    const handleScroll = debounce(() => {
       if (element.scrollLeft === 0) {
         setScrollStatus('start');
       } else if (
@@ -512,7 +508,7 @@ const Table = (
       } else {
         setScrollStatus('middle');
       }
-    };
+    }, 100);
 
     element.addEventListener('scroll', handleScroll);
 
@@ -820,7 +816,7 @@ const Table = (
       style={style}
     >
       <div
-        version="2.3"
+        version="2.2"
         id={`${tableId}`}
         ref={tableContainerRef}
         style={{
