@@ -23,7 +23,6 @@ import useScrollOnEdges from './hooks/useScrollOnEdges';
 import useHasScrollbar from './hooks/useHasScrollbar';
 import useAutoResize from '../../shared/useAutoResize';
 import useTableContext from './hooks/useTableContext';
-import PropTypes from 'prop-types';
 
 const ViewPort = styled.div`
   width: 100%;
@@ -514,6 +513,44 @@ const Table = (
 
     return () => {
       element.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const element = viewportRef.current;
+    if (!element) return;
+
+    let lastX = 0;
+
+    const onTouchStart = (e) => {
+      console.log('touchstart', e);
+      const touch = e.touches[0] || e.changedTouches[0];
+      lastX = touch.pageX;
+    };
+
+    const onTouchMove = (e) => {
+      console.log('touchmove', e);
+      const touch = e.touches[0] || e.changedTouches[0];
+      const currentX = touch.pageX;
+
+      if (
+        currentX < lastX &&
+        element.scrollLeft >= element.scrollWidth - element.clientWidth
+      ) {
+        // User is trying to scroll right past the end
+        e.preventDefault();
+      } else if (currentX > lastX && element.scrollLeft <= 0) {
+        // User is trying to scroll left past the start
+        e.preventDefault();
+      }
+    };
+
+    element.addEventListener('touchstart', onTouchStart, { passive: false });
+    element.addEventListener('touchmove', onTouchMove, { passive: false });
+
+    return () => {
+      element.removeEventListener('touchstart', onTouchStart);
+      element.removeEventListener('touchmove', onTouchMove);
     };
   }, []);
 
