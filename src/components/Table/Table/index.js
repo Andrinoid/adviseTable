@@ -499,7 +499,7 @@ const Table = (
     const element = viewportRef.current;
     if (!element) return;
 
-    const handleScroll = debounce(() => {
+    const handleScroll = () => {
       if (element.scrollLeft === 0) {
         setScrollStatus('start');
       } else if (
@@ -510,7 +510,7 @@ const Table = (
       } else {
         setScrollStatus('middle');
       }
-    }, 100);
+    };
 
     element.addEventListener('scroll', handleScroll);
 
