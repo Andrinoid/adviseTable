@@ -29,6 +29,7 @@ const ViewPort = styled.div`
   width: 100%;
   overflow: ${(props) => (props.printLayout ? 'visible' : 'hidden')};
   overflow-x: ${(props) => (props.printLayout ? 'visible' : 'auto')};
+  -webkit-overflow-scrolling: touch;
   min-width: 0;
   flex-direction: row;
   display: flex;
