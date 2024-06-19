@@ -33,6 +33,8 @@ const ViewPort = styled.div`
   flex-direction: row;
   display: flex;
   flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 `;
 
 const LeftBrickSpace = styled.div`
