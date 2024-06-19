@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useContext,
   useLayoutEffect,
-  useCallback,
 } from 'react';
 import {
   Cursor,
@@ -20,8 +19,6 @@ import Col from '../Col';
 import Plus from '../../../icons/Plus';
 import DragHandle from '../../../icons/DragHandle';
 import { Dimensions, compute, getRowId, useController } from '../hooks';
-import Resizable from '../Resizable';
-import { cloneDeep } from 'lodash';
 import produce from 'immer';
 
 function Section({

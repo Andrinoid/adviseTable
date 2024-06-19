@@ -3,8 +3,16 @@ import useLayout from '../../hooks/useLayout';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sheet } from 'react-modal-sheet';
 import useControls from '../../hooks';
+import styled from 'styled-components';
 
-const snapPoints = [-80, 0.45, 80];
+const StyledSheetHeader = styled(Sheet.Header)`
+  margin-top: -39px;
+  .react-modal-sheet-drag-indicator {
+    background: #333 !important;
+  }
+`;
+
+const snapPoints = [-80, 0.6, 150];
 
 function ModelSheetContainer({
   sheet,
@@ -64,7 +72,10 @@ function ModelSheetContainer({
       initialSnap={initialSnap}
     >
       <Sheet.Container>
-        <Sheet.Header />
+        <StyledSheetHeader />
+        {/* <div>
+          header content before scroll container
+        </div> */}
         <Sheet.Content style={{ paddingBottom: sheetRef.current?.y }}>
           <Sheet.Scroller draggableAt="both">{children}</Sheet.Scroller>
         </Sheet.Content>

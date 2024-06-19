@@ -27,7 +27,6 @@ import {
   DeviceDesktopAnalytics,
   ArrowsLeftRight,
 } from 'tabler-icons-react';
-import { initial } from 'lodash';
 
 var lastName = '';
 
