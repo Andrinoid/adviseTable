@@ -94,7 +94,7 @@ export const SectionElm = styled.div`
     }
     return `
       @media (max-width: ${breakpoint}px) {
-        flex-direction: row;
+        flex-direction: column;
       }
     `;
   }}
