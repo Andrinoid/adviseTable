@@ -34,15 +34,12 @@ const Sider = ({
   }
 
   if (platform === 'mobile' && !main) {
-    console.log('mobileContainer rendered');
     return <MobileContainer {...rest}>{children}</MobileContainer>;
   }
 
   if (smallScreen && !main) {
-    console.log('smallScreenContainer rendered');
     return <SmallScreenContainer {...rest}>{children}</SmallScreenContainer>;
   }
-  console.log('Container rendered');
   return (
     <Container width={{ width }} {...rest}>
       {children}
