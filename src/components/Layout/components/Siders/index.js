@@ -27,6 +27,13 @@ function ModelSheetContainer({
   const [initialSnap, setInitialSnap] = useState(0);
   const sheetRef = useRef();
 
+  const slideInAnimation = {
+    initial: { x: '-50px' }, // Start off-screen to the left
+    animate: { x: 0 }, // End at x: 0, which is the normal position
+    //exit: { opacity: 0 }, // You can adjust this for exit animation
+    transition: { type: 'linear', duration: 0.2 }, // Customizable transition
+  };
+
   useEffect(() => {
     if (siders.length > 0) {
       setOpen(true);
@@ -50,10 +57,7 @@ function ModelSheetContainer({
       <motion.div
         key={`${siderIndex}`}
         transition={{ ...transition, ease: 'easeIn' }}
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: -50, opacity: 0 }}
-        style={{ position: 'relative' }}
+        {...slideInAnimation}
       >
         {children}
       </motion.div>
