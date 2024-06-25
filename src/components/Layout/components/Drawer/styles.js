@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 100%;
   position: absolute;
   top: 0;
-  z-index: 11;
+  z-index: 51;
   pointer-events: none;
 
   ${({ smallScreen, platform }) => {
