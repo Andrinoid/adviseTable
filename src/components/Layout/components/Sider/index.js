@@ -33,13 +33,10 @@ const Sider = ({
     );
   }
 
-  if (platform === 'mobile' && !main) {
+  if ((smallScreen || platform === 'mobile') && !main) {
     return <MobileContainer {...rest}>{children}</MobileContainer>;
   }
 
-  if (smallScreen && !main) {
-    return <SmallScreenContainer {...rest}>{children}</SmallScreenContainer>;
-  }
   return (
     <Container width={{ width }} {...rest}>
       {children}
