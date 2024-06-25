@@ -58,6 +58,7 @@ function ModelSheetContainer({
         key={`${siderIndex}`}
         transition={{ ...transition, ease: 'easeIn' }}
         {...slideInAnimation}
+        style={{ position: 'relative', zIndex: 50 }}
       >
         {children}
       </motion.div>
