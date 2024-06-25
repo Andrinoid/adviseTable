@@ -16,5 +16,5 @@ export const Container = styled.div`
 
 export const MobileContainer = styled(Container)`
   width: 100vw;
-  // position: absolute;
+  position: relative;
 `;
