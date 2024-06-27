@@ -4,7 +4,7 @@ import produce from 'immer';
 import useLayout from './useLayout';
 
 const usePushDrawer = () => {
-  const { setDrawers, siders, clear } = useLayout();
+  const { setDrawers } = useLayout();
   return (component, root = false) => {
     if (root) {
       setTimeout(() => {
@@ -17,8 +17,8 @@ const usePushDrawer = () => {
         );
 
         setDrawers((previous) => {
-          if (previous.length == 0 || previous.length <= 2) return previous;
-          return previous.filter((_, i) => i != 0 && previous.length - 1 == i);
+          if (previous.length == 0 || previous.length == 1) return previous;
+          return previous.filter((_, i) => previous.length - 1 == i);
         });
       }, 200);
     } else {
