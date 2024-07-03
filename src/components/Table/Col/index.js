@@ -50,6 +50,7 @@ const Col = ({
   totalCols,
   // outer props
   dataValue,
+  dataRawValue,
   spanSelection = true,
   empty = false,
   horizontalAlign = 'right',
@@ -272,6 +273,7 @@ const Col = ({
       data-selectable={selectable}
       className={`tableCol`}
       data-value={inputValue}
+      data-raw-value={dataRawValue}
       onClick={onClick}
       // editInput={'some text'}
       onDoubleClick={handleDoubleClick}
