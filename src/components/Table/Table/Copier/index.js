@@ -80,14 +80,16 @@ export class Copier {
       for (let j = minX; j <= maxX; j++) {
         if (getContainedArea(_selections, { x: j, y: i }) != null) {
           const element = _table[i][j].current;
-          let value = element.getAttribute('data-raw-value');
-          if (!value) {
-            value = element.innerText;
-          }
+          // let value = element.getAttribute('data-raw-value');
+          // if (!value) {
+          //   value = element.innerText;
+          // }
 
-          if (value === '- -') {
-            value = '';
-          }
+          // if (value === '- -') {
+          //   value = '';
+          // }
+          let value = element.innerText;
+
           const colspan = element.getAttribute('data-colspan');
           const previousColspan =
             _table[i][j - 1]?.current?.getAttribute('data-colspan');
