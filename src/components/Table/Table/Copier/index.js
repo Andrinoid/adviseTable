@@ -80,9 +80,9 @@ export class Copier {
       for (let j = minX; j <= maxX; j++) {
         if (getContainedArea(_selections, { x: j, y: i }) != null) {
           const element = _table[i][j].current;
-          let value = element.current.getAttribute('data-raw-value');
+          let value = element.getAttribute('data-raw-value');
           if (!value) {
-            value = element.current.innerText;
+            value = element.innerText;
           }
 
           if (value === '- -') {
