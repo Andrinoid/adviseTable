@@ -56,7 +56,7 @@ class TableMatrixHandler {
       .filter((r) => r[0].current != null)
       .map((r) =>
         r.map((c, i) => {
-          let value = c.current.getAttribute('data-value');
+          let value = c.current.getAttribute('data-raw-value');
           // console.log(JSON.stringify(value), 'value', typeof value);
 
           if (!value) {

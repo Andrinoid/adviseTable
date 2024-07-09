@@ -783,7 +783,7 @@ const Table = React.forwardRef(
 
               let value =
                 tableMatrix[rowIndex][colIndex].current.getAttribute(
-                  'data-value',
+                  'data-raw-value',
                 );
 
               // try to convert value to number
