@@ -220,19 +220,19 @@ const Col = ({
         setEditionState(true);
         setInputValue(value);
         value = await onValueUpdate(true);
-      }
 
-      setPastedCols((cols) => [
-        ...cols,
-        {
-          value: value != null ? value : '',
-          x,
-          y,
-          allowEdition,
-          editable,
-          ...rest,
-        },
-      ]);
+        setPastedCols((cols) => [
+          ...cols,
+          {
+            value: value != null ? value : '',
+            x,
+            y,
+            allowEdition,
+            editable,
+            ...rest,
+          },
+        ]);
+      }
     };
     currentColRef.current.focus = () => {
       setEditionState(true);
