@@ -174,6 +174,7 @@ const Table = React.forwardRef(
       theme = 'light',
       headerData,
       headerColor = { background: '#ffffff', text: '#354052' },
+      headerContainer = <></>,
       showGrid, // Boolean
       children,
       tableId, // make required
@@ -926,34 +927,36 @@ const Table = React.forwardRef(
         >
           <div style={{ height: '100%' }}>
             {headerData ? (
-              <Header
-                headerColor={headerColor}
-                deselectAll={deselectAll}
-                selectAll={selectAll}
-                ref={headerScrollRef}
-                className="scrollable"
-                width={viewportWidth}
-                colHeight={headerHeight}
-                colWidth={colWidth}
-                firstColWidth={firstColWidth}
-                leftBrickWidth={leftBrickWidth}
-                lastColWidth={lastColWidth}
-                totalWidth={totalWidth}
-                onFirstColResize={onFirstColResize}
-                onLastColResize={onLastColResize}
-                totalCols={totalCols}
-                theTheme={theTheme}
-                themeKey={theme}
-                data={headerData}
-                hasTotalColumn={hasTotalColumn}
-                showGrid={showGrid}
-                autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-                autoAdjustLastColWidth={autoAdjustLastColWidth}
-                lasColumnRisizeable={lasColumnRisizeable}
-                isTableSelected={isTableSelected}
-                printLayout={printLayout}
-                stickyTopOffset={headerStickyTopOffset}
-              />
+              <headerContainer>
+                <Header
+                  headerColor={headerColor}
+                  deselectAll={deselectAll}
+                  selectAll={selectAll}
+                  ref={headerScrollRef}
+                  className="scrollable"
+                  width={viewportWidth}
+                  colHeight={headerHeight}
+                  colWidth={colWidth}
+                  firstColWidth={firstColWidth}
+                  leftBrickWidth={leftBrickWidth}
+                  lastColWidth={lastColWidth}
+                  totalWidth={totalWidth}
+                  onFirstColResize={onFirstColResize}
+                  onLastColResize={onLastColResize}
+                  totalCols={totalCols}
+                  theTheme={theTheme}
+                  themeKey={theme}
+                  data={headerData}
+                  hasTotalColumn={hasTotalColumn}
+                  showGrid={showGrid}
+                  autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+                  autoAdjustLastColWidth={autoAdjustLastColWidth}
+                  lasColumnRisizeable={lasColumnRisizeable}
+                  isTableSelected={isTableSelected}
+                  printLayout={printLayout}
+                  stickyTopOffset={headerStickyTopOffset}
+                />
+              </headerContainer>
             ) : null}
 
             {/* <div
