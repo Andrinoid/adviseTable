@@ -927,38 +927,69 @@ const Table = React.forwardRef(
         >
           <div style={{ height: '100%' }}>
             {headerData
-              ? React.cloneElement(
-                  headerContainer,
-                  {},
-                  <Header
-                    headerColor={headerColor}
-                    deselectAll={deselectAll}
-                    selectAll={selectAll}
-                    ref={headerScrollRef}
-                    className="scrollable"
-                    width={viewportWidth}
-                    colHeight={headerHeight}
-                    colWidth={colWidth}
-                    firstColWidth={firstColWidth}
-                    leftBrickWidth={leftBrickWidth}
-                    lastColWidth={lastColWidth}
-                    totalWidth={totalWidth}
-                    onFirstColResize={onFirstColResize}
-                    onLastColResize={onLastColResize}
-                    totalCols={totalCols}
-                    theTheme={theTheme}
-                    themeKey={theme}
-                    data={headerData}
-                    hasTotalColumn={hasTotalColumn}
-                    showGrid={showGrid}
-                    autoAdjustFirstColWidth={autoAdjustFirstColWidth}
-                    autoAdjustLastColWidth={autoAdjustLastColWidth}
-                    lasColumnRisizeable={lasColumnRisizeable}
-                    isTableSelected={isTableSelected}
-                    printLayout={printLayout}
-                    stickyTopOffset={headerStickyTopOffset}
-                  />,
-                )
+              ? typeof headerContainer === 'function'
+                ? headerContainer(
+                    <Header
+                      headerColor={headerColor}
+                      deselectAll={deselectAll}
+                      selectAll={selectAll}
+                      ref={headerScrollRef}
+                      className="scrollable"
+                      width={viewportWidth}
+                      colHeight={headerHeight}
+                      colWidth={colWidth}
+                      firstColWidth={firstColWidth}
+                      leftBrickWidth={leftBrickWidth}
+                      lastColWidth={lastColWidth}
+                      totalWidth={totalWidth}
+                      onFirstColResize={onFirstColResize}
+                      onLastColResize={onLastColResize}
+                      totalCols={totalCols}
+                      theTheme={theTheme}
+                      themeKey={theme}
+                      data={headerData}
+                      hasTotalColumn={hasTotalColumn}
+                      showGrid={showGrid}
+                      autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+                      autoAdjustLastColWidth={autoAdjustLastColWidth}
+                      lasColumnRisizeable={lasColumnRisizeable}
+                      isTableSelected={isTableSelected}
+                      printLayout={printLayout}
+                      stickyTopOffset={headerStickyTopOffset}
+                    />,
+                  )
+                : React.cloneElement(
+                    headerContainer,
+                    {},
+                    <Header
+                      headerColor={headerColor}
+                      deselectAll={deselectAll}
+                      selectAll={selectAll}
+                      ref={headerScrollRef}
+                      className="scrollable"
+                      width={viewportWidth}
+                      colHeight={headerHeight}
+                      colWidth={colWidth}
+                      firstColWidth={firstColWidth}
+                      leftBrickWidth={leftBrickWidth}
+                      lastColWidth={lastColWidth}
+                      totalWidth={totalWidth}
+                      onFirstColResize={onFirstColResize}
+                      onLastColResize={onLastColResize}
+                      totalCols={totalCols}
+                      theTheme={theTheme}
+                      themeKey={theme}
+                      data={headerData}
+                      hasTotalColumn={hasTotalColumn}
+                      showGrid={showGrid}
+                      autoAdjustFirstColWidth={autoAdjustFirstColWidth}
+                      autoAdjustLastColWidth={autoAdjustLastColWidth}
+                      lasColumnRisizeable={lasColumnRisizeable}
+                      isTableSelected={isTableSelected}
+                      printLayout={printLayout}
+                      stickyTopOffset={headerStickyTopOffset}
+                    />,
+                  )
               : null}
 
             <div
