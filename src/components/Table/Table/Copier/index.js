@@ -78,8 +78,8 @@ export class Copier {
 
     for (let i = minY; i <= maxY; i++) {
       for (let j = minX; j <= maxX; j++) {
-        if (getContainedArea(_selections, { x: j, y: i }) != null) {
-          const element = _table[i][j].current;
+        const element = _table[i][j].current;
+        if (element && getContainedArea(_selections, { x: j, y: i }) != null) {
           // let value = element.getAttribute('data-raw-value');
           // if (!value) {
           //   value = element.innerText;
