@@ -216,8 +216,8 @@ const Col = ({
   };
 
   useEffect(() => {
-    currentColRef.current.performPasteUpdate = async (value) => {
-      if (allowEdition && editable && initialValue != inputValue) {
+    currentColRef.current.performPasteUpdate = async (value, force = false) => {
+      if ((allowEdition && editable && initialValue != inputValue) || force) {
         setEditionState(true);
         setInputValue(value);
         value = await onValueUpdate(true);
